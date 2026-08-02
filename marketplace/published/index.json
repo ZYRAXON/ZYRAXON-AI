@@ -1,0 +1,41 @@
+{
+    "id":  "novamart",
+    "name":  "NovaMart - Premium E-Commerce Website",
+    "description":  "A complete, modern e-commerce website template with 14 products, 4 categories, shopping cart with localStorage persistence, product detail modals, category filters, testimonials and newsletter. Fully responsive with a stunning indigo-violet gradient design — ready to launch your online store.",
+    "category":  "E-Commerce",
+    "type":  "Template",
+    "tags":  [
+                 "ecommerce",
+                 "store",
+                 "shopping",
+                 "website",
+                 "template",
+                 "responsive",
+                 "cart",
+                 "tailwind"
+             ],
+    "author":  {
+                   "name":  "sayidilxs-web",
+                   "avatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+                   "url":  "https://github.com/sayidilxs-web"
+               },
+    "cover":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
+    "downloads":  0,
+    "rating":  0,
+    "publishedAt":  "2026-08-02T15:47:52.6129364Z",
+    "authorId":  "sayidilxs-web",
+    "authorAvatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+    "coverImage":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
+    "version":  "1.0.0",
+    "likeCount":  0,
+    "commentCount":  0,
+    "reviews":  0,
+    "featured":  false,
+    "verified":  false,
+    "createdAt":  "2026-08-02T15:47:52.6129364Z",
+    "updatedAt":  "2026-08-02T15:47:52.6129364Z",
+    "license":  "MIT",
+    "platforms":  [
+                      "web"
+                  ]
+}
