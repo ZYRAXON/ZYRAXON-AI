@@ -11,7 +11,7 @@
 <p align="center">
   <strong>All in one. Anything. Nothing is impossible.</strong>
 </p>
-
+https://zyraxonai.lovable.app/ecosystem
 <p align="center">
   <a href="https://zyraxonai.lovable.app/"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
@@ -348,7 +348,7 @@ See [open issues](https://github.com/onelpawarai/ZYRAXON-AI/issues) for planned 
 ## License
 
 [Business Source License 1.1 (BSL 1.1)](./LICENSE) - Free for non-commercial use. Commercial use requires a paid license. Converts to Apache 2.0 on 2030-07-21.
-
+https://zyraxonai.lovable.app/ecosystem
 ---
 
 <p align="center">
