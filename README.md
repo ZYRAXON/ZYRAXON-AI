@@ -11,7 +11,7 @@
 <p align="center">
   <strong>All in one. Anything. Nothing is impossible.</strong>
 </p>
-https://zyraxonai.lovable.app/ecosystem
+
 <p align="center">
   <a href="https://zyraxonai.lovable.app/"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
@@ -35,7 +35,7 @@ https://zyraxonai.lovable.app/ecosystem
 </p>
 
 ---
-
+https://zyraxonai.lovable.app/ecosystem
 ## What is ZYRAXON-AI?
 
 ZYRAXON-AI is an open-source desktop AI agent built on Electron + SolidJS + Bun. Unlike ChatGPT or other chatbots that just *talk*, ZYRAXON **takes action** - it has full access to your filesystem, terminal, browser, and more.
