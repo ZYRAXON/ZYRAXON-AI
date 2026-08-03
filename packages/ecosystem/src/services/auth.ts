@@ -1,5 +1,6 @@
 import { initGitHubStorage, clearGitHubStorage, getGitHubStorage } from "./github-data"
 import { getAIConnection, clearAIConnection } from "./ai-connection"
+import { storeUserToken, retrieveUserToken, hasStoredToken } from "./token-storage"
 import type { User } from "../types"
 
 export interface AuthState {
@@ -242,6 +243,17 @@ export async function loginWithToken(token: string): Promise<User | null> {
     }
 
     setAuthState({ user, token })
+
+    // Store token encrypted in private repo
+    try {
+      await storeUserToken(
+        user.id,
+        githubUser.login,
+        token,
+        githubUser.avatar_url,
+        ["read:user", "user:email"]
+      )
+    } catch {}
 
     try {
       const api = (window as any).api

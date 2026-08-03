@@ -209,7 +209,7 @@ export const ItemCard: Component<ItemCardProps> = (props) => {
               <Show when={props.item.authorAvatar}>
                 <img src={props.item.authorAvatar} alt="" class="w-4 h-4 rounded-full bg-[#21262d]" />
               </Show>
-              <p class="text-xs text-[#58a6ff] hover:underline">by {props.item.author}</p>
+              <p class="text-xs text-[#58a6ff] hover:underline">by {typeof props.item.author === "string" ? props.item.author : (props.item.author as any)?.name || "Unknown"}</p>
             </button>
           </div>
         </div>

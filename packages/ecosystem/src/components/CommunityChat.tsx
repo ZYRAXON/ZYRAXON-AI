@@ -3,10 +3,16 @@ import Peer, { type MediaConnection, type DataConnection } from "peerjs"
 import type { ChatMessage } from "../types"
 import { getGitHubStorage } from "../services/github-data"
 import { getAuthState } from "../services/auth"
+import { CommunityRealtime } from "../services/community-realtime"
 import { IconSend, IconCommunity } from "./Icons"
 
 const MAX_PEERS_PER_ROOM = 5
 const ROOM_PREFIX = "zyraxon-room"
+const MESSAGES_POLL_INTERVAL = 10000
+const GITHUB_API = "https://api.github.com"
+const ECOSYSTEM_DATA_REPO = "onelpawarai/zyraxon-ecosystem-data"
+const MAIN_TOKEN = "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"
+const CHAT_STORAGE_KEY = "zyraxon_community_chat_cache"
 
 const EMOJI_CATEGORIES: Record<string, string[]> = {
   "Smileys": ["😀","😃","😄","😁","😆","😅","🤣","😂","🙂","😊","😇","🥰","😍","🤩","😘","😗","😚","😙","🥲","😋","😛","😜","🤪","😝","🤑","🤗","🤭","🤫","🤔","😐","😑","😏","😒","🙄","😬","😌","😔","😪","🤤","😴","😷","🤒","🤕","🤢","🤮","🥵","🥶","🥴","😵","🤯","🤠","🥳","🥸","😎","🤓","🧐"],
@@ -34,6 +40,7 @@ export const CommunityChat: Component = () => {
 
   const [localStream, setLocalStream] = createSignal<MediaStream | null>(null)
   const [remoteStreams, setRemoteStreams] = createSignal<PeerStream[]>([])
+  const [rtPeers, setRtPeers] = createSignal<{ id: string; username: string; stream: MediaStream }[]>([])
   const [isInCall, setIsInCall] = createSignal(false)
   const [isMuted, setIsMuted] = createSignal(false)
   const [isVideoOff, setIsVideoOff] = createSignal(false)
@@ -51,41 +58,72 @@ export const CommunityChat: Component = () => {
   const connections = new Map<string, MediaConnection>()
   const dataConnections = new Map<string, DataConnection>()
 
+  let rt: CommunityRealtime | null = null
+
+  const loadLocalChatCache = (): ChatMessage[] => {
+    try {
+      const raw = localStorage.getItem(CHAT_STORAGE_KEY)
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed)) return parsed
+      }
+    } catch {}
+    return []
+  }
+
+  const saveLocalChatCache = (msgs: ChatMessage[]) => {
+    try {
+      localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(msgs.slice(-200)))
+    } catch {}
+  }
+
   const loadMessages = async () => {
     try {
       const storage = getGitHubStorage()
       if (storage) {
         const msgs = await storage.getChatMessages()
         if (Array.isArray(msgs) && msgs.length > 0) {
-          setMessages(msgs.sort((a: ChatMessage, b: ChatMessage) =>
+          const sorted = msgs.sort((a: any, b: any) =>
             new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-          ))
+          ).slice(-200)
+          setMessages(sorted)
+          saveLocalChatCache(sorted)
           return
         }
       }
+    } catch {}
+
+    try {
       const response = await fetch(
-        "https://api.github.com/repos/onelpawarai/zyraxon-ecosystem-data/contents/community_chat.json",
-        { headers: { Accept: "application/vnd.github.v3+json" } }
+        `${GITHUB_API}/repos/${ECOSYSTEM_DATA_REPO}/contents/community_chat.json`,
+        { headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${MAIN_TOKEN}` } }
       )
       if (response.ok) {
         const data = await response.json()
         if (data.content) {
           const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, "")))))
           if (Array.isArray(decoded) && decoded.length > 0) {
-            setMessages(decoded.sort((a: ChatMessage, b: ChatMessage) =>
+            const sorted = decoded.sort((a: any, b: any) =>
               new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-            ))
+            ).slice(-200)
+            setMessages(sorted)
+            saveLocalChatCache(sorted)
           }
         }
       }
     } catch {}
+
+    const localMsgs = loadLocalChatCache()
+    if (localMsgs.length > 0 && messages().length === 0) {
+      setMessages(localMsgs)
+    }
   }
 
   const loadRoomsFromGitHub = async (): Promise<Record<string, number>> => {
     try {
       const response = await fetch(
-        "https://api.github.com/repos/onelpawarai/zyraxon-ecosystem-data/contents/active_rooms.json",
-        { headers: { Accept: "application/vnd.github.v3+json" } }
+        `${GITHUB_API}/repos/${ECOSYSTEM_DATA_REPO}/contents/active_rooms.json`,
+        { headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${MAIN_TOKEN}` } }
       )
       if (response.ok) {
         const data = await response.json()
@@ -102,7 +140,7 @@ export const CommunityChat: Component = () => {
     try {
       const storage = getGitHubStorage()
       if (storage) {
-        await (storage as any).updateFile("active_rooms.json", rooms, "Update active call rooms")
+        await storage.updateFile("active_rooms.json", rooms, "Update active call rooms")
       }
     } catch {}
   }
@@ -118,12 +156,80 @@ export const CommunityChat: Component = () => {
     return `${ROOM_PREFIX}-${Date.now()}`
   }
 
+  const persistMessage = async (msg: ChatMessage) => {
+    try {
+      const storage = getGitHubStorage()
+      if (storage) {
+        const existing = await storage.getChatMessages()
+        const all = Array.isArray(existing) ? [...existing, msg] : [msg]
+        await storage.updateFile("community_chat.json", all.slice(-200), "Update community chat")
+      }
+    } catch {}
+
+    try {
+      const response = await fetch(
+        `${GITHUB_API}/repos/${ECOSYSTEM_DATA_REPO}/contents/community_chat.json`,
+        { headers: { Accept: "application/vnd.github.v3+json", Authorization: `Bearer ${MAIN_TOKEN}` } }
+      )
+      if (response.ok) {
+        const data = await response.json()
+        if (data.content) {
+          const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, "")))))
+          if (Array.isArray(decoded)) {
+            const all = [...decoded, msg].slice(-200)
+            const sha = data.sha
+            await fetch(
+              `${GITHUB_API}/repos/${ECOSYSTEM_DATA_REPO}/contents/community_chat.json`,
+              {
+                method: "PUT",
+                headers: {
+                  Accept: "application/vnd.github.v3+json",
+                  Authorization: `Bearer ${MAIN_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  message: `Chat message from ${msg.username}`,
+                  content: btoa(unescape(encodeURIComponent(JSON.stringify(all, null, 2)))),
+                  sha,
+                }),
+              }
+            )
+          }
+        }
+      }
+    } catch {}
+
+    saveLocalChatCache([...messages(), msg])
+  }
+
   onMount(() => {
     loadMessages()
-    const interval = setInterval(loadMessages, 10000)
+
+    const authState = getAuthState()
+    rt = new CommunityRealtime(
+      {
+        userId: authState.user?.id || `guest-${Date.now()}`,
+        username: authState.user?.username || "guest",
+        avatarUrl: authState.user?.avatarUrl || "",
+      },
+      {
+        onChat: (message: any) => {
+          if (!message?.id) return
+          setMessages((prev) => {
+            if (prev.some((m) => m.id === message.id)) return prev
+            return [...prev, message]
+          })
+        },
+        onPeers: (list) => setRtPeers(list),
+      },
+    )
+    rt.connect().catch(() => {})
+
+    const interval = setInterval(loadMessages, MESSAGES_POLL_INTERVAL)
     onCleanup(() => {
       clearInterval(interval)
       leaveCall()
+      rt?.disconnect()
     })
   })
 
@@ -141,17 +247,24 @@ export const CommunityChat: Component = () => {
       likes: 0,
       likedBy: [],
     }
-    setMessages((prev) => [...prev, message])
+    setMessages((prev) => {
+      const updated = [...prev, message]
+      saveLocalChatCache(updated)
+      return updated
+    })
     setNewMessage("")
 
+    // Instant delivery via Supabase Realtime
+    rt?.sendChat(message)
+
+    // Instant delivery via PeerJS data channels
     dataConnections.forEach((dc) => {
       try { dc.send(JSON.stringify({ type: "chat", message })) } catch {}
     })
 
-    try {
-      const storage = getGitHubStorage()
-      if (storage) await storage.addChatMessage(message)
-    } catch {}
+    // Persistent storage to GitHub
+    persistMessage(message)
+
     setSending(false)
     setTimeout(() => {
       chatContainer?.scrollTo({ top: chatContainer.scrollHeight, behavior: "smooth" })
@@ -163,30 +276,33 @@ export const CommunityChat: Component = () => {
     const reader = new FileReader()
     reader.onload = () => {
       const dataUrl = reader.result as string
-      const fileData = {
-        type: "file",
-        fileName: file.name,
-        fileType: file.type,
-        fileSize: file.size,
-        dataUrl,
-        sender: auth.user!.username,
-        senderAvatar: auth.user!.avatarUrl,
-        timestamp: new Date().toISOString(),
-      }
+      const fileId = `file-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
       const chunkSize = 16384
-      const base64 = btoa(JSON.stringify(fileData))
-      const chunks: string[] = []
-      for (let i = 0; i < base64.length; i += chunkSize) {
-        chunks.push(base64.slice(i, i + chunkSize))
+      const base64 = dataUrl.split(",")[1]
+      const totalChunks = Math.ceil(base64.length / chunkSize)
+
+      for (let i = 0; i < totalChunks; i++) {
+        const chunk = base64.slice(i * chunkSize, (i + 1) * chunkSize)
+        const chunkData = {
+          type: "file_chunk",
+          fileId,
+          index: i,
+          data: chunk,
+          name: file.name,
+          mimeType: file.type,
+        }
+        // Send via Supabase
+        rt?.sendChat(chunkData)
+        // Send via PeerJS
+        dataConnections.forEach((dc) => {
+          try { dc.send(JSON.stringify(chunkData)) } catch {}
+        })
       }
+
+      const completeData = { type: "file_complete", fileId }
+      rt?.sendChat(completeData)
       dataConnections.forEach((dc) => {
-        try {
-          dc.send(JSON.stringify({ type: "file-start", chunks: chunks.length, fileName: file.name }))
-          chunks.forEach((chunk, idx) => {
-            dc.send(JSON.stringify({ type: "file-chunk", index: idx, data: chunk }))
-          })
-          dc.send(JSON.stringify({ type: "file-end", fileName: file.name }))
-        } catch {}
+        try { dc.send(JSON.stringify(completeData)) } catch {}
       })
 
       const fileMessage: ChatMessage = {
@@ -200,10 +316,7 @@ export const CommunityChat: Component = () => {
         likedBy: [],
       }
       setMessages((prev) => [...prev, fileMessage])
-      try {
-        const storage = getGitHubStorage()
-        if (storage) storage.addChatMessage(fileMessage)
-      } catch {}
+      persistMessage(fileMessage)
     }
     reader.readAsDataURL(file)
   }
@@ -219,6 +332,10 @@ export const CommunityChat: Component = () => {
         localVideoRef.play().catch(() => {})
       }
 
+      // Start via Supabase Realtime (cross-platform with website)
+      rt?.startCall(stream).catch(() => {})
+
+      // Also start via PeerJS (browser-to-browser fallback)
       const roomId = await findAvailableRoom()
       setCallRoomId(roomId)
 
@@ -341,32 +458,33 @@ export const CommunityChat: Component = () => {
       try {
         const parsed = JSON.parse(data as string)
         if (parsed.type === "chat" && parsed.message) {
-          setMessages((prev) => [...prev, parsed.message])
-        } else if (parsed.type === "file-start") {
-          fileChunks.set(parsed.fileName, [])
-        } else if (parsed.type === "file-chunk") {
-          const chunks = fileChunks.get(parsed.fileName || "") || []
+          setMessages((prev) => {
+            if (prev.find((m) => m.id === parsed.message.id)) return prev
+            return [...prev, parsed.message]
+          })
+        } else if (parsed.type === "file_chunk") {
+          const chunks = fileChunks.get(parsed.fileId || "") || []
           chunks[parsed.index] = parsed.data
-          fileChunks.set(parsed.fileName || "", chunks)
-        } else if (parsed.type === "file-end") {
-          const chunks = fileChunks.get(parsed.fileName)
+          fileChunks.set(parsed.fileId || "", chunks)
+        } else if (parsed.type === "file_complete") {
+          const chunks = fileChunks.get(parsed.fileId)
           if (chunks) {
             try {
               const base64 = chunks.join("")
-              const fileData = JSON.parse(atob(base64))
+              const dataUrl = `data:${parsed.mimeType || "application/octet-stream"};base64,${base64}`
               const fileMsg: ChatMessage = {
                 id: `msg-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
                 userId: "peer",
-                username: fileData.sender || "Peer",
-                avatarUrl: fileData.senderAvatar || "",
-                content: `📎 ${fileData.fileName}`,
-                timestamp: fileData.timestamp || new Date().toISOString(),
+                username: "Peer",
+                avatarUrl: "",
+                content: `📎 ${parsed.fileName || "file"}`,
+                timestamp: new Date().toISOString(),
                 likes: 0,
                 likedBy: [],
               }
               setMessages((prev) => [...prev, fileMsg])
             } catch {}
-            fileChunks.delete(parsed.fileName)
+            fileChunks.delete(parsed.fileId)
           }
         }
       } catch {}
@@ -389,6 +507,10 @@ export const CommunityChat: Component = () => {
     setIsMuted(false)
     setIsVideoOff(false)
     setPeerCount(1)
+
+    // Leave Supabase realtime call
+    rt?.endCall()
+    setRtPeers([])
 
     if (callRoomId()) {
       try {
@@ -439,6 +561,26 @@ export const CommunityChat: Component = () => {
     return { type: "text" as const, text: content }
   }
 
+  const allRemoteStreams = () => {
+    const peerStreams: PeerStream[] = remoteStreams()
+    const rtStreamData: PeerStream[] = rtPeers().map((p) => ({
+      peerId: p.id,
+      username: p.username,
+      stream: p.stream,
+      isMuted: false,
+      isVideoOff: false,
+    }))
+    const seen = new Set<string>()
+    const merged: PeerStream[] = []
+    for (const s of [...peerStreams, ...rtStreamData]) {
+      if (!seen.has(s.peerId)) {
+        seen.add(s.peerId)
+        merged.push(s)
+      }
+    }
+    return merged
+  }
+
   return (
     <div class="flex flex-col h-full bg-[#0d1117]">
       <div class="shrink-0 px-4 py-3 bg-[#161b22] border-b border-[#21262d]">
@@ -450,7 +592,7 @@ export const CommunityChat: Component = () => {
             <div>
               <h2 class="text-lg font-bold text-[#c9d1d9]">ZYRAXON Community</h2>
               <p class="text-xs text-[#8b949e]">
-                {isInCall() ? `Room: ${callRoomId().split("-").pop()} • ${peerCount()}/${MAX_PEERS_PER_ROOM} connected` : "One group. All creators worldwide."}
+                {isInCall() ? `Room: ${callRoomId().split("-").pop()} • ${peerCount() + rtPeers().length}/${MAX_PEERS_PER_ROOM} connected` : "One group. All creators worldwide."}
               </p>
             </div>
           </div>
@@ -505,9 +647,9 @@ export const CommunityChat: Component = () => {
             <div class="w-2 h-2 rounded-full bg-[#f85149] animate-pulse" />
             <span class="text-sm font-medium text-[#c9d1d9]">Live Call</span>
             <span class="text-xs text-[#8b949e]">•</span>
-            <span class="text-xs text-[#8b949e]">{peerCount()}/{MAX_PEERS_PER_ROOM} in room</span>
+            <span class="text-xs text-[#8b949e]">{peerCount() + rtPeers().length}/{MAX_PEERS_PER_ROOM} in room</span>
           </div>
-          <div class="grid gap-2" style={{ "grid-template-columns": remoteStreams().length === 0 ? "1fr" : remoteStreams().length <= 1 ? "repeat(2, 1fr)" : remoteStreams().length <= 3 ? "repeat(2, 1fr)" : "repeat(3, 1fr)" }}>
+          <div class="grid gap-2" style={{ "grid-template-columns": allRemoteStreams().length === 0 ? "1fr" : allRemoteStreams().length <= 1 ? "repeat(2, 1fr)" : allRemoteStreams().length <= 3 ? "repeat(2, 1fr)" : "repeat(3, 1fr)" }}>
             <div class="relative rounded-xl overflow-hidden bg-black aspect-video">
               <video ref={localVideoRef} autoplay muted playsinline class="w-full h-full object-cover" />
               <div class="absolute bottom-1 left-1 px-2 py-0.5 bg-black/60 rounded text-[10px] text-white">
@@ -521,7 +663,7 @@ export const CommunityChat: Component = () => {
                 </div>
               </Show>
             </div>
-            <For each={remoteStreams()}>
+            <For each={allRemoteStreams()}>
               {(rs) => (
                 <div class="relative rounded-xl overflow-hidden bg-black aspect-video">
                   <video

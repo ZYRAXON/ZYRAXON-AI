@@ -1,8 +1,7 @@
-import { type Component, createSignal, Show, For } from "solid-js"
+import { type Component, createSignal, Show, For, onMount } from "solid-js"
 import type { Comment } from "../types"
 import { getAuthState } from "../services/auth"
-import { getGitHubStorage } from "../services/github-data"
-import { getAIConnection } from "../services/ai-connection"
+import { getComments as fetchSharedComments, addComment as saveSharedComment, type SharedComment } from "../services/shared-data"
 import { IconHeart, IconSend } from "./Icons"
 
 interface CommentSectionProps {
@@ -12,39 +11,59 @@ interface CommentSectionProps {
 }
 
 export const CommentSection: Component<CommentSectionProps> = (props) => {
+  const [comments, setComments] = createSignal<Comment[]>(props.comments)
   const [newComment, setNewComment] = createSignal("")
   const [isSubmitting, setIsSubmitting] = createSignal(false)
   const auth = getAuthState()
+
+  onMount(async () => {
+    try {
+      const stored = await fetchSharedComments(props.itemId)
+      if (stored.length > 0) {
+        setComments(stored.map((c) => ({
+          id: c.id,
+          userId: c.userId,
+          username: c.username,
+          avatarUrl: c.avatarUrl,
+          content: c.content,
+          itemId: c.itemId,
+          createdAt: c.createdAt,
+          likeCount: c.likeCount,
+        })))
+      }
+    } catch {}
+  })
 
   const handleSubmit = async () => {
     if (!newComment().trim() || isSubmitting() || !auth.user) return
 
     setIsSubmitting(true)
     try {
-      const storage = getGitHubStorage()
-      const ai = getAIConnection()
-
-      const comment: Comment = {
-        id: `comment-${Date.now()}`,
+      const comment: SharedComment = {
+        id: `comment-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        itemId: props.itemId,
         userId: auth.user.id,
         username: auth.user.username,
         avatarUrl: auth.user.avatarUrl,
         content: newComment().trim(),
-        itemId: props.itemId,
         createdAt: new Date().toISOString(),
         likeCount: 0,
       }
 
-      if (storage) {
-        await storage.addComment(comment)
-      }
+      await saveSharedComment(comment)
 
-      if (ai.isConnected()) {
-        await ai.syncUserData({ type: "comment", itemId: props.itemId, content: newComment().trim() })
-        await ai.addToMemoryContext({ type: "user_comment", itemId: props.itemId, content: newComment().trim() })
+      const appComment: Comment = {
+        id: comment.id,
+        userId: comment.userId,
+        username: comment.username,
+        avatarUrl: comment.avatarUrl,
+        content: comment.content,
+        itemId: comment.itemId,
+        createdAt: comment.createdAt,
+        likeCount: comment.likeCount,
       }
-
-      props.onCommentAdded?.(comment)
+      setComments([appComment, ...comments()])
+      props.onCommentAdded?.(appComment)
       setNewComment("")
     } catch (error) {
       console.error("Failed to add comment:", error)
@@ -100,7 +119,7 @@ export const CommentSection: Component<CommentSectionProps> = (props) => {
       </Show>
 
       <div class="space-y-4">
-        <For each={props.comments}>
+        <For each={comments()}>
           {(comment) => (
             <div class="flex gap-3">
               <img src={comment.avatarUrl} alt="" class="w-8 h-8 rounded-full bg-[#21262d]" />
@@ -122,7 +141,7 @@ export const CommentSection: Component<CommentSectionProps> = (props) => {
         </For>
       </div>
 
-      <Show when={props.comments.length === 0}>
+      <Show when={comments().length === 0}>
         <div class="text-center py-8">
           <div class="w-12 h-12 mx-auto mb-3 rounded-xl bg-[#161b22] border border-[#21262d] flex items-center justify-center">
             <IconSend size={18} class="text-[#484f58]" />

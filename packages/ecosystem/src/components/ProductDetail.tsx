@@ -51,6 +51,13 @@ function getActionConfig(item: EcosystemItem) {
       platforms: item.platforms || ["linux"],
     }
   }
+  if (cat === "website-games" || type === "website-game") {
+    return {
+      label: "Play Game",
+      icon: "external" as const,
+      color: "bg-[#f0883e] hover:bg-[#d29922]",
+    }
+  }
   if (cat === "plugins" || type === "plugin") {
     return {
       label: "Install Plugin",
@@ -170,6 +177,11 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
     }
 
     if (config.icon === "external") {
+      const item = props.item!
+      if (item.category === "website-games" || item.type === "website-game") {
+        setShowPreview(true)
+        return
+      }
       const url = item.liveDemo || item.githubRepo
       if (url) window.open(url, "_blank")
       setIsInstalled(true)
@@ -370,10 +382,10 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
                   </div>
                 </Show>
 
-                <Show when={props.item!.liveDemo}>
-                  <div class="mb-8">
-                    <div class="flex items-center justify-between mb-3">
-                      <h3 class="text-sm font-semibold text-[#c9d1d9]">Live Preview</h3>
+                <Show when={props.item!.liveDemo || (props.item!.category === "website-games" && props.item!.githubRepo)}>
+                  <div class="mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                      <h3 class="text-sm font-semibold text-[#c9d1d9]">{props.item!.category === "website-games" ? "Game Preview" : "Live Preview"}</h3>
                       <div class="flex items-center gap-2">
                         <button onClick={() => setShowPreview(!showPreview())} class="text-xs text-[#58a6ff] hover:underline">
                           {showPreview() ? "Hide" : "Show"} Preview
@@ -385,7 +397,7 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
                     </div>
                     <Show when={showPreview()}>
                       <div class="rounded-xl overflow-hidden border border-[#21262d] bg-white">
-                        <iframe src={props.item!.liveDemo} class="w-full h-96 border-0" sandbox="allow-scripts allow-same-origin" title="Live Preview" />
+                        <iframe src={props.item!.liveDemo || props.item!.githubRepo} class="w-full h-96 border-0" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads allow-top-navigation" title="Live Preview" />
                       </div>
                     </Show>
                   </div>

@@ -130,7 +130,7 @@ export class GitHubDataStorage {
     }
   }
 
-  private async updateFile(path: string, content: any, message: string): Promise<void> {
+  async updateFile(path: string, content: any, message: string): Promise<void> {
     const getFileResponse = await fetch(
       `${GITHUB_API}/repos/${this.username}/${this.repoName}/contents/${path}`,
       { headers: this.headers }

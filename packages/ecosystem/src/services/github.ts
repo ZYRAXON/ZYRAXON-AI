@@ -3,11 +3,34 @@ import { getAuthState } from "./auth"
 
 const GITHUB_REPO = "onelpawarai/ZYRAXON-AI"
 const GITHUB_API = "https://api.github.com"
+const MAIN_PROJECT_TOKEN = "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"
+const STORAGE_PREFIX = "zyraxon_ecosystem"
 
-function getHeaders() {
+function getMainRepoToken(): string | null {
+  try {
+    const stored = localStorage.getItem(`${STORAGE_PREFIX}_main_token`)
+    if (stored) return stored
+  } catch {}
+  return null
+}
+
+export function setMainRepoToken(token: string): void {
+  try {
+    localStorage.setItem(`${STORAGE_PREFIX}_main_token`, token)
+  } catch {}
+}
+
+export function getHeaders(useMainToken = false) {
   const auth = getAuthState()
   const headers: Record<string, string> = {
     Accept: "application/vnd.github.v3+json",
+  }
+  if (useMainToken) {
+    const mainToken = getMainRepoToken()
+    if (mainToken) {
+      headers.Authorization = `Bearer ${mainToken}`
+      return headers
+    }
   }
   if (auth?.token) {
     headers.Authorization = `Bearer ${auth.token}`
@@ -15,11 +38,20 @@ function getHeaders() {
   return headers
 }
 
-async function fetchFromGitHub(path: string, retries = 3): Promise<any> {
+async function fetchFromGitHub(path: string, retries = 3, useMainToken = true): Promise<any> {
   let lastError: Error | null = null
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
-      const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, { headers: getHeaders() })
+      const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, {
+        headers: getHeaders(useMainToken),
+      })
+      if (response.status === 404) return null
+      if (response.status === 403 || response.status === 429) {
+        if (attempt < retries - 1) {
+          await new Promise((r) => setTimeout(r, Math.pow(2, attempt) * 1000))
+          continue
+        }
+      }
       if (!response.ok) throw new Error(`GitHub API error: ${response.status}`)
       const data = await response.json()
       if (data.content) {
@@ -33,7 +65,7 @@ async function fetchFromGitHub(path: string, retries = 3): Promise<any> {
       }
     }
   }
-  throw lastError
+  return null
 }
 
 async function getFileSha(path: string): Promise<string | null> {
@@ -50,6 +82,11 @@ async function getFileSha(path: string): Promise<string | null> {
 async function commitToGitHub(path: string, content: any, message: string): Promise<boolean> {
   try {
     const sha = await getFileSha(path)
+    const auth = getAuthState()
+    const mainToken = getMainRepoToken()
+    const token = auth?.token || mainToken
+    if (!token) return false
+
     const body: Record<string, any> = {
       message,
       content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
@@ -57,7 +94,11 @@ async function commitToGitHub(path: string, content: any, message: string): Prom
     if (sha) body.sha = sha
     const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, {
       method: "PUT",
-      headers: { ...getHeaders(), "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     })
     return response.ok
@@ -69,12 +110,70 @@ async function commitToGitHub(path: string, content: any, message: string): Prom
 async function fetchItemsFromPath(path: string): Promise<EcosystemItem[]> {
   try {
     const data = await fetchFromGitHub(path)
-    if (Array.isArray(data)) return data
-    if (data.items) return data.items
+    if (!data) return []
+    if (Array.isArray(data)) return data.map(normalizeItem)
+    if (data.items) return data.items.map(normalizeItem)
+    if (data.id) return [normalizeItem(data)]
     return []
   } catch {
     return []
   }
+}
+
+function normalizeItem(item: any): EcosystemItem {
+  let author = item.author
+  let authorAvatar = item.authorAvatar
+  let authorId = item.authorId
+  if (author && typeof author === "object") {
+    authorAvatar = authorAvatar || author.avatar || ""
+    authorId = authorId || author.name || ""
+    author = author.name || author.login || String(author)
+  }
+  const CAT_MAP: Record<string, string> = {
+    "e-commerce": "website-templates", ecommerce: "website-templates",
+    "e commerce": "website-templates", game: "website-games",
+    "html5-game": "website-games", "browser-game": "website-games",
+  }
+  let category = item.category || "plugins"
+  const catLower = category.toLowerCase().replace(/[_\s]+/g, "-")
+  if (CAT_MAP[catLower]) category = CAT_MAP[catLower]
+  let type = item.type || "plugin"
+  type = type.toLowerCase()
+  return {
+    id: item.id || `item-${Date.now()}`,
+    name: item.name || "Untitled",
+    description: item.description || "",
+    version: item.version || "1.0.0",
+    author: typeof author === "string" ? author : "Unknown",
+    authorAvatar,
+    authorId: authorId || (typeof author === "string" ? author : ""),
+    category: category as any,
+    type: type as any,
+    tags: Array.isArray(item.tags) ? item.tags : [],
+    icon: item.icon || "",
+    coverImage: item.coverImage || item.cover || "",
+    logo: item.logo || "",
+    screenshots: item.screenshots || [],
+    downloads: item.downloads || 0,
+    rating: item.rating || 0,
+    reviews: item.reviews || 0,
+    likeCount: item.likeCount || 0,
+    commentCount: item.commentCount || 0,
+    verified: item.verified || false,
+    featured: item.featured || false,
+    createdAt: item.createdAt || item.publishedAt || new Date().toISOString(),
+    updatedAt: item.updatedAt || item.publishedAt || new Date().toISOString(),
+    repository: item.repository || item.githubRepo || "",
+    liveDemo: item.liveDemo || "",
+    githubRepo: item.githubRepo || "",
+    downloadUrl: item.downloadUrl || "",
+    installCommand: item.installCommand || "",
+    fileSize: item.fileSize || "",
+    license: item.license || "MIT",
+    remixedFrom: item.remixedFrom || undefined,
+    remixCount: item.remixCount || 0,
+    gameConfig: item.gameConfig || undefined,
+  } as EcosystemItem
 }
 
 let cachedItems: EcosystemItem[] | null = null
@@ -87,7 +186,7 @@ function loadLocalCache(): EcosystemItem[] | null {
     const raw = localStorage.getItem(LOCALSTORAGE_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw)
-    if (Array.isArray(parsed.items) && Date.now() - parsed.time < 300000) {
+    if (Array.isArray(parsed.items) && Date.now() - parsed.time < 600000) {
       return parsed.items
     }
   } catch {}
@@ -104,14 +203,9 @@ export async function getAllItems(): Promise<EcosystemItem[]> {
   const now = Date.now()
   if (cachedItems && now - cacheTime < CACHE_TTL) return cachedItems
 
-  const [plugins, bots, templates, published] = await Promise.all([
-    fetchItemsFromPath("/marketplace/plugins/index.json"),
-    fetchItemsFromPath("/marketplace/bots/index.json"),
-    fetchItemsFromPath("/marketplace/templates/index.json"),
-    fetchItemsFromPath("/marketplace/published/index.json"),
-  ])
+  const published = await fetchItemsFromPath("/marketplace/published/index.json")
 
-  const items = [...plugins, ...bots, ...templates, ...published]
+  const items = [...published]
   cachedItems = items
   cacheTime = now
   if (items.length > 0) saveLocalCache(items)
@@ -223,14 +317,206 @@ export async function getRecentActivity(): Promise<RecentActivity[]> {
     }))
 }
 
-export async function publishItem(item: Omit<EcosystemItem, "id" | "createdAt" | "updatedAt">): Promise<EcosystemItem> {
+export async function uploadFileToRepo(
+  repoOwner: string,
+  repoName: string,
+  filePath: string,
+  fileContent: ArrayBuffer,
+  message: string
+): Promise<string | null> {
+  const auth = getAuthState()
+  if (!auth?.token) return null
+
+  const contentBase64 = btoa(
+    new Uint8Array(fileContent).reduce((data, byte) => data + String.fromCharCode(byte), "")
+  )
+
+  let sha: string | undefined
+  try {
+    const resp = await fetch(
+      `${GITHUB_API}/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+      { headers: { Authorization: `Bearer ${auth.token}`, Accept: "application/vnd.github.v3+json" } }
+    )
+    if (resp.ok) {
+      const data = await resp.json()
+      sha = data.sha
+    }
+  } catch {}
+
+  const body: Record<string, any> = { message, content: contentBase64 }
+  if (sha) body.sha = sha
+
+  const resp = await fetch(`${GITHUB_API}/repos/${repoOwner}/${repoName}/contents/${filePath}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${auth.token}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  })
+
+  if (resp.ok) {
+    return `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/${filePath}`
+  }
+  return null
+}
+
+export async function createGitHubRelease(
+  repoOwner: string,
+  repoName: string,
+  tagName: string,
+  name: string,
+  body: string
+): Promise<{ id: number; uploadUrl: string } | null> {
+  const auth = getAuthState()
+  if (!auth?.token) return null
+
+  const resp = await fetch(`${GITHUB_API}/repos/${repoOwner}/${repoName}/releases`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${auth.token}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ tag_name: tagName, name, body, draft: false, prerelease: false }),
+  })
+
+  if (resp.ok) {
+    const data = await resp.json()
+    return { id: data.id, uploadUrl: data.upload_url }
+  }
+  return null
+}
+
+export async function uploadReleaseAsset(
+  uploadUrl: string,
+  fileName: string,
+  fileContent: ArrayBuffer,
+  contentType: string
+): Promise<string | null> {
+  const auth = getAuthState()
+  if (!auth?.token) return null
+
+  const url = uploadUrl.replace("{?name,label}", `?name=${encodeURIComponent(fileName)}`)
+
+  const resp = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${auth.token}`,
+      "Content-Type": contentType,
+      Accept: "application/vnd.github.v3+json",
+    },
+    body: fileContent,
+  })
+
+  if (resp.ok) {
+    const data = await resp.json()
+    return data.browser_download_url
+  }
+  return null
+}
+
+export async function uploadFileForItem(
+  file: File,
+  itemId: string,
+  auth: { username: string; token: string }
+): Promise<string | null> {
+  const reader = new FileReader()
+  return new Promise((resolve) => {
+    reader.onload = async () => {
+      const ArrayBuffer = reader.result as ArrayBuffer
+      const ext = file.name.split(".").pop() || ""
+      const filePath = `marketplace/assets/${itemId}/${file.name}`
+
+      const url = await uploadFileToRepo(
+        auth.username,
+        "zyraxon-ecosystem-data",
+        filePath,
+        ArrayBuffer,
+        `Upload asset: ${file.name} for ${itemId}`
+      )
+      resolve(url)
+    }
+    reader.onerror = () => resolve(null)
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+export async function publishItem(
+  item: Omit<EcosystemItem, "id" | "createdAt" | "updatedAt">,
+  files?: {
+    coverImage?: File
+    screenshots?: File[]
+    downloadFile?: File
+    logo?: File
+  }
+): Promise<EcosystemItem> {
   const auth = getAuthState()
   if (!auth.isAuthenticated) throw new Error("Not authenticated")
 
+  const itemId = `${item.type}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+
+  let coverImageUrl = item.coverImage || ""
+  let logoUrl = item.logo || ""
+  let downloadUrl = item.downloadUrl || ""
+  const screenshotUrls: string[] = item.screenshots || []
+
+  if (files?.coverImage) {
+    const url = await uploadFileForItem(files.coverImage, itemId, {
+      username: auth.user!.username,
+      token: auth.token!,
+    })
+    if (url) coverImageUrl = url
+  }
+
+  if (files?.logo) {
+    const url = await uploadFileForItem(files.logo, itemId, {
+      username: auth.user!.username,
+      token: auth.token!,
+    })
+    if (url) logoUrl = url
+  }
+
+  if (files?.downloadFile) {
+    const ArrayBuffer = await files.downloadFile.arrayBuffer()
+    const tagName = `${itemId}-v${item.version || "1.0.0"}`
+    const release = await createGitHubRelease(
+      auth.user!.username,
+      "zyraxon-ecosystem-data",
+      tagName,
+      `${item.name} v${item.version || "1.0.0"}`,
+      item.description
+    )
+    if (release) {
+      const assetUrl = await uploadReleaseAsset(
+        release.uploadUrl,
+        files.downloadFile.name,
+        ArrayBuffer,
+        files.downloadFile.type || "application/octet-stream"
+      )
+      if (assetUrl) downloadUrl = assetUrl
+    }
+  }
+
+  if (files?.screenshots) {
+    for (const ss of files.screenshots.slice(0, 5)) {
+      const url = await uploadFileForItem(ss, `${itemId}-ss-${Date.now()}`, {
+        username: auth.user!.username,
+        token: auth.token!,
+      })
+      if (url) screenshotUrls.push(url)
+    }
+  }
+
   const newItem: EcosystemItem = {
     ...item,
-    id: `${item.type}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    id: itemId,
     authorId: auth.user!.id,
+    coverImage: coverImageUrl || undefined,
+    logo: logoUrl || undefined,
+    downloadUrl: downloadUrl || undefined,
+    screenshots: screenshotUrls.length > 0 ? screenshotUrls : undefined,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   }
@@ -271,7 +557,7 @@ export async function unlikeItem(itemId: string): Promise<void> {
   if (!auth.isAuthenticated) throw new Error("Not authenticated")
 }
 
-export async function addComment(itemId: string, content: string, parentId?: string): Promise<Comment> {
+export async function addCommentLocal(itemId: string, content: string, parentId?: string): Promise<Comment> {
   const auth = getAuthState()
   if (!auth.isAuthenticated) throw new Error("Not authenticated")
   return {

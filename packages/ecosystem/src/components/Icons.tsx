@@ -409,6 +409,19 @@ export const IconLoader: Component<IconProps> = (props) => (
   </svg>
 )
 
+export const IconUpload: Component<IconProps> = (props) => (
+  <svg class={props.class} width={props.size || defaultSize} height={props.size || defaultSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" />
+    <path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3" />
+  </svg>
+)
+
+export const IconFile: Component<IconProps> = (props) => (
+  <svg class={props.class} width={props.size || defaultSize} height={props.size || defaultSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z" /><polyline points="13 2 13 9 20 9" />
+  </svg>
+)
+
 export const IconSparkles: Component<IconProps> = (props) => (
   <svg class={props.class} width={props.size || defaultSize} height={props.size || defaultSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 3l1.912 5.813a2 2 0 001.275 1.275L21 12l-5.813 1.912a2 2 0 00-1.275 1.275L12 21l-1.912-5.813a2 2 0 00-1.275-1.275L3 12l5.813-1.912a2 2 0 001.275-1.275L12 3z" />

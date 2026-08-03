@@ -9,7 +9,6 @@ export type Category =
   | "ai-models"
   | "tools"
   | "sdks"
-  | "types"
   | "pdfs"
   | "books"
   | "apis"
@@ -26,8 +25,10 @@ export type Category =
   | "fonts"
   | "code-snippets"
   | "devops"
+  | "website-games"
+  | "types"
 
-export type ItemType = "plugin" | "template" | "bot" | "model" | "tool" | "sdk" | "api" | "app" | "extension" | "cli" | "prompt" | "dataset" | "icon" | "ui-kit" | "landing-page" | "workflow" | "pdf" | "book" | "component" | "theme" | "startkit" | "desktop-app" | "iso" | "font" | "snippet" | "devops"
+export type ItemType = "plugin" | "template" | "bot" | "model" | "tool" | "sdk" | "api" | "app" | "extension" | "cli" | "prompt" | "dataset" | "icon" | "ui-kit" | "landing-page" | "workflow" | "pdf" | "book" | "component" | "theme" | "startkit" | "desktop-app" | "iso" | "font" | "snippet" | "devops" | "website-game"
 
 export interface SocialLinks {
   facebook?: string
@@ -71,6 +72,18 @@ export interface EcosystemItem {
   installCommand?: string
   fileSize?: string
   license?: string
+  remixedFrom?: string
+  remixCount?: number
+  gameConfig?: GameConfig
+}
+
+export interface GameConfig {
+  engine: "html5" | "phaser" | "pixi" | "threejs" | "unity-webgl" | "custom"
+  width?: number
+  height?: number
+  fullscreen?: boolean
+  controls?: Record<string, string>
+  assets?: string[]
 }
 
 export interface CategoryInfo {
@@ -119,6 +132,13 @@ export interface User {
   createdAt: string
 }
 
+export interface ChatAttachment {
+  url: string
+  name: string
+  type: string
+  size: number
+}
+
 export interface ChatMessage {
   id: string
   userId: string
@@ -128,6 +148,7 @@ export interface ChatMessage {
   timestamp: string
   likes: number
   likedBy: string[]
+  attachment?: ChatAttachment
 }
 
 export interface Comment {

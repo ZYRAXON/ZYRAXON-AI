@@ -39,6 +39,7 @@ const categoryFilters = [
   { id: "landing-pages", label: "Landing Pages" },
   { id: "devops", label: "DevOps" },
   { id: "code-snippets", label: "Snippets" },
+  { id: "website-games", label: "Website Games" },
 ]
 
 const typeColors: Record<string, string> = {
@@ -68,6 +69,7 @@ const typeColors: Record<string, string> = {
   icon: "bg-[#f778ba]/20 text-[#f778ba]",
   "ui-kit": "bg-[#d2a8ff]/20 text-[#d2a8ff]",
   prompt: "bg-[#8957e5]/20 text-[#bc8cff]",
+  "website-game": "bg-[#f0883e]/20 text-[#f0883e]",
 }
 
 function getActionInfo(item: EcosystemItem) {
@@ -282,10 +284,10 @@ export const Marketplace: Component<MarketplaceProps> = (props) => {
                       </Show>
                       <Show when={!item.authorAvatar}>
                         <div class="w-5 h-5 rounded-full bg-[#21262d] flex items-center justify-center text-[8px] text-[#8b949e]">
-                          {item.author.charAt(0)}
+                          {typeof item.author === "string" ? item.author.charAt(0) : ((item.author as any)?.name || "?").charAt(0)}
                         </div>
                       </Show>
-                      <span class="text-xs text-[#58a6ff]">{item.author}</span>
+                      <span class="text-xs text-[#58a6ff]">{typeof item.author === "string" ? item.author : (item.author as any)?.name || "Unknown"}</span>
                     </button>
 
                     <div class="flex items-center justify-between pt-3 border-t border-[#21262d]">

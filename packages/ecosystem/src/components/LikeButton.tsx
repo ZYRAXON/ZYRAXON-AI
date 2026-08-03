@@ -1,7 +1,6 @@
 import { type Component, createSignal, onMount } from "solid-js"
 import { getAuthState } from "../services/auth"
-import { getGitHubStorage } from "../services/github-data"
-import { getAIConnection } from "../services/ai-connection"
+import { getLikeCount, getUserLikes, toggleLike } from "../services/shared-data"
 import { IconHeart, IconHeartOutline } from "./Icons"
 
 interface LikeButtonProps {
@@ -18,39 +17,36 @@ export const LikeButton: Component<LikeButtonProps> = (props) => {
   const auth = getAuthState()
 
   onMount(async () => {
-    const storage = getGitHubStorage()
-    if (storage && auth.isAuthenticated) {
-      const liked = await storage.isLiked(props.itemId)
-      setIsLiked(liked)
-    }
+    if (!auth.isAuthenticated || !auth.user) return
+    try {
+      const count = await getLikeCount(props.itemId)
+      setLikeCount(count)
+      const userLikes = await getUserLikes(auth.user.id)
+      setIsLiked(userLikes.includes(props.itemId))
+    } catch {}
   })
 
   const handleLike = async () => {
-    if (!auth.isAuthenticated) return
+    if (!auth.isAuthenticated || !auth.user) return
 
     setIsAnimating(true)
     setTimeout(() => setIsAnimating(false), 300)
 
-    const storage = getGitHubStorage()
-    const ai = getAIConnection()
+    const prevLiked = isLiked()
+    const prevCount = likeCount()
+    const newLiked = !isLiked()
+    setIsLiked(newLiked)
+    setLikeCount(newLiked ? likeCount() + 1 : Math.max(0, likeCount() - 1))
 
-    if (isLiked()) {
-      if (storage) await storage.removeLike(props.itemId)
-      setIsLiked(false)
-      setLikeCount(likeCount() - 1)
-      if (ai.isConnected()) {
-        await ai.syncUserData({ type: "unlike", itemId: props.itemId })
-      }
-    } else {
-      if (storage) await storage.addLike(props.itemId)
-      setIsLiked(true)
-      setLikeCount(likeCount() + 1)
-      if (ai.isConnected()) {
-        await ai.syncUserData({ type: "like", itemId: props.itemId })
-      }
+    try {
+      const result = await toggleLike(props.itemId, auth.user.id)
+      setIsLiked(result.liked)
+      setLikeCount(result.count)
+      props.onLikeChange?.(result.liked, result.count)
+    } catch {
+      setIsLiked(prevLiked)
+      setLikeCount(prevCount)
     }
-
-    props.onLikeChange?.(isLiked(), likeCount())
   }
 
   return (
