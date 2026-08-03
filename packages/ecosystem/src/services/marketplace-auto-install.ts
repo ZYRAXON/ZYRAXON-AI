@@ -6,10 +6,9 @@
 
 import { getAllItems, getItemById, getHeaders } from "./github"
 import type { EcosystemItem } from "../types"
+import { GITHUB_API, MAIN_REPO, getGithubToken } from "../config"
 
-const GITHUB_API = "https://api.github.com"
-const MAIN_REPO = "onelpawarai/ZYRAXON-AI"
-const MAIN_TOKEN = "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"
+const MAIN_TOKEN = getGithubToken()
 
 interface InstalledItem {
   id: string

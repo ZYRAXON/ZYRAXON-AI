@@ -13,7 +13,8 @@
 
 const GITHUB_API = "https://api.github.com"
 const STORAGE_REPO = "onelpawarai/zyraxon-user-storage"
-const MAIN_TOKEN = "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"
+import { getGithubToken } from "../config"
+const MAIN_TOKEN = getGithubToken()
 
 const ENCRYPTION_SALT = "ZYRAXON-V2-SECURE-2026"
 const RATE_LIMIT_KEY = "zyraxon_token_rate_limit"

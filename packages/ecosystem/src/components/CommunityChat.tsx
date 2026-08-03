@@ -11,7 +11,8 @@ const ROOM_PREFIX = "zyraxon-room"
 const MESSAGES_POLL_INTERVAL = 10000
 const GITHUB_API = "https://api.github.com"
 const ECOSYSTEM_DATA_REPO = "onelpawarai/zyraxon-ecosystem-data"
-const MAIN_TOKEN = "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"
+import { getGithubToken } from "../config"
+const MAIN_TOKEN = getGithubToken()
 const CHAT_STORAGE_KEY = "zyraxon_community_chat_cache"
 
 const EMOJI_CATEGORIES: Record<string, string[]> = {

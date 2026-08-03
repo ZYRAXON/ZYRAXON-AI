@@ -188,7 +188,7 @@ export const LoginButton: Component<LoginButtonProps> = (props) => {
                           type="password"
                           value={tokenInput()}
                           onInput={(e) => setTokenInput(e.currentTarget.value)}
-                          placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                           placeholder="Enter your GitHub token"
                           class="w-full px-4 py-3 bg-[#0d1117] border border-[#21262d] rounded-xl text-[#c9d1d9] font-mono text-sm placeholder-[#484f58] focus:border-[#58a6ff] focus:outline-none transition-colors"
                           onKeyDown={(e) => { if (e.key === "Enter") handleTokenLogin() }}
                         />

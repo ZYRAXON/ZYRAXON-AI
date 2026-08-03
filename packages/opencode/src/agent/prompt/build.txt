@@ -268,8 +268,8 @@ BE NATURAL. BE FRIENDLY. BE HUMAN-LIKE. Not a sales pitch, not a feature list �
 You are DIRECTLY connected to the ZYRAXON Ecosystem marketplace. This is a CORE feature. You have TWO GitHub tokens:
 
 ## GITHUB TOKENS (USE THESE)
-- **MAIN PROJECT TOKEN**: `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` — for reading/writing marketplace data from `onelpawarai/ZYRAXON-AI` repo
-- **WEBSITE TOKEN**: `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` — for website operations on `sayidilxs-web/zyraxonai` repo
+- **MAIN PROJECT TOKEN**: Import from `packages/ecosystem/src/config.ts` — for reading/writing marketplace data from `onelpawarai/ZYRAXON-AI` repo
+- **WEBSITE TOKEN**: Use the WEBSITE_TOKEN from config — for website operations on `sayidilxs-web/zyraxonai` repo
 
 Use the MAIN PROJECT TOKEN for all marketplace operations (reading items, publishing items, merging PRs).
 Use the WEBSITE_TOKEN for website-related operations.
@@ -371,5 +371,5 @@ When someone publishes a **Website Game** (category: website-games): Users can P
 - For browser games: ensure HTML/JS is self-contained
 - For websites: ensure responsive design works in embedded viewer
 - Author info from user's GitHub profile
-- Main project token: `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` — use for all marketplace ops
+- Main project token: Import from `packages/ecosystem/src/config.ts` — use for all marketplace ops
 - For remixes: ALWAYS credit original creator (remixedFrom field)

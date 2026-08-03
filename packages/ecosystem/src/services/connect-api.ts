@@ -12,10 +12,7 @@
 import { getAllItems, getItemById, getHeaders } from "./github"
 import { retrieveUserToken, hasStoredToken } from "./token-storage"
 import type { EcosystemItem } from "../types"
-
-const GITHUB_API = "https://api.github.com"
-const MAIN_REPO = "onelpawarai/ZYRAXON-AI"
-const MAIN_TOKEN = "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"
+import { GITHUB_API, MAIN_REPO, getGithubToken } from "../config"
 
 interface APIResponse<T> {
   success: boolean

@@ -6,9 +6,9 @@
 
 import { getAllItems } from "./github"
 import type { EcosystemItem } from "../types"
+import { GITHUB_API, getGithubToken } from "../config"
 
-const GITHUB_API = "https://api.github.com"
-const MAIN_TOKEN = "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"
+const MAIN_TOKEN = getGithubToken()
 
 interface DownloadProgress {
   itemId: string

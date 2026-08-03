@@ -7,7 +7,8 @@
 const GITHUB_API = "https://api.github.com"
 const MAIN_REPO = "onelpawarai/ZYRAXON-AI"
 const DATA_PREFIX = "/marketplace/data"
-const READ_TOKEN = "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"
+import { getGithubToken } from "../config"
+const READ_TOKEN = getGithubToken()
 
 function getUserToken(): string | null {
   try {

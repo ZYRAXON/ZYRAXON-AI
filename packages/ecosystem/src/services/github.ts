@@ -1,9 +1,8 @@
 import type { EcosystemItem, CategoryInfo, EcosystemStats, RecentActivity, User, Comment } from "../types"
 import { getAuthState } from "./auth"
+import { GITHUB_API, MAIN_REPO, getGithubToken } from "../config"
 
-const GITHUB_REPO = "onelpawarai/ZYRAXON-AI"
-const GITHUB_API = "https://api.github.com"
-const MAIN_PROJECT_TOKEN = "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"
+const GITHUB_REPO = MAIN_REPO
 const STORAGE_PREFIX = "zyraxon_ecosystem"
 
 function getMainRepoToken(): string | null {
