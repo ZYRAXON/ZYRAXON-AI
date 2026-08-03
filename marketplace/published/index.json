@@ -1,43 +1,88 @@
-{
-    "id":  "novamart",
-    "name":  "NovaMart - Premium E-Commerce Website",
-    "description":  "A complete, modern e-commerce website template with 14 products, 4 categories, shopping cart with localStorage persistence, product detail modals, category filters, testimonials and newsletter. Fully responsive with a stunning indigo-violet gradient design — ready to launch your online store. Live demo available at https://sayidilxs-web.github.io/zyraxon-novamart/.",
-    "category":  "E-Commerce",
-    "type":  "Template",
-    "tags":  [
-                 "ecommerce",
-                 "store",
-                 "shopping",
-                 "website",
-                 "template",
-                 "responsive",
-                 "cart",
-                 "tailwind"
-             ],
-    "author":  {
-                   "name":  "sayidilxs-web",
-                   "avatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
-                   "url":  "https://github.com/sayidilxs-web"
-               },
-    "cover":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
-    "downloads":  0,
-    "rating":  0,
-    "publishedAt":  "2026-08-02T15:47:52.6129364Z",
-    "authorId":  "sayidilxs-web",
-    "authorAvatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
-    "coverImage":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
-    "version":  "1.0.0",
-    "likeCount":  0,
-    "commentCount":  0,
-    "reviews":  0,
-    "featured":  false,
-    "verified":  false,
-    "createdAt":  "2026-08-02T15:47:52.6129364Z",
-    "updatedAt":  "2026-08-02T15:47:52.6129364Z",
-    "license":  "MIT",
-    "platforms":  [
-                      "web"
-                  ],
-    "liveDemo":  "https://sayidilxs-web.github.io/zyraxon-novamart/",
-    "url":  "https://sayidilxs-web.github.io/zyraxon-novamart/"
-}
+[
+    {
+        "id":  "novamart",
+        "name":  "NovaMart - Premium E-Commerce Website",
+        "description":  "A complete, modern e-commerce website template with 14 products, 4 categories, shopping cart with localStorage persistence, product detail modals, category filters, testimonials and newsletter. Fully responsive with a stunning indigo-violet gradient design — ready to launch your online store. Live demo available at https://sayidilxs-web.github.io/zyraxon-novamart/.",
+        "category":  "E-Commerce",
+        "type":  "Template",
+        "tags":  [
+                     "ecommerce",
+                     "store",
+                     "shopping",
+                     "website",
+                     "template",
+                     "responsive",
+                     "cart",
+                     "tailwind"
+                 ],
+        "author":  {
+                       "name":  "sayidilxs-web",
+                       "avatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+                       "url":  "https://github.com/sayidilxs-web"
+                   },
+        "cover":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
+        "downloads":  0,
+        "rating":  0,
+        "publishedAt":  "2026-08-02T15:47:52.6129364Z",
+        "authorId":  "sayidilxs-web",
+        "authorAvatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+        "coverImage":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/novamart-cover.svg",
+        "version":  "1.0.0",
+        "likeCount":  0,
+        "commentCount":  0,
+        "reviews":  0,
+        "featured":  false,
+        "verified":  false,
+        "createdAt":  "2026-08-02T15:47:52.6129364Z",
+        "updatedAt":  "2026-08-02T15:47:52.6129364Z",
+        "license":  "MIT",
+        "platforms":  [
+                          "web"
+                      ],
+        "liveDemo":  "https://sayidilxs-web.github.io/zyraxon-novamart/",
+        "url":  "https://sayidilxs-web.github.io/zyraxon-novamart/"
+    },
+    {
+        "id":  "shadow-ninja",
+        "name":  "Shadow Ninja - 2D Action Platformer Game",
+        "description":  "An epic 2D ninja platformer inspired by Ninja Arashi. Battle through 8 levels across 3 acts (Bamboo Forest, Ancient Temple, Volcano Fortress), defeat 3 bosses (Shadow Samurai, Ninja Master, Shadow Demon Orochi), collect coins and power-ups. Progress, stars, best scores and best times are saved automatically in your browser — continue where you left off anytime. Full moveset: double jump, wall jump, dash, slide, sword slash and shuriken. Keyboard + touch controls. 100% free, no downloads, playable right inside the app.",
+        "category":  "website-games",
+        "type":  "website-game",
+        "tags":  [
+                     "ninja",
+                     "platformer",
+                     "2d",
+                     "action",
+                     "game",
+                     "arcade",
+                     "boss-fight",
+                     "html5"
+                 ],
+        "author":  {
+                       "name":  "sayidilxs-web",
+                       "avatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+                       "url":  "https://github.com/sayidilxs-web"
+                   },
+        "cover":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/shadow-ninja-cover.svg",
+        "downloads":  0,
+        "rating":  0,
+        "publishedAt":  "2026-08-03T10:43:13.0336185Z",
+        "authorId":  "sayidilxs-web",
+        "authorAvatar":  "https://avatars.githubusercontent.com/u/278779105?v=4",
+        "coverImage":  "https://raw.githubusercontent.com/sayidilxs-web/ZYRAXON-AI/main/marketplace/published/covers/shadow-ninja-cover.svg",
+        "version":  "1.0.0",
+        "likeCount":  0,
+        "commentCount":  0,
+        "reviews":  0,
+        "featured":  false,
+        "verified":  false,
+        "createdAt":  "2026-08-03T10:43:13.0336185Z",
+        "updatedAt":  "2026-08-03T10:43:13.0336185Z",
+        "license":  "MIT",
+        "platforms":  [
+                          "web"
+                      ],
+        "liveDemo":  "https://sayidilxs-web.github.io/zyraxon-shadow-ninja/",
+        "url":  "https://sayidilxs-web.github.io/zyraxon-shadow-ninja/"
+    }
+]

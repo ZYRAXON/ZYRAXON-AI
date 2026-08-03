@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SHADOW NINJA - 2D Action Platformer - ZYRAXON Ecosystem cover art (1200x630) -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Night sky gradient -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0B0B1E"/>
+      <stop offset="0.55" stop-color="#2A0A4A"/>
+      <stop offset="1" stop-color="#4A0E2E"/>
+    </linearGradient>
+
+    <!-- Soft red light cast from moon -->
+    <radialGradient id="moonLight" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FF3B4E" stop-opacity="0.3"/>
+      <stop offset="0.45" stop-color="#E22444" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#E22444" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Red moon surface -->
+    <radialGradient id="moonGrad" cx="0.38" cy="0.35" r="0.9">
+      <stop offset="0" stop-color="#FF6B7E"/>
+      <stop offset="0.35" stop-color="#F43B55"/>
+      <stop offset="0.7" stop-color="#B8183A"/>
+      <stop offset="1" stop-color="#6E0F2C"/>
+    </radialGradient>
+
+    <!-- Drifting fog -->
+    <linearGradient id="fogGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7A6BB8" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#8A7CC4" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#7A6BB8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Katana blade sheen -->
+    <linearGradient id="bladeGrad" x1="120" y1="-180" x2="120" y2="-170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4A4A62"/>
+      <stop offset="1" stop-color="#B8B8D0"/>
+    </linearGradient>
+
+    <!-- Slash motion trail -->
+    <linearGradient id="trailGrad" x1="260" y1="-262" x2="70" y2="-30" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF3B4E" stop-opacity="1"/>
+      <stop offset="0.5" stop-color="#FF5A76" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF8FA8" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Title chrome: white to cyan -->
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#BFF3FF"/>
+      <stop offset="1" stop-color="#38E1FF"/>
+    </linearGradient>
+
+    <!-- Badge fill -->
+    <linearGradient id="badgeGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4A2878"/>
+      <stop offset="1" stop-color="#1D1138"/>
+    </linearGradient>
+
+    <!-- Shuriken steel -->
+    <radialGradient id="shurikenFill" cx="0.35" cy="0.35" r="1">
+      <stop offset="0" stop-color="#7A6AA0"/>
+      <stop offset="1" stop-color="#221240"/>
+    </radialGradient>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="0.5" cy="0.44" r="0.75">
+      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.78" stop-color="#000000" stop-opacity="0.18"/>
+      <stop offset="0.92" stop-color="#000000" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+
+    <!-- Cinematic top/bottom shading -->
+    <linearGradient id="topShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000000" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bottomShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.42"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="moonGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="edgeGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="twinkle" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+    <filter id="blur2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2"/></filter>
+    <filter id="blur4" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4"/></filter>
+    <filter id="blur6" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+    <filter id="blur8" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur10" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="blur12" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="blur14" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="14"/></filter>
+    <filter id="blur20" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="20"/></filter>
+
+    <!-- Title: black drop + red accent glow -->
+    <filter id="titleGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.9" result="s1"/>
+      <feDropShadow in="s1" dx="0" dy="0" stdDeviation="8" flood-color="#FF2D55" flood-opacity="0.85" result="s2"/>
+      <feDropShadow in="s2" dx="0" dy="0" stdDeviation="22" flood-color="#C4123A" flood-opacity="0.6"/>
+    </filter>
+    <filter id="subShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Reusable decorations -->
+    <path id="petal" d="M0,0 C2.5,-5 6.5,-5 9,0 C6.5,5 2.5,5 0,0 Z"/>
+    <path id="spark" d="M0,-7 L1.8,-1.8 L7,0 L1.8,1.8 L0,7 L-1.8,1.8 L-7,0 L-1.8,-1.8 Z"/>
+    <g id="shurikenFull">
+      <path d="M0,-16 L4,-4 L16,0 L4,4 L0,16 L-4,4 L-16,0 L-4,-4 Z"/>
+      <circle r="2.4" fill="#140A26" stroke="none"/>
+    </g>
+  </defs>
+
+  <!-- ================= BACKGROUND ================= -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <circle cx="890" cy="140" r="230" fill="url(#moonLight)"/>
+
+  <!-- Star field -->
+  <g fill="#DCE6FF">
+    <circle cx="60" cy="90" r="1.2" opacity="0.8"/><circle cx="120" cy="50" r="0.8" opacity="0.5"/>
+    <circle cx="180" cy="120" r="1.5" opacity="0.9" fill="#FFE0C8"/><circle cx="240" cy="70" r="0.7" opacity="0.4"/>
+    <circle cx="300" cy="140" r="1" opacity="0.7"/><circle cx="370" cy="60" r="0.9" opacity="0.6"/>
+    <circle cx="420" cy="110" r="1.3" opacity="0.8"/><circle cx="470" cy="40" r="0.7" opacity="0.4" fill="#FFE0C8"/>
+    <circle cx="520" cy="130" r="1.1" opacity="0.7"/><circle cx="580" cy="80" r="1.4" opacity="0.9"/>
+    <circle cx="640" cy="150" r="0.8" opacity="0.5"/><circle cx="700" cy="60" r="1" opacity="0.7"/>
+    <circle cx="760" cy="120" r="0.9" opacity="0.6"/><circle cx="830" cy="50" r="1.2" opacity="0.8"/>
+    <circle cx="980" cy="70" r="1" opacity="0.7"/><circle cx="1050" cy="120" r="1.4" opacity="0.9"/>
+    <circle cx="1100" cy="60" r="0.8" opacity="0.5"/><circle cx="1150" cy="140" r="1.2" opacity="0.8" fill="#FFE0C8"/>
+    <circle cx="90" cy="200" r="1" opacity="0.6"/><circle cx="160" cy="260" r="1.3" opacity="0.8"/>
+    <circle cx="230" cy="180" r="0.8" opacity="0.5"/><circle cx="320" cy="240" r="1.1" opacity="0.7"/>
+    <circle cx="400" cy="210" r="0.9" opacity="0.6"/><circle cx="490" cy="260" r="1.2" opacity="0.8"/>
+    <circle cx="560" cy="190" r="0.8" opacity="0.5"/><circle cx="630" cy="240" r="1" opacity="0.7"/>
+    <circle cx="710" cy="190" r="0.9" opacity="0.6"/><circle cx="780" cy="240" r="1.3" opacity="0.8"/>
+    <circle cx="860" cy="210" r="0.8" opacity="0.5"/><circle cx="940" cy="260" r="1.1" opacity="0.7" fill="#FFE0C8"/>
+    <circle cx="1030" cy="200" r="0.9" opacity="0.6"/><circle cx="1120" cy="250" r="1.2" opacity="0.8"/>
+    <circle cx="70" cy="340" r="0.8" opacity="0.5"/><circle cx="150" cy="390" r="1.1" opacity="0.7"/>
+    <circle cx="260" cy="350" r="0.9" opacity="0.6"/><circle cx="360" cy="400" r="1.3" opacity="0.8"/>
+    <circle cx="480" cy="380" r="0.8" opacity="0.5"/><circle cx="590" cy="420" r="1" opacity="0.7"/>
+    <circle cx="680" cy="370" r="0.9" opacity="0.6"/><circle cx="770" cy="410" r="1.2" opacity="0.8"/>
+    <circle cx="870" cy="380" r="0.8" opacity="0.5"/><circle cx="960" cy="420" r="1.1" opacity="0.7"/>
+    <circle cx="1080" cy="370" r="0.9" opacity="0.6"/><circle cx="1150" cy="400" r="1.3" opacity="0.8"/>
+    <circle cx="110" cy="150" r="0.7" opacity="0.4"/><circle cx="540" cy="300" r="0.8" opacity="0.5"/>
+    <circle cx="900" cy="300" r="0.7" opacity="0.4"/><circle cx="1010" cy="320" r="0.8" opacity="0.5"/>
+  </g>
+  <!-- Twinkle stars -->
+  <g fill="#FFFFFF" filter="url(#twinkle)" opacity="0.9">
+    <circle cx="140" cy="150" r="2.2"/><circle cx="620" cy="95" r="2.4"/>
+    <circle cx="1035" cy="190" r="2"/><circle cx="395" cy="330" r="1.9"/>
+  </g>
+
+  <!-- ================= RED MOON (partial eclipse) ================= -->
+  <circle cx="890" cy="140" r="115" fill="#FF2D55" opacity="0.55" filter="url(#moonGlow)"/>
+  <circle cx="890" cy="140" r="100" fill="url(#moonGrad)"/>
+  <circle cx="858" cy="118" r="96" fill="#120A26" opacity="0.62" filter="url(#blur10)"/>
+  <circle cx="890" cy="140" r="118" fill="none" stroke="#FF4D6D" stroke-width="2" opacity="0.15" filter="url(#blur8)"/>
+
+  <!-- ================= MOUNTAIN SILHOUETTES + PAGODA ================= -->
+  <path d="M0,470 L90,380 L160,430 L260,340 L340,420 L430,360 L520,440 L600,400 L700,450 L800,380 L900,430 L1000,390 L1100,440 L1200,410 L1200,630 L0,630 Z" fill="#221450"/>
+  <g fill="#120A2E">
+    <line x1="800" y1="314" x2="800" y2="324" stroke="#120A2E" stroke-width="3"/>
+    <path d="M792,336 L800,324 L808,336 Z"/>
+    <rect x="796.5" y="336" width="7" height="9"/>
+    <path d="M786,348 L800,334 L814,348 Z"/>
+    <rect x="792" y="348" width="16" height="12"/>
+    <path d="M776,364 L800,346 L824,364 Z"/>
+    <rect x="784" y="364" width="32" height="16"/>
+    <circle cx="800" cy="371" r="2.5" fill="#FFB35C" filter="url(#edgeGlow)"/>
+  </g>
+  <rect x="-40" y="300" width="1280" height="50" rx="25" fill="url(#fogGrad)" opacity="0.25" filter="url(#blur14)"/>
+  <path d="M0,500 L80,430 L160,470 L250,410 L360,460 L470,420 L580,480 L680,440 L790,480 L900,430 L1010,470 L1110,450 L1200,480 L1200,630 L0,630 Z" fill="#171040"/>
+  <path d="M0,520 L70,450 L150,500 L240,430 L330,490 L420,460 L540,520 L640,470 L740,510 L850,470 L950,520 L1050,490 L1200,530 L1200,630 L0,630 Z" fill="#0C0720"/>
+  <rect x="-60" y="430" width="1320" height="60" rx="30" fill="url(#fogGrad)" opacity="0.4" filter="url(#blur12)"/>
+
+  <!-- ================= SLASH MOTION TRAIL (behind ninja) ================= -->
+  <g transform="translate(280,430)">
+    <path d="M260,-262 C238,-160 160,-70 70,-30" stroke="url(#trailGrad)" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.4" filter="url(#blur6)"/>
+    <path d="M260,-262 C238,-160 160,-70 70,-30" stroke="#FF5A76" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.6" filter="url(#blur2)"/>
+    <path d="M260,-262 C238,-160 160,-70 70,-30" stroke="#FFD9E0" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.95"/>
+    <g fill="#FFA9BC" opacity="0.8">
+      <circle cx="230" cy="-190" r="2.5"/><circle cx="185" cy="-130" r="2"/>
+      <circle cx="130" cy="-85" r="1.6"/><circle cx="95" cy="-55" r="1.3"/>
+    </g>
+  </g>
+
+  <!-- ================= NINJA FIGURE (mid-slash pose) ================= -->
+  <g transform="translate(280,430)">
+    <!-- Legs -->
+    <path d="M-12,-18 C-38,8 -66,42 -80,78 L-52,66 C-38,34 -18,10 -4,-4 Z" fill="#140B28"/>
+    <path d="M14,-18 C38,2 60,28 78,60 L50,72 C34,42 16,16 6,-4 Z" fill="#1A1030"/>
+    <!-- Torso -->
+    <path d="M-16,-108 C-36,-84 -34,-44 -18,-14 L22,-14 C38,-46 34,-86 16,-110 Z" fill="#1A1030"/>
+    <!-- Back arm -->
+    <path d="M-14,-102 C-42,-100 -66,-86 -84,-62 C-68,-74 -44,-84 -16,-88 Z" fill="#140B28"/>
+    <!-- Head -->
+    <circle cx="14" cy="-138" r="23" fill="#1A1030"/>
+    <!-- Hachimaki headband + streaming tails -->
+    <path d="M-12,-146 Q14,-160 38,-146 L36,-136 Q14,-150 -12,-136 Z" fill="#D1122E"/>
+    <circle cx="-12" cy="-141" r="4" fill="#C20F2A"/>
+    <path d="M-12,-141 C-50,-126 -88,-134 -132,-116 C-88,-108 -50,-112 -14,-130 Z" fill="#C20F2A"/>
+    <path d="M-12,-141 C-44,-114 -78,-108 -114,-82 C-78,-96 -46,-98 -16,-124 Z" fill="#9E0B20"/>
+    <!-- Front arm (raised to katana) -->
+    <path d="M18,-104 C44,-114 72,-130 93,-158 C70,-120 44,-102 14,-94 Z" fill="#1A1030"/>
+    <!-- Hands -->
+    <circle cx="93" cy="-158" r="7" fill="#1A1030"/>
+    <circle cx="116" cy="-177" r="7" fill="#1A1030"/>
+    <!-- Katana -->
+    <line x1="95" y1="-160" x2="118" y2="-180" stroke="#3A2450" stroke-width="7" stroke-linecap="round"/>
+    <line x1="99" y1="-158.5" x2="103.5" y2="-167.5" stroke="#C9A227" stroke-width="1.5" opacity="0.8"/>
+    <line x1="108" y1="-169" x2="112.5" y2="-177.5" stroke="#C9A227" stroke-width="1.5" opacity="0.8"/>
+    <ellipse cx="118" cy="-180" rx="8" ry="3.5" transform="rotate(60 118 -180)" fill="#D4A93E"/>
+    <polygon points="116.2,-176.9 119.8,-183.1 265,-265" fill="url(#bladeGrad)"/>
+    <path d="M119.8,-183.1 L265,-265" stroke="#5AC8FF" stroke-width="5" opacity="0.3" fill="none" filter="url(#blur4)"/>
+    <path d="M119.8,-183.1 L265,-265" stroke="#EAF6FF" stroke-width="2" opacity="0.95" fill="none" filter="url(#edgeGlow)"/>
+    <!-- Purple rim light accents -->
+    <path d="M16,-110 C34,-86 38,-46 22,-14" stroke="#8B5CF6" stroke-width="2" fill="none" opacity="0.55"/>
+    <path d="M14,-94 C44,-102 70,-120 93,-158" stroke="#8B5CF6" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M14,-18 C38,2 60,28 78,60" stroke="#8B5CF6" stroke-width="2" fill="none" opacity="0.45"/>
+    <path d="M26,-124 A23 23 0 0 1 36,-140" stroke="#8B5CF6" stroke-width="2" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- Foreground fog -->
+  <rect x="240" y="505" width="760" height="46" rx="23" fill="url(#fogGrad)" opacity="0.3" filter="url(#blur10)"/>
+
+  <!-- ================= CINEMATIC SHADING ================= -->
+  <rect width="1200" height="630" fill="url(#vignette)"/>
+  <rect width="1200" height="80" fill="url(#topShade)"/>
+  <rect y="560" width="1200" height="70" fill="url(#bottomShade)"/>
+
+  <!-- ================= CHERRY BLOSSOM PETALS ================= -->
+  <g>
+    <use href="#petal" transform="translate(395,175) rotate(35) scale(1.4)" fill="#FFB7C5" opacity="0.85"/>
+    <use href="#petal" transform="translate(445,215) rotate(-10) scale(1)" fill="#FF8FA8" opacity="0.8"/>
+    <use href="#petal" transform="translate(520,170) rotate(60) scale(0.9)" fill="#FFC9D5" opacity="0.85"/>
+    <use href="#petal" transform="translate(580,230) rotate(-25) scale(1.2)" fill="#FF7BA3" opacity="0.75"/>
+    <use href="#petal" transform="translate(655,185) rotate(15) scale(0.8)" fill="#FFB7C5" opacity="0.85"/>
+    <use href="#petal" transform="translate(740,240) rotate(-45) scale(1.1)" fill="#FF8FA8" opacity="0.8"/>
+    <use href="#petal" transform="translate(170,310) rotate(20) scale(1)" fill="#FFC9D5" opacity="0.85"/>
+    <use href="#petal" transform="translate(250,360) rotate(-30) scale(0.8)" fill="#FF7BA3" opacity="0.75"/>
+    <use href="#petal" transform="translate(330,430) rotate(40) scale(1.3)" fill="#FFB7C5" opacity="0.8"/>
+    <use href="#petal" transform="translate(460,480) rotate(-15) scale(0.9)" fill="#FF8FA8" opacity="0.85"/>
+    <use href="#petal" transform="translate(560,520) rotate(55) scale(1.1)" fill="#FFC9D5" opacity="0.75"/>
+    <use href="#petal" transform="translate(700,470) rotate(-40) scale(0.8)" fill="#FFB7C5" opacity="0.85"/>
+    <use href="#petal" transform="translate(840,430) rotate(10) scale(1.2)" fill="#FF7BA3" opacity="0.8"/>
+    <use href="#petal" transform="translate(960,490) rotate(-55) scale(1)" fill="#FF8FA8" opacity="0.85"/>
+    <use href="#petal" transform="translate(1080,440) rotate(25) scale(0.9)" fill="#FFC9D5" opacity="0.8"/>
+    <use href="#petal" transform="translate(150,220) rotate(-20) scale(0.8)" fill="#FFB7C5" opacity="0.85"/>
+  </g>
+
+  <!-- ================= SHURIKEN + SPARKLE GLINTS ================= -->
+  <g fill="url(#shurikenFill)" stroke="#7FE7FF" stroke-opacity="0.6" stroke-width="1.1" filter="url(#edgeGlow)">
+    <use href="#shurikenFull" transform="translate(985,305) rotate(15) scale(1.5)"/>
+    <use href="#shurikenFull" transform="translate(150,505) rotate(30) scale(1.1)"/>
+    <use href="#shurikenFull" transform="translate(175,120) rotate(45) scale(1)"/>
+    <use href="#shurikenFull" transform="translate(720,80) rotate(-20) scale(1.2)"/>
+  </g>
+  <g fill="#FFFFFF" opacity="0.95" filter="url(#edgeGlow)">
+    <use href="#spark" transform="translate(1010,290) rotate(20) scale(0.9)"/>
+    <use href="#spark" transform="translate(965,322) rotate(-15) scale(0.6)"/>
+    <use href="#spark" transform="translate(185,108) rotate(45) scale(0.8)"/>
+    <use href="#spark" transform="translate(705,64) rotate(-30) scale(0.7)"/>
+    <use href="#spark" transform="translate(135,492) rotate(10) scale(0.6)"/>
+    <use href="#spark" transform="translate(262,230) rotate(40) scale(0.5)"/>
+  </g>
+
+  <!-- Readability panel behind title -->
+  <ellipse cx="650" cy="258" rx="430" ry="72" fill="#07051A" opacity="0.4" filter="url(#blur20)"/>
+
+  <!-- ================= BADGE (top-left) ================= -->
+  <g>
+    <rect x="30" y="26" width="232" height="36" rx="18" fill="url(#badgeGrad)" stroke="#FF3B4E" stroke-opacity="0.5" stroke-width="1.2"/>
+    <circle cx="46" cy="44" r="4" fill="#FF3B4E" filter="url(#edgeGlow)"/>
+    <text x="140" y="49" text-anchor="middle" font-family="'Arial Black','Arial',sans-serif" font-size="13" font-weight="700" letter-spacing="2.5" fill="#F2ECFF">ZYRAXON ECOSYSTEM</text>
+  </g>
+
+  <!-- ================= TITLE ================= -->
+  <text x="650" y="255" text-anchor="middle" font-family="'Arial Black','Impact','Arial',sans-serif" font-weight="900" font-style="italic" font-size="96" letter-spacing="6" fill="url(#titleGrad)" filter="url(#titleGlow)" transform="scale(1.02,1)">SHADOW NINJA</text>
+
+  <!-- Underline flourish -->
+  <g>
+    <path d="M600,322 L695,322" stroke="url(#titleGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.65"/>
+    <rect x="643" y="317" width="10" height="10" transform="rotate(45 648 322)" fill="#FF3B4E" opacity="0.9"/>
+  </g>
+
+  <!-- ================= SUBTITLE ================= -->
+  <text x="650" y="306" text-anchor="middle" font-family="'Arial Black','Arial',sans-serif" font-weight="700" font-size="24" letter-spacing="9" fill="#FFFFFF" fill-opacity="0.72" filter="url(#subShadow)">2D ACTION PLATFORMER</text>
+
+  <!-- ================= FOOTER TEXT (bottom-right) ================= -->
+  <text x="1170" y="602" text-anchor="end" font-family="'Segoe UI','Arial',sans-serif" font-size="15" font-weight="600" letter-spacing="2" fill="#FFFFFF" fill-opacity="0.7" filter="url(#subShadow)">8 Levels • 3 Bosses • Save Progress</text>
+</svg>
