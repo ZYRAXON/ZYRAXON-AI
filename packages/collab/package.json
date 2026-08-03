@@ -1,6 +1,6 @@
 {
   "name": "@opencode-ai/collab",
-  "version": "0.0.1",
+  "version": "19.0.0",
   "private": true,
   "type": "module",
   "exports": {

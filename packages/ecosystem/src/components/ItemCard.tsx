@@ -2,7 +2,7 @@ import { type Component, createSignal, For, Show } from "solid-js"
 import type { EcosystemItem } from "../types"
 import { IconStar, IconHeart, IconHeartOutline, IconDownload, IconCheck, IconShare, IconMessageSquare, IconExternalLink, IconCopy, IconCode } from "./Icons"
 import { getAuthState } from "../services/auth"
-import { getGitHubStorage } from "../services/github-data"
+import { getLikeCount, getUserLikes, toggleLike } from "../services/shared-data"
 
 interface ItemCardProps {
   item: EcosystemItem
@@ -95,17 +95,12 @@ export const ItemCard: Component<ItemCardProps> = (props) => {
 
   const handleLike = async (e: MouseEvent) => {
     e.stopPropagation()
-    if (!auth.isAuthenticated) return
-    const storage = getGitHubStorage()
-    if (isLiked()) {
-      if (storage) await storage.removeLike(props.item.id)
-      setIsLiked(false)
-      setLikeCount(likeCount() - 1)
-    } else {
-      if (storage) await storage.addLike(props.item.id)
-      setIsLiked(true)
-      setLikeCount(likeCount() + 1)
-    }
+    if (!auth.isAuthenticated || !auth.user) return
+    try {
+      const result = await toggleLike(props.item.id, auth.user.id)
+      setIsLiked(result.liked)
+      setLikeCount(result.count)
+    } catch {}
   }
 
   const handleCopyLink = async (e: MouseEvent) => {

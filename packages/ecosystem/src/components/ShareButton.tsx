@@ -18,7 +18,16 @@ export const ShareButton: Component<ShareButtonProps> = (props) => {
   const itemUrl = () => props.itemUrl || `https://zyraxonai.lovable.app/ecosystem/item/${props.itemId}`
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(itemUrl())
+    try {
+      await navigator.clipboard.writeText(itemUrl())
+    } catch {
+      const ta = document.createElement("textarea")
+      ta.value = itemUrl()
+      document.body.appendChild(ta)
+      ta.select()
+      document.execCommand("copy")
+      document.body.removeChild(ta)
+    }
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }

@@ -236,11 +236,20 @@ This includes:
 When publishing a website game:
 1. Set \`category: "website-games"\`
 2. Set \`type: "website-game"\`
-3. Provide \`liveDemo\` URL (GitHub Pages or hosted)
+3. Provide \`liveDemo\` URL (GitHub Pages or hosted) — THIS IS REQUIRED for game/template/landing-page items
 4. Optionally provide \`gameConfig\` with engine, dimensions, controls
 5. Upload HTML/JS/CSS files or ZIP bundle
 
 The game runs inside ZYRAXON's embedded viewer — no external browser needed.
+
+### CRITICAL: LIVE URL RULE
+
+When publishing ANY website-related item (website-templates, landing-pages, website-games):
+- ALWAYS set the \`liveDemo\` field with the actual working URL
+- The live URL is what powers the "Play Game" / "View Live" button in the marketplace
+- Without liveDemo, the item shows but users can't interact with it
+- After deploying a website, immediately set liveDemo to the deployed URL
+- The marketplace viewer embeds this URL in an iframe for instant preview
 `
 
 export const CATEGORY_FILE_GUIDE: Record<string, { accept: string; action: string; description: string }> = {

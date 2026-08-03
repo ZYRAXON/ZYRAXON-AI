@@ -95,6 +95,7 @@ export type ElectronAPI = {
   storeKeys: (name: string) => Promise<string[]>
   storeLength: (name: string) => Promise<number>
   saveEcosystemAuth: (data: { token: string; user: any }) => Promise<boolean>
+  getGithubToken: () => Promise<string | null>
 
   getWindowCount: () => Promise<number>
   getWindowID: () => Promise<string>

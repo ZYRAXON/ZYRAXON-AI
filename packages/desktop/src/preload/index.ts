@@ -75,6 +75,7 @@ const api: ElectronAPI = {
   storeKeys: (name) => ipcRenderer.invoke("store-keys", name),
   storeLength: (name) => ipcRenderer.invoke("store-length", name),
   saveEcosystemAuth: (data) => ipcRenderer.invoke("save-ecosystem-auth", data),
+  getGithubToken: () => ipcRenderer.invoke("get-github-token"),
 
   getWindowCount: () => ipcRenderer.invoke("get-window-count"),
   getWindowID: () => ipcRenderer.invoke("get-window-id"),

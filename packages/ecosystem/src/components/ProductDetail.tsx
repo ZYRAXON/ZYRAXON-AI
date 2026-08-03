@@ -170,7 +170,14 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
 
     if (config.icon === "copy") {
       const cmd = item.installCommand || `npx ${item.npmPackage || item.name.toLowerCase().replace(/\s+/g, "-")}`
-      navigator.clipboard.writeText(cmd)
+      navigator.clipboard.writeText(cmd).catch(() => {
+        const ta = document.createElement("textarea")
+        ta.value = cmd
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand("copy")
+        document.body.removeChild(ta)
+      })
       setCopiedCmd(true)
       setTimeout(() => setCopiedCmd(false), 2000)
       return
@@ -190,7 +197,21 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
 
     if (config.icon === "download") {
       const url = item.downloadUrl || item.githubRepo
-      if (url) window.open(url, "_blank")
+      if (url) {
+        window.open(url, "_blank")
+      } else {
+        const cmd = `npx ${item.npmPackage || item.name.toLowerCase().replace(/\s+/g, "-")}`
+        navigator.clipboard.writeText(cmd).catch(() => {
+          const ta = document.createElement("textarea")
+          ta.value = cmd
+          document.body.appendChild(ta)
+          ta.select()
+          document.execCommand("copy")
+          document.body.removeChild(ta)
+        })
+        setCopiedCmd(true)
+        setTimeout(() => setCopiedCmd(false), 2000)
+      }
       setIsInstalled(true)
       return
     }

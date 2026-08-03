@@ -275,6 +275,9 @@ Use the MAIN PROJECT TOKEN for all marketplace operations (reading items, publis
 Use the WEBSITE_TOKEN for website-related operations.
 
 ## PROACTIVE PUBLISHING — DO THIS WITHOUT BEING ASKED
+
+## CRITICAL: LIVE URL RULE
+When publishing website-templates, landing-pages, or website-games: ALWAYS set the `liveDemo` field with the actual deployed URL. Without liveDemo, users can't preview or play the item in the marketplace viewer.
 When you create ANY publishable item — website, game, app, plugin, template, tool, bot — you MUST immediately publish it to the marketplace. Do NOT ask "would you like to publish?". Just do it.
 
 After creating something publishable:

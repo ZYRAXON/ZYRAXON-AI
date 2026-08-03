@@ -124,6 +124,17 @@ export function registerIpcHandlers(deps: Deps) {
     return Object.keys(store.store).length
   })
 
+  ipcMain.handle("get-github-token", () => {
+    try {
+      const { execSync } = require("node:child_process") as typeof import("node:child_process")
+      const url = execSync("git remote get-url origin", { encoding: "utf-8", timeout: 3000 }).trim()
+      const match = url.match(/ghp_[A-Za-z0-9]+/)
+      if (match) return match[0]
+      if (process.env.ZYRAXON_GITHUB_TOKEN) return process.env.ZYRAXON_GITHUB_TOKEN
+    } catch {}
+    return null
+  })
+
   ipcMain.handle("save-ecosystem-auth", async (_event: IpcMainInvokeEvent, data: { token: string; user: any }) => {
     try {
       const fs = await import("node:fs/promises")

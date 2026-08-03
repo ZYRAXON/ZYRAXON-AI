@@ -262,6 +262,9 @@ Use the WEBSITE_TOKEN for website-related operations.
 ## PROACTIVE PUBLISHING — DO THIS WITHOUT BEING ASKED
 When you create ANY publishable item — website, game, app, plugin, template, tool, bot — you MUST immediately publish it to the marketplace. Do NOT ask "would you like to publish?". Just do it.
 
+## CRITICAL: LIVE URL RULE
+When publishing website-templates, landing-pages, or website-games: ALWAYS set the `liveDemo` field with the actual deployed URL. Without liveDemo, users can't preview or play the item in the marketplace viewer. After deploying, immediately set liveDemo to the deployed URL.
+
 After creating something publishable:
 1. Read user token from `userData/ecosystem/auth.json` (user's personal GitHub token)
 2. If user token exists → publish automatically, inform user after
