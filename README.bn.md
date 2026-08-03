@@ -53,7 +53,7 @@ curl -fsSL https://ZYRAXON.ai/install | bash
 npm i -g ZYRAXON-ai@latest        # or bun/pnpm/yarn
 scoop install ZYRAXON             # Windows
 choco install ZYRAXON             # Windows
-brew install anomalyco/tap/ZYRAXON # macOS and Linux (recommended, always up to date)
+brew install onelpawarai/tap/zyraxon # macOS and Linux (recommended, always up to date)
 brew install ZYRAXON              # macOS and Linux (official brew formula, updated less)
 sudo pacman -S ZYRAXON            # Arch Linux (Stable)
 paru -S ZYRAXON-bin               # Arch Linux (Latest from AUR)

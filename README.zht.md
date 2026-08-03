@@ -53,7 +53,7 @@ curl -fsSL https://ZYRAXON.ai/install | bash
 npm i -g ZYRAXON-ai@latest        # 也可使用 bun/pnpm/yarn
 scoop install ZYRAXON             # Windows
 choco install ZYRAXON             # Windows
-brew install anomalyco/tap/ZYRAXON # macOS 與 Linux（推薦，始終保持最新）
+brew install onelpawarai/tap/zyraxon # macOS 與 Linux（推薦，始終保持最新）
 brew install ZYRAXON              # macOS 與 Linux（官方 brew formula，更新頻率較低）
 sudo pacman -S ZYRAXON            # Arch Linux (Stable)
 paru -S ZYRAXON-bin               # Arch Linux (Latest from AUR)
