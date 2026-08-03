@@ -1,7 +1,7 @@
 {
     "id":  "novamart",
     "name":  "NovaMart - Premium E-Commerce Website",
-    "description":  "A complete, modern e-commerce website template with 14 products, 4 categories, shopping cart with localStorage persistence, product detail modals, category filters, testimonials and newsletter. Fully responsive with a stunning indigo-violet gradient design — ready to launch your online store.",
+    "description":  "A complete, modern e-commerce website template with 14 products, 4 categories, shopping cart with localStorage persistence, product detail modals, category filters, testimonials and newsletter. Fully responsive with a stunning indigo-violet gradient design — ready to launch your online store. Live demo available at https://sayidilxs-web.github.io/zyraxon-novamart/.",
     "category":  "E-Commerce",
     "type":  "Template",
     "tags":  [
@@ -37,5 +37,7 @@
     "license":  "MIT",
     "platforms":  [
                       "web"
-                  ]
+                  ],
+    "liveDemo":  "https://sayidilxs-web.github.io/zyraxon-novamart/",
+    "url":  "https://sayidilxs-web.github.io/zyraxon-novamart/"
 }
