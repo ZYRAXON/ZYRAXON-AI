@@ -4,6 +4,7 @@ about: Report a bug to help us improve ZYRAXON-AI
 title: "[BUG] "
 labels: bug
 assignees: ''
+
 ---
 
 ## Bug Description
