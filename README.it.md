@@ -54,7 +54,7 @@ npm i -g ZYRAXON-ai@latest        # oppure bun/pnpm/yarn
 scoop install ZYRAXON             # Windows
 choco install ZYRAXON             # Windows
 brew install onelpawarai/tap/zyraxon # macOS e Linux (consigliato, sempre aggiornato)
-brew install ZYRAXON              # macOS e Linux (formula brew ufficiale, aggiornata meno spesso)
+brew install zyraxon              # macOS e Linux (formula brew ufficiale)
 sudo pacman -S ZYRAXON            # Arch Linux (Stable)
 paru -S ZYRAXON-bin               # Arch Linux (Latest from AUR)
 mise use -g ZYRAXON               # Qualsiasi OS
@@ -76,8 +76,10 @@ ZYRAXON è disponibile anche come applicazione desktop. Puoi scaricarla direttam
 | Linux                 | `.deb`, `.rpm`, oppure AppImage    |
 
 ```bash
+# Linux (Homebrew)
+brew install onelpawarai/tap/zyraxon
 # macOS (Homebrew)
-brew install --cask ZYRAXON-desktop
+brew install onelpawarai/tap/zyraxon
 # Windows (Scoop)
 scoop bucket add extras; scoop install extras/ZYRAXON-desktop
 ```
