@@ -96,6 +96,13 @@ export type ElectronAPI = {
   storeLength: (name: string) => Promise<number>
   saveEcosystemAuth: (data: { token: string; user: any }) => Promise<boolean>
   getGithubToken: () => Promise<string | null>
+  // ZYRAXON Extension Manager — installs directly, no VS Code dependency
+  installVsix: (vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => Promise<{ success: boolean; error?: string; extensionId?: string; extension?: any }>
+  getInstalledExtensions: () => Promise<any[]>
+  uninstallExtension: (extensionId: string) => Promise<{ success: boolean; error?: string }>
+  toggleExtensionStatus: (extensionId: string) => Promise<{ success: boolean; status?: string; error?: string }>
+  isExtensionInstalled: (extensionId: string) => Promise<boolean>
+  queryVscodeMarketplace: (body: unknown) => Promise<any>
 
   getWindowCount: () => Promise<number>
   getWindowID: () => Promise<string>

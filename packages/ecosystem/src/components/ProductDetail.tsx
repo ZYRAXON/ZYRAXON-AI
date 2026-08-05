@@ -4,6 +4,8 @@ import { LikeButton } from "./LikeButton"
 import { ShareButton } from "./ShareButton"
 import { CommentSection } from "./CommentSection"
 import { getAuthState } from "../services/auth"
+import { incrementDownload } from "../services/shared-data"
+import { installItemInApp } from "../services/download"
 import {
   IconX, IconExternalLink, IconDownload, IconStar, IconCalendar,
   IconCode, IconChevronLeft, IconChevronRight, IconMaximize,
@@ -196,31 +198,19 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
     }
 
     if (config.icon === "download") {
-      const url = item.downloadUrl || item.githubRepo
-      if (url) {
-        window.open(url, "_blank")
-      } else {
-        const cmd = `npx ${item.npmPackage || item.name.toLowerCase().replace(/\s+/g, "-")}`
-        navigator.clipboard.writeText(cmd).catch(() => {
-          const ta = document.createElement("textarea")
-          ta.value = cmd
-          document.body.appendChild(ta)
-          ta.select()
-          document.execCommand("copy")
-          document.body.removeChild(ta)
-        })
-        setCopiedCmd(true)
-        setTimeout(() => setCopiedCmd(false), 2000)
-      }
+      // Download directly inside the app — never an external window
+      installItemInApp(item)
+      incrementDownload(item.id).catch(() => {})
       setIsInstalled(true)
       return
     }
 
     if (config.icon === "install") {
-      if (item.installCommand) {
-        navigator.clipboard.writeText(item.installCommand)
-        setCopiedCmd(true)
-        setTimeout(() => setCopiedCmd(false), 2000)
+      // Inside the app: install/download the item directly
+      const didInstall = installItemInApp(item)
+      if (didInstall) {
+        incrementDownload(item.id).catch(() => {})
+        setIsInstalled(true)
         return
       }
       setIsInstalling(true)
@@ -411,14 +401,29 @@ export const ProductDetail: Component<ProductDetailProps> = (props) => {
                         <button onClick={() => setShowPreview(!showPreview())} class="text-xs text-[#58a6ff] hover:underline">
                           {showPreview() ? "Hide" : "Show"} Preview
                         </button>
-                        <a href={props.item!.liveDemo} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-xs text-[#58a6ff] hover:underline">
-                          <IconMaximize size={12} /> Open Full Screen
-                        </a>
+                        <Show when={showPreview()}>
+                          <button
+                            onClick={() => {
+                              const iframe = document.querySelector('#game-preview-iframe') as HTMLIFrameElement
+                              if (iframe?.requestFullscreen) iframe.requestFullscreen()
+                            }}
+                            class="flex items-center gap-1 text-xs text-[#58a6ff] hover:underline"
+                          >
+                            <IconMaximize size={12} /> Fullscreen
+                          </button>
+                        </Show>
                       </div>
                     </div>
                     <Show when={showPreview()}>
-                      <div class="rounded-xl overflow-hidden border border-[#21262d] bg-white">
-                        <iframe src={props.item!.liveDemo || props.item!.githubRepo} class="w-full h-96 border-0" sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads allow-top-navigation" title="Live Preview" />
+                      <div class="rounded-xl overflow-hidden border border-[#21262d] bg-[#0d1117]">
+                        <iframe
+                          id="game-preview-iframe"
+                          src={props.item!.liveDemo || props.item!.githubRepo}
+                          class="w-full border-0"
+                          style={{ height: "min(70vh, 600px)" }}
+                          sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals allow-downloads allow-top-navigation"
+                          title="Live Preview"
+                        />
                       </div>
                     </Show>
                   </div>

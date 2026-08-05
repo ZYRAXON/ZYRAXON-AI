@@ -81,10 +81,23 @@ async function stop() {
 }
 
 function prepareSidecarEnv(password: string, userDataPath: string) {
+  // Read marketplace auth token from ecosystem auth file
+  let marketplaceToken = ""
+  try {
+    const fs = require("node:fs")
+    const path = require("node:path")
+    const authPath = path.join(userDataPath, "ecosystem", "auth.json")
+    if (fs.existsSync(authPath)) {
+      const authData = JSON.parse(fs.readFileSync(authPath, "utf-8"))
+      marketplaceToken = authData.token || ""
+    }
+  } catch {}
+
   Object.assign(process.env, {
     ZYRAXON_SERVER_USERNAME: "zyraxon",
     ZYRAXON_SERVER_PASSWORD: password,
     XDG_STATE_HOME: process.env.XDG_STATE_HOME ?? userDataPath,
+    ZYRAXON_GITHUB_TOKEN: marketplaceToken || process.env.ZYRAXON_GITHUB_TOKEN || "",
   })
 }
 

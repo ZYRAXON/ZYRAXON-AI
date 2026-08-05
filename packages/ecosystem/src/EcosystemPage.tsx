@@ -8,8 +8,10 @@ import { RecentActivity } from "./components/RecentActivity"
 import { ProductDetail } from "./components/ProductDetail"
 import { LoginButton } from "./components/LoginButton"
 import { UserProfile } from "./components/UserProfile"
-import { CommunityChat } from "./components/CommunityChat"
 import { Marketplace } from "./components/Marketplace"
+import { VSCodeMarketplace } from "./components/VSCodeMarketplace"
+import { InstalledExtensions } from "./components/InstalledExtensions"
+import { GitHubReleases } from "./components/GitHubReleases"
 import type { ViewMode, EcosystemItem, CategoryInfo, EcosystemStats, User, Category } from "./types"
 import {
   getAllItems,
@@ -34,6 +36,7 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
   const [searchQuery, setSearchQuery] = createSignal("")
   const [selectedUser, setSelectedUser] = createSignal<User | null>(null)
   const [viewHistory, setViewHistory] = createSignal<ViewMode[]>(["home"])
+  const [vsCodeDeepLinkId, setVsCodeDeepLinkId] = createSignal<string | null>(null)
 
   const [items] = createResource(getAllItems)
   const [categories] = createResource(getCategories)
@@ -52,11 +55,17 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
 
   onMount(async () => {
     if (props.initialItemId) {
-      const allItems = await getAllItems()
-      const item = allItems.find((i) => i.id === props.initialItemId)
-      if (item) {
-        setSelectedItem(item)
-        setView("product-detail")
+      // Check if this is a VS Code extension ID (contains a dot like "ms-python.python")
+      if (props.initialItemId.includes(".")) {
+        setVsCodeDeepLinkId(props.initialItemId)
+        setView("extensions")
+      } else {
+        const allItems = await getAllItems()
+        const item = allItems.find((i) => i.id === props.initialItemId)
+        if (item) {
+          setSelectedItem(item)
+          setView("product-detail")
+        }
       }
     }
 
@@ -79,6 +88,10 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
     setViewHistory([...viewHistory(), newView])
     setView(newView)
     setSearchQuery("")
+    // Clear VS Code deep link when navigating away from extensions
+    if (newView !== "extensions") {
+      setVsCodeDeepLinkId(null)
+    }
   }
 
   const goBack = () => {
@@ -182,6 +195,10 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
         return "ZYRAXON ECOSYSTEM"
       case "marketplace":
         return "Marketplace"
+      case "extensions":
+        return "Extensions"
+      case "github":
+        return "GitHub Releases"
       case "community":
         return "Community"
       case "explore":
@@ -217,6 +234,10 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
         return "One Marketplace. Endless Possibilities."
       case "marketplace":
         return "Discover and share amazing creations"
+      case "extensions":
+        return "Browse extensions from the Visual Studio Marketplace"
+      case "github":
+        return "Latest releases from apps, bots & tools across all of GitHub"
       case "community":
         return "Connect with creators worldwide"
       case "explore":
@@ -433,14 +454,20 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
             </Show>
           </Show>
 
-          <Show when={view() === "community"}>
-            <div class="h-[calc(100vh-200px)]">
-              <CommunityChat />
-            </div>
-          </Show>
-
           <Show when={view() === "marketplace"}>
             <Marketplace onSelectItem={handleSelectItem} onUserClick={handleUserClickByUsername} />
+          </Show>
+
+          <Show when={view() === "extensions"}>
+            <VSCodeMarketplace deepLinkId={vsCodeDeepLinkId()} />
+          </Show>
+
+          <Show when={view() === "my-extensions"}>
+            <InstalledExtensions />
+          </Show>
+
+          <Show when={view() === "github"}>
+            <GitHubReleases />
           </Show>
 
           <Show when={view() === "profile" && selectedUser()}>

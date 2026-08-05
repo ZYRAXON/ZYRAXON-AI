@@ -11,10 +11,20 @@ interface SidebarProps {
   onViewChange: (view: ViewMode) => void
 }
 
+const IconExtensions: typeof IconHome = (props) => (
+  <svg class={props.class} width={props.size || 16} height={props.size || 16} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="7" rx="1" />
+    <rect x="14" y="3" width="7" height="7" rx="1" />
+    <rect x="3" y="14" width="7" height="7" rx="1" />
+    <path d="M17.5 14v7" /><path d="M14 17.5h7" />
+  </svg>
+)
+
 const mainNavItems: { id: ViewMode; label: string; icon: typeof IconHome }[] = [
   { id: "home", label: "Home", icon: IconHome },
   { id: "marketplace", label: "Marketplace", icon: IconMarketplace },
-  { id: "community", label: "Community", icon: IconCommunity },
+  { id: "extensions", label: "Extensions", icon: IconExtensions },
+  { id: "github", label: "GitHub Releases", icon: IconDownload },
   { id: "explore", label: "Explore", icon: IconSearch },
   { id: "categories", label: "Categories", icon: IconCategories },
   { id: "top-rated", label: "Top Rated", icon: IconStar },
@@ -24,6 +34,7 @@ const mainNavItems: { id: ViewMode; label: string; icon: typeof IconHome }[] = [
 
 const myStuffItems: { id: ViewMode; label: string; icon: typeof IconPackage }[] = [
   { id: "my-plugins", label: "My Plugins", icon: IconPackage },
+  { id: "my-extensions", label: "My Extensions", icon: IconExtensions },
   { id: "my-downloads", label: "My Downloads", icon: IconDownload },
   { id: "my-favorites", label: "My Favorites", icon: IconHeart },
 ]

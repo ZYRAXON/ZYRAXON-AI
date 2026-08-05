@@ -111,7 +111,7 @@ export interface RecentActivity {
   timestamp: string
 }
 
-export type ViewMode = "home" | "explore" | "categories" | "top-rated" | "trending" | "new" | "my-plugins" | "my-downloads" | "my-favorites" | "profile" | "community" | "marketplace" | "product-detail" | "settings" | "ai-settings"
+export type ViewMode = "home" | "explore" | "categories" | "top-rated" | "trending" | "new" | "my-plugins" | "my-downloads" | "my-favorites" | "my-extensions" | "profile" | "marketplace" | "extensions" | "github" | "product-detail" | "settings" | "ai-settings"
 
 export interface User {
   id: string

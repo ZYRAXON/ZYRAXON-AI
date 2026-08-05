@@ -6,6 +6,7 @@ import { app, BrowserWindow, Notification, clipboard, dialog, ipcMain, shell } f
 import type { IpcMainEvent, IpcMainInvokeEvent } from "electron"
 import type { DesktopMenuAction } from "@opencode-ai/app/desktop-menu"
 
+
 import type { FatalRendererError, PreviewState, ServerReadyData, TitlebarTheme } from "../preload/types"
 import { runDesktopMenuAction } from "./desktop-menu-actions"
 import { setForceFocus } from "./debug"
@@ -161,6 +162,25 @@ export function registerIpcHandlers(deps: Deps) {
     },
   )
 
+  // VS Code Marketplace API proxy (bypasses CORS)
+  ipcMain.handle("vscode-marketplace-api", async (_event: IpcMainInvokeEvent, body: unknown) => {
+    try {
+      const res = await fetch("https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json;api-version=7.2-preview.1",
+          "User-Agent": "zyraxon-ecosystem",
+        },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) return { error: `VS Code Marketplace ${res.status}` }
+      return await res.json()
+    } catch (err: any) {
+      return { error: err.message || "VS Code Marketplace unreachable" }
+    }
+  })
+
   ipcMain.handle(
     "open-file-picker",
     async (
@@ -292,6 +312,34 @@ export function registerIpcHandlers(deps: Deps) {
       checkForUpdates: () => void deps.showUpdater(),
       relaunch: deps.relaunch,
     })
+  })
+
+  // ─── VSIX Install ────────────────────────────────────────────────────────────
+  // ZYRAXON Extension Manager — installs extensions directly, no VS Code dependency
+  ipcMain.handle("install-vsix", async (_event: IpcMainInvokeEvent, vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => {
+    const { installExtensionFromUrl } = await import("./extension-manager")
+    return installExtensionFromUrl(vsixUrl, extensionId, options)
+  })
+
+  // ─── Extension Management ────────────────────────────────────────────────────
+  ipcMain.handle("get-installed-extensions", async () => {
+    const { getInstalledExtensions } = await import("./extension-manager")
+    return getInstalledExtensions()
+  })
+
+  ipcMain.handle("uninstall-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { uninstallExtension } = await import("./extension-manager")
+    return uninstallExtension(extensionId)
+  })
+
+  ipcMain.handle("toggle-extension-status", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { toggleExtensionStatus } = await import("./extension-manager")
+    return toggleExtensionStatus(extensionId)
+  })
+
+  ipcMain.handle("is-extension-installed", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { isExtensionInstalled } = await import("./extension-manager")
+    return isExtensionInstalled(extensionId)
   })
 
   ipcMain.handle("transcribe-audio", async (_event: IpcMainInvokeEvent, audioBase64: string, mimeType: string) => {

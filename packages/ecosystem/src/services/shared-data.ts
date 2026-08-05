@@ -1,13 +1,13 @@
 /**
  * SharedData — Central GitHub storage for likes, comments, ratings, downloads
- * All data stored in onelpawarai/ZYRAXON-AI/marketplace/data/
+ * All data stored in onelpawarai/ZYRAXON-DATA/marketplace/data/
  *
  * READ: unauthenticated (public repo, 60 req/hr) or user token
  * WRITE: App token via Electron IPC (git remote URL) — guaranteed write access
  */
 
 const GITHUB_API = "https://api.github.com"
-const MAIN_REPO = "onelpawarai/ZYRAXON-AI"
+const MAIN_REPO = "onelpawarai/ZYRAXON-DATA"
 const DATA_PATH = "/marketplace/data"
 
 // App token from Electron main process (reads from git remote URL)
@@ -142,12 +142,13 @@ export async function addComment(comment: SharedComment): Promise<boolean> {
 }
 
 // ─── RATINGS ──────────────────────────────────────────────
-export async function getRating(itemId: string): Promise<{ average: number; count: number; userRating: number }> {
+export async function getRating(itemId: string, userId?: string): Promise<{ average: number; count: number; userRating: number }> {
   const allRatings = await readJson<Record<string, Array<{ userId: string; rating: number; createdAt?: string }>>>(`${DATA_PATH}/ratings.json`, {})
   const ratings = allRatings[itemId] || []
   if (ratings.length === 0) return { average: 0, count: 0, userRating: 0 }
   const sum = ratings.reduce((s, r) => s + r.rating, 0)
-  return { average: sum / ratings.length, count: ratings.length, userRating: 0 }
+  const userRating = userId ? (ratings.find((r) => r.userId === userId)?.rating || 0) : 0
+  return { average: sum / ratings.length, count: ratings.length, userRating }
 }
 
 export async function setRating(itemId: string, userId: string, rating: number): Promise<{ average: number; count: number }> {

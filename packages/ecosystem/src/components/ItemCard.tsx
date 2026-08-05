@@ -2,6 +2,7 @@ import { type Component, createSignal, For, Show } from "solid-js"
 import type { EcosystemItem } from "../types"
 import { IconStar, IconHeart, IconHeartOutline, IconDownload, IconCheck, IconShare, IconMessageSquare, IconExternalLink, IconCopy, IconCode } from "./Icons"
 import { getAuthState } from "../services/auth"
+import { installItemInApp } from "../services/download"
 import { getLikeCount, getUserLikes, toggleLike } from "../services/shared-data"
 
 interface ItemCardProps {
@@ -147,21 +148,19 @@ export const ItemCard: Component<ItemCardProps> = (props) => {
     }
 
     if (action.icon === "download") {
-      if (item.downloadUrl) {
-        window.open(item.downloadUrl, "_blank")
-      } else if (item.githubRepo) {
-        window.open(`${item.githubRepo}/releases/latest`, "_blank")
-      }
+      // Download directly inside the app — never an external window
+      installItemInApp(item)
       setIsInstalled(true)
       setActionDone()
       return
     }
 
     if (action.icon === "install") {
-      if (item.installCommand) {
-        navigator.clipboard.writeText(item.installCommand)
-        setCopiedCmd(true)
-        setTimeout(() => setCopiedCmd(false), 2000)
+      // Inside the app: install/download the item directly
+      const didInstall = installItemInApp(item)
+      if (didInstall) {
+        setIsInstalled(true)
+        setActionDone()
         return
       }
     }

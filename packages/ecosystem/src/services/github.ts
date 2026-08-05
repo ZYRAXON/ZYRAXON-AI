@@ -1,8 +1,9 @@
 import type { EcosystemItem, CategoryInfo, EcosystemStats, RecentActivity, User, Comment } from "../types"
 import { getAuthState } from "./auth"
-import { GITHUB_API, MAIN_REPO, getGithubToken } from "../config"
+import { GITHUB_API, MAIN_REPO, DATA_REPO, getGithubToken } from "../config"
 
 const GITHUB_REPO = MAIN_REPO
+const MARKETPLACE_REPO = DATA_REPO
 const STORAGE_PREFIX = "zyraxon_ecosystem"
 
 function getMainRepoToken(): string | null {
@@ -10,6 +11,8 @@ function getMainRepoToken(): string | null {
     const stored = localStorage.getItem(`${STORAGE_PREFIX}_main_token`)
     if (stored) return stored
   } catch {}
+  const configToken = getGithubToken()
+  if (configToken) return configToken
   return null
 }
 
@@ -37,11 +40,12 @@ export function getHeaders(useMainToken = false) {
   return headers
 }
 
-async function fetchFromGitHub(path: string, retries = 3, useMainToken = true): Promise<any> {
+async function fetchFromGitHub(path: string, retries = 3, useMainToken = true, repo?: string): Promise<any> {
+  const targetRepo = repo || GITHUB_REPO
   let lastError: Error | null = null
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
-      const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, {
+      const response = await fetch(`${GITHUB_API}/repos/${targetRepo}/contents${path}`, {
         headers: getHeaders(useMainToken),
       })
       if (response.status === 404) return null
@@ -67,9 +71,10 @@ async function fetchFromGitHub(path: string, retries = 3, useMainToken = true): 
   return null
 }
 
-async function getFileSha(path: string): Promise<string | null> {
+async function getFileSha(path: string, repo?: string): Promise<string | null> {
+  const targetRepo = repo || GITHUB_REPO
   try {
-    const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, { headers: getHeaders() })
+    const response = await fetch(`${GITHUB_API}/repos/${targetRepo}/contents${path}`, { headers: getHeaders() })
     if (!response.ok) return null
     const data = await response.json()
     return data.sha || null
@@ -78,9 +83,10 @@ async function getFileSha(path: string): Promise<string | null> {
   }
 }
 
-async function commitToGitHub(path: string, content: any, message: string): Promise<boolean> {
+async function commitToGitHub(path: string, content: any, message: string, repo?: string): Promise<boolean> {
+  const targetRepo = repo || GITHUB_REPO
   try {
-    const sha = await getFileSha(path)
+    const sha = await getFileSha(path, targetRepo)
     const auth = getAuthState()
     const mainToken = getMainRepoToken()
     const token = auth?.token || mainToken
@@ -91,7 +97,7 @@ async function commitToGitHub(path: string, content: any, message: string): Prom
       content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
     }
     if (sha) body.sha = sha
-    const response = await fetch(`${GITHUB_API}/repos/${GITHUB_REPO}/contents${path}`, {
+    const response = await fetch(`${GITHUB_API}/repos/${targetRepo}/contents${path}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -108,7 +114,7 @@ async function commitToGitHub(path: string, content: any, message: string): Prom
 
 async function fetchItemsFromPath(path: string): Promise<EcosystemItem[]> {
   try {
-    const data = await fetchFromGitHub(path)
+    const data = await fetchFromGitHub(path, 3, true, MARKETPLACE_REPO)
     if (!data) return []
     if (Array.isArray(data)) return data.map(normalizeItem)
     if (data.items) return data.items.map(normalizeItem)
@@ -523,13 +529,13 @@ export async function publishItem(
   try {
     let existingItems: EcosystemItem[] = []
     try {
-      const data = await fetchFromGitHub("/marketplace/published/index.json")
+      const data = await fetchFromGitHub("/marketplace/published/index.json", 3, true, MARKETPLACE_REPO)
       existingItems = Array.isArray(data) ? data : data.items || []
     } catch {
       existingItems = []
     }
     existingItems.push(newItem)
-    await commitToGitHub("/marketplace/published/index.json", existingItems, `Publish: ${newItem.name} to ZYRAXON Ecosystem`)
+    await commitToGitHub("/marketplace/published/index.json", existingItems, `Publish: ${newItem.name} to ZYRAXON Ecosystem`, MARKETPLACE_REPO)
 
     const { getGitHubStorage } = await import("./github-data")
     const storage = getGitHubStorage()

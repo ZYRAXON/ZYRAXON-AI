@@ -70,6 +70,7 @@ import {
 import {
   collectNewSessionDeepLinks,
   collectOpenProjectDeepLinks,
+  collectInstallDeepLinks,
   deepLinkEvent,
   drainPendingDeepLinks,
 } from "./layout/deep-links"
@@ -1257,6 +1258,21 @@ export default function LegacyLayout(props: ParentProps) {
 
   const handleDeepLinks = (urls: string[]) => {
     if (!server.isLocal()) return
+
+    // Handle zyraxon://install/... deep links
+    const installLinks = collectInstallDeepLinks(urls)
+    for (const link of installLinks) {
+      if (link.type === "extension") {
+        // Navigate to ecosystem extensions page with the extension ID
+        navigateWithSidebarReset(`/ecosystem?item=${encodeURIComponent(link.extensionId)}`)
+        return
+      }
+      if (link.type === "release") {
+        // Navigate to ecosystem GitHub releases page
+        navigateWithSidebarReset(`/ecosystem?view=github&repo=${encodeURIComponent(link.repo)}&tag=${encodeURIComponent(link.tag)}`)
+        return
+      }
+    }
 
     for (const directory of collectOpenProjectDeepLinks(urls)) {
       void openProject(directory)

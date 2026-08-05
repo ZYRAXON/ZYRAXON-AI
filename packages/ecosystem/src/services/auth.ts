@@ -71,7 +71,7 @@ export async function startDeviceFlow(): Promise<DeviceCodeResponse> {
     },
     body: JSON.stringify({
       client_id: GITHUB_CLIENT_ID,
-      scope: "read:user user:email",
+      scope: "read:user user:email user:follow",
     }),
   })
 

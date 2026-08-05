@@ -76,6 +76,14 @@ const api: ElectronAPI = {
   storeLength: (name) => ipcRenderer.invoke("store-length", name),
   saveEcosystemAuth: (data) => ipcRenderer.invoke("save-ecosystem-auth", data),
   getGithubToken: () => ipcRenderer.invoke("get-github-token"),
+  // ZYRAXON Extension Manager — installs directly, no VS Code dependency
+  installVsix: (vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) =>
+    ipcRenderer.invoke("install-vsix", vsixUrl, extensionId, options),
+  getInstalledExtensions: () => ipcRenderer.invoke("get-installed-extensions"),
+  uninstallExtension: (extensionId: string) => ipcRenderer.invoke("uninstall-extension", extensionId),
+  toggleExtensionStatus: (extensionId: string) => ipcRenderer.invoke("toggle-extension-status", extensionId),
+  isExtensionInstalled: (extensionId: string) => ipcRenderer.invoke("is-extension-installed", extensionId),
+  queryVscodeMarketplace: (body: unknown) => ipcRenderer.invoke("vscode-marketplace-api", body),
 
   getWindowCount: () => ipcRenderer.invoke("get-window-count"),
   getWindowID: () => ipcRenderer.invoke("get-window-id"),
@@ -155,5 +163,15 @@ const api: ElectronAPI = {
     return () => ipcRenderer.removeListener("site-preview-update", handler)
   },
 }
+
+// Inject token for ecosystem marketplace access
+;(async () => {
+  try {
+    const token = await ipcRenderer.invoke("get-github-token")
+    if (token) {
+      (window as any).__ZYRAXON_CONFIG__ = { token }
+    }
+  } catch {}
+})()
 
 contextBridge.exposeInMainWorld("api", api)

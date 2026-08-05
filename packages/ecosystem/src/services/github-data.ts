@@ -212,12 +212,24 @@ export class GitHubDataStorage {
       follows.following.push(userId)
       await this.updateFile("follows.json", follows, `Follow user: ${userId}`)
     }
+    try {
+      await fetch(`${GITHUB_API}/user/following/${userId}`, {
+        method: "PUT",
+        headers: this.headers,
+      })
+    } catch {}
   }
 
   async unfollowUser(userId: string): Promise<void> {
     const follows = await this.getFollows()
     follows.following = follows.following.filter((id) => id !== userId)
     await this.updateFile("follows.json", follows, `Unfollow user: ${userId}`)
+    try {
+      await fetch(`${GITHUB_API}/user/following/${userId}`, {
+        method: "DELETE",
+        headers: this.headers,
+      })
+    } catch {}
   }
 
   async isFollowing(userId: string): Promise<boolean> {
