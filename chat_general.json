@@ -1,11 +1,1 @@
-[
-  {
-    "id": "msg-test-002",
-    "userId": "test",
-    "username": "system-test",
-    "text": "API persistence test",
-    "timestamp": "2026-08-05T13:45:14.5710300Z",
-    "likes": 0,
-    "likedBy": []
-  }
-]
+[]
