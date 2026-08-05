@@ -1,12 +1,11 @@
 [
   {
-    "id": "msg-msg2qljat0zktpubp78",
-    "userId": "user-278779105",
-    "username": "sayidilxs-web",
-    "avatarUrl": "https://avatars.githubusercontent.com/u/278779105?v=4",
-    "content": "hi",
-    "timestamp": "2026-08-05T12:39:34.534Z",
+    "id": "msg-test-001",
+    "text": "API persistence test",
+    "timestamp": "2026-08-05T19:44:03.6649442+06:00",
     "likes": 0,
+    "username": "system-test",
+    "userId": "test",
     "likedBy": []
   }
 ]
