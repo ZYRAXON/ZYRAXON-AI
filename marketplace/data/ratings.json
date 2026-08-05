@@ -5,5 +5,12 @@
       "rating": 5,
       "createdAt": "2026-08-05T03:05:01.968Z"
     }
+  ],
+  "novamart": [
+    {
+      "userId": "user-278779105",
+      "rating": 5,
+      "createdAt": "2026-08-05T03:21:51.342Z"
+    }
   ]
 }
