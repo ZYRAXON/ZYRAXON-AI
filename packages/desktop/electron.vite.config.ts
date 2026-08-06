@@ -72,24 +72,27 @@ if (!import.meta.require) { import.meta.require = require; }
         load(id) {
           if (id === "\0bun:sqlite-shim.ts") {
             return `
-import { DatabaseSync } from "node:sqlite";
+import initSqlJs from "sql.js";
+const SQL = await initSqlJs();
 class Statement {
-  constructor(stmt) { this._stmt = stmt; }
-  all(...params) { return this._stmt.all(...params); }
-  values(...params) { this._stmt.setReturnArrays(true); return this._stmt.all(...params); }
-  run(...params) { return this._stmt.run(...params); }
-  safeIntegers() {}
+  constructor(stmt, db) { this._stmt = stmt; this._db = db; }
+  all(...params) { this._stmt.bind(params.length ? params : undefined); const rows = []; while (this._stmt.step()) { rows.push(this._stmt.getAsObject()); } this._stmt.reset(); return rows; }
+  values(...params) { this._stmt.bind(params.length ? params : undefined); const rows = []; while (this._stmt.step()) { rows.push(this._stmt.get()); } this._stmt.reset(); return rows; }
+  run(...params) { this._stmt.bind(params.length ? params : undefined); this._stmt.step(); this._stmt.reset(); return { changes: this._db.getRowsModified() }; }
+  safeIntegers() { return this; }
 }
 export class Database {
   constructor(filename, options) {
-    this._db = new DatabaseSync(filename, { readOnly: options?.readonly ?? false, open: true, enableForeignKeyConstraints: true });
-    if (options?.disableWAL !== true && !options?.readonly) this._db.exec("PRAGMA journal_mode = WAL;");
+    this._readonly = options?.readonly ?? false;
+    if (!filename || filename === ":memory:") { this._db = new SQL.Database(); }
+    else { this._db = new SQL.Database(); }
+    if (!this._readonly) { try { this._db.run("PRAGMA journal_mode = WAL"); } catch {} }
   }
-  query(sql) { return new Statement(this._db.prepare(sql)); }
-  run(sql) { this._db.exec(sql); }
+  query(sql) { return new Statement(this._db.prepare(sql), this._db); }
+  run(sql) { this._db.run(sql); }
   close() { this._db.close(); }
   serialize() { return new Uint8Array(0); }
-  loadExtension(p) { this._db.loadExtension(p); }
+  loadExtension() {}
 }
 `
           }
@@ -115,21 +118,72 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
         name: "opencode:virtual-server-module",
         enforce: "pre",
         resolveId(id) {
-          if (id === "virtual:opencode-server") return this.resolve(`${ZYRAXON_SERVER_DIST}/node.js`)
+          if (id === "virtual:opencode-server") {
+            // Sidecar now loads server directly via import("./chunks/opencode-server.js")
+            // This plugin is kept as a no-op for any remaining references
+            return { id: "opencode-server-bundle", external: true }
+          }
         },
       },
       {
         name: "opencode:copy-server-assets",
+        async buildStart() {
+          // Copy server bundle BEFORE build so the sidecar import resolves
+          const chunksDir = "./out/main/chunks"
+          await fs.mkdir(chunksDir, { recursive: true })
+          const serverSource = path.join(ZYRAXON_SERVER_DIST, "node.js")
+          const serverDest = path.join(chunksDir, "opencode-server.js")
+          await fs.copyFile(serverSource, serverDest)
+          console.log(`[opencode] Pre-copied server bundle to ${serverDest} (${(await fs.stat(serverDest)).size} bytes)`)
+        },
         async writeBundle() {
+          const chunksDir = "./out/main/chunks"
           for (const l of await fs.readdir(ZYRAXON_SERVER_DIST)) {
-            if (!l.endsWith(".wasm")) continue
-            await fs.writeFile(`./out/main/chunks/${l}`, await fs.readFile(`${ZYRAXON_SERVER_DIST}/${l}`))
+            if (l.endsWith(".wasm")) {
+              await fs.writeFile(`${chunksDir}/${l}`, await fs.readFile(`${ZYRAXON_SERVER_DIST}/${l}`))
+            }
           }
-          // Copy the embedded web UI file
-          await fs.copyFile(
-            path.join(ZYRAXON_SERVER_DIST, "opencode-web-ui.gen.ts"),
-            "./out/main/opencode-web-ui.gen.ts"
-          )
+          const serverSource = path.join(ZYRAXON_SERVER_DIST, "node.js")
+          const serverDest = path.join(chunksDir, "opencode-server.js")
+          await fs.copyFile(serverSource, serverDest)
+
+          // Patch bun:sqlite and bun:ffi imports → local shim files
+          let serverCode = await fs.readFile(serverDest, "utf-8")
+          serverCode = serverCode.replace(/from "bun:sqlite"/g, 'from "./bun-sqlite-shim.mjs"')
+          serverCode = serverCode.replace(/from "bun:ffi"/g, 'from "./bun-ffi-shim.mjs"')
+          serverCode = serverCode.replace(/import\("bun:sqlite"\)/g, 'import("./bun-sqlite-shim.mjs")')
+          await fs.writeFile(serverDest, serverCode)
+          console.log(`[opencode] Patched server bundle: replaced bun:sqlite/bun:ffi with local shims`)
+
+          // Copy bun: protocol shim files
+          const shimDir = path.resolve(__dirname, "src/main/shims")
+          for (const shim of ["bun-sqlite-shim.mjs", "bun-ffi-shim.mjs"]) {
+            const src = path.join(shimDir, shim)
+            try {
+              await fs.access(src)
+              await fs.copyFile(src, path.join(chunksDir, shim))
+            } catch {
+              console.warn(`[opencode] Warning: shim ${shim} not found at ${src}`)
+            }
+          }
+
+          // Copy sql-wasm.wasm for sql.js (bun:sqlite shim dependency)
+          const wasmSource = path.resolve(__dirname, "node_modules/sql.js/dist/sql-wasm.wasm")
+          try {
+            await fs.access(wasmSource)
+            await fs.copyFile(wasmSource, path.join(chunksDir, "sql-wasm.wasm"))
+            console.log(`[opencode] Copied sql-wasm.wasm to ${chunksDir}`)
+          } catch {
+            console.warn(`[opencode] Warning: sql-wasm.wasm not found at ${wasmSource}`)
+          }
+          console.log(`[opencode] Copied bun: protocol shims to ${chunksDir}`)
+
+          const webUiSource = path.join(ZYRAXON_SERVER_DIST, "opencode-web-ui.gen.ts")
+          const webUiDest = "./out/main/opencode-web-ui.gen.ts"
+          try {
+            await fs.access(webUiSource)
+            await fs.copyFile(webUiSource, webUiDest)
+          } catch { /* file doesn't exist, skip */ }
         },
       },
     ],

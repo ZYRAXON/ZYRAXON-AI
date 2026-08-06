@@ -54,7 +54,17 @@ async function start(command: StartCommand) {
     ensureLoopbackNoProxy()
     useSystemCertificates()
     useEnvProxy()
-    const { Server } = await import("virtual:opencode-server")
+
+    // Load the pre-built server bundle from the output directory at runtime.
+    // The server bundle uses ESM with top-level await, so we MUST use import()
+    // (not require). The server bundle has bun:sqlite/bun:ffi imports patched
+    // to local shim files at build time.
+    const { dirname } = await import("node:path")
+    const { fileURLToPath } = await import("node:url")
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = dirname(__filename)
+    const serverUrl = new URL("./chunks/opencode-server.js", import.meta.url).href
+    const { Server } = await import(serverUrl)
 
     listener = await Server.listen({
       port: command.port,
