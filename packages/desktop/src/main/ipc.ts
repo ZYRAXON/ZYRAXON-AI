@@ -342,6 +342,38 @@ export function registerIpcHandlers(deps: Deps) {
     return isExtensionInstalled(extensionId)
   })
 
+  // ─── VS Code Extension Host (100% ZYRAXON's own, no VS Code dependency) ─────
+  ipcMain.handle("extension-host:get-extensions", async () => {
+    const { getExtensionHostExtensions } = await import("./extension-host-ipc")
+    return getExtensionHostExtensions()
+  })
+
+  ipcMain.handle("extension-host:activate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { activateExtensionById } = await import("./extension-host-ipc")
+    return activateExtensionById(extensionId)
+  })
+
+  ipcMain.handle("extension-host:deactivate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { deactivateExtensionById } = await import("./extension-host-ipc")
+    return deactivateExtensionById(extensionId)
+  })
+
+  ipcMain.handle("extension-host:is-active", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { isExtensionActive } = await import("./extension-host-ipc")
+    return isExtensionActive(extensionId)
+  })
+
+  ipcMain.handle("extension-host:check-updates", async () => {
+    return { hasUpdates: false, updates: [], checkedAt: new Date().toISOString() }
+  })
+
+  ipcMain.handle("extension-host:get-last-check", () => null)
+
+  ipcMain.handle("extension-host:refresh", async () => {
+    const { refreshExtensions } = await import("./extension-host-ipc")
+    return refreshExtensions()
+  })
+
   ipcMain.handle("transcribe-audio", async (_event: IpcMainInvokeEvent, audioBase64: string, mimeType: string) => {
     const apiKey = findOpenAIKey()
     if (!apiKey) {

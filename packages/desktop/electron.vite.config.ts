@@ -178,6 +178,24 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
           }
           console.log(`[opencode] Copied bun: protocol shims to ${chunksDir}`)
 
+          // Copy jsonc-parser UMD impl/ directory — the server bundle uses
+          // __commonJS wrapper with runtime require("./impl/format") calls
+          // that Bun's bundler didn't inline. These files must exist at runtime.
+          const jsoncImplDir = path.resolve(__dirname, "../../node_modules/.bun/jsonc-parser@3.3.1/node_modules/jsonc-parser/lib/umd/impl")
+          const destImplDir = path.join(chunksDir, "impl")
+          try {
+            await fs.access(jsoncImplDir)
+            await fs.mkdir(destImplDir, { recursive: true })
+            for (const f of await fs.readdir(jsoncImplDir)) {
+              if (f.endsWith(".js")) {
+                await fs.copyFile(path.join(jsoncImplDir, f), path.join(destImplDir, f))
+              }
+            }
+            console.log(`[opencode] Copied jsonc-parser impl/ to ${destImplDir}`)
+          } catch {
+            console.warn(`[opencode] Warning: jsonc-parser impl not found at ${jsoncImplDir}`)
+          }
+
           const webUiSource = path.join(ZYRAXON_SERVER_DIST, "opencode-web-ui.gen.ts")
           const webUiDest = "./out/main/opencode-web-ui.gen.ts"
           try {

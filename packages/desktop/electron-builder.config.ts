@@ -49,7 +49,7 @@ const getBase = (appId: string): Configuration => ({
   extraMetadata: {
     desktopName: `${appId}.desktop`,
   },
-  files: ["out/**/*", "resources/**/*"],
+  files: ["out/**/*", "resources/**/*", "vscode-host/**/*"],
   extraResources: [
     {
       from: "native/",

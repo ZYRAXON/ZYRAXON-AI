@@ -3,6 +3,7 @@ import { $ } from "bun"
 import path from "path"
 import { fileURLToPath } from "url"
 import { createSolidTransformPlugin } from "@opentui/solid/bun-plugin"
+import * as fs from "fs"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const dir = path.resolve(__dirname, "..")
@@ -15,6 +16,20 @@ import { Script } from "@opencode-ai/script"
 
 const plugin = createSolidTransformPlugin()
 
+// Plugin to force jsonc-parser sub-modules to be bundled
+const jsoncPlugin: Bun.Plugin = {
+  name: "jsonc-parser-bundler",
+  setup(build) {
+    build.onResolve({ filter: /^\.\/impl\// }, (args) => {
+      // Only resolve if the importer is jsonc-parser
+      if (args.importer.includes("jsonc-parser")) {
+        return { path: path.resolve(path.dirname(args.importer), args.path) }
+      }
+      return null
+    })
+  },
+}
+
 console.log("Building opencode dist/node...")
 
 // Ensure dist/node directory exists
@@ -24,7 +39,7 @@ await $`mkdir -p ${distNode}`
 const result = await Bun.build({
   conditions: ["bun", "node"],
   tsconfig: "./tsconfig.json",
-  plugins: [plugin],
+  plugins: [plugin, jsoncPlugin],
   external: ["node-gyp"],
   format: "esm",
   minify: false,
