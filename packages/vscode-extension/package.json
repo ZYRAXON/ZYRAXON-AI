@@ -1,0 +1,190 @@
+{
+  "name": "zyraxon-ai",
+  "displayName": "ZYRAXON AI — Ultimate AI Assistant",
+  "description": "Most powerful AI coding assistant. Chat, code completion, terminal integration, marketplace, and 136+ tools — all inside VS Code.",
+  "version": "1.0.0",
+  "publisher": "onelpawarai",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "AI",
+    "assistant",
+    "code completion",
+    "chat",
+    "ZYRAXON",
+    "coding assistant",
+    "AI pair programmer"
+  ],
+  "icon": "media/icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "zyraxon.chat",
+        "title": "ZYRAXON: Open AI Chat"
+      },
+      {
+        "command": "zyraxon.ask",
+        "title": "ZYRAXON: Ask AI about Selection"
+      },
+      {
+        "command": "zyraxon.explain",
+        "title": "ZYRAXON: Explain Code"
+      },
+      {
+        "command": "zyraxon.fix",
+        "title": "ZYRAXON: Fix Code"
+      },
+      {
+        "command": "zyraxon.refactor",
+        "title": "ZYRAXON: Refactor Code"
+      },
+      {
+        "command": "zyraxon.test",
+        "title": "ZYRAXON: Generate Tests"
+      },
+      {
+        "command": "zyraxon.doc",
+        "title": "ZYRAXON: Generate Documentation"
+      },
+      {
+        "command": "zyraxon.terminal",
+        "title": "ZYRAXON: Open AI Terminal"
+      },
+      {
+        "command": "zyraxon.marketplace",
+        "title": "ZYRAXON: Open Marketplace"
+      },
+      {
+        "command": "zyraxon.settings",
+        "title": "ZYRAXON: Settings"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "zyraxon",
+          "title": "ZYRAXON AI",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "zyraxon": [
+        {
+          "type": "webview",
+          "id": "zyraxon.chatView",
+          "name": "AI Chat"
+        },
+        {
+          "type": "webview",
+          "id": "zyraxon.marketplaceView",
+          "name": "Marketplace"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "zyraxon.ask",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "zyraxon.explain",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "zyraxon.fix",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "zyraxon.refactor",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "zyraxon.test",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "zyraxon.doc",
+          "group": "zyraxon",
+          "when": "editorHasSelection"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "zyraxon.chat",
+          "group": "zyraxon",
+          "when": "editorIsOpen"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "zyraxon.chat",
+        "key": "ctrl+shift+z",
+        "mac": "cmd+shift+z"
+      },
+      {
+        "command": "zyraxon.ask",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a",
+        "when": "editorHasSelection"
+      }
+    ],
+    "configuration": {
+      "title": "ZYRAXON AI",
+      "properties": {
+        "zyraxon.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:3000",
+          "description": "ZYRAXON server URL"
+        },
+        "zyraxon.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "ZYRAXON API key (optional)"
+        },
+        "zyraxon.theme": {
+          "type": "string",
+          "default": "dark",
+          "enum": ["dark", "light", "auto"],
+          "description": "ZYRAXON UI theme"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "package": "webpack --mode production",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.22.0",
+    "copy-webpack-plugin": "^12.0.0",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.3.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.0"
+  }
+}
