@@ -33,6 +33,3 @@ if (Bun.file(srcWebUI).exists()) {
 }
 
 await $`electron-vite build`
-
-// Post-build: patch jsonc-parser UMD → pre-bundled (writeBundle hook unreliable)
-await $`bun run ${path.join(__dirname, "patch-jsonc.ts")}`
