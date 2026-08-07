@@ -36,7 +36,8 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
   const [searchQuery, setSearchQuery] = createSignal("")
   const [selectedUser, setSelectedUser] = createSignal<User | null>(null)
   const [viewHistory, setViewHistory] = createSignal<ViewMode[]>(["home"])
-  const [vsCodeDeepLinkId, setVsCodeDeepLinkId] = createSignal<string | null>(null)
+  const [vsCodeDeepLinkId, setVsCodeDeepLinkId] = 
+createSignal<string | undefined>(undefined)
 
   const [items] = createResource(getAllItems)
   const [categories] = createResource(getCategories)
@@ -90,7 +91,7 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
     setSearchQuery("")
     // Clear VS Code deep link when navigating away from extensions
     if (newView !== "extensions") {
-      setVsCodeDeepLinkId(null)
+      setVsCodeDeepLinkId(undefined)
     }
   }
 

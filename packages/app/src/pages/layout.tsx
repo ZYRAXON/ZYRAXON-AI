@@ -2,6 +2,7 @@ import {
   createEffect,
   createMemo,
   createResource,
+  createSignal,
   For,
   on,
   onCleanup,
@@ -83,6 +84,8 @@ import {
 } from "./layout/sidebar-workspace"
 import { ProjectDragOverlay, SortableProject, type ProjectSidebarContext } from "./layout/sidebar-project"
 import { SidebarContent } from "./layout/sidebar-shell"
+import { ActivityBar, type ActivityBarEntry } from "./layout/activity-bar"
+import { ExtensionPanel } from "./layout/extension-panel"
 
 export default function LegacyLayout(props: ParentProps) {
   const serverSDK = useServerSDK()
@@ -157,6 +160,66 @@ export default function LegacyLayout(props: ParentProps) {
     sizing: false,
     peek: undefined as string | undefined,
     peeked: false,
+  })
+
+  // Activity Bar state — which panel is active (null = none)
+  const [activePanel, setActivePanel] = createSignal<string | null>(null)
+  const [installedExtensions, setInstalledExtensions] = createSignal<Array<{ id: string; displayName: string; icon?: string; publisher: string }>>([])
+  const [selectedExtensionId, setSelectedExtensionId] = createSignal<string | null>(null)
+
+  const builtinEntries: ActivityBarEntry[] = [
+    { id: "extensions", icon: "puzzle", label: "Extensions" },
+  ]
+
+  const extensionEntries = createMemo<ActivityBarEntry[]>(() =>
+    installedExtensions().map((ext) => ({
+      id: `ext:${ext.id}`,
+      icon: ext.displayName?.slice(0, 2)?.toUpperCase() || "??",
+      label: ext.displayName || ext.id,
+      iconUrl: ext.icon,
+    }))
+  )
+
+  const activityEntries = createMemo<ActivityBarEntry[]>(() => [
+    ...builtinEntries,
+    ...extensionEntries(),
+  ])
+
+  const togglePanel = (id: string) => {
+    if (id.startsWith("ext:")) {
+      const extId = id.slice(4)
+      setSelectedExtensionId(selectedExtensionId() === extId ? null : extId)
+      setActivePanel("extensions")
+      return
+    }
+    setSelectedExtensionId(null)
+    setActivePanel(activePanel() === id ? null : id)
+  }
+
+  const loadExtensions = async () => {
+    try {
+      const apiObj = (window as any).api
+      const manifestList = await apiObj?.getInstalledExtensions?.()
+      if (manifestList && Array.isArray(manifestList)) {
+        setInstalledExtensions(
+          manifestList.map((ext: any) => ({
+            id: ext.id,
+            displayName: ext.displayName || ext.id,
+            icon: ext.icon,
+            publisher: ext.publisher || "",
+          }))
+        )
+      }
+    } catch {}
+  }
+
+  onMount(() => {
+    loadExtensions()
+    const apiObj = (window as any).api
+    if (apiObj?.onExtensionInstalled) {
+      const cleanup = apiObj.onExtensionInstalled(() => loadExtensions())
+      onCleanup(cleanup)
+    }
   })
 
   const updateVersion = () => {
@@ -2271,15 +2334,26 @@ export default function LegacyLayout(props: ParentProps) {
       <div class="flex-1 min-h-0 min-w-0 flex">
         <div class="flex-1 min-h-0 relative">
           <div class="size-full relative overflow-x-hidden">
+            {/* Activity Bar — fixed 48px left strip */}
+            <Show when={layout.sidebar.opened()}>
+              <div class="hidden xl:block absolute inset-y-0 left-0 z-20">
+                <ActivityBar
+                  entries={activityEntries}
+                  activeId={activePanel}
+                  onSelect={togglePanel}
+                />
+              </div>
+            </Show>
+
             <nav
               aria-label={language.t("sidebar.nav.projectsAndSessions")}
               data-component="sidebar-nav-desktop"
               classList={{
                 "hidden xl:block": true,
-                "absolute inset-y-0 left-0": true,
+                "absolute inset-y-0": true,
                 "z-10": true,
               }}
-              style={{ width: `${side()}px` }}
+              style={{ left: `${layout.sidebar.opened() ? "48px" : "0"}`, width: `${side()}px` }}
               ref={(el) => {
                 setState("nav", el)
               }}
@@ -2293,13 +2367,23 @@ export default function LegacyLayout(props: ParentProps) {
                 arm()
               }}
             >
-              <div class="@container w-full h-full contain-strict">{sidebarContent()}</div>
+              <div class="@container w-full h-full contain-strict">
+                <Show
+                  when={activePanel() === "extensions"}
+                  fallback={sidebarContent()}
+                >
+                  <ExtensionPanel
+                    selectedExtension={selectedExtensionId() ?? undefined}
+                    onClearSelection={() => setSelectedExtensionId(null)}
+                  />
+                </Show>
+              </div>
             </nav>
 
             <Show when={layout.sidebar.opened()}>
               <div
                 class="hidden xl:block absolute inset-y-0 z-30 w-0 overflow-visible"
-                style={{ left: `${side()}px` }}
+                style={{ left: `${48 + side()}px` }}
                 onPointerDown={() => setState("sizing", true)}
               >
                 <ResizeHandle
@@ -2356,7 +2440,7 @@ export default function LegacyLayout(props: ParentProps) {
                   !state.sizing,
               }}
               style={{
-                "--main-left": layout.sidebar.opened() ? `${side()}px` : "4rem",
+                "--main-left": layout.sidebar.opened() ? `${48 + side()}px` : "4rem",
               }}
             >
               <main

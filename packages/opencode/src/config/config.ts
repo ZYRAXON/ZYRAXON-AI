@@ -223,8 +223,8 @@ const layer = Layer.effect(
             : { text, type: "virtual", ...options, env },
         ),
       )
-      const parsed = ConfigParse.jsonc(expanded, source)
-      const data = ConfigParse.schema(ConfigV1.Info, normalizeLoadedConfig(parsed), source)
+      const parsed = yield* Effect.try({ try: () => ConfigParse.jsonc(expanded, source), catch: (err) => err })
+      const data = yield* Effect.try({ try: () => ConfigParse.schema(ConfigV1.Info, normalizeLoadedConfig(parsed), source), catch: (err) => err })
       if (!("path" in options)) return data
 
       yield* Effect.promise(() => resolveLoadedPlugins(data, options.path))
@@ -237,10 +237,21 @@ const layer = Layer.effect(
     })
 
     const loadFile = Effect.fnUntraced(function* (filepath: string, env?: Record<string, string>) {
+      // Skip non-JSON/JSONC files (e.g. .js) — they can't be parsed as config
+      if (!filepath.endsWith(".json") && !filepath.endsWith(".jsonc")) {
+        yield* Effect.logDebug("skipping non-JSON config file", { path: filepath })
+        return {} as Info
+      }
       yield* Effect.logInfo("loading", { path: filepath })
       const text = yield* readConfigFile(filepath)
       if (!text) return {} as Info
-      return yield* loadConfig(text, { path: filepath }, env)
+      return yield* Effect.catch(
+        loadConfig(text, { path: filepath }, env),
+        (err) => Effect.gen(function* () {
+          yield* Effect.logWarning("config file load failed, using defaults", { path: filepath, error: String(err) })
+          return {} as Info
+        })
+      )
     })
 
     const loadGlobal = Effect.fnUntraced(function* (env?: Record<string, string>) {
@@ -642,7 +653,7 @@ const layer = Layer.effect(
       let next: Info
       let changed: boolean
       if (!file.endsWith(".jsonc")) {
-        const existing = ConfigParse.schema(ConfigV1.Info, ConfigParse.jsonc(before, file), file)
+        const existing = yield* Effect.try({ try: () => ConfigParse.schema(ConfigV1.Info, ConfigParse.jsonc(before, file), file), catch: (err) => err })
         const merged = mergeDeep(writable(existing), patch)
         const serialized = JSON.stringify(merged, null, 2)
         changed = serialized !== before
@@ -650,7 +661,7 @@ const layer = Layer.effect(
         next = merged
       } else {
         const updated = patchJsonc(before, patch)
-        next = ConfigParse.schema(ConfigV1.Info, ConfigParse.jsonc(updated, file), file)
+        next = yield* Effect.try({ try: () => ConfigParse.schema(ConfigV1.Info, ConfigParse.jsonc(updated, file), file), catch: (err) => err })
         changed = updated !== before
         if (changed) yield* fs.writeFileString(file, updated).pipe(Effect.orDie)
       }

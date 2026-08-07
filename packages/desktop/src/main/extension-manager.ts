@@ -5,7 +5,7 @@
  * Downloads VSIX packages, extracts them, stores locally, and tracks installed extensions.
  */
 
-import { app } from "electron"
+import { app, BrowserWindow } from "electron"
 import { join } from "node:path"
 import { mkdirSync, existsSync, readdirSync, readFileSync, writeFileSync, rmSync, statSync } from "node:fs"
 import { readFile, writeFile, unlink, stat, readdir, mkdir } from "node:fs/promises"
@@ -78,27 +78,27 @@ function saveManifest(extensions: InstalledExtension[]): void {
 
 /**
  * Extract a VSIX file (which is a ZIP) to a directory.
- * Uses Node.js built-in zlib for basic extraction, or falls back to PowerShell.
+ * Tries tar first (fast, built-in on Windows 10+), falls back to PowerShell.
  */
 async function extractVsix(vsixPath: string, targetDir: string): Promise<void> {
   if (!existsSync(targetDir)) {
     mkdirSync(targetDir, { recursive: true })
   }
 
-  // Use PowerShell to extract (works on Windows without extra dependencies)
+  // Try tar first (fast, no PowerShell overhead)
   try {
-    await execFileAsync("powershell", [
-      "-NoProfile",
-      "-Command",
-      `Expand-Archive -Path '${vsixPath}' -DestinationPath '${targetDir}' -Force`
-    ], { timeout: 30000 })
+    await execFileAsync("tar", [
+      "-xf", vsixPath,
+      "-C", targetDir
+    ], { timeout: 60000 })
   } catch {
-    // Fallback: use tar if available (Windows 10+)
+    // Fallback: PowerShell Expand-Archive
     try {
-      await execFileAsync("tar", [
-        "-xf", vsixPath,
-        "-C", targetDir
-      ], { timeout: 30000 })
+      await execFileAsync("powershell", [
+        "-NoProfile",
+        "-Command",
+        `Expand-Archive -Path '${vsixPath}' -DestinationPath '${targetDir}' -Force`
+      ], { timeout: 120000 })
     } catch (err: any) {
       throw new Error(`Failed to extract VSIX: ${err.message}`)
     }
@@ -113,14 +113,20 @@ async function extractVsix(vsixPath: string, targetDir: string): Promise<void> {
       const src = join(extensionSubdir, item)
       const dest = join(targetDir, item)
       try {
-        // Use PowerShell Move-Item for cross-device moves
-        await execFileAsync("powershell", [
-          "-NoProfile",
-          "-Command",
-          `Move-Item -Path '${src}' -Destination '${dest}' -Force`
-        ], { timeout: 10000 })
+        // Use node:fs rename first (fast, same volume)
+        const { renameSync } = await import("node:fs")
+        renameSync(src, dest)
       } catch {
-        // If move fails, just leave it in extension/ subdirectory
+        try {
+          // Fallback to PowerShell Move-Item for cross-device moves
+          await execFileAsync("powershell", [
+            "-NoProfile",
+            "-Command",
+            `Copy-Item -Path '${src}' -Destination '${dest}' -Recurse -Force; Remove-Item -Path '${src}' -Recurse -Force`
+          ], { timeout: 30000 })
+        } catch {
+          // If all moves fail, leave it in extension/ subdirectory
+        }
       }
     }
     // Clean up the empty extension/ directory
@@ -151,6 +157,20 @@ function parsePackageJson(extensionDir: string): ExtensionPackageJson | null {
   } catch {
     return null
   }
+}
+
+// ─── Notification ───────────────────────────────────────────────────────────
+
+function notifyExtensionInstalled(extensionId: string): void {
+  try {
+    // Send to all open windows so the extension panel refreshes
+    const windows = BrowserWindow.getAllWindows()
+    for (const win of windows) {
+      if (!win.isDestroyed()) {
+        win.webContents.send("extension-installed", { extensionId })
+      }
+    }
+  } catch {}
 }
 
 // ─── Public API ──────────────────────────────────────────────────────────────
@@ -189,9 +209,23 @@ export async function installExtensionFromUrl(
     }
     mkdirSync(extensionDir, { recursive: true })
 
-    // Download VSIX
+    // Download VSIX with timeout and proper headers
     const vsixPath = join(extensionDir, `${extensionId}.vsix`)
-    const response = await fetch(vsixUrl)
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 120000) // 120s timeout
+    let response: Response
+    try {
+      response = await fetch(vsixUrl, {
+        signal: controller.signal,
+        headers: {
+          "User-Agent": "ZYRAXON/1.0 (Electron)",
+          "Accept": "application/octet-stream,*/*",
+        },
+        redirect: "follow",
+      })
+    } finally {
+      clearTimeout(timeout)
+    }
     if (!response.ok) {
       throw new Error(`Download failed: ${response.status} ${response.statusText}`)
     }
@@ -240,6 +274,7 @@ export async function installExtensionFromUrl(
           manifest.push(installed)
           saveManifest(manifest)
           
+          notifyExtensionInstalled(pkg.name)
           return { success: true, extensionId: pkg.name, extension: installed }
         } catch {
           // If rename fails, use original directory
@@ -264,6 +299,9 @@ export async function installExtensionFromUrl(
 
     manifest.push(installed)
     saveManifest(manifest)
+
+    // Notify all windows to refresh extension lists
+    notifyExtensionInstalled(extensionId)
 
     return { success: true, extensionId, extension: installed }
   } catch (error: any) {

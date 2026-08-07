@@ -26,6 +26,10 @@ function getAuthor(item: any): string {
   return item.author || item.owner || ""
 }
 
+function getDescription(item: any): string {
+  return item.description || item.summary || item.about || ""
+}
+
 export const AssetDetailModal: Component<AssetDetailModalProps> = (props) => {
   const [rating, setRatingState] = createSignal({ average: 0, count: 0, userRating: 0 })
   const [likeCount, setLikeCountState] = createSignal(0)

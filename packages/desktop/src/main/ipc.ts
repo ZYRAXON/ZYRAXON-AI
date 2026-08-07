@@ -318,7 +318,11 @@ export function registerIpcHandlers(deps: Deps) {
   // ZYRAXON Extension Manager — installs extensions directly, no VS Code dependency
   ipcMain.handle("install-vsix", async (_event: IpcMainInvokeEvent, vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => {
     const { installExtensionFromUrl } = await import("./extension-manager")
-    return installExtensionFromUrl(vsixUrl, extensionId, options)
+    try {
+      return await installExtensionFromUrl(vsixUrl, extensionId, options)
+    } catch (err: any) {
+      return { success: false, extensionId, error: err.message || "Install failed" }
+    }
   })
 
   // ─── Extension Management ────────────────────────────────────────────────────
@@ -340,6 +344,38 @@ export function registerIpcHandlers(deps: Deps) {
   ipcMain.handle("is-extension-installed", async (_event: IpcMainInvokeEvent, extensionId: string) => {
     const { isExtensionInstalled } = await import("./extension-manager")
     return isExtensionInstalled(extensionId)
+  })
+
+  // ─── VS Code Extension Host (100% ZYRAXON's own, no VS Code dependency) ─────
+  ipcMain.handle("extension-host:get-extensions", async () => {
+    const { getExtensionHostExtensions } = await import("./extension-host-ipc")
+    return getExtensionHostExtensions()
+  })
+
+  ipcMain.handle("extension-host:activate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { activateExtensionById } = await import("./extension-host-ipc")
+    return activateExtensionById(extensionId)
+  })
+
+  ipcMain.handle("extension-host:deactivate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { deactivateExtensionById } = await import("./extension-host-ipc")
+    return deactivateExtensionById(extensionId)
+  })
+
+  ipcMain.handle("extension-host:is-active", async (_event: IpcMainInvokeEvent, extensionId: string) => {
+    const { isExtensionActive } = await import("./extension-host-ipc")
+    return isExtensionActive(extensionId)
+  })
+
+  ipcMain.handle("extension-host:check-updates", async () => {
+    return { hasUpdates: false, updates: [], checkedAt: new Date().toISOString() }
+  })
+
+  ipcMain.handle("extension-host:get-last-check", () => null)
+
+  ipcMain.handle("extension-host:refresh", async () => {
+    const { refreshExtensions } = await import("./extension-host-ipc")
+    return refreshExtensions()
   })
 
   ipcMain.handle("transcribe-audio", async (_event: IpcMainInvokeEvent, audioBase64: string, mimeType: string) => {

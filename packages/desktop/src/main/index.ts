@@ -303,6 +303,19 @@ const main = Effect.gen(function* () {
     recordFatalRendererError: (error) => writeLog("renderer", "fatal renderer error", { ...error }, "error"),
   })
   registerWslIpcHandlers(wslServers)
+
+  // ─── VS Code Extension Host ───────────────────────────────────────────────
+  // Initializes the extension host which scans installed extensions,
+  // creates VS Code API shims, and handles activation/deactivation.
+  yield* Effect.promise(async () => {
+    try {
+      const { registerExtensionHostIPC } = await import("./extension-host-ipc")
+      registerExtensionHostIPC()
+    } catch (error) {
+      logger.warn("failed to initialize extension host", error)
+    }
+  })
+
   void updater.start()
 
   // ─── Preview State File Watcher ─────────────────────────────────────────────

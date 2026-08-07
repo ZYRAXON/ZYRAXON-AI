@@ -152,6 +152,126 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
           serverCode = serverCode.replace(/from "bun:sqlite"/g, 'from "./bun-sqlite-shim.mjs"')
           serverCode = serverCode.replace(/from "bun:ffi"/g, 'from "./bun-ffi-shim.mjs"')
           serverCode = serverCode.replace(/import\("bun:sqlite"\)/g, 'import("./bun-sqlite-shim.mjs")')
+
+          // --- jsonc-parser patch: replace broken UMD with pre-bundled CJS ---
+          if (serverCode.includes("../../node_modules/.bun/jsonc-parser@")) {
+            const nodeModulesBase = path.resolve(__dirname, "../../node_modules/.bun")
+            // Find the version that matches what's in the server bundle
+            const serverVersionMatch = serverCode.match(/jsonc-parser@([\d.]+)/)
+            const targetVersion = serverVersionMatch ? serverVersionMatch[1] : null
+            const jsoncDirs = await fs.readdir(nodeModulesBase).catch(() => [] as string[])
+            const jsoncDir = jsoncDirs.find((d) => targetVersion ? d === `jsonc-parser@${targetVersion}` : d.startsWith("jsonc-parser@"))
+            if (jsoncDir) {
+              const bundledPath = path.join(nodeModulesBase, jsoncDir, "node_modules/jsonc-parser/lib/esm/main.js.bundled")
+              const stringInternPath = path.join(nodeModulesBase, jsoncDir, "node_modules/jsonc-parser/lib/esm/impl/string-intern.js")
+              if (await fs.access(bundledPath).then(() => true).catch(() => false)) {
+                let bundled = await fs.readFile(bundledPath, "utf-8")
+
+                // Inline string-intern
+                if (await fs.access(stringInternPath).then(() => true).catch(() => false)) {
+                  const stringInternContent = (await fs.readFile(stringInternPath, "utf-8"))
+                    .replace(/^\uFEFF/, "")
+                    .replace(/^'use strict';\n/m, "")
+                    .replace(/^export /gm, "")
+                  bundled = bundled.replace(/^import \{[^}]+\} from '\.\/string-intern';\n/m, "")
+                  bundled = bundled.replace(
+                    /^(import \{ createScanner \} from '\.\/scanner';\n)/m,
+                    `${stringInternContent}\n$1`,
+                  )
+                }
+
+                // Remove ALL import statements
+                bundled = bundled.replace(/^import \{[^}]+\} from '[^']+';\n/gm, "")
+                bundled = bundled.replace(/^import \* as \w+ from '[^']+';\n/gm, "")
+
+                // Remove main.js re-export lines
+                bundled = bundled.replace(/^export const \w+ = scanner\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^export const \w+ = parser\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^export const \w+ = formatter\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^export const \w+ = edit\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^exports\.\w+ = scanner\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^exports\.\w+ = parser\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^exports\.\w+ = formatter\.\w+;\n/gm, "")
+                bundled = bundled.replace(/^exports\.\w+ = edit\.\w+;\n/gm, "")
+
+                // Remove trailing main.js section
+                const lastCopyrightIdx = bundled.lastIndexOf("/*------")
+                if (lastCopyrightIdx !== -1) {
+                  const afterCopyright = bundled.substring(lastCopyrightIdx)
+                  const useStrictIdx = afterCopyright.indexOf("'use strict';")
+                  if (useStrictIdx !== -1) {
+                    const sectionContent = afterCopyright.substring(useStrictIdx + 13)
+                    if (!sectionContent.includes("function isDigit") && !sectionContent.includes("function repeat")) {
+                      bundled = bundled.substring(0, lastCopyrightIdx).trimEnd() + "\n"
+                    }
+                  }
+                }
+
+                // Clean up
+                bundled = bundled.replace(/^\uFEFF/, "")
+                bundled = bundled.replace(/^'use strict';\n/m, "")
+                bundled = bundled.replace(/^\/\/ Pre-bundled.*?\n/m, "")
+                bundled = bundled.replace(/^\/\/ Source:.*?\n/m, "")
+
+                // Collect export var names (enum IIFEs)
+                const exportVarNames: string[] = []
+                for (const m of bundled.matchAll(/^export var (\w+);$/gm)) {
+                  exportVarNames.push(m[1])
+                }
+
+                // Convert ESM exports to CommonJS
+                bundled = bundled
+                  .replace(/^export function (\w+)/gm, "exports.$1 = function $1")
+                  .replace(/^export const (\w+)/gm, "exports.$1")
+                  .replace(/^export class (\w+)/gm, "exports.$1 = class $1")
+                  .replace(/^export var (\w+);$/gm, "var $1;")
+
+                // For each enum var, find IIFE and add exports inline
+                for (const name of exportVarNames) {
+                  const iifeEnd = new RegExp(`\\}\\)\\(${name} \\|\\| \\(${name} = \\{\\}\\)\\);`)
+                  bundled = bundled.replace(iifeEnd, `})(exports.${name} = ${name} || (${name} = {}));`)
+                }
+
+                // Find and replace the broken UMD block
+                // Use simple string search instead of regex to avoid \r\n issues
+                const startMarker = "// ../../node_modules/.bun/jsonc-parser@"
+                const startIdx = serverCode.indexOf(startMarker)
+
+                if (startIdx !== -1) {
+                  // Find the beginning of the line containing the start marker
+                  let lineStart = startIdx
+                  while (lineStart > 0 && serverCode[lineStart - 1] !== "\n") lineStart--
+                  // Find where var require_main = __commonJS(...) ends by bracket counting
+                  const cjsStart = serverCode.indexOf("var require_main = __commonJS((exports, module2) => {", startIdx)
+                  if (cjsStart !== -1) {
+                    let depth = 0
+                    let endPos = cjsStart
+                    let foundFirst = false
+                    for (let i = cjsStart; i < serverCode.length - 1; i++) {
+                      if (serverCode[i] === "{" ) { depth++; foundFirst = true }
+                      if (serverCode[i] === "}") { depth-- }
+                      if (foundFirst && depth === 0) { endPos = i + 1; break }
+                    }
+                    // Find end of line after the closing });
+                    let lineEnd = endPos
+                    while (lineEnd < serverCode.length && serverCode[lineEnd] !== "\n") lineEnd++
+                    if (lineEnd < serverCode.length) lineEnd++ // include the newline
+
+                    const replacement = [
+                      "// jsonc-parser (pre-bundled, no asar path issues)",
+                      "var require_main = __commonJS((exports, module2) => {",
+                      bundled,
+                      "});",
+                      "",
+                    ].join("\n")
+                    serverCode = serverCode.substring(0, lineStart) + replacement + serverCode.substring(lineEnd)
+                    console.log("[opencode] Patched jsonc-parser: replaced broken UMD with pre-bundled CJS")
+                  }
+                }
+              }
+            }
+          }
+
           await fs.writeFile(serverDest, serverCode)
           console.log(`[opencode] Patched server bundle: replaced bun:sqlite/bun:ffi with local shims`)
 

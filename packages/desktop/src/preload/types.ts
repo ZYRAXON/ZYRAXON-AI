@@ -103,6 +103,17 @@ export type ElectronAPI = {
   toggleExtensionStatus: (extensionId: string) => Promise<{ success: boolean; status?: string; error?: string }>
   isExtensionInstalled: (extensionId: string) => Promise<boolean>
   queryVscodeMarketplace: (body: unknown) => Promise<any>
+  extensionHost: {
+    getExtensions: () => Promise<{ id: string; name: string; displayName: string; description: string; version: string; publisher: string; isActive: boolean }[]>
+    activateExtension: (extensionId: string) => Promise<boolean>
+    deactivateExtension: (extensionId: string) => Promise<boolean>
+    isActive: (extensionId: string) => Promise<boolean>
+    checkUpdates: () => Promise<{ hasUpdates: boolean; updates: any[]; checkedAt: string }>
+    getLastCheck: () => Promise<string | null>
+    onNotification: (cb: (data: any) => void) => () => void
+    onUpdatesAvailable: (cb: (result: any) => void) => () => void
+    onUpdateProgress: (cb: (data: any) => void) => () => void
+  }
 
   getWindowCount: () => Promise<number>
   getWindowID: () => Promise<string>

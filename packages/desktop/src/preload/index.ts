@@ -85,6 +85,37 @@ const api: ElectronAPI = {
   isExtensionInstalled: (extensionId: string) => ipcRenderer.invoke("is-extension-installed", extensionId),
   queryVscodeMarketplace: (body: unknown) => ipcRenderer.invoke("vscode-marketplace-api", body),
 
+  // ─── ZYRAXON Extension Host (VS Code compatible) ──────────────────────────
+  extensionHost: {
+    getExtensions: () => ipcRenderer.invoke("extension-host:get-extensions"),
+    activateExtension: (extensionId: string) => ipcRenderer.invoke("extension-host:activate-extension", extensionId),
+    deactivateExtension: (extensionId: string) => ipcRenderer.invoke("extension-host:deactivate-extension", extensionId),
+    isActive: (extensionId: string) => ipcRenderer.invoke("extension-host:is-active", extensionId),
+    checkUpdates: () => ipcRenderer.invoke("extension-host:check-updates"),
+    getLastCheck: () => ipcRenderer.invoke("extension-host:get-last-check"),
+    onNotification: (cb: (data: any) => void) => {
+      const handler = (_: unknown, data: any) => cb(data)
+      ipcRenderer.on("extension-host:notification", handler)
+      return () => ipcRenderer.removeListener("extension-host:notification", handler)
+    },
+    onUpdatesAvailable: (cb: (result: any) => void) => {
+      const handler = (_: unknown, result: any) => cb(result)
+      ipcRenderer.on("extension-host:updates-available", handler)
+      return () => ipcRenderer.removeListener("extension-host:updates-available", handler)
+    },
+    onUpdateProgress: (cb: (data: any) => void) => {
+      const handler = (_: unknown, data: any) => cb(data)
+      ipcRenderer.on("extension-host:update-progress", handler)
+      return () => ipcRenderer.removeListener("extension-host:update-progress", handler)
+    },
+  },
+
+  onExtensionInstalled: (cb: (data: any) => void) => {
+    const handler = (_: unknown, data: any) => cb(data)
+    ipcRenderer.on("extension-installed", handler)
+    return () => ipcRenderer.removeListener("extension-installed", handler)
+  },
+
   getWindowCount: () => ipcRenderer.invoke("get-window-count"),
   getWindowID: () => ipcRenderer.invoke("get-window-id"),
   onMenuCommand: (cb) => {
