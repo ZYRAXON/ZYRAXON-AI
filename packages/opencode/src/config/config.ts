@@ -237,10 +237,21 @@ const layer = Layer.effect(
     })
 
     const loadFile = Effect.fnUntraced(function* (filepath: string, env?: Record<string, string>) {
+      // Skip non-JSON/JSONC files (e.g. .js) — they can't be parsed as config
+      if (!filepath.endsWith(".json") && !filepath.endsWith(".jsonc")) {
+        yield* Effect.logDebug("skipping non-JSON config file", { path: filepath })
+        return {} as Info
+      }
       yield* Effect.logInfo("loading", { path: filepath })
       const text = yield* readConfigFile(filepath)
       if (!text) return {} as Info
-      return yield* loadConfig(text, { path: filepath }, env)
+      return yield* Effect.catch(
+        loadConfig(text, { path: filepath }, env),
+        (err) => Effect.gen(function* () {
+          yield* Effect.logWarning("config file load failed, using defaults", { path: filepath, error: String(err) })
+          return {} as Info
+        })
+      )
     })
 
     const loadGlobal = Effect.fnUntraced(function* (env?: Record<string, string>) {
