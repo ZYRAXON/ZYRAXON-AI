@@ -81,7 +81,11 @@ function scanExtensions(): Map<string, ExtensionInfo> {
     try {
       const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"))
 
-      if (!packageJson.engines?.vscode) continue
+      if (!packageJson.engines?.vscode) {
+        // Still include extensions without engines.vscode — they may be ZYRAXON-native
+        // Only skip if there's truly no useful info
+        if (!packageJson.displayName && !packageJson.name) continue
+      }
 
       const ext: ExtensionInfo = {
         id: `${packageJson.publisher}.${packageJson.name}`,

@@ -110,6 +110,12 @@ const api: ElectronAPI = {
     },
   },
 
+  onExtensionInstalled: (cb: (data: any) => void) => {
+    const handler = (_: unknown, data: any) => cb(data)
+    ipcRenderer.on("extension-installed", handler)
+    return () => ipcRenderer.removeListener("extension-installed", handler)
+  },
+
   getWindowCount: () => ipcRenderer.invoke("get-window-count"),
   getWindowID: () => ipcRenderer.invoke("get-window-id"),
   onMenuCommand: (cb) => {

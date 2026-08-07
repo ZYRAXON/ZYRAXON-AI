@@ -164,13 +164,63 @@ export default function LegacyLayout(props: ParentProps) {
 
   // Activity Bar state — which panel is active (null = none)
   const [activePanel, setActivePanel] = createSignal<string | null>(null)
-  const activityEntries: ActivityBarEntry[] = [
+  const [installedExtensions, setInstalledExtensions] = createSignal<Array<{ id: string; displayName: string; icon?: string; publisher: string }>>([])
+  const [selectedExtensionId, setSelectedExtensionId] = createSignal<string | null>(null)
+
+  const builtinEntries: ActivityBarEntry[] = [
     { id: "extensions", icon: "puzzle", label: "Extensions" },
   ]
 
+  const extensionEntries = createMemo<ActivityBarEntry[]>(() =>
+    installedExtensions().map((ext) => ({
+      id: `ext:${ext.id}`,
+      icon: ext.displayName?.slice(0, 2)?.toUpperCase() || "??",
+      label: ext.displayName || ext.id,
+      iconUrl: ext.icon,
+    }))
+  )
+
+  const activityEntries = createMemo<ActivityBarEntry[]>(() => [
+    ...builtinEntries,
+    ...extensionEntries(),
+  ])
+
   const togglePanel = (id: string) => {
+    if (id.startsWith("ext:")) {
+      const extId = id.slice(4)
+      setSelectedExtensionId(selectedExtensionId() === extId ? null : extId)
+      setActivePanel("extensions")
+      return
+    }
+    setSelectedExtensionId(null)
     setActivePanel(activePanel() === id ? null : id)
   }
+
+  const loadExtensions = async () => {
+    try {
+      const apiObj = (window as any).api
+      const manifestList = await apiObj?.getInstalledExtensions?.()
+      if (manifestList && Array.isArray(manifestList)) {
+        setInstalledExtensions(
+          manifestList.map((ext: any) => ({
+            id: ext.id,
+            displayName: ext.displayName || ext.id,
+            icon: ext.icon,
+            publisher: ext.publisher || "",
+          }))
+        )
+      }
+    } catch {}
+  }
+
+  onMount(() => {
+    loadExtensions()
+    const apiObj = (window as any).api
+    if (apiObj?.onExtensionInstalled) {
+      const cleanup = apiObj.onExtensionInstalled(() => loadExtensions())
+      onCleanup(cleanup)
+    }
+  })
 
   const updateVersion = () => {
     const state = platform.updater?.state()
@@ -2322,7 +2372,10 @@ export default function LegacyLayout(props: ParentProps) {
                   when={activePanel() === "extensions"}
                   fallback={sidebarContent()}
                 >
-                  <ExtensionPanel />
+                  <ExtensionPanel
+                    selectedExtension={selectedExtensionId() ?? undefined}
+                    onClearSelection={() => setSelectedExtensionId(null)}
+                  />
                 </Show>
               </div>
             </nav>

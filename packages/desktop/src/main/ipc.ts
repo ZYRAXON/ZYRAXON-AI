@@ -318,7 +318,11 @@ export function registerIpcHandlers(deps: Deps) {
   // ZYRAXON Extension Manager — installs extensions directly, no VS Code dependency
   ipcMain.handle("install-vsix", async (_event: IpcMainInvokeEvent, vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => {
     const { installExtensionFromUrl } = await import("./extension-manager")
-    return installExtensionFromUrl(vsixUrl, extensionId, options)
+    try {
+      return await installExtensionFromUrl(vsixUrl, extensionId, options)
+    } catch (err: any) {
+      return { success: false, extensionId, error: err.message || "Install failed" }
+    }
   })
 
   // ─── Extension Management ────────────────────────────────────────────────────
