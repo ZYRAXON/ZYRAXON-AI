@@ -434,7 +434,7 @@ createSignal<string | undefined>(undefined)
             <Show when={(!items() || items()!.length === 0) && !searchQuery()}>
               <div class="flex flex-col items-center justify-center py-20">
                 <div class="w-20 h-20 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
-                  <span class="text-3xl text-[#484f58]">🛒</span>
+                  <span class="text-3xl text-[#484f58]">≡ƒ¢Æ</span>
                 </div>
                 <p class="text-xl text-[#c9d1d9] mb-2">No Items Published Yet</p>
                 <p class="text-sm text-[#8b949e] mb-6 text-center max-w-md">
@@ -623,7 +623,7 @@ createSignal<string | undefined>(undefined)
               <Show when={!categoryItems() || categoryItems()!.length === 0}>
                 <div class="flex flex-col items-center justify-center py-16">
                   <div class="w-16 h-16 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
-                    <span class="text-2xl text-[#484f58]">📭</span>
+                    <span class="text-2xl text-[#484f58]">≡ƒô¡</span>
                   </div>
                   <p class="text-lg text-[#c9d1d9] mb-2">No items in this category yet</p>
                   <p class="text-sm text-[#8b949e]">Items will appear here once published</p>
@@ -638,13 +638,13 @@ createSignal<string | undefined>(undefined)
                   <div class="flex flex-col items-center justify-center py-16">
                     <div class="w-16 h-16 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
                       <span class="text-2xl text-[#484f58]">
-                        {view() === "my-plugins" ? "📦" :
-                         view() === "my-downloads" ? "⬇️" :
-                         view() === "my-favorites" ? "❤️" :
-                         view() === "explore" ? "🔍" :
-                         view() === "top-rated" ? "⭐" :
-                         view() === "trending" ? "📈" :
-                         view() === "new" ? "🆕" : "📭"}
+                        {view() === "my-plugins" ? "≡ƒôª" :
+                         view() === "my-downloads" ? "Γ¼ç∩╕Å" :
+                         view() === "my-favorites" ? "Γ¥ñ∩╕Å" :
+                         view() === "explore" ? "≡ƒöì" :
+                         view() === "top-rated" ? "Γ¡É" :
+                         view() === "trending" ? "≡ƒôê" :
+                         view() === "new" ? "≡ƒåò" : "≡ƒô¡"}
                       </span>
                     </div>
                     <p class="text-lg text-[#c9d1d9] mb-2">
