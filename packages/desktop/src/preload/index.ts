@@ -93,6 +93,7 @@ const api: ElectronAPI = {
     isActive: (extensionId: string) => ipcRenderer.invoke("extension-host:is-active", extensionId),
     checkUpdates: () => ipcRenderer.invoke("extension-host:check-updates"),
     getLastCheck: () => ipcRenderer.invoke("extension-host:get-last-check"),
+    getRegisteredModels: () => ipcRenderer.invoke("extension-host:get-registered-models"),
     onNotification: (cb: (data: any) => void) => {
       const handler = (_: unknown, data: any) => cb(data)
       ipcRenderer.on("extension-host:notification", handler)
@@ -133,6 +134,7 @@ const api: ElectronAPI = {
   openFilePicker: (opts) => ipcRenderer.invoke("open-file-picker", opts),
   readPickedFile: (token, path) => ipcRenderer.invoke("read-picked-file", token, path),
   releasePickedFiles: (token) => ipcRenderer.invoke("release-picked-files", token),
+  writeFile: (path: string, content: string) => ipcRenderer.invoke("write-file", path, content),
   getPathForFile: (file) => webUtils.getPathForFile(file),
   saveFilePicker: (opts) => ipcRenderer.invoke("save-file-picker", opts),
   openLink: (url) => ipcRenderer.send("open-link", url),
@@ -192,6 +194,24 @@ const api: ElectronAPI = {
     const handler = (_: unknown, state: PreviewState) => cb(state)
     ipcRenderer.on("site-preview-update", handler)
     return () => ipcRenderer.removeListener("site-preview-update", handler)
+  },
+
+  // Jarvis Browser - Real Chrome automation
+  jarvisBrowser: {
+    init: (config?: any) => ipcRenderer.invoke("jarvis-browser:init", config),
+    navigate: (url: string) => ipcRenderer.invoke("jarvis-browser:navigate", url),
+    screenshot: (fullPage?: boolean) => ipcRenderer.invoke("jarvis-browser:screenshot", fullPage),
+    click: (x: number, y: number) => ipcRenderer.invoke("jarvis-browser:click", x, y),
+    type: (text: string) => ipcRenderer.invoke("jarvis-browser:type", text),
+    evaluate: (expression: string) => ipcRenderer.invoke("jarvis-browser:evaluate", expression),
+    detectCaptcha: () => ipcRenderer.invoke("jarvis-browser:detect-captcha"),
+    solveCaptcha: () => ipcRenderer.invoke("jarvis-browser:solve-captcha"),
+    listTabs: () => ipcRenderer.invoke("jarvis-browser:list-tabs"),
+    createTab: (url?: string) => ipcRenderer.invoke("jarvis-browser:create-tab", url),
+    closeTab: (tabId: string) => ipcRenderer.invoke("jarvis-browser:close-tab", tabId),
+    fillForm: (selector: string, value: string) => ipcRenderer.invoke("jarvis-browser:fill-form", selector, value),
+    getElement: (x: number, y: number) => ipcRenderer.invoke("jarvis-browser:get-element", x, y),
+    destroy: () => ipcRenderer.invoke("jarvis-browser:destroy"),
   },
 }
 

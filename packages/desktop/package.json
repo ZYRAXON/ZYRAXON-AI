@@ -31,6 +31,7 @@
         "electron-store": "11.0.2",
         "electron-updater": "6.8.9",
         "electron-window-state": "^5.0.3",
+        "jarvis-browser-core": "file:../../playwright-base/packages/jarvis-browser-core",
         "jsonc-parser": "^3.3.0",
         "marked": "^15",
         "sql.js": "1.14.1"

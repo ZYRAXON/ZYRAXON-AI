@@ -18,6 +18,7 @@ import type {
   SessionReviewLineComment,
 } from "@opencode-ai/session-ui/session-review"
 import FileTreeV2 from "@/components/file-tree-v2"
+import { MonacoEditor, getLanguageFromPath } from "@/components/monaco-editor"
 import { useLanguage } from "@/context/language"
 import { useSDK } from "@/context/sdk"
 import {
@@ -55,6 +56,8 @@ export type ReviewPanelV2Props = {
 
 export function ReviewPanelV2(props: ReviewPanelV2Props) {
   const sdk = useSDK()
+  const [editMode, setEditMode] = createSignal(false)
+  const [editContent, setEditContent] = createSignal<string>("")
 
   const diffs = createMemo(() => props.diffs().filter(filterRenderableDiff))
   const filteredFiles = createMemo(() =>
@@ -108,6 +111,34 @@ export function ReviewPanelV2(props: ReviewPanelV2Props) {
         return undefined
       })
 
+  const loadFileForEdit = async (path: string) => {
+    try {
+      const content = await sdk()
+        .client.file.read({ path })
+        .then((x) => x.data)
+      if (content) {
+        setEditContent(typeof content === "string" ? content : content.content || "")
+        setEditMode(true)
+      }
+    } catch (error) {
+      console.debug("[session-review-v2] failed to load file for edit", { path, error })
+    }
+  }
+
+  const saveFileEdit = async () => {
+    const file = activeDiff()
+    if (!file) return
+    try {
+      const api = (window as any).api
+      if (api?.writeFile) {
+        await api.writeFile(file, editContent())
+      }
+      setEditMode(false)
+    } catch (error) {
+      console.debug("[session-review-v2] failed to save file", { file, error })
+    }
+  }
+
   return (
     <SessionReviewV2
       title={props.title}
@@ -121,7 +152,12 @@ export function ReviewPanelV2(props: ReviewPanelV2Props) {
           title={props.title}
           state={props.state}
           diffsReady={props.diffsReady}
-          onSelectFile={props.onSelectFile}
+          onSelectFile={(path) => {
+            props.onSelectFile(path)
+            if (editMode()) {
+              loadFileForEdit(path)
+            }
+          }}
           diffs={diffs}
           filteredFiles={filteredFiles}
           searching={searching}
@@ -131,35 +167,83 @@ export function ReviewPanelV2(props: ReviewPanelV2Props) {
       }
       activeFile={activeDiff()}
       files={filteredFiles()}
-      onSelectFile={props.onSelectFile}
+      onSelectFile={(path) => {
+        props.onSelectFile(path)
+        if (editMode()) {
+          loadFileForEdit(path)
+        }
+      }}
       diffStyle={props.diffStyle}
       onDiffStyleChange={props.onDiffStyleChange}
       expandMode={props.state.expandMode()}
       onExpandModeChange={props.state.setExpandMode}
       hasDiffs={diffs().length > 0}
       preview={
-        // Key on the file path, not the diff object identity, so refreshed diff data
-        // updates the mounted preview instead of remounting the whole viewer.
         <Show when={activeDiff()} keyed>
           {(file) => (
-            <Show when={activeItem()}>
-              {(diff) => (
-                <SessionReviewFilePreviewV2
-                  file={file}
-                  diff={diff()}
-                  diffStyle={props.diffStyle}
-                  expandMode={props.state.expandMode()}
-                  readFile={readFile}
-                  onLineComment={props.onLineComment}
-                  onLineCommentUpdate={props.onLineCommentUpdate}
-                  onLineCommentDelete={props.onLineCommentDelete}
-                  lineCommentActions={props.lineCommentActions}
-                  comments={props.comments}
-                  focusedComment={props.focusedComment}
-                  onFocusedCommentChange={props.onFocusedCommentChange}
-                />
-              )}
-            </Show>
+            <div class="h-full flex flex-col">
+              <div class="flex items-center gap-2 px-3 py-1.5 border-b border-border-base shrink-0">
+                <button
+                  classList={{
+                    "px-2 py-0.5 text-12-medium rounded transition-colors": true,
+                    "bg-text-interactive-base text-background-base": !editMode(),
+                    "text-text-weak hover:text-text-strong": editMode(),
+                  }}
+                  onClick={() => setEditMode(false)}
+                >
+                  Diff
+                </button>
+                <button
+                  classList={{
+                    "px-2 py-0.5 text-12-medium rounded transition-colors": true,
+                    "bg-text-interactive-base text-background-base": editMode(),
+                    "text-text-weak hover:text-text-strong": !editMode(),
+                  }}
+                  onClick={() => loadFileForEdit(file)}
+                >
+                  Edit
+                </button>
+                <Show when={editMode()}>
+                  <button
+                    class="px-2 py-0.5 text-12-medium rounded bg-green-600 text-white hover:bg-green-700 transition-colors ml-auto"
+                    onClick={saveFileEdit}
+                  >
+                    Save (Ctrl+S)
+                  </button>
+                </Show>
+              </div>
+              <div class="flex-1 min-h-0 overflow-hidden">
+                <Show when={editMode()} fallback={
+                  <Show when={activeItem()}>
+                    {(diff) => (
+                      <SessionReviewFilePreviewV2
+                        file={file}
+                        diff={diff()}
+                        diffStyle={props.diffStyle}
+                        expandMode={props.state.expandMode()}
+                        readFile={readFile}
+                        onLineComment={props.onLineComment}
+                        onLineCommentUpdate={props.onLineCommentUpdate}
+                        onLineCommentDelete={props.onLineCommentDelete}
+                        lineCommentActions={props.lineCommentActions}
+                        comments={props.comments}
+                        focusedComment={props.focusedComment}
+                        onFocusedCommentChange={props.onFocusedCommentChange}
+                      />
+                    )}
+                  </Show>
+                }>
+                  <MonacoEditor
+                    value={editContent()}
+                    language={getLanguageFromPath(file)}
+                    path={file}
+                    onChange={(val) => setEditContent(val)}
+                    onSave={() => saveFileEdit()}
+                    height="100%"
+                  />
+                </Show>
+              </div>
+            </div>
           )}
         </Show>
       }

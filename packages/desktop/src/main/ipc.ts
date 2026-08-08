@@ -125,6 +125,17 @@ export function registerIpcHandlers(deps: Deps) {
     return Object.keys(store.store).length
   })
 
+  ipcMain.handle("write-file", async (_event: IpcMainInvokeEvent, filePath: string, content: string) => {
+    try {
+      const { writeFileSync } = await import("node:fs")
+      writeFileSync(filePath, content, "utf-8")
+      return true
+    } catch (error: any) {
+      console.error("[IPC] Failed to write file:", error.message)
+      return false
+    }
+  })
+
   ipcMain.handle("get-github-token", () => {
     try {
       const { execSync } = require("node:child_process") as typeof import("node:child_process")

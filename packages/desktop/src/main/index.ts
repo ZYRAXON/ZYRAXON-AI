@@ -316,6 +316,19 @@ const main = Effect.gen(function* () {
     }
   })
 
+  // ─── Jarvis Browser Integration ──────────────────────────────────────────
+  // Real Chrome browser automation - 10x faster than any human
+  // Connects to system Chrome via CDP, no Chromium download needed
+  yield* Effect.promise(async () => {
+    try {
+      const { registerJarvisBrowserIPC } = await import("./jarvis-browser-integration")
+      registerJarvisBrowserIPC(mainWindow)
+      logger.info("Jarvis Browser integration registered")
+    } catch (error) {
+      logger.warn("failed to initialize Jarvis Browser", error)
+    }
+  })
+
   void updater.start()
 
   // ─── Preview State File Watcher ─────────────────────────────────────────────

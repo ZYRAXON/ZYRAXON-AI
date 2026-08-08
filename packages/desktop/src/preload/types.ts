@@ -110,10 +110,13 @@ export type ElectronAPI = {
     isActive: (extensionId: string) => Promise<boolean>
     checkUpdates: () => Promise<{ hasUpdates: boolean; updates: any[]; checkedAt: string }>
     getLastCheck: () => Promise<string | null>
+    getRegisteredModels: () => Promise<Array<{ providerID: string; models: Array<{ providerID: string; modelID: string; name: string; description?: string; contextLength?: number; cost?: { input: number; output: number } }> }>>
     onNotification: (cb: (data: any) => void) => () => void
     onUpdatesAvailable: (cb: (result: any) => void) => () => void
     onUpdateProgress: (cb: (data: any) => void) => () => void
   }
+
+  onExtensionInstalled: (cb: (data: any) => void) => () => void
 
   getWindowCount: () => Promise<number>
   getWindowID: () => Promise<string>
@@ -133,6 +136,7 @@ export type ElectronAPI = {
   }) => Promise<{ token: string; files: { path: string; name: string; size: number }[] } | null>
   readPickedFile: (token: string, path: string) => Promise<ArrayBuffer>
   releasePickedFiles: (token: string) => Promise<void>
+  writeFile: (path: string, content: string) => Promise<boolean>
   getPathForFile: (file: File) => string
   saveFilePicker: (opts?: { title?: string; defaultPath?: string }) => Promise<string | null>
   openLink: (url: string) => void
@@ -169,4 +173,22 @@ export type ElectronAPI = {
   getPreviewState: () => Promise<PreviewState>
   setPreviewState: (state: PreviewState) => Promise<void>
   onSitePreviewUpdate: (cb: (state: PreviewState) => void) => () => void
+
+  // Jarvis Browser - Real Chrome automation
+  jarvisBrowser: {
+    init: (config?: any) => Promise<{ success: boolean; error?: string }>
+    navigate: (url: string) => Promise<{ success: boolean; error?: string }>
+    screenshot: (fullPage?: boolean) => Promise<{ success: boolean; data?: string; error?: string }>
+    click: (x: number, y: number) => Promise<{ success: boolean; error?: string }>
+    type: (text: string) => Promise<{ success: boolean; error?: string }>
+    evaluate: (expression: string) => Promise<{ success: boolean; result?: any; error?: string }>
+    detectCaptcha: () => Promise<{ success: boolean; captcha?: any; error?: string }>
+    solveCaptcha: () => Promise<{ success: boolean; solved?: boolean; error?: string }>
+    listTabs: () => Promise<{ success: boolean; tabs?: any[]; error?: string }>
+    createTab: (url?: string) => Promise<{ success: boolean; tabId?: string; error?: string }>
+    closeTab: (tabId: string) => Promise<{ success: boolean; error?: string }>
+    fillForm: (selector: string, value: string) => Promise<{ success: boolean; error?: string }>
+    getElement: (x: number, y: number) => Promise<{ success: boolean; element?: any; error?: string }>
+    destroy: () => Promise<{ success: boolean; error?: string }>
+  }
 }
