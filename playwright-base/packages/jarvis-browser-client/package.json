@@ -1,0 +1,29 @@
+{
+  "name": "@jarvis/client",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A thin client for Jarvis",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyraxon-ai/jarvis-browser.git"
+  },
+  "homepage": "https://jarvisbrowser.dev",
+  "engines": {
+    "node": ">=20"
+  },
+  "author": {
+    "name": "ZYRAXON AI"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./lib/index.mjs",
+      "default": "./lib/index.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "jarvis-browser-core": "1.63.0-next"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@jarvis/browser-firefox",
+  "version": "1.63.0-next",
+  "description": "Jarvis package that automatically installs Firefox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zyraxon-ai/jarvis-browser.git"
+  },
+  "homepage": "https://jarvisbrowser.dev",
+  "engines": {
+    "node": ">=20"
+  },
+  "author": {
+    "name": "ZYRAXON AI"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "install": "node install.js"
+  },
+  "dependencies": {
+    "jarvis-browser-core": "1.63.0-next"
+  }
+}
