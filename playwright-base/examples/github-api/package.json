@@ -1,0 +1,13 @@
+﻿{
+  "name": "github-api",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jarvis test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@jarvis-browser/test": "^1.17.1"
+  }
+}
