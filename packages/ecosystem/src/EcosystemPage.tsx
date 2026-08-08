@@ -36,7 +36,8 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
   const [searchQuery, setSearchQuery] = createSignal("")
   const [selectedUser, setSelectedUser] = createSignal<User | null>(null)
   const [viewHistory, setViewHistory] = createSignal<ViewMode[]>(["home"])
-  const [vsCodeDeepLinkId, setVsCodeDeepLinkId] = createSignal<string | null>(null)
+  const [vsCodeDeepLinkId, setVsCodeDeepLinkId] = 
+createSignal<string | undefined>(undefined)
 
   const [items] = createResource(getAllItems)
   const [categories] = createResource(getCategories)
@@ -90,7 +91,7 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
     setSearchQuery("")
     // Clear VS Code deep link when navigating away from extensions
     if (newView !== "extensions") {
-      setVsCodeDeepLinkId(null)
+      setVsCodeDeepLinkId(undefined)
     }
   }
 
@@ -433,7 +434,7 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
             <Show when={(!items() || items()!.length === 0) && !searchQuery()}>
               <div class="flex flex-col items-center justify-center py-20">
                 <div class="w-20 h-20 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
-                  <span class="text-3xl text-[#484f58]">🛒</span>
+                  <span class="text-3xl text-[#484f58]">≡ƒ¢Æ</span>
                 </div>
                 <p class="text-xl text-[#c9d1d9] mb-2">No Items Published Yet</p>
                 <p class="text-sm text-[#8b949e] mb-6 text-center max-w-md">
@@ -622,7 +623,7 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
               <Show when={!categoryItems() || categoryItems()!.length === 0}>
                 <div class="flex flex-col items-center justify-center py-16">
                   <div class="w-16 h-16 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
-                    <span class="text-2xl text-[#484f58]">📭</span>
+                    <span class="text-2xl text-[#484f58]">≡ƒô¡</span>
                   </div>
                   <p class="text-lg text-[#c9d1d9] mb-2">No items in this category yet</p>
                   <p class="text-sm text-[#8b949e]">Items will appear here once published</p>
@@ -637,13 +638,13 @@ export const EcosystemPage: Component<{ initialItemId?: string }> = (props) => {
                   <div class="flex flex-col items-center justify-center py-16">
                     <div class="w-16 h-16 rounded-2xl bg-[#161b22] border border-[#21262d] flex items-center justify-center mb-4">
                       <span class="text-2xl text-[#484f58]">
-                        {view() === "my-plugins" ? "📦" :
-                         view() === "my-downloads" ? "⬇️" :
-                         view() === "my-favorites" ? "❤️" :
-                         view() === "explore" ? "🔍" :
-                         view() === "top-rated" ? "⭐" :
-                         view() === "trending" ? "📈" :
-                         view() === "new" ? "🆕" : "📭"}
+                        {view() === "my-plugins" ? "≡ƒôª" :
+                         view() === "my-downloads" ? "Γ¼ç∩╕Å" :
+                         view() === "my-favorites" ? "Γ¥ñ∩╕Å" :
+                         view() === "explore" ? "≡ƒöì" :
+                         view() === "top-rated" ? "Γ¡É" :
+                         view() === "trending" ? "≡ƒôê" :
+                         view() === "new" ? "≡ƒåò" : "≡ƒô¡"}
                       </span>
                     </div>
                     <p class="text-lg text-[#c9d1d9] mb-2">
