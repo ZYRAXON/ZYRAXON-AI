@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * Copyright 2019 Google Inc. All rights reserved.
  * Modifications copyright (c) ZYRAXON AI.

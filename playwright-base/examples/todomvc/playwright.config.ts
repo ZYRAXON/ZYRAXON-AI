@@ -1,4 +1,4 @@
-﻿/* eslint-disable notice/notice */
+/* eslint-disable notice/notice */
 
 import { defineConfig, devices } from '@jarvis-browser/test';
 import dotenv from 'dotenv';

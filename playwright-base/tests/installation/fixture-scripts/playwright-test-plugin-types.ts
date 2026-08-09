@@ -1,4 +1,4 @@
-﻿import { test as test1, expect as expect1, mergeTests, mergeExpects } from '@jarvis-browser/test';
+import { test as test1, expect as expect1, mergeTests, mergeExpects } from '@jarvis-browser/test';
 import type { Page } from '@jarvis-browser/test';
 import { test as test2, expect as expect2 } from 'jarvis-browser-test-plugin';
 

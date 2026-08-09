@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * Copyright 2026 ZYRAXON AI. All rights reserved.
  * Modifications copyright (c) ZYRAXON AI.

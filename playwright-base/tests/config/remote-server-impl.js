@@ -1,4 +1,4 @@
-﻿const fs = require('fs');
+const fs = require('fs');
 const cluster = require('cluster');
 
 async function start() {

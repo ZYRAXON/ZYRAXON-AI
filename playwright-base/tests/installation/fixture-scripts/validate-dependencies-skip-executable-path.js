@@ -1,4 +1,4 @@
-﻿const jarvis = require('jarvis');
+const jarvis = require('jarvis');
 
 process.env.PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = 1;
 

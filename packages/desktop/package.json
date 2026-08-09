@@ -34,7 +34,8 @@
         "jarvis-browser-core": "file:../../playwright-base/packages/jarvis-browser-core",
         "jsonc-parser": "^3.3.0",
         "marked": "^15",
-        "sql.js": "1.14.1"
+        "sql.js": "1.14.1",
+        "ws": "^8.18.0"
     },
     "devDependencies": {
         "@actions/artifact": "4.0.0",

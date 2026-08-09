@@ -1,4 +1,4 @@
-﻿var Vue = (function (exports) {
+var Vue = (function (exports) {
   'use strict';
 
   /**

@@ -97,6 +97,19 @@ export namespace RipgrepBinary {
             const target = path.join(Global.Path.bin, `rg${process.platform === "win32" ? ".exe" : ""}`)
             if (yield* fs.isFile(target).pipe(Effect.orDie)) return target
 
+            const bundledPath = path.join(
+              process.resourcesPath ?? path.join(__dirname, "..", "..", "resources"),
+              "bin",
+              `rg${process.platform === "win32" ? ".exe" : ""}`,
+            )
+            if (yield* fs.isFile(bundledPath).pipe(Effect.catchAll(() => Effect.succeed(false)))) {
+              yield* fs.ensureDir(Global.Path.bin).pipe(Effect.orDie)
+              yield* fs.copyFile(bundledPath, target)
+              if (process.platform !== "win32") yield* fs.chmod(target, 0o755)
+              yield* Effect.logInfo("using bundled ripgrep", { path: bundledPath })
+              return target
+            }
+
             const platformKey = `${process.arch}-${process.platform}` as keyof typeof PLATFORM
             const config = PLATFORM[platformKey]
             if (!config) throw new Error(`unsupported platform for ripgrep: ${platformKey}`)

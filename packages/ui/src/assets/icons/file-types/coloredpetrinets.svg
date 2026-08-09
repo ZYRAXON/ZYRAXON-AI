@@ -1,9 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="16" height="16">
-  <rect width="16" height="16" fill="white"/>
-  <g transform="translate(100,100)" stroke="black" stroke-width="28" stroke-linecap="square" fill="none">
-    <line x1="-45" y1="-45" x2="-30" y2="-30"/>
-    <line x1="30" y1="30" x2="45" y2="45"/>
-    <line x1="-45" y1="45" x2="-30" y2="30"/>
-    <line x1="30" y1="-30" x2="45" y2="-45"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <rect width="3" height="1" x="9" y="7.5" fill="#b0bec5" rx="0" ry=".032"></rect>
+      <rect width="3" height="1" x="4" y="7.5" fill="#b0bec5" rx="0" ry=".032"></rect>
+      <circle cx="3" cy="8" r="2" fill="#4caf50"></circle>
+      <circle cx="13" cy="8" r="2" fill="#ff9800"></circle>
+      <rect width="4" height="4" x="6" y="6" fill="#00bcd4" rx=".59"></rect>
 </svg>

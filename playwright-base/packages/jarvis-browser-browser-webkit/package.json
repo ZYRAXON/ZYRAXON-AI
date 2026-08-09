@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@jarvis/browser-webkit",
   "version": "1.63.0-next",
   "description": "Jarvis package that automatically installs WebKit",

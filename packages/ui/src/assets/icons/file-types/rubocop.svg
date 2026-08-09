@@ -1,9 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="16" height="16">
-  <rect width="16" height="16" fill="white"/>
-  <g transform="translate(100,100)" stroke="black" stroke-width="28" stroke-linecap="square" fill="none">
-    <line x1="-45" y1="-45" x2="-30" y2="-30"/>
-    <line x1="30" y1="30" x2="45" y2="45"/>
-    <line x1="-45" y1="45" x2="-30" y2="30"/>
-    <line x1="30" y1="-30" x2="45" y2="-45"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16">
+  <path
+        fill="#b0bec5"
+        d="M22 24a2 2 0 0 1-2 2h-2l-1-2h-2l-1 2h-2a2 2 0 0 1-2-2v-2H8v2a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4v-2h-2Z"
+      ></path>
+      <path
+        fill="#b0bec5"
+        d="M20 24v-2h-8v2h1v-1h6v1zm6.5-10H26a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2h-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5H6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2h.5a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5"
+      ></path>
+      <path fill="#e53935" d="M8 15h16v2H8z" data-mit-no-recolor="true"></path>
+      <path fill="#b0bec5" d="M23.738 10a7.99 7.99 0 0 0-15.476 0Z"></path>
 </svg>

@@ -1,4 +1,4 @@
-﻿// This is generated from /utils/protocol-types-generator/index.js
+// This is generated from /utils/protocol-types-generator/index.js
 type binary = string;
 export namespace Protocol {
   export namespace Accessibility {

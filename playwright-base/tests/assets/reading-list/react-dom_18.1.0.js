@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license React
  * react-dom.development.js
  *

@@ -1,5 +1,46 @@
 import { createEffect, createSignal, onCleanup, onMount, type JSX } from "solid-js"
 import type * as Monaco from "monaco-editor"
+// Monaco editor CSS loaded at runtime via link tag
+let monacoCssLoaded = false
+function loadMonacoCss() {
+  if (monacoCssLoaded) return
+  monacoCssLoaded = true
+  const link = document.createElement("link")
+  link.rel = "stylesheet"
+  link.href = new URL("monaco-editor/min/vs/editor/editor.main.css", import.meta.url).href
+  document.head.appendChild(link)
+}
+
+let workersConfigured = false
+function configureMonacoWorkers() {
+  if (workersConfigured) return
+  workersConfigured = true
+
+  ;(window as any).MonacoEnvironment = {
+    getWorker(_moduleId: string, label: string) {
+      const getWorkerModule = (moduleUrl: string) => {
+        return new Worker(new URL(moduleUrl, import.meta.url), { type: "module" })
+      }
+      switch (label) {
+        case "json":
+          return getWorkerModule("monaco-editor/esm/vs/language/json/json.worker?worker")
+        case "css":
+        case "scss":
+        case "less":
+          return getWorkerModule("monaco-editor/esm/vs/language/css/css.worker?worker")
+        case "html":
+        case "handlebars":
+        case "razor":
+          return getWorkerModule("monaco-editor/esm/vs/language/html/html.worker?worker")
+        case "typescript":
+        case "javascript":
+          return getWorkerModule("monaco-editor/esm/vs/language/typescript/ts.worker?worker")
+        default:
+          return getWorkerModule("monaco-editor/esm/vs/editor/editor.worker?worker")
+      }
+    },
+  }
+}
 
 export interface MonacoEditorProps {
   value: string
@@ -22,6 +63,8 @@ export function MonacoEditor(props: MonacoEditorProps) {
   onMount(async () => {
     if (!containerRef) return
 
+    loadMonacoCss()
+    configureMonacoWorkers()
     const monacoModule = await import("monaco-editor")
     monaco = monacoModule
 

@@ -344,10 +344,39 @@ const layer = Layer.effect(
       const [cmd, ...args] = mcp.command
       const baseDir = yield* InstanceState.directory
       const cwd = mcp.cwd ? path.resolve(baseDir, mcp.cwd) : baseDir
+
+      // Resolve __RESOURCES_PATH__ placeholder in command/args (for bundled MCP servers)
+      // Try multiple paths: packaged Electron resourcesPath, then dev fallbacks
+      const findResourcesPath = (): string => {
+        // 1. Packaged Electron: process.resourcesPath works
+        if (typeof process !== "undefined" && (process as any).resourcesPath) {
+          const p = (process as any).resourcesPath as string
+          // Verify it actually contains MCP files (not Electron install dir)
+          try {
+            const fs = require("fs") as typeof import("fs")
+            if (fs.existsSync(path.join(p, "jarvis-browser-mcp.js"))) return p
+          } catch {}
+        }
+        // 2. Dev mode: resolve relative to this file (packages/opencode/src/mcp/)
+        try {
+          const { fileURLToPath } = require("url") as typeof import("url")
+          const here = path.dirname(fileURLToPath(import.meta.url))
+          const devResources = path.resolve(here, "../../../desktop/resources")
+          const fs = require("fs") as typeof import("fs")
+          if (fs.existsSync(path.join(devResources, "jarvis-browser-mcp.js"))) return devResources
+        } catch {}
+        // 3. Fallback to baseDir (project root)
+        return baseDir
+      }
+      const resourcesPath = findResourcesPath()
+      const resolvePath = (p: string) => p.replace(/__RESOURCES_PATH__/g, resourcesPath)
+      const resolvedCmd = resolvePath(cmd)
+      const resolvedArgs = args.map(resolvePath)
+
       const transport = new StdioClientTransport({
         stderr: "pipe",
-        command: cmd,
-        args,
+        command: resolvedCmd,
+        args: resolvedArgs,
         cwd,
         env: {
           ...process.env,

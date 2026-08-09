@@ -1,9 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="16" height="16">
-  <rect width="16" height="16" fill="white"/>
-  <g transform="translate(100,100)" stroke="black" stroke-width="28" stroke-linecap="square" fill="none">
-    <line x1="-45" y1="-45" x2="-30" y2="-30"/>
-    <line x1="30" y1="30" x2="45" y2="45"/>
-    <line x1="-45" y1="45" x2="-30" y2="30"/>
-    <line x1="30" y1="-30" x2="45" y2="-45"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16">
+  <path
+        fill="#1e88e5"
+        d="M10 1C7.23 1 5 3.23 5 6v5h5c2.77 0 5-2.23 5-5s-2.23-5-5-5m1.5 3H13v5h-1.5zm-5 1H8v4H6.5zM9 6h1.5v3H9zM1 8v3h3V8zm0 4v2.498a.5.5 0 0 0 .502.502H4v-3zm4 0v3h3v-3z"
+      ></path>
 </svg>

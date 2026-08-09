@@ -1,4 +1,4 @@
-﻿/**
+/**
  * The MIT License (MIT)
  * Modifications copyright (c) ZYRAXON AI.
  *

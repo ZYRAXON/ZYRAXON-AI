@@ -191,7 +191,7 @@ function loadLocalCache(): EcosystemItem[] | null {
     const raw = localStorage.getItem(LOCALSTORAGE_KEY)
     if (!raw) return null
     const parsed = JSON.parse(raw)
-    if (Array.isArray(parsed.items) && Date.now() - parsed.time < 600000) {
+    if (Array.isArray(parsed.items) && Date.now() - parsed.time < 86400000) {
       return parsed.items
     }
   } catch {}
@@ -214,7 +214,21 @@ export async function getAllItems(): Promise<EcosystemItem[]> {
   cachedItems = items
   cacheTime = now
   if (items.length > 0) saveLocalCache(items)
-  return items.length > 0 ? items : (loadLocalCache() ?? items)
+  if (items.length > 0) return items
+
+  const local = loadLocalCache()
+  if (local && local.length > 0) return local
+
+  try {
+    const { BUNDLED_MARKETPLACE_ITEMS } = await import("./bundled-marketplace")
+    if (BUNDLED_MARKETPLACE_ITEMS.length > 0) {
+      cachedItems = BUNDLED_MARKETPLACE_ITEMS
+      cacheTime = now
+      return BUNDLED_MARKETPLACE_ITEMS
+    }
+  } catch {}
+
+  return items
 }
 
 export async function getItemsByCategory(category: string): Promise<EcosystemItem[]> {

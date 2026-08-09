@@ -235,13 +235,78 @@ export async function installExtensionFromUrl(
     // Extract VSIX
     await extractVsix(vsixPath, extensionDir)
 
-    // Parse package.json for metadata
+    // Parse package.json for metadata + icon
     const pkg = parsePackageJson(extensionDir)
     const finalId = pkg?.name || extensionId
     const finalDisplayName = pkg?.displayName || options?.displayName || finalId
     const finalVersion = pkg?.version || options?.version || "0.0.0"
     const finalPublisher = pkg?.publisher || options?.publisher || "unknown"
     const finalDescription = pkg?.description || options?.description || ""
+
+    // Extract icon from package.json (icon field, contributes.icon, or icon URL)
+    let finalIcon = options?.icon
+    if (!finalIcon && pkg) {
+      // Direct icon field (string path or URL)
+      if (typeof pkg.icon === "string") {
+        const iconValue = pkg.icon
+        // If it's a URL, use directly
+        if (iconValue.startsWith("http://") || iconValue.startsWith("https://") || iconValue.startsWith("data:")) {
+          finalIcon = iconValue
+        }
+        // If it's a relative path, resolve to absolute path
+        else {
+          const iconPath = join(extensionDir, iconValue)
+          if (existsSync(iconPath)) {
+            try {
+              const iconBuffer = readFileSync(iconPath)
+              const ext = iconValue.split(".").pop()?.toLowerCase() || "png"
+              const mime = ext === "svg" ? "image/svg+xml" : ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png"
+              finalIcon = `data:${mime};base64,${iconBuffer.toString("base64")}`
+            } catch {}
+          }
+        }
+      }
+      // VS Code contributes.icon pattern
+      else if (pkg.contributes?.icon) {
+        const iconValue = pkg.contributes.icon
+        if (typeof iconValue === "string") {
+          if (iconValue.startsWith("http://") || iconValue.startsWith("https://") || iconValue.startsWith("data:")) {
+            finalIcon = iconValue
+          } else {
+            const iconPath = join(extensionDir, iconValue)
+            if (existsSync(iconPath)) {
+              try {
+                const iconBuffer = readFileSync(iconPath)
+                const ext = iconValue.split(".").pop()?.toLowerCase() || "png"
+                const mime = ext === "svg" ? "image/svg+xml" : ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png"
+                finalIcon = `data:${mime};base64,${iconBuffer.toString("base64")}`
+              } catch {}
+            }
+          }
+        }
+      }
+      // Check for common icon file names in extension directory
+      else {
+        const iconCandidates = [
+          "icon.png", "icon.svg", "icon.jpg", "icon.jpeg", "icon.ico",
+          "assets/icon.png", "assets/icon.svg", "images/icon.png",
+          "resources/icon.png", "media/icon.png",
+          `${finalId.split(".").pop()}.png`,
+        ]
+        for (const candidate of iconCandidates) {
+          const iconPath = join(extensionDir, candidate)
+          if (existsSync(iconPath)) {
+            try {
+              const iconBuffer = readFileSync(iconPath)
+              const ext = candidate.split(".").pop()?.toLowerCase() || "png"
+              const mime = ext === "svg" ? "image/svg+xml" : ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png"
+              finalIcon = `data:${mime};base64,${iconBuffer.toString("base64")}`
+            } catch {}
+            break
+          }
+        }
+      }
+    }
 
     // If the package.json name differs from extensionId, rename directory
     if (pkg?.name && pkg.name !== extensionId) {
@@ -266,7 +331,7 @@ export async function installExtensionFromUrl(
             installedAt: new Date().toISOString(),
             vsixPath,
             extensionPath: newDir,
-            icon: options?.icon,
+            icon: finalIcon,
             size: buffer.length,
             status: "active",
           }
@@ -292,7 +357,7 @@ export async function installExtensionFromUrl(
       installedAt: new Date().toISOString(),
       vsixPath,
       extensionPath: extensionDir,
-      icon: options?.icon,
+      icon: finalIcon,
       size: buffer.length,
       status: "active",
     }

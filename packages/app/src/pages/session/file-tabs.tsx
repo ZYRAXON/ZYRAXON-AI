@@ -450,15 +450,11 @@ function SessionFileViewV1(props: { tab: string }) {
           cacheKey: cacheKey(),
         }}
         enableLineSelection
-        enableGutterUtility
         selectedLines={activeSelection()}
         commentedLines={commentedLines()}
         onRendered={() => {
           scrollSync.queueRestore()
         }}
-        annotations={commentsUi.annotations()}
-        renderAnnotation={commentsUi.renderAnnotation}
-        renderGutterUtility={commentsUi.renderGutterUtility}
         onLineSelected={(range: SelectedLineRange | null) => {
           commentsUi.onLineSelected(range)
         }}
@@ -733,15 +729,11 @@ function SessionFileViewV2(props: { tab: string }) {
           cacheKey: cacheKey(),
         }}
         enableLineSelection
-        enableGutterUtility
         selectedLines={activeSelection()}
         commentedLines={commentedLines()}
         onRendered={() => {
           scrollSync.queueRestore()
         }}
-        annotations={commentsUi.annotations()}
-        renderAnnotation={commentsUi.renderAnnotation}
-        renderGutterUtility={commentsUi.renderGutterUtility}
         onLineSelected={(range: SelectedLineRange | null) => {
           commentsUi.onLineSelected(range)
         }}

@@ -1,4 +1,4 @@
-﻿/* eslint-disable notice/notice */
+/* eslint-disable notice/notice */
 
 import { defineConfig } from '@jarvis-browser/test';
 

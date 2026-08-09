@@ -1,9 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="16" height="16">
-  <rect width="16" height="16" fill="white"/>
-  <g transform="translate(100,100)" stroke="black" stroke-width="28" stroke-linecap="square" fill="none">
-    <line x1="-45" y1="-45" x2="-30" y2="-30"/>
-    <line x1="30" y1="30" x2="45" y2="45"/>
-    <line x1="-45" y1="45" x2="-30" y2="30"/>
-    <line x1="30" y1="-30" x2="45" y2="-45"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16">
+  <defs>
+        <linearGradient
+          id="a"
+          x1="385.222"
+          x2="405.918"
+          y1="482.514"
+          y2="477.914"
+          gradientTransform="matrix(.75 0 0 .75 -284.775 -343.25)"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0" stop-color="#78909c" stop-opacity=".2"></stop>
+          <stop offset="1" stop-color="#78909c"></stop>
+        </linearGradient>
+      </defs>
+      <path fill="#78909c" d="m17.714 9-3.428 14-1.715 7L28 14ZM4 18 19.429 2l-1.715 7Z"></path>
+      <path fill="url(#a)" d="M17.714 9 4 18l10.286 5Z"></path>
 </svg>

@@ -50,6 +50,7 @@ interface ExtensionInfo {
   contributes?: any
   extensionPath: string
   isActive: boolean
+  icon?: string
 }
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -200,6 +201,41 @@ function scanExtensions(): Map<string, ExtensionInfo> {
         if (!packageJson.displayName && !packageJson.name) continue
       }
 
+      let icon = packageJson.icon || packageJson.contributes?.icon || ""
+      // Convert relative icon path to data URI
+      if (icon && !icon.startsWith("data:") && !icon.startsWith("http")) {
+        const iconPath = join(extensionPath, icon)
+        if (existsSync(iconPath)) {
+          try {
+            const iconBuffer = readFileSync(iconPath)
+            const ext = icon.split(".").pop()?.toLowerCase() || "png"
+            const mime = ext === "svg" ? "image/svg+xml" : ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png"
+            icon = `data:${mime};base64,${iconBuffer.toString("base64")}`
+          } catch {}
+        }
+      }
+      // If no icon from package.json, scan for common icon files
+      if (!icon) {
+        const iconCandidates = [
+          "icon.png", "icon.svg", "icon.jpg", "icon.jpeg", "icon.ico",
+          "assets/icon.png", "assets/icon.svg", "images/icon.png",
+          "resources/icon.png", "media/icon.png",
+        ]
+        for (const candidate of iconCandidates) {
+          const iconPath = join(extensionPath, candidate)
+          if (existsSync(iconPath)) {
+            try {
+              const { readFileSync: readFs } = require("node:fs")
+              const iconBuffer = readFs(iconPath)
+              const ext = candidate.split(".").pop()?.toLowerCase() || "png"
+              const mime = ext === "svg" ? "image/svg+xml" : ext === "png" ? "image/png" : ext === "jpg" || ext === "jpeg" ? "image/jpeg" : "image/png"
+              icon = `data:${mime};base64,${iconBuffer.toString("base64")}`
+            } catch {}
+            break
+          }
+        }
+      }
+
       const ext: ExtensionInfo = {
         id: `${packageJson.publisher}.${packageJson.name}`,
         name: packageJson.name,
@@ -212,6 +248,7 @@ function scanExtensions(): Map<string, ExtensionInfo> {
         contributes: packageJson.contributes || {},
         extensionPath,
         isActive: false,
+        icon,
       }
 
       extensions.set(ext.id, ext)
@@ -222,6 +259,18 @@ function scanExtensions(): Map<string, ExtensionInfo> {
   }
 
   return extensions
+}
+
+// ─── Robust Extension Lookup ─────────────────────────────────────────────────
+// Extension IDs may be "chatgpt-ai" (installed.json) or "YaleHuang.chatgpt-ai"
+// (scanner). Try exact match, then name-only fallback.
+function findExtension(extensionId: string): ExtensionInfo | undefined {
+  const exact = extensionMap.get(extensionId)
+  if (exact) return exact
+  for (const [, ext] of extensionMap) {
+    if (ext.name === extensionId || ext.id.endsWith(`.${extensionId}`)) return ext
+  }
+  return undefined
 }
 
 // ─── VS Code API Shim Injection ───────────────────────────────────────────────
@@ -391,7 +440,7 @@ function createVSCodeShim(): any {
     },
     extensions: {
       getExtension: (extensionId: string) => {
-        const found = extensionMap.get(extensionId)
+        const found = findExtension(extensionId)
         if (found) {
           return {
             id: found.id,
@@ -601,9 +650,20 @@ function initializeExtensionHost(): void {
 
   const manifestActive = loadManifestActiveExtensions()
   for (const id of manifestActive) {
-    if (!activatedExtensions.has(id) && extensionMap.has(id)) {
+    if (activatedExtensions.has(id)) continue
+    // Try exact match first
+    if (extensionMap.has(id)) {
       activatedExtensions.add(id)
       console.log(`[ExtHost] Restored active from manifest: ${id}`)
+      continue
+    }
+    // Fallback: match by name alone (installed.json may use short ID without publisher prefix)
+    for (const [extId, ext] of extensionMap) {
+      if (ext.name === id || extId.endsWith(`.${id}`)) {
+        activatedExtensions.add(extId)
+        console.log(`[ExtHost] Restored active from manifest (name match): ${id} → ${extId}`)
+        break
+      }
     }
   }
 
@@ -619,30 +679,35 @@ export function registerExtensionHostIPC(): void {
   ipcMain.handle("extension-host:get-extensions", () => {
     return Array.from(extensionMap.values()).map((ext) => ({
       id: ext.id,
+      shortId: ext.name,
       name: ext.name,
       displayName: ext.displayName || ext.name,
       description: ext.description || "",
       version: ext.version,
       publisher: ext.publisher,
-      isActive: activatedExtensions.has(ext.id),
+      isActive: activatedExtensions.has(ext.id) || activatedExtensions.has(ext.name),
+      icon: ext.icon || "",
     }))
   })
 
   ipcMain.handle("extension-host:activate-extension", async (_, extensionId: string) => {
-    const ext = extensionMap.get(extensionId)
+    const ext = findExtension(extensionId)
     if (!ext) return false
-    if (activatedExtensions.has(extensionId)) return true
+    if (activatedExtensions.has(ext.id) || activatedExtensions.has(extensionId)) return true
 
     const success = await activateExtension(ext)
     if (success) {
-      activatedExtensions.add(extensionId)
+      activatedExtensions.add(ext.id)
       saveActivationState()
     }
     return success
   })
 
   ipcMain.handle("extension-host:deactivate-extension", (_, extensionId: string) => {
-    if (!activatedExtensions.has(extensionId)) return false
+    const ext = findExtension(extensionId)
+    const realId = ext?.id || extensionId
+    if (!activatedExtensions.has(realId) && !activatedExtensions.has(extensionId)) return false
+    activatedExtensions.delete(realId)
     activatedExtensions.delete(extensionId)
     saveActivationState()
     console.log(`[ExtHost] Deactivated: ${extensionId}`)
@@ -650,7 +715,8 @@ export function registerExtensionHostIPC(): void {
   })
 
   ipcMain.handle("extension-host:is-active", (_, extensionId: string) => {
-    return activatedExtensions.has(extensionId)
+    const ext = findExtension(extensionId)
+    return activatedExtensions.has(extensionId) || (ext ? activatedExtensions.has(ext.id) : false)
   })
 
   ipcMain.handle("extension-host:check-updates", () => {
@@ -682,6 +748,7 @@ export function getExtensionHostExtensions() {
     version: ext.version,
     publisher: ext.publisher,
     isActive: activatedExtensions.has(ext.id),
+    icon: ext.icon || "",
   }))
 }
 
@@ -699,7 +766,10 @@ export async function activateExtensionById(extensionId: string): Promise<boolea
 }
 
 export function deactivateExtensionById(extensionId: string): boolean {
-  if (!activatedExtensions.has(extensionId)) return false
+  const ext = findExtension(extensionId)
+  const realId = ext?.id || extensionId
+  if (!activatedExtensions.has(realId) && !activatedExtensions.has(extensionId)) return false
+  activatedExtensions.delete(realId)
   activatedExtensions.delete(extensionId)
   saveActivationState()
   console.log(`[ExtHost] Deactivated: ${extensionId}`)
@@ -707,7 +777,8 @@ export function deactivateExtensionById(extensionId: string): boolean {
 }
 
 export function isExtensionActive(extensionId: string): boolean {
-  return activatedExtensions.has(extensionId)
+  const ext = findExtension(extensionId)
+  return activatedExtensions.has(extensionId) || (ext ? activatedExtensions.has(ext.id) : false)
 }
 
 export function refreshExtensions(): number {

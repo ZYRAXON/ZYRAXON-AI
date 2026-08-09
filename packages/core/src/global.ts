@@ -10,7 +10,30 @@ import { makeGlobalNode } from "./effect/app-node"
 const app = "zyraxon"
 const data = path.join(xdgData!, app)
 const cache = path.join(xdgCache!, app)
-const config = path.join(xdgConfig!, app)
+
+// On Windows, xdgConfig = %APPDATA% (C:\Users\<user>\AppData\Roaming)
+// But users may also have config at ~/.config/zyraxon/ (Linux-style)
+// Check both and prefer ~/.config if it exists (more standard)
+const xdgConfigDir = path.join(xdgConfig!, app)
+const homeConfigDir = path.join(os.homedir(), ".config", app)
+
+// Use a getter so we can check at runtime which path has config files
+function resolveConfigDir(): string {
+  // If env override, use that
+  if (Flag.ZYRAXON_CONFIG_DIR) return Flag.ZYRAXON_CONFIG_DIR
+  // Check if ~/.config/zyraxon has any config files (user expectation)
+  try {
+    const files = fs.readdirSync(homeConfigDir)
+    if (files.some(f => f.endsWith(".json") || f.endsWith(".jsonc"))) {
+      return homeConfigDir
+    }
+  } catch {}
+  // Fallback to xdg path
+  return xdgConfigDir
+}
+
+const config = resolveConfigDir()
+
 const state = path.join(xdgState!, app)
 const tmp = path.join(os.tmpdir(), app)
 

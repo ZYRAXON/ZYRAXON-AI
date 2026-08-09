@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2026 ZYRAXON AI. All rights reserved.
  * Modifications copyright (c) ZYRAXON AI.
  *

@@ -1,4 +1,4 @@
-﻿// Single source of truth for the mapping between idiomatic npm imports and
+// Single source of truth for the mapping between idiomatic npm imports and
 // the keys exported from `jarvis-core/lib/utilsBundle`.
 //
 // Each entry: package specifier → { default?, named?: {srcName: bundleKey}, namespace? }

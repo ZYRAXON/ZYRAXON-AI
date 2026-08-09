@@ -56,6 +56,18 @@ const getBase = (appId: string): Configuration => ({
       to: "native/",
       filter: ["index.js", "index.d.ts", "build/Release/mac_window.node", "swift-build/**"],
     },
+    {
+      from: "resources/bin/",
+      to: "bin/",
+    },
+    {
+      from: "resources/jarvis-browser-mcp.js",
+      to: "jarvis-browser-mcp.js",
+    },
+    {
+      from: "resources/utilsBundle.js",
+      to: "utilsBundle.js",
+    },
   ],
   mac: {
     category: "public.app-category.developer-tools",

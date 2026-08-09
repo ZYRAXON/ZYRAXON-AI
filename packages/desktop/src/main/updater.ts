@@ -17,6 +17,8 @@ export function setupAutoUpdater(stop: () => Promise<void>) {
   autoUpdater.allowDowngrade = true
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = false
+  autoUpdater.disableWebInstaller = true
+  autoUpdater.disableDowngrade = false
   logger.log("auto updater configured", {
     channel: autoUpdater.channel,
     allowPrerelease: autoUpdater.allowPrerelease,
@@ -29,17 +31,21 @@ export function setupAutoUpdater(stop: () => Promise<void>) {
     enabled: UPDATER_ENABLED,
     currentVersion: app.getVersion(),
     backend: {
-      checkForUpdates: () => autoUpdater.checkForUpdates(),
-      downloadUpdate: () => autoUpdater.downloadUpdate(),
+      checkForUpdates: () =>
+        Promise.race([
+          autoUpdater.checkForUpdates(),
+          new Promise<null>((resolve) => setTimeout(() => resolve(null), 15000)),
+        ]),
+      downloadUpdate: () =>
+        Promise.race([
+          autoUpdater.downloadUpdate(),
+          new Promise<never>((_, reject) => setTimeout(() => reject(new Error("Download timeout")), 300000)),
+        ]),
       quitAndInstall: () => {
-        // quitAndInstall closes all windows before emitting before-quit, so
-        // flag the quit first to keep window ids persisted for restore.
         setAppQuitting()
         try {
           autoUpdater.quitAndInstall()
         } catch (error) {
-          // The install failed and the app keeps running; clear the flag so
-          // deliberate window closes prune ids again.
           setAppQuitting(false)
           throw error
         }

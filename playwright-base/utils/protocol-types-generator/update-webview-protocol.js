@@ -1,4 +1,4 @@
-﻿//
+//
 // Fetches upstream WebKit Web Inspector protocol definitions from
 // github.com/WebKit/WebKit (main branch) and generates an up-to-date
 // `packages/jarvis-browser-core/src/server/webkit/webview/protocol.d.ts` so we

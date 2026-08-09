@@ -1,4 +1,4 @@
-import { createEffect, createMemo, For, Show, type Accessor, type JSX } from "solid-js"
+import { createEffect, createMemo, createSignal, For, Show, onCleanup, type Accessor, type JSX } from "solid-js"
 import {
   DragDropProvider,
   DragDropSensors,
@@ -11,6 +11,14 @@ import { ConstrainDragXAxis } from "@/utils/solid-dnd"
 import { IconButton } from "@opencode-ai/ui/icon-button"
 import { Tooltip, TooltipKeybind } from "@opencode-ai/ui/tooltip"
 import { type LocalProject } from "@/context/layout"
+
+interface SidebarExtension {
+  id: string
+  name: string
+  displayName: string
+  icon?: string
+  isActive: boolean
+}
 
 export const SidebarContent = (props: {
   mobile?: boolean
@@ -34,6 +42,8 @@ export const SidebarContent = (props: {
 }): JSX.Element => {
   const expanded = createMemo(() => !!props.mobile || props.opened())
   const placement = () => (props.mobile ? "bottom" : "right")
+  const [activeExtensions, setActiveExtensions] = createSignal<SidebarExtension[]>([])
+  const [selectedExt, setSelectedExt] = createSignal<string | null>(null)
   let panel: HTMLDivElement | undefined
 
   createEffect(() => {
@@ -45,6 +55,79 @@ export const SidebarContent = (props: {
     }
     el.setAttribute("inert", "")
   })
+
+  // Load active extensions for sidebar icons
+  createEffect(() => {
+    const loadExtensions = async () => {
+      try {
+        const api = (window as any).api
+        const hostList = await api?.extensionHost?.getExtensions()
+        const manifestList = await api?.getInstalledExtensions?.()
+        
+        const merged = new Map<string, SidebarExtension>()
+        
+        // Manifest list uses short IDs (e.g. "chatgpt-ai")
+        if (manifestList && Array.isArray(manifestList)) {
+          for (const ext of manifestList) {
+            if (ext.status === "active") {
+              merged.set(ext.id, {
+                id: ext.id,
+                name: ext.id.split(".").pop() || ext.id,
+                displayName: ext.displayName || ext.id,
+                icon: ext.icon,
+                isActive: true,
+              })
+            }
+          }
+        }
+        
+        // Host list uses full IDs (e.g. "YaleHuang.chatgpt-ai") — merge by name
+        if (hostList && Array.isArray(hostList)) {
+          for (const ext of hostList) {
+            if (ext.isActive) {
+              // Find existing entry by name match
+              let found = false
+              for (const [key, existing] of merged) {
+                if (existing.name === ext.name || existing.name === ext.shortId || key === ext.name) {
+                  // Update with richer data from host (icon, displayName)
+                  if (ext.icon && !existing.icon) existing.icon = ext.icon
+                  if (ext.displayName && ext.displayName !== ext.name) existing.displayName = ext.displayName
+                  found = true
+                  break
+                }
+              }
+              if (!found) {
+                merged.set(ext.name, {
+                  id: ext.name,
+                  name: ext.name,
+                  displayName: ext.displayName || ext.name,
+                  icon: ext.icon,
+                  isActive: true,
+                })
+              }
+            }
+          }
+        }
+        
+        setActiveExtensions(Array.from(merged.values()))
+      } catch {}
+    }
+    loadExtensions()
+  })
+
+  const getInitials = (name: string) => name.slice(0, 2).toUpperCase()
+
+  const getAvatarColor = (id: string) => {
+    const colors = [
+      "bg-blue-500", "bg-green-500", "bg-purple-500", "bg-orange-500",
+      "bg-pink-500", "bg-teal-500", "bg-indigo-500", "bg-red-500",
+    ]
+    let hash = 0
+    for (let i = 0; i < id.length; i++) {
+      hash = id.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    return colors[Math.abs(hash) % colors.length]
+  }
 
   return (
     <div class="flex h-full w-full min-w-0 overflow-hidden">
@@ -66,6 +149,38 @@ export const SidebarContent = (props: {
               <SortableProvider ids={props.projects().map((p) => p.worktree)}>
                 <For each={props.projects()}>{(project) => props.renderProject(project)}</For>
               </SortableProvider>
+
+              {/* Active Extension Icons */}
+              <Show when={activeExtensions().length > 0}>
+                <div class="w-8 h-px bg-border-base my-1" />
+                <For each={activeExtensions()}>
+                  {(ext) => (
+                    <Tooltip placement={placement()} value={ext.displayName}>
+                      <button
+                        classList={{
+                          "w-10 h-10 rounded-lg flex items-center justify-center shrink-0 cursor-pointer transition-all": true,
+                          "ring-2 ring-text-interactive-base ring-offset-1 ring-offset-background-base": selectedExt() === ext.id,
+                          "hover:bg-surface-raised-base-hover": selectedExt() !== ext.id,
+                        }}
+                        onClick={() => setSelectedExt(selectedExt() === ext.id ? null : ext.id)}
+                        aria-label={ext.displayName}
+                      >
+                        <Show
+                          when={ext.icon}
+                          fallback={
+                            <span class={`w-8 h-8 rounded-md flex items-center justify-center text-12-semibold text-white ${getAvatarColor(ext.id)}`}>
+                              {getInitials(ext.displayName)}
+                            </span>
+                          }
+                        >
+                          <img src={ext.icon} class="w-8 h-8 rounded-md" alt="" />
+                        </Show>
+                      </button>
+                    </Tooltip>
+                  )}
+                </For>
+              </Show>
+
               <Tooltip
                 placement={placement()}
                 value={

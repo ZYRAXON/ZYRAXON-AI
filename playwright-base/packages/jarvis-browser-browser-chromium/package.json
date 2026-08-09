@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@jarvis/browser-chromium",
   "version": "1.63.0-next",
   "description": "Jarvis package that automatically installs Chromium",
