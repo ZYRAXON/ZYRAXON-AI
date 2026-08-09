@@ -26,7 +26,7 @@ export const BUNDLED_MARKETPLACE_ITEMS: EcosystemItem[] = [
     license: "MIT",
     platforms: ["web"],
     liveDemo: "https://sayidilxs-web.github.io/zyraxon-novamart/",
-    url: "https://sayidilxs-web.github.io/zyraxon-novamart/",
+    repository: "sayidilxs-web/ZYRAXON-AI",
     featured: false,
     verified: false,
     likeCount: 0,
@@ -34,7 +34,6 @@ export const BUNDLED_MARKETPLACE_ITEMS: EcosystemItem[] = [
     reviews: 0,
     installCommand: "",
     githubRepo: "",
-    screenshot: "",
     gameConfig: undefined,
   },
   {
@@ -57,7 +56,7 @@ export const BUNDLED_MARKETPLACE_ITEMS: EcosystemItem[] = [
     license: "MIT",
     platforms: ["web"],
     liveDemo: "https://sayidilxs-web.github.io/zyraxon-shadow-ninja/",
-    url: "https://sayidilxs-web.github.io/zyraxon-shadow-ninja/",
+    repository: "sayidilxs-web/ZYRAXON-AI",
     featured: false,
     verified: false,
     likeCount: 0,
@@ -65,7 +64,6 @@ export const BUNDLED_MARKETPLACE_ITEMS: EcosystemItem[] = [
     reviews: 0,
     installCommand: "",
     githubRepo: "",
-    screenshot: "",
     gameConfig: undefined,
   },
 ]
