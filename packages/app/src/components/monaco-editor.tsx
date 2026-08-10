@@ -68,6 +68,11 @@ export function MonacoEditor(props: MonacoEditorProps) {
     const monacoModule = await import("monaco-editor")
     monaco = monacoModule
 
+    // Stop keyboard events from bubbling to chat input
+    containerRef.addEventListener("keydown", (e) => e.stopPropagation(), true)
+    containerRef.addEventListener("keyup", (e) => e.stopPropagation(), true)
+    containerRef.addEventListener("keypress", (e) => e.stopPropagation(), true)
+
     editor = monaco.editor.create(containerRef, {
       value: props.value,
       language: props.language || "plaintext",
@@ -128,8 +133,15 @@ export function MonacoEditor(props: MonacoEditorProps) {
       props.onSave?.(value)
     })
 
+    // Auto-focus editor
+    editor.focus()
     setReady(true)
   })
+
+  // Click on container focuses the editor (prevents chat from stealing focus)
+  const handleClick = () => {
+    editor?.focus()
+  }
 
   createEffect(() => {
     if (!editor || !monaco) return
@@ -158,6 +170,7 @@ export function MonacoEditor(props: MonacoEditorProps) {
       ref={containerRef}
       class={props.class}
       style={{ height: props.height || "100%", width: "100%", "min-height": "300px" }}
+      onClick={handleClick}
     />
   )
 }

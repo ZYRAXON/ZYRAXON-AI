@@ -1,5 +1,6 @@
 import path from "path"
 import fs from "fs/promises"
+import fsSync from "fs"
 import { xdgData, xdgCache, xdgConfig, xdgState } from "xdg-basedir"
 import os from "os"
 import { Context, Effect, Layer } from "effect"
@@ -17,18 +18,15 @@ const cache = path.join(xdgCache!, app)
 const xdgConfigDir = path.join(xdgConfig!, app)
 const homeConfigDir = path.join(os.homedir(), ".config", app)
 
-// Use a getter so we can check at runtime which path has config files
+// Use sync fs to check config dirs at startup
 function resolveConfigDir(): string {
-  // If env override, use that
   if (Flag.ZYRAXON_CONFIG_DIR) return Flag.ZYRAXON_CONFIG_DIR
-  // Check if ~/.config/zyraxon has any config files (user expectation)
   try {
-    const files = fs.readdirSync(homeConfigDir)
+    const files = fsSync.readdirSync(homeConfigDir)
     if (files.some(f => f.endsWith(".json") || f.endsWith(".jsonc"))) {
       return homeConfigDir
     }
   } catch {}
-  // Fallback to xdg path
   return xdgConfigDir
 }
 

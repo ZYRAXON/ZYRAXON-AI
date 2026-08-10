@@ -24,7 +24,9 @@
     },
     "main": "./out/main/index.js",
     "dependencies": {
+        "@playwright/mcp": "0.0.79",
         "@zip.js/zip.js": "2.7.62",
+        "chromium-bidi": "17.0.2",
         "effect": "catalog:",
         "electron-context-menu": "4.1.2",
         "electron-log": "^5",
@@ -34,6 +36,7 @@
         "jarvis-browser-core": "file:../../playwright-base/packages/jarvis-browser-core",
         "jsonc-parser": "^3.3.0",
         "marked": "^15",
+        "playwright-core": "1.62.1",
         "sql.js": "1.14.1",
         "ws": "^8.18.0"
     },

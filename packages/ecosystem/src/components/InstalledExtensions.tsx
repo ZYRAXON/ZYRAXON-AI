@@ -55,21 +55,7 @@ export const InstalledExtensions: Component = () => {
         const result = await api.getInstalledExtensions()
         setExtensions(result || [])
       } else {
-        // Fallback: read from localStorage (website mode)
-        const raw = localStorage.getItem("zyraxon_installed_extensions")
-        const ids: string[] = raw ? JSON.parse(raw) : []
-        setExtensions(ids.map((id) => ({
-          id,
-          displayName: id.split(".").pop() || id,
-          version: "unknown",
-          publisher: id.split(".")[0] || "unknown",
-          description: "Installed via marketplace",
-          installedAt: new Date().toISOString(),
-          vsixPath: "",
-          extensionPath: "",
-          size: 0,
-          status: "active" as const,
-        })))
+        setExtensions([])
       }
     } catch (err: any) {
       setError(err.message || "Failed to load installed extensions")

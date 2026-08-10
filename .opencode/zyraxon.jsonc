@@ -8,7 +8,13 @@
       "description": "Use for Effect v4 and effect-smol implementation details"
     }
   },
-  "mcp": {},
+  "mcp": {
+    "jarvis-browser": {
+      "type": "local",
+      "command": ["node", "packages/desktop/resources/jarvis-browser-mcp.js"],
+      "cwd": "."
+    }
+  },
   "tools": {
     "github-triage": false,
     "github-pr-search": false

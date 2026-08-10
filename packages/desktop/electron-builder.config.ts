@@ -49,7 +49,7 @@ const getBase = (appId: string): Configuration => ({
   extraMetadata: {
     desktopName: `${appId}.desktop`,
   },
-  files: ["out/**/*", "resources/**/*", "vscode-host/**/*"],
+  files: ["out/**/*", "resources/icons/**", "resources/entitlements.plist", "vscode-host/**/*"],
   extraResources: [
     {
       from: "native/",
@@ -61,12 +61,20 @@ const getBase = (appId: string): Configuration => ({
       to: "bin/",
     },
     {
-      from: "resources/jarvis-browser-mcp.js",
-      to: "jarvis-browser-mcp.js",
+      from: "resources/jarvis-browser-mcp.cjs",
+      to: "jarvis-browser-mcp.cjs",
+    },
+    {
+      from: "resources/default-mcp-config.json",
+      to: "default-mcp-config.json",
     },
     {
       from: "resources/utilsBundle.js",
       to: "utilsBundle.js",
+    },
+    {
+      from: "resources/jarvis-browser",
+      to: "jarvis-browser",
     },
   ],
   mac: {

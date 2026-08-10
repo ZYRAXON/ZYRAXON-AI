@@ -432,7 +432,24 @@ export class Chromium extends BrowserType {
     options: types.LaunchOptions & { port?: number; userDataDir?: string } = {}
   ): Promise<Browser> {
     const port = options.port || 9222;
-    const userDataDir = options.userDataDir || path.join(os.homedir(), '.zyraxon-browser-profile');
+
+    // Use real Chrome profile — all logins, cookies, extensions available
+    const realProfile = path.join(os.homedir(), 'AppData', 'Local', 'Google', 'Chrome', 'User Data');
+    const fs = require('fs');
+    let userDataDir = options.userDataDir;
+
+    // Check if real profile is locked (Chrome is running)
+    if (!userDataDir) {
+      const lockFile = path.join(realProfile, 'lockfile');
+      if (fs.existsSync(lockFile)) {
+        // Chrome is running — use temp profile
+        userDataDir = path.join(os.tmpdir(), 'zyraxon-chrome-headless');
+        progress.log(`<jarvis-browser> Chrome running, using temp profile: ${userDataDir}`);
+      } else {
+        userDataDir = realProfile;
+        progress.log(`<jarvis-browser> Using real Chrome profile: ${userDataDir}`);
+      }
+    }
 
     // Find system Chrome installation
     const chromePath = this._findSystemChrome();
@@ -440,32 +457,42 @@ export class Chromium extends BrowserType {
       throw new Error('Chrome browser not found on this system. Please install Google Chrome.');
 
     progress.log(`<jarvis-browser> Found Chrome at: ${chromePath}`);
-    progress.log(`<jarvis-browser> Launching Chrome with remote debugging on port ${port}...`);
 
-    // Launch Chrome with remote debugging enabled
-    const chromeArgs = [
-      `--remote-debugging-port=${port}`,
-      `--user-data-dir=${userDataDir}`,
-      '--no-first-run',
-      '--no-default-browser-check',
-      '--disable-background-networking',
-      '--disable-sync',
-      '--disable-translate',
-      '--disable-extensions',
-      '--disable-infobars',
-      'about:blank',
-    ];
+    // Check if CDP port is already available (Chrome already running with debug port)
+    const cdpReady = await this._checkCDPReady(port);
+    if (cdpReady) {
+      progress.log(`<jarvis-browser> Chrome CDP already available on port ${port}`);
+    } else {
+      progress.log(`<jarvis-browser> Launching Chrome headless on port ${port}...`);
 
-    const { spawn } = require('child_process');
-    const chromeProcess = spawn(chromePath, chromeArgs, {
-      detached: true,
-      stdio: 'ignore',
-    });
-    chromeProcess.unref();
+      // Launch Chrome HEADLESS — no window visible, like Perplexity
+      const chromeArgs = [
+        '--headless=new',
+        `--remote-debugging-port=${port}`,
+        `--user-data-dir=${userDataDir}`,
+        '--no-first-run',
+        '--no-default-browser-check',
+        '--disable-background-networking',
+        '--disable-sync',
+        '--disable-translate',
+        '--disable-extensions',
+        '--disable-gpu',
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        'about:blank',
+      ];
 
-    // Wait for Chrome to start and CDP endpoint to be available
-    progress.log(`<jarvis-browser> Waiting for Chrome to start...`);
-    await this._waitForChromeReady(port, 10000);
+      const { spawn } = require('child_process');
+      const chromeProcess = spawn(chromePath, chromeArgs, {
+        detached: true,
+        stdio: 'ignore',
+      });
+      chromeProcess.unref();
+
+      progress.log(`<jarvis-browser> Waiting for Chrome headless...`);
+      await this._waitForChromeReady(port, 15000);
+    }
 
     // Connect via CDP WebSocket
     progress.log(`<jarvis-browser> Connecting to Chrome via CDP on port ${port}...`);
@@ -479,6 +506,21 @@ export class Chromium extends BrowserType {
     } catch (error) {
       throw new Error(`Failed to connect to Chrome: ${error}`);
     }
+  }
+
+  private async _checkCDPReady(port: number): Promise<boolean> {
+    try {
+      const http = require('http');
+      return new Promise((resolve) => {
+        const req = http.get(`http://127.0.0.1:${port}/json/version`, (res: any) => {
+          let data = '';
+          res.on('data', (chunk: any) => data += chunk);
+          res.on('end', () => resolve(true));
+        });
+        req.on('error', () => resolve(false));
+        req.setTimeout(2000, () => { req.destroy(); resolve(false); });
+      });
+    } catch { return false; }
   }
 
   private _findSystemChrome(): string | null {

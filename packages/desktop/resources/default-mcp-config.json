@@ -1,0 +1,12 @@
+{
+  "mcp": {
+    "jarvis-browser": {
+      "type": "local",
+      "command": ["node", "__RESOURCES_PATH__/jarvis-browser-mcp.cjs", "--headless", "--browser", "chrome", "--no-sandbox"],
+      "enabled": true,
+      "environment": {
+        "PLAYWRIGHT_MCP_HEADLESS": "true"
+      }
+    }
+  }
+}

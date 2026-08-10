@@ -161,7 +161,9 @@ function loadManifestActiveExtensions(): string[] {
   try {
     const manifestPath = getManifestStatusPath()
     if (existsSync(manifestPath)) {
-      const data = JSON.parse(readFileSync(manifestPath, "utf-8"))
+      const raw = JSON.parse(readFileSync(manifestPath, "utf-8"))
+      // installed.json may be {value: [...], Count: N} or a plain array
+      const data = Array.isArray(raw) ? raw : (raw?.value ?? (Array.isArray(raw) ? raw : []))
       if (Array.isArray(data)) {
         return data.filter((e: any) => e.status === "active").map((e: any) => e.id)
       }
@@ -220,6 +222,7 @@ function scanExtensions(): Map<string, ExtensionInfo> {
           "icon.png", "icon.svg", "icon.jpg", "icon.jpeg", "icon.ico",
           "assets/icon.png", "assets/icon.svg", "images/icon.png",
           "resources/icon.png", "media/icon.png",
+          "resource/icon.png", "resource/images/icon.png",
         ]
         for (const candidate of iconCandidates) {
           const iconPath = join(extensionPath, candidate)

@@ -1,4 +1,4 @@
-import { createEffect, createMemo, createSignal, For, Show, onCleanup, type Accessor, type JSX } from "solid-js"
+import { createEffect, createMemo, createSignal, For, onMount, Show, onCleanup, type Accessor, type JSX } from "solid-js"
 import {
   DragDropProvider,
   DragDropSensors,
@@ -56,64 +56,95 @@ export const SidebarContent = (props: {
     el.setAttribute("inert", "")
   })
 
-  // Load active extensions for sidebar icons
-  createEffect(() => {
-    const loadExtensions = async () => {
+  const generateFallbackIcon = (id: string, name: string): string => {
+    const initials = (name || id).slice(0, 2).toUpperCase()
+    const hash = Array.from(id).reduce((h, c) => c.charCodeAt(0) + ((h << 5) - h), 0)
+    const hue = Math.abs(hash) % 360
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="hsl(${hue},65%,45%)"/><text x="32" y="32" dy=".1em" text-anchor="middle" dominant-baseline="central" fill="white" font-family="system-ui,sans-serif" font-size="22" font-weight="600">${initials}</text></svg>`
+    return `data:image/svg+xml;base64,${btoa(svg)}`
+  }
+
+  const loadExtensions = async () => {
+    const api = (window as any).api
+
+    for (let attempt = 0; attempt < 3; attempt++) {
       try {
-        const api = (window as any).api
-        const hostList = await api?.extensionHost?.getExtensions()
-        const manifestList = await api?.getInstalledExtensions?.()
-        
         const merged = new Map<string, SidebarExtension>()
-        
-        // Manifest list uses short IDs (e.g. "chatgpt-ai")
-        if (manifestList && Array.isArray(manifestList)) {
-          for (const ext of manifestList) {
-            if (ext.status === "active") {
-              merged.set(ext.id, {
-                id: ext.id,
-                name: ext.id.split(".").pop() || ext.id,
-                displayName: ext.displayName || ext.id,
-                icon: ext.icon,
-                isActive: true,
-              })
-            }
-          }
-        }
-        
-        // Host list uses full IDs (e.g. "YaleHuang.chatgpt-ai") — merge by name
-        if (hostList && Array.isArray(hostList)) {
-          for (const ext of hostList) {
-            if (ext.isActive) {
-              // Find existing entry by name match
-              let found = false
-              for (const [key, existing] of merged) {
-                if (existing.name === ext.name || existing.name === ext.shortId || key === ext.name) {
-                  // Update with richer data from host (icon, displayName)
-                  if (ext.icon && !existing.icon) existing.icon = ext.icon
-                  if (ext.displayName && ext.displayName !== ext.name) existing.displayName = ext.displayName
-                  found = true
-                  break
-                }
-              }
-              if (!found) {
-                merged.set(ext.name, {
-                  id: ext.name,
-                  name: ext.name,
-                  displayName: ext.displayName || ext.name,
-                  icon: ext.icon,
+
+        // Source 1: extensionHost.getExtensions() — filesystem scan, base64 icons
+        if (api?.extensionHost?.getExtensions) {
+          try {
+            const hostList: any[] = await api.extensionHost.getExtensions() ?? []
+            for (const ext of hostList) {
+              if (ext.isActive) {
+                merged.set(ext.id, {
+                  id: ext.id,
+                  name: ext.name || ext.id.split(".").pop() || ext.id,
+                  displayName: ext.displayName || ext.id,
+                  icon: ext.icon || "",
                   isActive: true,
                 })
               }
             }
+          } catch {}
+        }
+
+        // Source 2: getInstalledExtensions() — installed.json manifest
+        // installed.json may use short IDs (e.g. "marscode-extension")
+        // while scanner uses full IDs (e.g. "MarsCode.marscode-extension")
+        // Match by checking if full ID ends with ".<shortId>" or equals shortId
+        if (api?.getInstalledExtensions) {
+          try {
+            const manifestList: any[] = await api.getInstalledExtensions() ?? []
+            for (const ext of manifestList) {
+              if (ext.status !== "active") continue
+              const shortId = ext.id
+              // Find matching entry in merged by full ID
+              let matchedKey: string | undefined
+              for (const [key] of merged) {
+                if (key === shortId || key.endsWith(`.${shortId}`) || key.includes(shortId)) {
+                  matchedKey = key
+                  break
+                }
+              }
+              if (matchedKey) {
+                // Ensure icon is filled (prefer base64 from scanner, fallback to manifest)
+                const existing = merged.get(matchedKey)!
+                if (!existing.icon && ext.icon) {
+                  existing.icon = ext.icon
+                }
+              } else {
+                // New entry not found in scanner — add with fallback icon
+                const icon = ext.icon || generateFallbackIcon(shortId, ext.displayName || shortId)
+                merged.set(shortId, {
+                  id: shortId,
+                  name: shortId,
+                  displayName: ext.displayName || shortId,
+                  icon,
+                  isActive: true,
+                })
+              }
+            }
+          } catch {}
+        }
+
+        // Generate fallback icons for any extensions still missing icons
+        for (const [key, ext] of merged) {
+          if (!ext.icon) {
+            ext.icon = generateFallbackIcon(key, ext.displayName)
           }
         }
-        
-        setActiveExtensions(Array.from(merged.values()))
+
+        if (merged.size > 0) {
+          setActiveExtensions(Array.from(merged.values()))
+          return
+        }
       } catch {}
+      await new Promise(r => setTimeout(r, 1000))
     }
-    loadExtensions()
-  })
+  }
+
+  onMount(() => { loadExtensions() })
 
   const getInitials = (name: string) => name.slice(0, 2).toUpperCase()
 
@@ -173,7 +204,19 @@ export const SidebarContent = (props: {
                             </span>
                           }
                         >
-                          <img src={ext.icon} class="w-8 h-8 rounded-md" alt="" />
+                          <img
+                            src={ext.icon}
+                            class="w-8 h-8 rounded-md"
+                            alt=""
+                            onError={(e) => {
+                              const img = e.currentTarget
+                              img.style.display = "none"
+                              const fallback = document.createElement("span")
+                              fallback.className = `w-8 h-8 rounded-md flex items-center justify-center text-12-semibold text-white ${getAvatarColor(ext.id)}`
+                              fallback.textContent = getInitials(ext.displayName)
+                              img.parentElement?.appendChild(fallback)
+                            }}
+                          />
                         </Show>
                       </button>
                     </Tooltip>

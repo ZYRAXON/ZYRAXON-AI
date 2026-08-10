@@ -329,6 +329,47 @@ const main = Effect.gen(function* () {
     }
   })
 
+  // ─── MCP Config Auto-Create ──────────────────────────────────────────────
+  // Ensure zyraxon.jsonc exists with jarvis-browser MCP config on first launch
+  yield* Effect.promise(async () => {
+    try {
+      const { writeFileSync, mkdirSync, existsSync, readFileSync } = await import("node:fs")
+      const configDir = join(homedir(), ".config", "zyraxon")
+      if (!existsSync(configDir)) mkdirSync(configDir, { recursive: true })
+
+      const configPath = join(configDir, "zyraxon.jsonc")
+      const defaultConfig = {
+        "$schema": "https://zyraxon.ai/config.json",
+        "mcp": {
+          "jarvis-browser": {
+            "type": "local",
+            "command": ["node", "__RESOURCES_PATH__/jarvis-browser-mcp.cjs", "--headless", "--browser", "chrome", "--no-sandbox"],
+            "enabled": true,
+            "environment": {
+              "PLAYWRIGHT_MCP_HEADLESS": "true"
+            }
+          }
+        }
+      }
+
+      if (!existsSync(configPath)) {
+        writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2))
+        logger.info("created default MCP config", { path: configPath })
+      } else {
+        const existing = readFileSync(configPath, "utf-8")
+        const parsed = JSON.parse(existing)
+        if (!parsed.mcp || !parsed.mcp["jarvis-browser"]) {
+          parsed.mcp = parsed.mcp || {}
+          parsed.mcp["jarvis-browser"] = defaultConfig.mcp["jarvis-browser"]
+          writeFileSync(configPath, JSON.stringify(parsed, null, 2))
+          logger.info("added jarvis-browser to existing MCP config", { path: configPath })
+        }
+      }
+    } catch (error) {
+      logger.warn("failed to auto-create MCP config", error)
+    }
+  })
+
   void updater.start()
 
   // ─── Preview State File Watcher ─────────────────────────────────────────────

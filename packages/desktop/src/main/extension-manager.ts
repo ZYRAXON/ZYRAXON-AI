@@ -62,8 +62,9 @@ function loadManifest(): InstalledExtension[] {
   try {
     const path = getInstalledManifestPath()
     if (!existsSync(path)) return []
-    const data = readFileSync(path, "utf-8")
-    return JSON.parse(data)
+    const raw = JSON.parse(readFileSync(path, "utf-8"))
+    const data = Array.isArray(raw) ? raw : (raw?.value ?? [])
+    return Array.isArray(data) ? data : []
   } catch {
     return []
   }

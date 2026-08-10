@@ -23,6 +23,7 @@ import { useSettings } from "@/context/settings"
 import { getSessionHandoff } from "@/pages/session/handoff"
 import { useSessionLayout } from "@/pages/session/session-layout"
 import { createSessionTabs } from "@/pages/session/helpers"
+import { MonacoEditor, getLanguageFromPath } from "@/components/monaco-editor"
 
 function FileCommentMenu(props: {
   moreLabel: string
@@ -480,17 +481,59 @@ function SessionFileViewV1(props: { tab: string }) {
     </div>
   )
 
+  const [debounceTimer, setDebounceTimer] = createSignal<ReturnType<typeof setTimeout> | null>(null)
+  const [saveStatus, setSaveStatus] = createSignal<"idle" | "saving" | "saved">("idle")
+  let saveTimer: ReturnType<typeof setTimeout> | null = null
+
+  const autoSave = (filePath: string, value: string) => {
+    const prev = debounceTimer()
+    if (prev) clearTimeout(prev)
+    setSaveStatus("saving")
+    setDebounceTimer(setTimeout(async () => {
+      try {
+        const api = (window as any).api
+        if (api?.writeFile) {
+          const ok = await api.writeFile(filePath, value)
+          setSaveStatus(ok ? "saved" : "idle")
+        }
+      } catch {
+        setSaveStatus("idle")
+      }
+      if (saveTimer) clearTimeout(saveTimer)
+      saveTimer = setTimeout(() => setSaveStatus("idle"), 2000)
+    }, 1000))
+  }
+
   const content = () => (
     <div class="mt-3 relative h-full min-h-0">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
-          <Match when={state()?.loaded}>{renderFile(contents())}</Match>
+          <Match when={state()?.loaded}>
+            <MonacoEditor
+              path={path() ?? ""}
+              value={contents()}
+              language={getLanguageFromPath(path() ?? "")}
+              class="h-full w-full"
+              onChange={(val) => { if (path()) autoSave(path()!, val) }}
+            />
+          </Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>
           </Match>
           <Match when={state()?.error}>{(err) => <div class="px-6 py-4 text-text-weak">{err()}</div>}</Match>
         </Switch>
       </ScrollView>
+      <Show when={saveStatus() !== "idle"}>
+        <div class="absolute bottom-2 right-2 z-10 pointer-events-none">
+          <span class={`text-11-medium px-2 py-0.5 rounded-md backdrop-blur-sm ${
+            saveStatus() === "saving"
+              ? "bg-surface-raised-base/80 text-text-weak"
+              : "bg-green-500/20 text-green-400"
+          }`}>
+            {saveStatus() === "saving" ? "Saving..." : "Saved"}
+          </span>
+        </div>
+      </Show>
     </div>
   )
 
@@ -767,17 +810,59 @@ function SessionFileViewV2(props: { tab: string }) {
     </div>
   )
 
+  const [debounceTimerV2, setDebounceTimerV2] = createSignal<ReturnType<typeof setTimeout> | null>(null)
+  const [saveStatusV2, setSaveStatusV2] = createSignal<"idle" | "saving" | "saved">("idle")
+  let saveTimerV2: ReturnType<typeof setTimeout> | null = null
+
+  const autoSaveV2 = (filePath: string, value: string) => {
+    const prev = debounceTimerV2()
+    if (prev) clearTimeout(prev)
+    setSaveStatusV2("saving")
+    setDebounceTimerV2(setTimeout(async () => {
+      try {
+        const api = (window as any).api
+        if (api?.writeFile) {
+          const ok = await api.writeFile(filePath, value)
+          setSaveStatusV2(ok ? "saved" : "idle")
+        }
+      } catch {
+        setSaveStatusV2("idle")
+      }
+      if (saveTimerV2) clearTimeout(saveTimerV2)
+      saveTimerV2 = setTimeout(() => setSaveStatusV2("idle"), 2000)
+    }, 1000))
+  }
+
   const content = () => (
     <div class="mt-3 relative h-full min-h-0">
       <ScrollView class="h-full" viewportRef={scrollSync.setViewport} onScroll={scrollSync.handleScroll as any}>
         <Switch>
-          <Match when={state()?.loaded}>{renderFile(contents())}</Match>
+          <Match when={state()?.loaded}>
+            <MonacoEditor
+              path={path() ?? ""}
+              value={contents()}
+              language={getLanguageFromPath(path() ?? "")}
+              class="h-full w-full"
+              onChange={(val) => { if (path()) autoSaveV2(path()!, val) }}
+            />
+          </Match>
           <Match when={state()?.loading}>
             <div class="px-6 py-4 text-text-weak">{language.t("common.loading")}...</div>
           </Match>
           <Match when={state()?.error}>{(err) => <div class="px-6 py-4 text-text-weak">{err()}</div>}</Match>
         </Switch>
       </ScrollView>
+      <Show when={saveStatusV2() !== "idle"}>
+        <div class="absolute bottom-2 right-2 z-10 pointer-events-none">
+          <span class={`text-11-medium px-2 py-0.5 rounded-md backdrop-blur-sm ${
+            saveStatusV2() === "saving"
+              ? "bg-surface-raised-base/80 text-text-weak"
+              : "bg-green-500/20 text-green-400"
+          }`}>
+            {saveStatusV2() === "saving" ? "Saving..." : "Saved"}
+          </span>
+        </div>
+      </Show>
     </div>
   )
 

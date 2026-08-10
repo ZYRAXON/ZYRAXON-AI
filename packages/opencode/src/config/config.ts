@@ -594,6 +594,56 @@ const layer = Layer.effect(
           result.compaction = { ...result.compaction, prune: false }
         }
 
+        // Inject bundled default MCP config if no MCP servers are configured
+        // This ensures Jarvis Browser MCP works out of the box without user config
+        if (!result.mcp || Object.keys(result.mcp).length === 0) {
+          try {
+            const fsSync = require("fs") as typeof import("fs")
+            const pathMod = require("path") as typeof import("path")
+            let resourcesPath = ""
+            // 1. Check ZYRAXON_RESOURCES_PATH env var (set by Electron main process for sidecar)
+            if (!resourcesPath && process.env.ZYRAXON_RESOURCES_PATH) {
+              const rp = process.env.ZYRAXON_RESOURCES_PATH as string
+              if (fsSync.existsSync(pathMod.join(rp, "default-mcp-config.json"))) {
+                resourcesPath = rp
+              }
+            }
+            // 2. Check process.resourcesPath (available in Electron main process)
+            if (!resourcesPath && typeof process !== "undefined" && (process as any).resourcesPath) {
+              const rp = (process as any).resourcesPath as string
+              if (fsSync.existsSync(pathMod.join(rp, "default-mcp-config.json"))) {
+                resourcesPath = rp
+              }
+            }
+            // 3. Dev mode fallback — resolve relative to this file
+            if (!resourcesPath) {
+              try {
+                const { fileURLToPath } = require("url") as typeof import("url")
+                const here = pathMod.dirname(fileURLToPath(new URL(".", import.meta.url).href))
+                const devRes = pathMod.resolve(here, "../../../desktop/resources")
+                if (fsSync.existsSync(pathMod.join(devRes, "default-mcp-config.json"))) {
+                  resourcesPath = devRes
+                }
+              } catch {}
+            }
+            if (resourcesPath) {
+              const defaultMcp = JSON.parse(fsSync.readFileSync(pathMod.join(resourcesPath, "default-mcp-config.json"), "utf-8"))
+              if (defaultMcp.mcp) {
+                const resolvedMcp: Record<string, any> = {}
+                for (const [key, value] of Object.entries(defaultMcp.mcp) as [string, any][]) {
+                  resolvedMcp[key] = {
+                    ...value,
+                    command: value.command?.map((c: string) =>
+                      c.replace(/__RESOURCES_PATH__/g, resourcesPath)
+                    ),
+                  }
+                }
+                result.mcp = { ...resolvedMcp, ...result.mcp }
+              }
+            }
+          } catch {}
+        }
+
         return {
           config: result,
           directories,

@@ -410,7 +410,6 @@ const Detail: Component<{ id: string; onBack: () => void }> = (props) => {
             saveInstalledIds(ids)
           }
           setInstalled(true)
-          // Send AI system message about the installation
           window.dispatchEvent(
             new CustomEvent("zyraxon:ai-system-message", {
               detail: {
@@ -422,19 +421,10 @@ const Detail: Component<{ id: string; onBack: () => void }> = (props) => {
             })
           )
         } else {
-          setInstallError(result.error || "Installation failed")
+          setInstallError(result.error || "Installation failed — check that ZYRAXON is running in the desktop app")
         }
       } else {
-        // Fallback: just download the VSIX file
-        incrementDownload(ext()!.id).catch(() => {})
-        const ids = getInstalledIds()
-        if (!ids.includes(ext()!.id)) {
-          ids.push(ext()!.id)
-          saveInstalledIds(ids)
-        }
-        setInstalled(true)
-        // Trigger download
-        window.open(vsixUrl, "_blank")
+        setInstallError("Extension manager not available. Please restart ZYRAXON and try again.")
       }
     } catch (err: any) {
       setInstallError(err.message || "Installation failed")

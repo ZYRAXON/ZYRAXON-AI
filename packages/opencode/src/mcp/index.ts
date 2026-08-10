@@ -346,26 +346,29 @@ const layer = Layer.effect(
       const cwd = mcp.cwd ? path.resolve(baseDir, mcp.cwd) : baseDir
 
       // Resolve __RESOURCES_PATH__ placeholder in command/args (for bundled MCP servers)
-      // Try multiple paths: packaged Electron resourcesPath, then dev fallbacks
+      // Try multiple paths: env var, packaged Electron resourcesPath, then dev fallbacks
       const findResourcesPath = (): string => {
-        // 1. Packaged Electron: process.resourcesPath works
+        const fs = require("fs") as typeof import("fs")
+        // 1. ZYRAXON_RESOURCES_PATH env var (set by Electron main process for sidecar)
+        if (process.env.ZYRAXON_RESOURCES_PATH) {
+          const p = process.env.ZYRAXON_RESOURCES_PATH
+          if (fs.existsSync(path.join(p, "jarvis-browser-mcp.cjs"))) return p
+        }
+        // 2. Packaged Electron: process.resourcesPath works in main process
         if (typeof process !== "undefined" && (process as any).resourcesPath) {
           const p = (process as any).resourcesPath as string
-          // Verify it actually contains MCP files (not Electron install dir)
-          try {
-            const fs = require("fs") as typeof import("fs")
-            if (fs.existsSync(path.join(p, "jarvis-browser-mcp.js"))) return p
-          } catch {}
+          if (fs.existsSync(path.join(p, "jarvis-browser-mcp.cjs"))) return p
         }
-        // 2. Dev mode: resolve relative to this file (packages/opencode/src/mcp/)
+        // 3. Dev mode: resolve relative to this file (packages/opencode/src/mcp/)
         try {
           const { fileURLToPath } = require("url") as typeof import("url")
           const here = path.dirname(fileURLToPath(import.meta.url))
           const devResources = path.resolve(here, "../../../desktop/resources")
-          const fs = require("fs") as typeof import("fs")
-          if (fs.existsSync(path.join(devResources, "jarvis-browser-mcp.js"))) return devResources
+          if (fs.existsSync(path.join(devResources, "jarvis-browser-mcp.cjs"))) return devResources
         } catch {}
-        // 3. Fallback to baseDir (project root)
+        // 4. Fallback: check resources dir relative to baseDir
+        const fallback = path.resolve(baseDir, "packages/desktop/resources")
+        if (fs.existsSync(path.join(fallback, "jarvis-browser-mcp.cjs"))) return fallback
         return baseDir
       }
       const resourcesPath = findResourcesPath()

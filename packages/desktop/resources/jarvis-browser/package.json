@@ -1,0 +1,6 @@
+{
+  "name": "jarvis-browser",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser automation MCP server for ZYRAXON"
+}
