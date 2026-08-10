@@ -1,4 +1,5 @@
 import { execFile } from "node:child_process"
+import { existsSync, cpSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { promisify } from "node:util"
@@ -23,6 +24,15 @@ async function signWindows(configuration: { path: string }) {
   )
 }
 
+function copyJarvisNodeModules(configuration: { appOutDir: string }) {
+  const src = path.join(packageDir, "resources", "jarvis-browser", "node_modules")
+  const dst = path.join(configuration.appOutDir, "resources", "jarvis-browser", "node_modules")
+  if (existsSync(src)) {
+    cpSync(src, dst, { recursive: true })
+    console.log("[afterPack] Copied jarvis-browser node_modules to", dst)
+  }
+}
+
 const channel = (() => {
   const raw = process.env.ZYRAXON_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
@@ -36,6 +46,7 @@ const APP_IDS = {
 } as const
 
 const getBase = (appId: string): Configuration => ({
+  afterPack: copyJarvisNodeModules,
   artifactName: "zyraxon-desktop-${os}-${arch}.${ext}",
   directories: {
     output: "dist",
@@ -75,6 +86,7 @@ const getBase = (appId: string): Configuration => ({
     {
       from: "resources/jarvis-browser",
       to: "jarvis-browser",
+      filter: ["package.json", "node_modules/**/*"],
     },
   ],
   mac: {
