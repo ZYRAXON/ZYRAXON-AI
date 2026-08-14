@@ -223,6 +223,41 @@ bun run dev
 
 ---
 
+## ZYRAXON Code — A Full VS Code-grade Editor, Embedded
+
+We didn't bolt a text box onto a chatbot. We embedded an entire desktop code editor —
+**ZYRAXON Code** — the fully packaged, production VS Code runtime (`packages/zyraxon-code`,
+~23,000 source files from the upstream `microsoft/vscode` tree), built from source and
+rendered **inside** the ZYRAXON desktop window.
+
+### What This Means
+
+| Capability | What You Get |
+|-----------|--------------|
+| **Real Editor, Not A Textarea** | Full Monaco editor: IntelliSense, multi-cursor, find & replace, minimap, breadcrumbs, peek definitions |
+| **Language Intelligence** | Built-in extensions for TypeScript/JS, Python, C/C++, Java, C#, HTML/CSS, JSON, Markdown, Git, and dozens more |
+| **Extensions** | The complete VS Code extension pipeline — bundled & native (Git, Microsoft auth) compiled with 0 errors |
+| **Integrated Git** | Source control panel, diffs, staging, blame, history — right in the app |
+| **No Separate Window** | Renders inline inside the ZYRAXON window (no new window, no browser tab) |
+| **AI Agent Bridge** | ZYRAXON's agents operate the editor directly — same workspace, same files, real edits |
+
+### The Editor Stack
+
+```
+ZYRAXON Code (VS Code fork)
+  ├── Monaco editor core (syntax, IntelliSense, theming)
+  ├── 100+ bundled language extensions (esbuild-compiled, 0 errors)
+  ├── Native extensions: Git + Microsoft Authentication
+  ├── Electron 42 runtime (auto-downloaded, ~100MB, zero manual setup)
+  └── Embedded via editor-server → rendered inside the desktop shell
+```
+
+This is the same editor engine the world's most-used IDE runs on — now fused with
+ZYRAXON's 9 agent modes, 136+ tools, eternal memory, and self-healing system. Your AI
+doesn't *tell* you the code — it *opens the file and edits it in a real editor*.
+
+---
+
 ## 136+ Tools
 
 ### MCP Tools (124) - 6 Servers
@@ -302,6 +337,7 @@ ZYRAXON-AI/
         screen/        # Vision System (capture engine, frame processor, memory, analyzer)
         memory/        # Eternal memory system (50K+ memories)
     desktop/           # Electron desktop app
+    zyraxon-code/      # Embedded VS Code-grade editor (full VS Code runtime fork)
     app/               # SolidJS UI
     ui/                # Shared UI components
     core/              # Core utilities, database
