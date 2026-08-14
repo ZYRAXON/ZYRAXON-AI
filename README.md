@@ -13,18 +13,18 @@
 </p>
 
 <p align="center">
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github0"><img alt="Stars" src="https://img.shields.io/github/stars/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=yellow" /></a>
+  <a href="https://zyraxonai.lovable.app"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
+  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
+  <a href="https://github.com/onelpawarai/ZYRAXON-AI/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=yellow" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/issues"><img alt="Issues" src="https://img.shields.io/github/issues/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=red" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-BSL%201.1-green?style=for-the-badge" /></a>
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><img alt="Downloads" src="https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple" /></a>
+  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=cyan" /></a>
 </p>
 
 <p align="center">
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8"><strong>Visit our Website</strong></a> &nbsp;|&nbsp;
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><strong>Download</strong></a> &nbsp;|&nbsp;
+  <a href="https://zyraxonai.lovable.app"><strong>Visit our Website</strong></a> &nbsp;|&nbsp;
+  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><strong>Download</strong></a> &nbsp;|&nbsp;
   <a href="https://youtube.com/@zyraxon-aix"><strong>YouTube</strong></a>
 </p>
 
@@ -35,7 +35,7 @@
 </p>
 
 ---
-https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github6
+
 ## What is ZYRAXON-AI?
 
 ZYRAXON-AI is an open-source desktop AI agent built on Electron + SolidJS + Bun. Unlike ChatGPT or other chatbots that just *talk*, ZYRAXON **takes action** - it has full access to your filesystem, terminal, browser, and more.
@@ -105,7 +105,7 @@ Website genesis intelligence — creates complete, production-ready websites fro
 
 ## Download
 
-Download the latest release from our **[Releases page](https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1)**:
+Download the latest release from our **[Releases page](https://github.com/onelpawarai/ZYRAXON-AI/releases)**:
 
 | Platform | File | Architecture |
 |----------|------|:------------:|
@@ -123,7 +123,7 @@ Download the latest release from our **[Releases page](https://img.shields.io/ba
 
 - **[Bun](https://bun.sh)** 1.3.14+ (JavaScript runtime & package manager)
 - **[Git](https://git-scm.com/)** (version control)
-- **[Node.js](https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple0)** 22+ (required for some native modules)
+- **[Node.js](https://nodejs.org/)** 22+ (required for some native modules)
 
 ### Quick Build (All-in-One)
 
@@ -309,6 +309,48 @@ This works across all agent modes — Build, Beast, PRO, APEX, and DARK EMPEROR.
 
 ---
 
+## ZYRAXON vs. The World — One Agent To Rule Them All
+
+Everyone else gives you **one tool**. ZYRAXON is the only agent that is *everything* at once —
+a full code editor, an autonomous developer, a desktop automation bot, a security toolkit,
+a streamer, and a memory-keeping brain — in a single native desktop app.
+
+| Capability | **ZYRAXON** | Cursor | Windsurf | Copilot | Devin | OpenHands | OpenCode |
+|---|---|---|---|---|---|---|---|
+| **Category** | All-in-One Agent | AI IDE | AI IDE | IDE Plugin | Autonomous Dev | Cloud Agent | CLI Agent |
+| **Native Desktop App** | ✅ Built-in | ✅ | ✅ | ❌ Plugin | ❌ Web | ❌ Web | ❌ Terminal |
+| **Embedded Full VS Code Editor** | ✅ Built from source | ✅ (fork) | ✅ (fork) | ✅ (in VS Code) | ❌ | ❌ | ❌ |
+| **9 Agent Modes** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Autonomous Self-Healing** (installs missing tools) | ✅ | ❌ | ❌ | ❌ | ⚠️ Limited | ⚠️ Limited | ⚠️ Limited |
+| **Self-Evolution** (builds its own tools at runtime) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Eternal Memory** (50K+ compressed memories) | ✅ | ⚠️ Chat history | ⚠️ Chat history | ⚠️ Limited | ⚠️ Project state | ⚠️ Short-term | ⚠️ Short-term |
+| **Desktop Automation** (click, type, control your PC) | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Full Security Toolkit** (bug bounty scanner) | ✅ 20+ tools | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Real-Time Screen Vision** | ✅ | ❌ | ❌ | ❌ | ⚠️ Screenshots | ❌ | ❌ |
+| **YouTube Live Streaming** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **136+ Tools Included** | ✅ | ⚠️ MCP only | ⚠️ MCP only | ⚠️ MCP only | ⚠️ Few | ⚠️ Few | ⚠️ MCP only |
+| **25+ AI Provider Routing** | ✅ Auto | ⚠️ Sub only | ⚠️ Sub only | ⚠️ Sub only | ⚠️ Internal | ⚠️ BYO key | ⚠️ BYO key |
+| **Free & Open Source** | ✅ BSL 1.1 | ❌ Paid | ❌ Paid | ❌ Paid | ❌ Paid | ✅ | ✅ |
+| **Works Offline, Fully Local** | ✅ | ⚠️ | ❌ | ⚠️ | ❌ Cloud-only | ❌ Cloud-only | ⚠️ |
+
+### Why ZYRAXON Wins
+
+- **Cursor / Windsurf** give you an AI *inside* an editor. ZYRAXON *is* the editor **and** the
+  agent **and** the OS-level operator — it writes code, then clicks through your desktop,
+  runs the build, scans for vulnerabilities, and ships it. No other tool controls the machine.
+- **Copilot** is a sidebar. ZYRAXON is a self-evolving employee with screen vision and eternal memory.
+- **Devin** is a cloud bot that you watch through a browser. ZYRAXON runs 100% on your machine —
+  offline, private, with direct access to *your* files, *your* terminal, *your* screen.
+- **OpenHands / OpenCode** are powerful CLI/cloud agents — but they have no GUI, no embedded
+  editor, no desktop automation, no streaming, and no self-evolving toolchain. ZYRAXON has it all,
+  plus everything they can do.
+- **Nothing is impossible**: DARK EMPEROR mode has **zero refusal** — it never says "I can't".
+
+> **Bottom line:** If Cursor is a sports car and Devin is an airline, ZYRAXON is a
+> transformer — a complete autonomous AI workforce in one app. All in one. Anything. Nothing is impossible.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -357,7 +399,7 @@ We love contributions! ZYRAXON-AI is open-source and we welcome everyone.
 
 ### How to Contribute
 1. **Fork** the repository
-2. **Clone** your fork: `git clone https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github2
+2. **Clone** your fork: `git clone https://github.com/onelpawarai/ZYRAXON-AI.git
 3. **Install**: `bun install`
 4. **Build**: `cd packages/zyraxon && bun run build`
 5. **Create branch**: `git checkout -b feat/my-feature`
@@ -375,7 +417,7 @@ We love contributions! ZYRAXON-AI is open-source and we welcome everyone.
 ### Contact Us
 - **GitHub Issues** - [Open an issue](https://github.com/onelpawarai/ZYRAXON-AI/issues) for bugs or feature requests
 - **YouTube** - [@zyraxon-aix](https://youtube.com/@zyraxon-aix)
-- **Website** - [zyraxonai.lovable.app](https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8)
+- **Website** - [zyraxonai.lovable.app](https://zyraxonai.lovable.app)
 
 > Whether you want to contribute code, report bugs, suggest features, or just learn from the project - you are welcome. Contact us and we will work together!
 
@@ -409,12 +451,11 @@ See [open issues](https://github.com/onelpawarai/ZYRAXON-AI/issues) for planned 
 ## License
 
 [Business Source License 1.1 (BSL 1.1)](./LICENSE) - Free for non-commercial use. Commercial use requires a paid license. Converts to Apache 2.0 on 2030-07-21.
-https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github6
 ---
 
 <p align="center">
   <strong>Built with obsession. Powered by AI.</strong><br><br>
-  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github5">
+  <a href="https://github.com/onelpawarai/ZYRAXON-AI">
     <img alt="ZYRAXON" src="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github" />
   </a>
 </p>
