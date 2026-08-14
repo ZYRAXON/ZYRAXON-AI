@@ -10,13 +10,13 @@ ZYRAXON giver en interaktiv terminalgrænseflade eller TUI til at arbejde med di
 At køre ZYRAXON starter TUI for den nuværende mappe.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Eller du kan starte den for en bestemt arbejdsmappe.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Når du er i TUI, kan du spørge den med en besked.
@@ -357,7 +357,7 @@ Du kan tilpasse TUI-adfærd gennem `tui.json` (eller `tui.jsonc`).
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ Du kan tilpasse TUI-adfærd gennem `tui.json` (eller `tui.jsonc`).
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -397,7 +397,7 @@ Dette er adskilt fra `zyraxon.json`, som konfigurerer server-/kørselstidsadfær
 - `mouse` - Aktiverer eller deaktiverer musefangst i TUI (standard: `true`). Når den er deaktiveret, bevares terminalens oprindelige musemarkering og rulning.
 - `attention` - Konfigurerer skrivebordsnotifikationer og lyde for TUI. Deaktiveret som standard.
 
-Brug `OPENCODE_TUI_CONFIG` til at indlæse en brugerdefineret TUI-konfigurationssti.
+Brug `ZYRAXON_TUI_CONFIG` til at indlæse en brugerdefineret TUI-konfigurationssti.
 
 ### Attention
 
@@ -407,7 +407,7 @@ Attention lader TUI give dig besked, når ZYRAXON venter på et svar, kræver go
 - `notifications` - Når Attention er aktiveret, lader dette TUI sende skrivebordsnotifikationer via terminalen. Standard er `true`.
 - `sound` - Når Attention er aktiveret, tillader dette advarselslyde. Standard er `true`.
 - `volume` - Standard lydstyrke for advarselslyde fra `0` til `1`. Standard er `0.4`.
-- `sound_pack` - Sound pack-ID der skal bruges. Standard er `opencode.default`.
+- `sound_pack` - Sound pack-ID der skal bruges. Standard er `zyraxon.default`.
 - `sounds` - Angiver brugerdefinerede lydfiler for `default`, `question`, `permission`, `error`, `done` eller `subagent_done`. Stier kan være absolutte, `file://` URL'er eller relative til `tui.json`.
 
 ---

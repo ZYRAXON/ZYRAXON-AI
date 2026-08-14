@@ -1,19 +1,19 @@
 ---
 title: الخادم
-description: تفاعل مع خادم opencode عبر HTTP.
+description: تفاعل مع خادم zyraxon عبر HTTP.
 ---
 
 import config from "../../../../config.mjs"
 export const typesUrl = `${config.github}/blob/dev/packages/sdk/js/src/gen/types.gen.ts`
 
-يشغّل الأمر `zyraxon serve` خادما HTTP دون واجهة ويعرض نقطة نهاية OpenAPI يمكن لعميل opencode استخدامها.
+يشغّل الأمر `zyraxon serve` خادما HTTP دون واجهة ويعرض نقطة نهاية OpenAPI يمكن لعميل zyraxon استخدامها.
 
 ---
 
 ### الاستخدام
 
 ```bash
-opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
+zyraxon serve [--port <number>] [--hostname <string>] [--cors <origin>]
 ```
 
 #### الخيارات
@@ -23,40 +23,40 @@ opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
 | `--port`        | المنفذ الذي يستمع عليه                | `4096`           |
 | `--hostname`    | اسم المضيف الذي يستمع عليه            | `127.0.0.1`      |
 | `--mdns`        | تفعيل اكتشاف mDNS                     | `false`          |
-| `--mdns-domain` | اسم نطاق مخصص لخدمة mDNS              | `opencode.local` |
+| `--mdns-domain` | اسم نطاق مخصص لخدمة mDNS              | `zyraxon.local` |
 | `--cors`        | أصول (Origins) متصفح إضافية مسموح بها | `[]`             |
 
 يمكن تمرير `--cors` عدة مرات:
 
 ```bash
-opencode serve --cors http://localhost:5173 --cors https://app.example.com
+zyraxon serve --cors http://localhost:5173 --cors https://app.example.com
 ```
 
 ---
 
 ### المصادقة
 
-عيّن `OPENCODE_SERVER_PASSWORD` لحماية الخادم باستخدام مصادقة HTTP الأساسية. اسم المستخدم افتراضيا هو `opencode`، أو عيّن `OPENCODE_SERVER_USERNAME` لتغييره. ينطبق ذلك على كل من `zyraxon serve` و `zyraxon web`.
+عيّن `ZYRAXON_SERVER_PASSWORD` لحماية الخادم باستخدام مصادقة HTTP الأساسية. اسم المستخدم افتراضيا هو `zyraxon`، أو عيّن `ZYRAXON_SERVER_USERNAME` لتغييره. ينطبق ذلك على كل من `zyraxon serve` و `zyraxon web`.
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve
 ```
 
 ---
 
 ### كيف يعمل
 
-عند تشغيل `opencode` يبدأ تشغيل واجهة terminal تفاعلية (TUI) وخادما. تكون الـ TUI هي
+عند تشغيل `zyraxon` يبدأ تشغيل واجهة terminal تفاعلية (TUI) وخادما. تكون الـ TUI هي
 العميل الذي يتحدث إلى الخادم. يوفّر الخادم نقطة نهاية لمواصفة OpenAPI 3.1.
 وتُستخدم هذه النقطة أيضا لتوليد [SDK](/docs/sdk).
 
 :::tip
-استخدم خادم opencode للتفاعل مع opencode برمجيا.
+استخدم خادم zyraxon للتفاعل مع zyraxon برمجيا.
 :::
 
-تتيح هذه البنية لـ opencode دعم عدة عملاء وتمكّنك من التفاعل مع opencode برمجيا.
+تتيح هذه البنية لـ zyraxon دعم عدة عملاء وتمكّنك من التفاعل مع zyraxon برمجيا.
 
-يمكنك تشغيل `zyraxon serve` لبدء خادم مستقل. إذا كانت واجهة opencode في terminal (TUI)
+يمكنك تشغيل `zyraxon serve` لبدء خادم مستقل. إذا كانت واجهة zyraxon في terminal (TUI)
 قيد التشغيل، فسيبدأ `zyraxon serve` خادما جديدا.
 
 ---
@@ -83,7 +83,7 @@ http://<hostname>:<port>/doc
 
 ## واجهات API
 
-يعرض خادم opencode واجهات API التالية.
+يعرض خادم zyraxon واجهات API التالية.
 
 ---
 

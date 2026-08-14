@@ -1,7 +1,7 @@
-export const deepLinkEvent = "opencode:deep-link"
+export const deepLinkEvent = "zyraxon:deep-link"
 
 const parseUrl = (input: string) => {
-  if (!input.startsWith("opencode://") && !input.startsWith("zyraxon://")) return
+  if (!input.startsWith("zyraxon://") && !input.startsWith("zyraxon://")) return
   if (typeof URL.canParse === "function" && !URL.canParse(input)) return
   try {
     return new URL(input)
@@ -30,29 +30,13 @@ export const parseNewSessionDeepLink = (input: string) => {
   return { directory, prompt }
 }
 
-export interface InstallExtensionDeepLink {
-  type: "extension"
-  extensionId: string
-}
-
 export interface InstallReleaseDeepLink {
   type: "release"
   repo: string
   tag: string
 }
 
-export type InstallDeepLink = InstallExtensionDeepLink | InstallReleaseDeepLink
-
-/**
- * Parse zyraxon://install/extension/{id} deep links
- * Format: zyraxon://install/extension/ms-python.python
- */
-export const parseInstallExtensionDeepLink = (input: string): InstallExtensionDeepLink | null => {
-  if (!input.startsWith("zyraxon://install/extension/")) return null
-  const extensionId = input.slice("zyraxon://install/extension/".length)
-  if (!extensionId) return null
-  return { type: "extension", extensionId: decodeURIComponent(extensionId) }
-}
+export type InstallDeepLink = InstallReleaseDeepLink
 
 /**
  * Parse zyraxon://install/release/{repo}/{tag} deep links
@@ -74,7 +58,7 @@ export const parseInstallReleaseDeepLink = (input: string): InstallReleaseDeepLi
 
 export const collectInstallDeepLinks = (urls: string[]): InstallDeepLink[] =>
   urls
-    .map((url) => parseInstallExtensionDeepLink(url) ?? parseInstallReleaseDeepLink(url))
+    .map((url) => parseInstallReleaseDeepLink(url))
     .filter((link): link is InstallDeepLink => !!link)
 
 export const collectOpenProjectDeepLinks = (urls: string[]) =>
@@ -83,13 +67,13 @@ export const collectOpenProjectDeepLinks = (urls: string[]) =>
 export const collectNewSessionDeepLinks = (urls: string[]) =>
   urls.map(parseNewSessionDeepLink).filter((link): link is { directory: string; prompt?: string } => !!link)
 
-type OpenCodeWindow = Window & {
+type ZyraxonWindow = Window & {
   __ZYRAXON__?: {
     deepLinks?: string[]
   }
 }
 
-export const drainPendingDeepLinks = (target: OpenCodeWindow) => {
+export const drainPendingDeepLinks = (target: ZyraxonWindow) => {
   const pending = target.__ZYRAXON__?.deepLinks ?? []
   if (pending.length === 0) return []
   if (target.__ZYRAXON__) target.__ZYRAXON__.deepLinks = []

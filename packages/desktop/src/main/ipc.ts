@@ -4,7 +4,7 @@ import { readFileSync, existsSync } from "node:fs"
 import { basename, join } from "node:path"
 import { app, BrowserWindow, Notification, clipboard, dialog, ipcMain, shell } from "electron"
 import type { IpcMainEvent, IpcMainInvokeEvent } from "electron"
-import type { DesktopMenuAction } from "@opencode-ai/app/desktop-menu"
+import type { DesktopMenuAction } from "@zyraxon-ai/app/desktop-menu"
 
 
 import type { FatalRendererError, PreviewState, ServerReadyData, TitlebarTheme } from "../preload/types"
@@ -13,6 +13,7 @@ import { setForceFocus } from "./debug"
 import { assertAttachmentBudget, createPickedFileAuthorizations } from "./attachment-picker"
 import { getStore, removeStoreFileIfEmpty } from "./store"
 import { getPinchZoomEnabled, getWindowID, setPinchZoomEnabled, setTitlebar, updateTitlebar } from "./windows"
+import { installEditorExtension, installVsix, isEditorActive, setEditorBounds, setEditorMode, type VsixMetadata } from "./editor-server"
 import type { UpdaterController } from "./updater-controller"
 import { createUpdaterSubscriptions } from "./updater-subscriptions"
 import { YouTubeStreamManager } from "./youtube-stream"
@@ -88,6 +89,15 @@ export function registerIpcHandlers(deps: Deps) {
   ipcMain.handle("updater-install", () => deps.updater.install())
   ipcMain.handle("set-background-color", (_event: IpcMainInvokeEvent, color: string) => deps.setBackgroundColor(color))
   ipcMain.handle("export-debug-logs", () => deps.exportDebugLogs())
+  ipcMain.handle("set-editor-mode", (_event: IpcMainInvokeEvent, active: boolean, directory?: string) => setEditorMode(active, directory))
+  ipcMain.handle("set-editor-bounds", (_event: IpcMainInvokeEvent, bounds: { x: number; y: number; width: number; height: number }) => {
+    setEditorBounds(bounds)
+  })
+  ipcMain.handle("install-editor-extension", (_event: IpcMainInvokeEvent, sourceDir: string) => installEditorExtension(sourceDir))
+  ipcMain.handle("install-vsix", (_event: IpcMainInvokeEvent, vsixUrl: string, extensionId: string, meta?: VsixMetadata) =>
+    installVsix(vsixUrl, extensionId, meta),
+  )
+  ipcMain.handle("get-editor-state", () => ({ active: isEditorActive() }))
   ipcMain.handle("set-force-focus", (event: IpcMainInvokeEvent, enabled: boolean) =>
     setForceFocus(event.sender, enabled),
   )
@@ -127,11 +137,11 @@ export function registerIpcHandlers(deps: Deps) {
 
   ipcMain.handle("write-file", async (_event: IpcMainInvokeEvent, filePath: string, content: string) => {
     try {
-      const { writeFileSync } = await import("node:fs")
-      writeFileSync(filePath, content, "utf-8")
+      const fs = require("node:fs")
+      fs.writeFileSync(filePath, content, "utf-8")
       return true
     } catch (error: any) {
-      console.error("[IPC] Failed to write file:", error.message)
+      console.error("[IPC] Failed to write file:", error.message, "path:", filePath)
       return false
     }
   })
@@ -172,25 +182,6 @@ export function registerIpcHandlers(deps: Deps) {
       return opts?.multiple ? result.filePaths : result.filePaths[0]
     },
   )
-
-  // VS Code Marketplace API proxy (bypasses CORS)
-  ipcMain.handle("vscode-marketplace-api", async (_event: IpcMainInvokeEvent, body: unknown) => {
-    try {
-      const res = await fetch("https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json;api-version=7.2-preview.1",
-          "User-Agent": "zyraxon-ecosystem",
-        },
-        body: JSON.stringify(body),
-      })
-      if (!res.ok) return { error: `VS Code Marketplace ${res.status}` }
-      return await res.json()
-    } catch (err: any) {
-      return { error: err.message || "VS Code Marketplace unreachable" }
-    }
-  })
 
   ipcMain.handle(
     "open-file-picker",
@@ -325,70 +316,6 @@ export function registerIpcHandlers(deps: Deps) {
     })
   })
 
-  // ─── VSIX Install ────────────────────────────────────────────────────────────
-  // ZYRAXON Extension Manager — installs extensions directly, no VS Code dependency
-  ipcMain.handle("install-vsix", async (_event: IpcMainInvokeEvent, vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => {
-    const { installExtensionFromUrl } = await import("./extension-manager")
-    try {
-      return await installExtensionFromUrl(vsixUrl, extensionId, options)
-    } catch (err: any) {
-      return { success: false, extensionId, error: err.message || "Install failed" }
-    }
-  })
-
-  // ─── Extension Management ────────────────────────────────────────────────────
-  ipcMain.handle("get-installed-extensions", async () => {
-    const { getInstalledExtensions } = await import("./extension-manager")
-    return getInstalledExtensions()
-  })
-
-  ipcMain.handle("uninstall-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { uninstallExtension } = await import("./extension-manager")
-    return uninstallExtension(extensionId)
-  })
-
-  ipcMain.handle("toggle-extension-status", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { toggleExtensionStatus } = await import("./extension-manager")
-    return toggleExtensionStatus(extensionId)
-  })
-
-  ipcMain.handle("is-extension-installed", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { isExtensionInstalled } = await import("./extension-manager")
-    return isExtensionInstalled(extensionId)
-  })
-
-  // ─── VS Code Extension Host (100% ZYRAXON's own, no VS Code dependency) ─────
-  ipcMain.handle("extension-host:get-extensions", async () => {
-    const { getExtensionHostExtensions } = await import("./extension-host-ipc")
-    return getExtensionHostExtensions()
-  })
-
-  ipcMain.handle("extension-host:activate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { activateExtensionById } = await import("./extension-host-ipc")
-    return activateExtensionById(extensionId)
-  })
-
-  ipcMain.handle("extension-host:deactivate-extension", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { deactivateExtensionById } = await import("./extension-host-ipc")
-    return deactivateExtensionById(extensionId)
-  })
-
-  ipcMain.handle("extension-host:is-active", async (_event: IpcMainInvokeEvent, extensionId: string) => {
-    const { isExtensionActive } = await import("./extension-host-ipc")
-    return isExtensionActive(extensionId)
-  })
-
-  ipcMain.handle("extension-host:check-updates", async () => {
-    return { hasUpdates: false, updates: [], checkedAt: new Date().toISOString() }
-  })
-
-  ipcMain.handle("extension-host:get-last-check", () => null)
-
-  ipcMain.handle("extension-host:refresh", async () => {
-    const { refreshExtensions } = await import("./extension-host-ipc")
-    return refreshExtensions()
-  })
-
   ipcMain.handle("transcribe-audio", async (_event: IpcMainInvokeEvent, audioBase64: string, mimeType: string) => {
     const apiKey = findOpenAIKey()
     if (!apiKey) {
@@ -516,7 +443,7 @@ function findOpenAIKey(): string | null {
 
   const configDirs = [
     join(app.getPath("home"), ".config", "zyraxon"),
-    join(app.getPath("home"), ".config", "opencode"),
+    join(app.getPath("home"), ".config", "zyraxon"),
     app.getPath("userData"),
   ]
 

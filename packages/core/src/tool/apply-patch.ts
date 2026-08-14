@@ -1,7 +1,7 @@
 export * as ApplyPatchTool from "./apply-patch"
 
-import { ToolFailure } from "@opencode-ai/llm"
-import { FileDiff } from "@opencode-ai/schema/file-diff"
+import { ToolFailure } from "@zyraxon-ai/llm"
+import { FileDiff } from "@zyraxon-ai/schema/file-diff"
 import { createTwoFilesPatch, diffLines } from "diff"
 import { Effect, Layer, Schema } from "effect"
 import { makeLocationNode } from "../effect/app-node"

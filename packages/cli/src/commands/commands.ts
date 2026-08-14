@@ -3,7 +3,7 @@ import { Spec } from "../framework/spec"
 
 declare const ZYRAXON_CLI_NAME: string | undefined
 
-export const Commands = Spec.make(typeof ZYRAXON_CLI_NAME === "string" ? ZYRAXON_CLI_NAME : "opencode", {
+export const Commands = Spec.make(typeof ZYRAXON_CLI_NAME === "string" ? ZYRAXON_CLI_NAME : "zyraxon", {
   description: "ZYRAXON 2.0 preview command line interface",
   commands: [
     Spec.make("api", {

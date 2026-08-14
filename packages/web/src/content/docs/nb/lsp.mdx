@@ -1,6 +1,6 @@
 ---
 title: LSP-servere
-description: opencode integreres med LSP-serverne dine.
+description: zyraxon integreres med LSP-serverne dine.
 ---
 
 ZYRAXON kan integreres med Language Server Protocol (LSP)-servere for å bruke diagnostikk som tilbakemelding til agenten.
@@ -50,14 +50,14 @@ ZYRAXON kommer med flere innebygde LSP-servere for populære språk:
 LSP er deaktivert som standard. Når det er aktivert, starter servere når en av filtypene ovenfor oppdages og kravene oppfylles.
 
 :::note
-Du kan deaktivere automatiske LSP-servernedlastinger ved å sette miljøvariabelen `OPENCODE_DISABLE_LSP_DOWNLOAD` til `true`.
+Du kan deaktivere automatiske LSP-servernedlastinger ved å sette miljøvariabelen `ZYRAXON_DISABLE_LSP_DOWNLOAD` til `true`.
 :::
 
 ---
 
 ## Slik fungerer det
 
-Når LSP er aktivert og opencode åpner en fil, gjør den:
+Når LSP er aktivert og zyraxon åpner en fil, gjør den:
 
 1. Kontrollerer filtypen mot alle aktiverte LSP-servere.
 2. Starter den riktige LSP-serveren hvis den ikke allerede kjører.

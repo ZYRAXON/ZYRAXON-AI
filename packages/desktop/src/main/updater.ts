@@ -18,7 +18,6 @@ export function setupAutoUpdater(stop: () => Promise<void>) {
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = false
   autoUpdater.disableWebInstaller = true
-  autoUpdater.disableDowngrade = false
   logger.log("auto updater configured", {
     channel: autoUpdater.channel,
     allowPrerelease: autoUpdater.allowPrerelease,

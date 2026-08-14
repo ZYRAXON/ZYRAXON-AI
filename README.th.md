@@ -126,4 +126,4 @@ ZYRAXON รวมเอเจนต์ในตัวสองตัวที่
 
 ---
 
-**ร่วมชุมชนของเรา** [Discord](https://discord.gg/DN4fZCCDJj)
+**ร่วมชุมชนของเรา** [Discord](https://discord.gg/GP8yX33NA)

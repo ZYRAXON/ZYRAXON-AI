@@ -1,4 +1,4 @@
-import { Effect, Ref } from "effect"
+import { Effect, Ref, Context } from "effect"
 import type { PipelinePhase, PipelineStatus, Task, AgentID } from "./types"
 
 export interface PipelineInterface {
@@ -30,7 +30,7 @@ export interface PipelineSpec {
   agents: Record<PipelinePhase, AgentID>
 }
 
-export class Pipeline extends Effect.Service<PipelineInterface>()("@zyraxon/Pipeline") {}
+export class Pipeline extends Context.Service<Pipeline, PipelineInterface>()("@zyraxon/Pipeline") {}
 
 const PHASE_ORDER: PipelinePhase[] = ["plan", "execute", "verify", "deploy"]
 

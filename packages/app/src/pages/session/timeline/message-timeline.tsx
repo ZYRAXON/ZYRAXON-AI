@@ -16,9 +16,9 @@ import { Dynamic } from "solid-js/web"
 import { useNavigate } from "@solidjs/router"
 import { useMutation } from "@tanstack/solid-query"
 import { createVirtualizer, defaultRangeExtractor, elementScroll, type VirtualItem } from "@tanstack/solid-virtual"
-import { Accordion } from "@opencode-ai/ui/accordion"
-import { Button } from "@opencode-ai/ui/button"
-import { Card } from "@opencode-ai/ui/card"
+import { Accordion } from "@zyraxon-ai/ui/accordion"
+import { Button } from "@zyraxon-ai/ui/button"
+import { Card } from "@zyraxon-ai/ui/card"
 import {
   ContextToolGroup,
   Message,
@@ -26,40 +26,40 @@ import {
   Part as MessagePart,
   partDefaultOpen,
   type UserActions,
-} from "@opencode-ai/session-ui/message-part"
-import { DiffChanges } from "@opencode-ai/ui/diff-changes"
-import { FileIcon } from "@opencode-ai/ui/file-icon"
-import { Icon } from "@opencode-ai/ui/icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
-import { IconButtonV2 } from "@opencode-ai/ui/v2/icon-button-v2"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { MenuV2 } from "@opencode-ai/ui/v2/menu-v2"
-import { Dialog } from "@opencode-ai/ui/dialog"
-import { DialogFooter, DialogHeader, DialogTitleGroup, DialogV2 } from "@opencode-ai/ui/v2/dialog-v2"
-import { InlineInput } from "@opencode-ai/ui/inline-input"
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { SessionRetry } from "@opencode-ai/session-ui/session-retry"
-import { isScrollKeyTarget, scrollKey, scrollKeyOwner, ScrollView } from "@opencode-ai/ui/scroll-view"
-import { StickyAccordionHeader } from "@opencode-ai/ui/sticky-accordion-header"
-import { TextField } from "@opencode-ai/ui/text-field"
-import { TextReveal } from "@opencode-ai/ui/text-reveal"
-import { TextShimmer } from "@opencode-ai/ui/text-shimmer"
+} from "@zyraxon-ai/session-ui/message-part"
+import { DiffChanges } from "@zyraxon-ai/ui/diff-changes"
+import { FileIcon } from "@zyraxon-ai/ui/file-icon"
+import { Icon } from "@zyraxon-ai/ui/icon"
+import { IconButton } from "@zyraxon-ai/ui/icon-button"
+import { Icon as IconV2 } from "@zyraxon-ai/ui/v2/icon"
+import { IconButtonV2 } from "@zyraxon-ai/ui/v2/icon-button-v2"
+import { DropdownMenu } from "@zyraxon-ai/ui/dropdown-menu"
+import { MenuV2 } from "@zyraxon-ai/ui/v2/menu-v2"
+import { Dialog } from "@zyraxon-ai/ui/dialog"
+import { DialogFooter, DialogHeader, DialogTitleGroup, DialogV2 } from "@zyraxon-ai/ui/v2/dialog-v2"
+import { InlineInput } from "@zyraxon-ai/ui/inline-input"
+import { ButtonV2 } from "@zyraxon-ai/ui/v2/button-v2"
+import { SessionRetry } from "@zyraxon-ai/session-ui/session-retry"
+import { isScrollKeyTarget, scrollKey, scrollKeyOwner, ScrollView } from "@zyraxon-ai/ui/scroll-view"
+import { StickyAccordionHeader } from "@zyraxon-ai/ui/sticky-accordion-header"
+import { TextField } from "@zyraxon-ai/ui/text-field"
+import { TextReveal } from "@zyraxon-ai/ui/text-reveal"
+import { TextShimmer } from "@zyraxon-ai/ui/text-shimmer"
 import type {
   AssistantMessage,
   Message as MessageType,
   Part as PartType,
   ToolPart,
   UserMessage,
-} from "@opencode-ai/sdk/v2"
+} from "@zyraxon-ai/sdk/v2"
 import { showToast } from "@/utils/toast"
-import { getDirectory, getFilename } from "@opencode-ai/core/util/path"
+import { getDirectory, getFilename } from "@zyraxon-ai/core/util/path"
 import { Popover as KobaltePopover } from "@kobalte/core/popover"
-import { normalize } from "@opencode-ai/session-ui/session-diff"
-import { useFileComponent } from "@opencode-ai/ui/context/file"
+import { normalize } from "@zyraxon-ai/session-ui/session-diff"
+import { useFileComponent } from "@zyraxon-ai/ui/context/file"
 import { shouldMarkBoundaryGesture, normalizeWheelDelta } from "@/pages/session/message-gesture"
 import { SessionContextUsage } from "@/components/session-context-usage"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
 import { useLanguage } from "@/context/language"
 import { useSessionKey } from "@/pages/session/session-layout"
 import { useServerSDK } from "@/context/server-sdk"
@@ -435,6 +435,7 @@ export function MessageTimeline(props: {
       return showHeader() ? 64 : 0
     },
     overscan: 50,
+    paddingStart: 0,
     paddingEnd: 64,
     rangeExtractor: (range) => {
       const id = activeMessageID()

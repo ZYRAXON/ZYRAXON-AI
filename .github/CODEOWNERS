@@ -3,11 +3,11 @@ packages/app/      @Hona @Brendonovich
 packages/desktop/  @Hona @Brendonovich
 
 # ZYRAXON-specific ownership
-packages/opencode/ @onelpawarai
-packages/opencode/src/mcp/ @onelpawarai
-packages/opencode/src/agent/ @onelpawarai
-packages/opencode/src/tool/ @onelpawarai
-packages/opencode/src/session/ @onelpawarai
+packages/zyraxon/ @onelpawarai
+packages/zyraxon/src/mcp/ @onelpawarai
+packages/zyraxon/src/agent/ @onelpawarai
+packages/zyraxon/src/tool/ @onelpawarai
+packages/zyraxon/src/session/ @onelpawarai
 
 # Documentation
 README.md @onelpawarai
@@ -16,5 +16,5 @@ SECURITY.md @onelpawarai
 AGENTS.md @onelpawarai
 
 # Configuration
-.opencode/ @onelpawarai
+.zyraxon/ @onelpawarai
 .github/ @onelpawarai

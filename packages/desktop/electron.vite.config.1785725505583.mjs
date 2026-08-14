@@ -1,14 +1,14 @@
 // electron.vite.config.ts
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "electron-vite";
-import appPlugin from "@opencode-ai/app/vite";
+import appPlugin from "@zyraxon-ai/app/vite";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
   const current = process.env.NODE_OPTIONS ?? "";
   process.env.NODE_OPTIONS = `${current} --max-old-space-size=8192`.trim();
 }
-var ZYRAXON_SERVER_DIST = "../opencode/dist/node";
+var ZYRAXON_SERVER_DIST = "../zyraxon/dist/node";
 var channel = (() => {
   const raw = process.env.ZYRAXON_CHANNEL;
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw;
@@ -36,7 +36,7 @@ var electron_vite_config_default = defineConfig({
     },
     build: {
       rollupOptions: {
-        external: ["node-fetch", "opencode-web-ui.gen.ts"],
+        external: ["node-fetch", "zyraxon-web-ui.gen.ts"],
         input: { index: "src/main/index.ts", sidecar: "src/main/sidecar.ts" },
         // Keep this identical to electron-vite's Node 20.11+ shim. Its regex insertion can
         // corrupt bundled TypeScript, while a Rollup banner places the shim safely.
@@ -55,7 +55,7 @@ if (!import.meta.require) { import.meta.require = require; }
     },
     plugins: [
       {
-        name: "opencode:bun-protocol-shim",
+        name: "zyraxon:bun-protocol-shim",
         enforce: "pre",
         resolveId(id) {
           if (id === "bun:sqlite") return "\0bun:sqlite-shim.ts";
@@ -97,29 +97,29 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
         }
       },
       {
-        name: "opencode:node-pty-narrower",
+        name: "zyraxon:node-pty-narrower",
         enforce: "pre",
         resolveId(s) {
           if (s === "@lydell/node-pty") return nodePtyPkg;
         }
       },
       {
-        name: "opencode:virtual-server-module",
+        name: "zyraxon:virtual-server-module",
         enforce: "pre",
         resolveId(id) {
-          if (id === "virtual:opencode-server") return this.resolve(`${ZYRAXON_SERVER_DIST}/node.js`);
+          if (id === "virtual:zyraxon-server") return this.resolve(`${ZYRAXON_SERVER_DIST}/node.js`);
         }
       },
       {
-        name: "opencode:copy-server-assets",
+        name: "zyraxon:copy-server-assets",
         async writeBundle() {
           for (const l of await fs.readdir(ZYRAXON_SERVER_DIST)) {
             if (!l.endsWith(".wasm")) continue;
             await fs.writeFile(`./out/main/chunks/${l}`, await fs.readFile(`${ZYRAXON_SERVER_DIST}/${l}`));
           }
           await fs.copyFile(
-            path.join(ZYRAXON_SERVER_DIST, "opencode-web-ui.gen.ts"),
-            "./out/main/opencode-web-ui.gen.ts"
+            path.join(ZYRAXON_SERVER_DIST, "zyraxon-web-ui.gen.ts"),
+            "./out/main/zyraxon-web-ui.gen.ts"
           );
         }
       }

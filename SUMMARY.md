@@ -12,7 +12,7 @@
 ```
 ZYRAXON-AI-main/
 ├── packages/
-│   ├── opencode/          # Core AI engine (Bun + TypeScript)
+│   ├── zyraxon/          # Core AI engine (Bun + TypeScript)
 │   ├── desktop/           # Electron desktop app (SolidJS)
 │   ├── app/               # Web app (SolidJS)
 │   ├── cli/               # CLI interface
@@ -39,8 +39,8 @@ ZYRAXON-AI-main/
 
 ## Key Packages
 
-### 1. packages/opencode (Core AI Engine)
-- **Path**: `C:\Users\MMP\Downloads\ZYRAXON-AI-main\ZYRAXON-AI-main\packages\opencode`
+### 1. packages/zyraxon (Core AI Engine)
+- **Path**: `C:\Users\MMP\Downloads\ZYRAXON-AI-main\ZYRAXON-AI-main\packages\zyraxon`
 - **Package name**: `zyraxon`
 - **Entry point**: `src/index.ts`
 - **Build output**: `dist/node/node.js` (server bundle for desktop)
@@ -144,7 +144,7 @@ src/
 ## Vision System (Active Feature)
 
 ### Status
-- **Files Created**: 8 files in `packages/opencode/src/screen/`
+- **Files Created**: 8 files in `packages/zyraxon/src/screen/`
 - **Integration**: Modified `prompt.ts` for direct screenshot injection
 - **Bug Fixed**: `agent.toLowerCase is not a function` error resolved
 - **Current Issue**: EXE build failing with `EPERM: dxcompiler.dll` permission error
@@ -170,21 +170,21 @@ src/
 
 ## Build Process
 
-### Step 1: Build OpenCode Binary
+### Step 1: Build Zyraxon Binary
 ```bash
-bun run --cwd packages/opencode bun run build
+bun run --cwd packages/zyraxon bun run build
 ```
 
 ### Step 2: Build Server Bundle
 ```bash
-bun run --cwd packages/opencode bun run script/build-node.ts
-# Output: packages/opencode/dist/node/node.js
+bun run --cwd packages/zyraxon bun run script/build-node.ts
+# Output: packages/zyraxon/dist/node/node.js
 ```
 
 ### Step 3: Copy Web UI Import Map (CRITICAL)
 ```bash
 # After build-node.ts, copy the generated web UI file to dist/node/
-cp packages/opencode/opencode-web-ui.gen.ts packages/opencode/dist/node/
+cp packages/zyraxon/zyraxon-web-ui.gen.ts packages/zyraxon/dist/node/
 # Without this, desktop build will FAIL
 ```
 
@@ -243,7 +243,7 @@ bun run --cwd packages/desktop bun run package:mac
 - `tsconfig.json` - TypeScript config
 - `.gitignore` - Git ignore rules
 
-### packages/opencode
+### packages/zyraxon
 - `package.json` - Package dependencies
 - `tsconfig.json` - TypeScript config
 - `script/build-node.ts` - Server build script
@@ -257,7 +257,7 @@ bun run --cwd packages/desktop bun run package:mac
 ## Key Scripts
 
 ### Build Scripts
-- `script/build-node.ts` - Builds OpenCode server
+- `script/build-node.ts` - Builds Zyraxon server
 - `script/build.ts` - Main build script
 
 ### Desktop Scripts
@@ -290,9 +290,9 @@ bun run --cwd packages/desktop bun run package:mac
 3. Open Electron app
 
 ### Production Build
-1. Build binary: `bun run --cwd packages/opencode bun run build`
-2. Build server bundle: `bun run --cwd packages/opencode bun run script/build-node.ts`
-3. Copy web UI: `cp packages/opencode/opencode-web-ui.gen.ts packages/opencode/dist/node/`
+1. Build binary: `bun run --cwd packages/zyraxon bun run build`
+2. Build server bundle: `bun run --cwd packages/zyraxon bun run script/build-node.ts`
+3. Copy web UI: `cp packages/zyraxon/zyraxon-web-ui.gen.ts packages/zyraxon/dist/node/`
 4. Build web UI: `bun run --cwd packages/app bun run build`
 5. Build desktop: `bun run --cwd packages/desktop bun run build`
 6. Package: `bun run --cwd packages/desktop bun run package:win` (or `:linux` / `:mac`)
@@ -328,28 +328,28 @@ bun run --cwd packages/desktop bun run package:mac
 ### GitHub
 - **Repository**: https://github.com/onelpawarai/ZYRAXON-AI
 - **Token**: (stored securely, not committed)
-- **Discord**: https://discord.gg/DN4fZCCDJj
+- **Discord**: https://discord.gg/GP8yX33NA
 
 ## Contact
 
 - **Website**: https://zyraxon.ai
 - **Email**: skhridoy652@gmail.com
-- **Discord**: https://discord.gg/DN4fZCCDJj
+- **Discord**: https://discord.gg/GP8yX33NA
 
 ## Build Results (July 27, 2026)
 
-### Step 1: packages/opencode build (binary)
-- **Command**: `bun run --cwd packages/opencode bun run build`
+### Step 1: packages/zyraxon build (binary)
+- **Command**: `bun run --cwd packages/zyraxon bun run build`
 - **Status**: SUCCESS
 - **Output**: dist/zyraxon-{platform}-{arch}/
 
-### Step 2: packages/opencode build (server bundle)
-- **Command**: `bun run --cwd packages/opencode bun run script/build-node.ts`
+### Step 2: packages/zyraxon build (server bundle)
+- **Command**: `bun run --cwd packages/zyraxon bun run script/build-node.ts`
 - **Status**: SUCCESS
 - **Output**: dist/node/node.js
 
 ### Step 3: Copy Web UI
-- **Command**: `cp packages/opencode/opencode-web-ui.gen.ts packages/opencode/dist/node/`
+- **Command**: `cp packages/zyraxon/zyraxon-web-ui.gen.ts packages/zyraxon/dist/node/`
 - **Status**: SUCCESS
 - **Note**: CRITICAL — desktop build fails without this
 
@@ -372,7 +372,7 @@ bun run --cwd packages/desktop bun run package:mac
 ### Issues Resolved
 1. **EPERM error**: dxcompiler.dll locked by previous process
 2. **Missing dist/node/node.js**: Created via build-node.ts script
-3. **virtual:opencode-server resolution**: Fixed by creating server bundle
+3. **virtual:zyraxon-server resolution**: Fixed by creating server bundle
 
 ## Last Updated
 - **Date**: July 27, 2026

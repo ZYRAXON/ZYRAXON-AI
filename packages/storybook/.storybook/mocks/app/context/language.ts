@@ -25,8 +25,8 @@ const dict: Record<string, string> = {
   "dialog.model.unpaid.freeModels.title": "Free models provided by ZYRAXON",
   "dialog.model.unpaid.addMore.title": "Add more models from popular providers",
   "dialog.model.unpaid.viewMoreProviders": "See 70+ more providers",
-  "dialog.provider.opencode.tagline": "Reliable optimized models",
-  "dialog.provider.opencodeGo.tagline": "Low cost subscription for everyone",
+  "dialog.provider.zyraxon.tagline": "Reliable optimized models",
+  "dialog.provider.zyraxonGo.tagline": "Low cost subscription for everyone",
   "dialog.provider.custom.label": "Custom OpenAI-compatible provider",
   "dialog.provider.search.placeholder": "Search providers",
   "dialog.provider.empty": "No providers found",
@@ -43,13 +43,13 @@ const dict: Record<string, string> = {
   "provider.connect.apiKey.label": "{{provider}} API key",
   "provider.connect.apiKey.placeholder": "API key",
   "provider.connect.apiKey.required": "API key is required",
-  "provider.connect.opencodeZen.line1":
+  "provider.connect.zyraxonZen.line1":
     "ZYRAXON Zen gives you access to a curated set of reliable optimized models for coding agents.",
-  "provider.connect.opencodeZen.line2":
+  "provider.connect.zyraxonZen.line2":
     "With a single API key you'll get access to models such as Claude, GPT, Gemini, GLM and more.",
-  "provider.connect.opencodeZen.visit.prefix": "Visit ",
-  "provider.connect.opencodeZen.visit.link": "zyraxon.ai/zen",
-  "provider.connect.opencodeZen.visit.suffix": " to collect your API key.",
+  "provider.connect.zyraxonZen.visit.prefix": "Visit ",
+  "provider.connect.zyraxonZen.visit.link": "zyraxon.ai/zen",
+  "provider.connect.zyraxonZen.visit.suffix": " to collect your API key.",
   "provider.connect.oauth.code.visit.prefix": "Visit ",
   "provider.connect.oauth.code.visit.link": "this link",
   "provider.connect.oauth.code.visit.suffix":

@@ -1,4 +1,4 @@
-import opencodeWordmarkDark from "../asset/logo-ornate-dark.svg"
+import zyraxonWordmarkDark from "../asset/logo-ornate-dark.svg"
 import { query } from "@solidjs/router"
 import { createEffect, createMemo, createSignal, For, onCleanup, onMount, Show } from "solid-js"
 import { useI18n } from "../context/i18n"
@@ -133,7 +133,7 @@ export function Header(props: { githubStars: string; links?: readonly HeaderLink
             <span>[{props.githubStars}]</span>
           </a>
           <a data-slot="header-button" data-variant="contrast" href="https://zyraxon.ai/">
-            <strong>{i18n.t("header.tryOpenCode")}</strong>
+            <strong>{i18n.t("header.tryZyraxon")}</strong>
           </a>
           <button
             data-slot="menu-button"
@@ -202,9 +202,9 @@ function DataWordmark() {
   )
 }
 
-function OpenCodeMark() {
+function ZyraxonMark() {
   return (
-    <svg data-slot="opencode-mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+    <svg data-slot="zyraxon-mark" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
       <path d="M40 40H0V0H40V40Z" fill="var(--stats-logo-bg)" />
       <path d="M26 29H14V17H26V29Z" fill="var(--stats-logo-fill)" />
       <path d="M26 11H14V29H26V11ZM32 35H8V5H32V35Z" fill="var(--stats-logo-stroke)" />
@@ -238,7 +238,7 @@ export function Footer(props: {
   const connect = [
     { href: "mailto:hello@zyraxon.ai", label: i18n.t("footer.contact") },
     { href: "https://zyraxon.ai/discord", label: i18n.t("footer.community") },
-    { href: "https://x.com/opencode", label: "X" },
+    { href: "https://x.com/SayidiLxs", label: "X" },
     { href: githubLink.href, label: i18n.t("header.github") },
     { href: "https://www.youtube.com/@anomaly-co", label: i18n.t("footer.youtube") },
   ]
@@ -252,7 +252,7 @@ export function Footer(props: {
       <Show when={bridge()}>{(link) => <SectionBridge label={link().label} href={link().href} />}</Show>
       <div data-slot="footer-grid">
         <a data-slot="footer-mark" href="https://zyraxon.ai" aria-label={i18n.t("footer.homeAria")}>
-          <OpenCodeMark />
+          <ZyraxonMark />
         </a>
         <FooterColumn title={i18n.t("footer.modelData")} links={modelStats} localHref={localHref} />
         <FooterColumn title={i18n.t("footer.legal")} links={legal} localHref={localHref} />
@@ -433,7 +433,7 @@ function SubscribeModal(props: { onClose: () => void }) {
       <div data-slot="modal-scrim" aria-hidden="true" onClick={props.onClose} />
       <div data-slot="modal-panel">
         <div data-slot="modal-brand">
-          <img data-slot="modal-logo" src={opencodeWordmarkDark} alt="ZYRAXON" />
+          <img data-slot="modal-logo" src={zyraxonWordmarkDark} alt="ZYRAXON" />
           <button
             data-slot="modal-close"
             type="button"

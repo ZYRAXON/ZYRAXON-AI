@@ -126,4 +126,4 @@ Hvis du jobber med et prosjekt som er relatert til ZYRAXON og bruker "ZYRAXON" s
 
 ---
 
-**Bli med i fellesskapet** [Discord](https://discord.gg/DN4fZCCDJj)
+**Bli med i fellesskapet** [Discord](https://discord.gg/GP8yX33NA)

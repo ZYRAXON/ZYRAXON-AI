@@ -1,4 +1,4 @@
-﻿---
+---
 id: test-agents
 title: "Agents"
 ---
@@ -43,8 +43,8 @@ npx playwright init-agents --loop=claude
 npx playwright init-agents --loop=codex
 ```
 
-```bash tab=bash-opencode
-npx playwright init-agents --loop=opencode
+```bash tab=bash-zyraxon
+npx playwright init-agents --loop=zyraxon
 ```
 
 :::note

@@ -63,7 +63,7 @@ async function start(command: StartCommand) {
     const { fileURLToPath } = await import("node:url")
     const __filename = fileURLToPath(import.meta.url)
     const __dirname = dirname(__filename)
-    const serverUrl = new URL("./chunks/opencode-server.js", import.meta.url).href
+    const serverUrl = new URL("./chunks/zyraxon-server.js", import.meta.url).href
     const { Server } = await import(serverUrl)
 
     listener = await Server.listen({

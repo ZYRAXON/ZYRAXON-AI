@@ -10,13 +10,13 @@ ZYRAXON pruža interaktivni terminalski interfejs ili TUI za rad na vašim proje
 Pokretanje ZYRAXON pokreće TUI za trenutni direktorij.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Ili ga možete pokrenuti za određeni radni direktorij.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Kada uđete u TUI, možete to zatražiti porukom.
@@ -363,7 +363,7 @@ Možete prilagoditi TUI ponašanje putem `tui.json` (ili `tui.jsonc`).
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -380,7 +380,7 @@ Možete prilagoditi TUI ponašanje putem `tui.json` (ili `tui.jsonc`).
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -403,7 +403,7 @@ Ovo je odvojeno od `zyraxon.json`, koji konfiguriše ponašanje servera/izvršav
 - `mouse` - Omogućava ili onemogućava hvatanje miša u TUI (podrazumijevano: `true`). Kada je onemogućeno, zadržava se izvorno ponašanje terminala za označavanje i pomicanje mišem.
 - `attention` - Konfiguriše desktop obavještenja i zvukove za TUI. Podrazumijevano je onemogućeno.
 
-Koristite `OPENCODE_TUI_CONFIG` da učitate prilagođenu putanju TUI konfiguracije.
+Koristite `ZYRAXON_TUI_CONFIG` da učitate prilagođenu putanju TUI konfiguracije.
 
 ### Attention
 
@@ -413,7 +413,7 @@ Attention omogućava da vas TUI obavijesti kada ZYRAXON čeka odgovor, treba odo
 - `notifications` - Kada je Attention omogućen, dozvoljava TUI-ju da šalje desktop obavještenja putem terminala. Podrazumijevano je `true`.
 - `sound` - Kada je Attention omogućen, dozvoljava zvukove upozorenja. Podrazumijevano je `true`.
 - `volume` - Podrazumijevana jačina zvukova upozorenja od `0` do `1`. Podrazumijevano je `0.4`.
-- `sound_pack` - Sound pack ID koji se koristi. Podrazumijevano je `opencode.default`.
+- `sound_pack` - Sound pack ID koji se koristi. Podrazumijevano je `zyraxon.default`.
 - `sounds` - Postavlja prilagođene zvučne datoteke za `default`, `question`, `permission`, `error`, `done` ili `subagent_done`. Putanje mogu biti apsolutne, `file://` URL-ovi ili relativne u odnosu na `tui.json`.
 
 ---

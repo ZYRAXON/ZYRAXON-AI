@@ -10,13 +10,13 @@ ZYRAXON provides an interactive terminal interface or TUI for working on your pr
 Running ZYRAXON starts the TUI for the current directory.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Or you can start it for a specific working directory.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Once you're in the TUI, you can prompt it with a message.
@@ -358,7 +358,7 @@ You can customize TUI behavior through `tui.json` (or `tui.jsonc`).
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -375,7 +375,7 @@ You can customize TUI behavior through `tui.json` (or `tui.jsonc`).
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -398,7 +398,7 @@ This is separate from `zyraxon.json`, which configures server/runtime behavior.
 - `mouse` - Enable or disable mouse capture in the TUI (default: `true`). When disabled, the terminal's native mouse selection/scrolling behavior is preserved.
 - `attention` - Configures TUI desktop notifications and sounds. Disabled by default.
 
-Use `OPENCODE_TUI_CONFIG` to load a custom TUI config path.
+Use `ZYRAXON_TUI_CONFIG` to load a custom TUI config path.
 
 ### Attention
 
@@ -408,7 +408,7 @@ The TUI can request attention for questions, permissions, session errors, and co
 - `notifications` - Allow terminal-mediated desktop notifications when attention is enabled. Defaults to `true`.
 - `sound` - Allow attention sounds when attention is enabled. Defaults to `true`.
 - `volume` - Default sound volume from `0` to `1`. Defaults to `0.4`.
-- `sound_pack` - Sound pack ID to use. Defaults to `opencode.default`.
+- `sound_pack` - Sound pack ID to use. Defaults to `zyraxon.default`.
 - `sounds` - Override sound files for `default`, `question`, `permission`, `error`, `done`, or `subagent_done`. Paths can be absolute, `file://` URLs, or relative to `tui.json`.
 
 ---

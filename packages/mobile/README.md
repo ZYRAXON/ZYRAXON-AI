@@ -13,12 +13,12 @@ Android device automation powered by AI. Combines a React Native chat interface 
 │  packages/mobile-server/ (Bun + Hono)                                 │
 │                                                                        │
 │  GET  /health              ← Health check                             │
-│  POST /api/mobile/agent    ← 🤖 AI Agent (opencode.ai free models)    │
+│  POST /api/mobile/agent    ← 🤖 AI Agent (zyraxon.ai free models)    │
 │  POST /api/mobile/agent/stream ← SSE streaming (word-by-word)         │
 │                                                                        │
 │         ▲ HTTPS (JSON)                    │ HTTPS (OpenAI API)         │
 │         │                                 ▼                            │
-│         │                    🆓 opencode.ai /zen/v1/chat/completions    │
+│         │                    🆓 zyraxon.ai /zen/v1/chat/completions    │
 │         │                    (mimo-v2.5-free / big-pickle — NO KEY!)   │
 └─────────┼──────────────────────────────────────────────────────────────┘
           │
@@ -45,7 +45,7 @@ Android device automation powered by AI. Combines a React Native chat interface 
 │  │  POST /go-home          ← home btn   │    │  │ Port 19090       │  │ │
 │  │  POST /scroll           ← scroll     │    │  │ (laptop-side)    │  │ │
 =======
-│                     ☁️ OpenCode.ai (Free AI)                          │
+│                     ☁️ Zyraxon.ai (Free AI)                          │
 │                                                                        │
 │  Direct API call (no server needed!):                                 │
 │  POST https://opencode.ai/zen/v1/chat/completions                   │
@@ -97,7 +97,7 @@ Android device automation powered by AI. Combines a React Native chat interface 
 User types "Open YouTube and play cat videos"
         │
         ▼
-Main App → POST /api/mobile/agent → Render → opencode.ai AI
+Main App → POST /api/mobile/agent → Render → zyraxon.ai AI
         │                                              │
         │                     AI responds with JSON:   │
         │          {"text":"Opening YouTube...",        │
@@ -119,7 +119,7 @@ Main App → POST /api/mobile/agent (with screenshot) → AI checks result
     Loop until finish_reason: "complete" ──────────────┘
 =======
 | **APK 1: Helper** (`android-automation/`) | Native Android service. Uses AccessibilityService API for REAL touch, scroll, swipe, text input. HTTP server on port 19091. | Main app sends HTTP to `http://127.0.0.1:19091` |
-| **APK 2: Main** (`Expo/RN app`) | Chat interface. Calls OpenCode.ai directly for AI, Helper APK for device control. | Calls `opencode.ai/zen/v1` for AI, `:19091` for actions |
+| **APK 2: Main** (`Expo/RN app`) | Chat interface. Calls Zyraxon.ai directly for AI, Helper APK for device control. | Calls `zyraxon.ai/zen/v1` for AI, `:19091` for actions |
 
 ### Data Flow
 
@@ -127,7 +127,7 @@ Main App → POST /api/mobile/agent (with screenshot) → AI checks result
 User: "Open YouTube"
         │
         ▼
-Main App → POST opencode.ai/zen/v1/chat/completions
+Main App → POST zyraxon.ai/zen/v1/chat/completions
         │
         │ AI returns reasoning field with JSON:
         │ {"text":"Opening YouTube...","actions":[{"type":"open_app","target":"youtube"}]}
@@ -406,13 +406,13 @@ Base URL: `http://127.0.0.1:19091`
 
 ## Free AI Models (No API Keys)
 
-This system uses **opencode.ai** free models. No API keys needed — ever.
+This system uses **zyraxon.ai** free models. No API keys needed — ever.
 
 | Model | Provider | Context | Notes |
 |-------|----------|---------|-------|
-| `mimo-v2.5-free` | opencode | 200K | Default — fast, capable |
-| `big-pickle` | opencode | 200K | General purpose |
-| `deepseek-v4-flash-free` | opencode | 200K | Fast responses |
+| `mimo-v2.5-free` | zyraxon | 200K | Default — fast, capable |
+| `big-pickle` | zyraxon | 200K | General purpose |
+| `deepseek-v4-flash-free` | zyraxon | 200K | Fast responses |
 
 To change the model: Set `MOBILE_AI_MODEL` environment variable on Render, or change the model name in `packages/mobile-server/src/ai-agent.ts`.
 
@@ -466,8 +466,8 @@ npx expo run:android
 ## Troubleshooting
 
 **"Failed to parse JSON" error:**
-- Check that Render server's `OPENCODE_API_URL` is `https://opencode.ai/zen/v1` (NOT `https://api.opencode.ai/v1`)
-- Ensure `OPENCODE_API_KEY` is empty/not set on Render (free API doesn't use auth)
+- Check that Render server's `ZYRAXON_API_URL` is `https://opencode.ai/zen/v1` (NOT `https://api.opencode.ai/v1`)
+- Ensure `ZYRAXON_API_KEY` is empty/not set on Render (free API doesn't use auth)
 
 **Helper APK not connecting:**
 - Make sure Accessibility Service is enabled in Android Settings
@@ -530,7 +530,7 @@ Base URL: `http://127.0.0.1:19091`
 
 ## Free AI Models
 
-Uses **opencode.ai** — no API keys needed.
+Uses **zyraxon.ai** — no API keys needed.
 
 | Model | Notes |
 |-------|-------|
@@ -547,7 +547,7 @@ Uses **opencode.ai** — no API keys needed.
 - Make sure Helper app is running
 
 **AI not responding:**
-- Check internet connection (required for OpenCode.ai)
+- Check internet connection (required for Zyraxon.ai)
 
 **Build errors:**
 - Install Android SDK 34

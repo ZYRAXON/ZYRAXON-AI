@@ -1,4 +1,4 @@
-import type { Session } from "@opencode-ai/sdk/v2/client"
+import type { Session } from "@zyraxon-ai/sdk/v2/client"
 import {
   type ComponentProps,
   createEffect,
@@ -18,23 +18,23 @@ import {
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { createStore, produce } from "solid-js/store"
 import { useQuery } from "@tanstack/solid-query"
-import { Button } from "@opencode-ai/ui/button"
-import { Logo } from "@opencode-ai/ui/logo"
-import { Spinner } from "@opencode-ai/ui/spinner"
-import { ScrollView } from "@opencode-ai/ui/scroll-view"
-import { ProjectAvatar } from "@opencode-ai/ui/v2/project-avatar-v2"
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
-import { IconButtonV2 } from "@opencode-ai/ui/v2/icon-button-v2"
-import { MenuV2 } from "@opencode-ai/ui/v2/menu-v2"
-import { TooltipV2 } from "@opencode-ai/ui/v2/tooltip-v2"
+import { Button } from "@zyraxon-ai/ui/button"
+import { Logo } from "@zyraxon-ai/ui/logo"
+import { Spinner } from "@zyraxon-ai/ui/spinner"
+import { ScrollView } from "@zyraxon-ai/ui/scroll-view"
+import { ProjectAvatar } from "@zyraxon-ai/ui/v2/project-avatar-v2"
+import { ButtonV2 } from "@zyraxon-ai/ui/v2/button-v2"
+import { Icon as IconV2 } from "@zyraxon-ai/ui/v2/icon"
+import { IconButtonV2 } from "@zyraxon-ai/ui/v2/icon-button-v2"
+import { MenuV2 } from "@zyraxon-ai/ui/v2/menu-v2"
+import { TooltipV2 } from "@zyraxon-ai/ui/v2/tooltip-v2"
 import { getProjectAvatarVariant, useLayout, type HomeProjectSelection, type LocalProject } from "@/context/layout"
 import { useNavigate } from "@solidjs/router"
-import { base64Encode } from "@opencode-ai/core/util/encode"
-import { Icon } from "@opencode-ai/ui/icon"
+import { base64Encode } from "@zyraxon-ai/core/util/encode"
+import { Icon } from "@zyraxon-ai/ui/icon"
 import { usePlatform } from "@/context/platform"
 import { DateTime } from "luxon"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
 import { useDirectoryPicker } from "@/components/directory-picker"
 import { useSettingsCommand } from "@/components/settings-dialog"
 import { DialogSelectServer, useServerManagementController } from "@/components/dialog-select-server"
@@ -58,13 +58,13 @@ import { sessionTitle } from "@/utils/session-title"
 import { pathKey } from "@/utils/path-key"
 import { useGlobal } from "@/context/global"
 import { useCommand } from "@/context/command"
-import { Binary } from "@opencode-ai/core/util/binary"
+import { Binary } from "@zyraxon-ai/core/util/binary"
 import { ServerRowMenu } from "@/components/server/server-row-menu"
 import { ServerHealthIndicator } from "@/components/server/server-row"
 import { type ServerHealth } from "@/utils/server-health"
 import { Persist, persisted } from "@/utils/persist"
-import { useMarked } from "@opencode-ai/ui/context/marked"
-import { preloadMarkdown } from "@opencode-ai/session-ui/markdown-cache"
+import { useMarked } from "@zyraxon-ai/ui/context/marked"
+import { preloadMarkdown } from "@zyraxon-ai/session-ui/markdown-cache"
 import { archiveHomeSession } from "./home-session-archive"
 import { shouldOpenSessionInBackground } from "./home-session-open"
 import { showToast } from "@/utils/toast"
@@ -927,27 +927,60 @@ function HomeUtilityNav(props: {
     <div class={`${props.class ?? ""} min-w-0 flex-col gap-1 pr-3`}>
       <button
         type="button"
-        class={`${HOME_PROJECT_NAV_ROW} text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
+        class={`${HOME_PROJECT_NAV_ROW} group relative overflow-hidden h-10 rounded-[8px] text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
         onClick={() => navigate("/ecosystem")}
       >
-        <IconV2 name="globe" size="small" />
-        <span class={HOME_PROJECT_NAV_LABEL}>Ecosystem</span>
+        <video
+          class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          src="/videos/ecosystem.mp4"
+          muted
+          loop
+          autoPlay
+          playsInline
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <span class="relative z-10 flex items-center gap-2">
+          <IconV2 name="globe" size="small" />
+          <span class={HOME_PROJECT_NAV_LABEL}>Ecosystem</span>
+        </span>
       </button>
       <button
         type="button"
-        class={`${HOME_PROJECT_NAV_ROW} text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
+        class={`${HOME_PROJECT_NAV_ROW} group relative overflow-hidden h-10 rounded-[8px] text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
         onClick={props.openSettings}
       >
-        <IconV2 name="settings-gear" size="small" />
-        <span class={HOME_PROJECT_NAV_LABEL}>{props.language.t("sidebar.settings")}</span>
+        <video
+          class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          src="/videos/setting.mp4"
+          muted
+          loop
+          autoPlay
+          playsInline
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-gray-600/20 to-slate-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <span class="relative z-10 flex items-center gap-2">
+          <IconV2 name="settings-gear" size="small" />
+          <span class={HOME_PROJECT_NAV_LABEL}>{props.language.t("sidebar.settings")}</span>
+        </span>
       </button>
       <button
         type="button"
-        class={`${HOME_PROJECT_NAV_ROW} text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
+        class={`${HOME_PROJECT_NAV_ROW} group relative overflow-hidden h-10 rounded-[8px] text-v2-text-text-faint [&>[data-slot=icon-svg]]:text-v2-icon-icon-muted`}
         onClick={props.openHelp}
       >
-        <IconV2 name="help" size="small" />
-        <span class={HOME_PROJECT_NAV_LABEL}>{props.language.t("sidebar.help")}</span>
+        <video
+          class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          src="/videos/help.mp4"
+          muted
+          loop
+          autoPlay
+          playsInline
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-pink-600/20 to-purple-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <span class="relative z-10 flex items-center gap-2">
+          <IconV2 name="help" size="small" />
+          <span class={HOME_PROJECT_NAV_LABEL}>{props.language.t("sidebar.help")}</span>
+        </span>
       </button>
     </div>
   )

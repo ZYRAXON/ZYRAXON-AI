@@ -7,12 +7,12 @@ services:
       - key: PORT
         value: "3001"
       - key: MOBILE_AI_PROVIDER
-        value: opencode
+        value: zyraxon
       - key: MOBILE_AI_MODEL
         value: mimo-v2.5-free
-      - key: OPENCODE_API_KEY
+      - key: ZYRAXON_API_KEY
         sync: false
-      - key: OPENCODE_API_URL
+      - key: ZYRAXON_API_URL
         value: https://opencode.ai/zen/v1
-      - key: OPENCODE_API_KEY
+      - key: ZYRAXON_API_KEY
         value: ""

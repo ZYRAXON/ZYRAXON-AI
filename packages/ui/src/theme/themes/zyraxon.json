@@ -1,7 +1,7 @@
 {
   "$schema": "https://zyraxon.ai/desktop-theme.json",
-  "name": "OpenCode",
-  "id": "opencode",
+  "name": "Zyraxon",
+  "id": "zyraxon",
   "light": {
     "palette": {
       "neutral": "#ffffff",

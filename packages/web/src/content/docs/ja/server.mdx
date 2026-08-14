@@ -13,7 +13,7 @@ export const typesUrl = `${config.github}/blob/dev/packages/sdk/js/src/gen/types
 ### 使用法
 
 ```bash
-opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
+zyraxon serve [--port <number>] [--hostname <string>] [--cors <origin>]
 ```
 
 #### オプション
@@ -23,30 +23,30 @@ opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
 | `--port`        | リッスンするポート                | `4096`           |
 | `--hostname`    | リッスンするホスト名              | `127.0.0.1`      |
 | `--mdns`        | mDNS 検出を有効にする             | `false`          |
-| `--mdns-domain` | mDNS サービスのカスタムドメイン名 | `opencode.local` |
+| `--mdns-domain` | mDNS サービスのカスタムドメイン名 | `zyraxon.local` |
 | `--cors`        | 許可する追加のブラウザーオリジン  | `[]`             |
 
 `--cors` は複数回渡すことができます。
 
 ```bash
-opencode serve --cors http://localhost:5173 --cors https://app.example.com
+zyraxon serve --cors http://localhost:5173 --cors https://app.example.com
 ```
 
 ---
 
 ### 認証
 
-HTTP 基本認証でサーバーを保護するには、`OPENCODE_SERVER_PASSWORD` を設定します。ユーザー名はデフォルトで `opencode` になるか、`OPENCODE_SERVER_USERNAME` を設定してオーバーライドします。これは、`zyraxon serve` と `zyraxon web` の両方に当てはまります。
+HTTP 基本認証でサーバーを保護するには、`ZYRAXON_SERVER_PASSWORD` を設定します。ユーザー名はデフォルトで `zyraxon` になるか、`ZYRAXON_SERVER_USERNAME` を設定してオーバーライドします。これは、`zyraxon serve` と `zyraxon web` の両方に当てはまります。
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve
 ```
 
 ---
 
 ### 仕組み
 
-`opencode` を実行すると、TUI とサーバーが起動します。 TUI はサーバーと通信するクライアントです。サーバーは OpenAPI 3.1 仕様のエンドポイントを公開します。このエンドポイントは、[SDK](/docs/sdk) を使用してアクセスできます。
+`zyraxon` を実行すると、TUI とサーバーが起動します。 TUI はサーバーと通信するクライアントです。サーバーは OpenAPI 3.1 仕様のエンドポイントを公開します。このエンドポイントは、[SDK](/docs/sdk) を使用してアクセスできます。
 
 :::tip
 ZYRAXON サーバーを使用して、プログラムで ZYRAXON と対話します。

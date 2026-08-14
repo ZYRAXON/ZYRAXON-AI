@@ -650,7 +650,7 @@ export const dict = {
   "workspace.lite.subscription.resetsIn": "초기화까지 남은 시간:",
   "workspace.lite.subscription.useBalance": "사용 한도 도달 후에는 보유 잔액 사용",
   "workspace.lite.subscription.selectProvider":
-    'Go 모델을 사용하려면 opencode 설정에서 "ZYRAXON Go"를 공급자로 선택하세요.',
+    'Go 모델을 사용하려면 zyraxon 설정에서 "ZYRAXON Go"를 공급자로 선택하세요.',
   "workspace.lite.providers.title": "공급자",
   "workspace.lite.providers.description": "라우팅에 사용할 공급자를 제어합니다.",
   "workspace.lite.providers.useChina": "중국에서 호스팅되는 모델 활성화",

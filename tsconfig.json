@@ -5,12 +5,12 @@
     "baseUrl": ".",
     "paths": {
       "@zyraxon/*": ["packages/*/src"],
-      "@zyraxon/opencode/*": ["packages/opencode/src/*"],
+      "@zyraxon/zyraxon/*": ["packages/zyraxon/src/*"],
       "@zyraxon/desktop/*": ["packages/desktop/src/*"],
-      "@zyraxon/mcp/*": ["packages/opencode/src/mcp/*"],
-      "@zyraxon/tools/*": ["packages/opencode/src/tool/*"],
-      "@zyraxon/agents/*": ["packages/opencode/src/agent/*"],
-      "@zyraxon/sessions/*": ["packages/opencode/src/session/*"]
+      "@zyraxon/mcp/*": ["packages/zyraxon/src/mcp/*"],
+      "@zyraxon/tools/*": ["packages/zyraxon/src/tool/*"],
+      "@zyraxon/agents/*": ["packages/zyraxon/src/agent/*"],
+      "@zyraxon/sessions/*": ["packages/zyraxon/src/session/*"]
     },
     "target": "ES2022",
     "module": "ESNext",

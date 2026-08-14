@@ -18,13 +18,13 @@ To ensure the maintainability of the project, please note the following:
 ## Make a change
 
 > [!WARNING]
-> The core of the Playwright MCP was moved to the [Playwright monorepo](https://github.com/microsoft/playwright).
+> The core of the Playwright MCP was moved to the [Playwright monorepo](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/tools/backend1).
 
 Clone the Playwright repository. If you plan to send a pull request, it might be better to [fork the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) first.
 
 
 ```bash
-git clone https://github.com/microsoft/playwright
+git clone https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/tools/backend1
 cd playwright
 ```
 
@@ -84,7 +84,7 @@ Note that tests should be *hermetic*, and not depend on external services. Tests
 
 ## Write a commit message
 
-Commit messages should follow the [Semantic Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/) format:
+Commit messages should follow the [Semantic Commit Messages](https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/tools/backend0) format:
 
 ```
 label(namespace): title
@@ -135,7 +135,7 @@ There is a very high bar for new dependencies, including updating to a new versi
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+the rights to use your contribution. For details, visit https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/tools/backend2.
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
@@ -145,4 +145,4 @@ provided by the bot. You will only need to do this once across all repos using o
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+contact [zyraxon@microsoft.com](mailto:zyraxon@microsoft.com) with any additional questions or comments.

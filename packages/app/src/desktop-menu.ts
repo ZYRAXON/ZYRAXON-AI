@@ -201,7 +201,7 @@ export const DESKTOP_MENU: DesktopMenu[] = [
     label: "Help",
     items: [
       { type: "item", label: "ZYRAXON Documentation", href: "https://zyraxon.ai/docs" },
-      { type: "item", label: "Support Forum", href: "https://discord.gg/DN4fZCCDJj" },
+      { type: "item", label: "Support Forum", href: "https://discord.gg/GP8yX33NA" },
       { type: "item", label: "Export Logs...", command: "logs.export" },
       { type: "separator" },
       {

@@ -13,8 +13,8 @@ Le skill vengono caricate on-demand tramite lo strumento nativo `skill`: gli age
 Crea una cartella per ogni nome di skill e metti un `SKILL.md` al suo interno.
 ZYRAXON cerca in queste posizioni:
 
-- Config di progetto: `.opencode/skills/<name>/SKILL.md`
-- Config globale: `~/.config/opencode/skills/<name>/SKILL.md`
+- Config di progetto: `.zyraxon/skills/<name>/SKILL.md`
+- Config globale: `~/.config/zyraxon/skills/<name>/SKILL.md`
 - Progetto compatibile con Claude: `.claude/skills/<name>/SKILL.md`
 - Globale compatibile con Claude: `~/.claude/skills/<name>/SKILL.md`
 - Progetto compatibile con agent: `.agents/skills/<name>/SKILL.md`
@@ -25,9 +25,9 @@ ZYRAXON cerca in queste posizioni:
 ## Discovery
 
 Per i percorsi locali al progetto, ZYRAXON risale dalla directory di lavoro corrente finche' non raggiunge il worktree git.
-Carica qualsiasi `skills/*/SKILL.md` corrispondente in `.opencode/` e qualsiasi `.claude/skills/*/SKILL.md` o `.agents/skills/*/SKILL.md` corrispondente lungo il percorso.
+Carica qualsiasi `skills/*/SKILL.md` corrispondente in `.zyraxon/` e qualsiasi `.claude/skills/*/SKILL.md` o `.agents/skills/*/SKILL.md` corrispondente lungo il percorso.
 
-Le definizioni globali vengono caricate anche da `~/.config/opencode/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` e `~/.agents/skills/*/SKILL.md`.
+Le definizioni globali vengono caricate anche da `~/.config/zyraxon/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` e `~/.agents/skills/*/SKILL.md`.
 
 ---
 
@@ -73,14 +73,14 @@ Tieni la descrizione abbastanza specifica da permettere all'agente di scegliere 
 
 ## Esempio
 
-Crea `.opencode/skills/git-release/SKILL.md` cosi':
+Crea `.zyraxon/skills/git-release/SKILL.md` cosi':
 
 ```markdown
 ---
 name: git-release
 description: Create consistent releases and changelogs
 license: MIT
-compatibility: opencode
+compatibility: zyraxon
 metadata:
   audience: maintainers
   workflow: github

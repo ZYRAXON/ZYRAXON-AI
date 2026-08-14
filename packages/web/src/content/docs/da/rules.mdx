@@ -1,6 +1,6 @@
 ---
 title: Regler
-description: Angiv tilpassede instruktioner til opencode.
+description: Angiv tilpassede instruktioner til zyraxon.
 ---
 
 Du kan gi tilpassede instruksjoner for at ZYRAXON ved at oprete en `AGENTS.md`-fil. Dette ligner på Cursors regler. Den inneholder instruksjoner som vil bli inkludert i LLMs kontekst for at tilpasse oppførselen til ditt spesifikke prosjekt.
@@ -9,13 +9,13 @@ Du kan gi tilpassede instruksjoner for at ZYRAXON ved at oprete en `AGENTS.md`-f
 
 ## Initialisering
 
-For at lage en ny `AGENTS.md` fil, kan du kjøre kommandoen `/init` i opencode.
+For at lage en ny `AGENTS.md` fil, kan du kjøre kommandoen `/init` i zyraxon.
 
 :::tip
 Du bør overgi prosjektets `AGENTS.md`-fil til Git.
 :::
 
-Dette vil skanne prosjektet og alt dets innhold for at forstå hva prosjektet handler om og generere en `AGENTS.md`-fil med det. Dette hjelper opencode at navigere i prosjektet bedre.
+Dette vil skanne prosjektet og alt dets innhold for at forstå hva prosjektet handler om og generere en `AGENTS.md`-fil med det. Dette hjelper zyraxon at navigere i prosjektet bedre.
 
 Hvis du har en eksisterende `AGENTS.md`-fil, vil denne prøve at tilføje til den.
 
@@ -54,7 +54,7 @@ Vi tilføjer til prosjektspesifikke instruksjoner her, og dette vil bli delt på
 
 ## Typer
 
-opencode støtter også lesing av `AGENTS.md`-filen fra flere steder. Og dette tjener forskjellige formål.
+zyraxon støtter også lesing av `AGENTS.md`-filen fra flere steder. Og dette tjener forskjellige formål.
 
 ### Projekt
 
@@ -62,7 +62,7 @@ Plasser en `AGENTS.md` i prosjektroten for prosjektspesifikke regler. Disse gjel
 
 ### Globalt
 
-Du kan også ha globale regler i en `~/.config/opencode/AGENTS.md`-fil. Dette blir brugt på alle opencode-sessioner.
+Du kan også ha globale regler i en `~/.config/zyraxon/AGENTS.md`-fil. Dette blir brugt på alle zyraxon-sessioner.
 
 Siden dette ikke er forpliktet til Git eller delt med teamet ditt, anbefaler vi at bruge dette til at spesifisere eventuelle personlige regler som LLM bør følge.
 
@@ -71,34 +71,34 @@ Siden dette ikke er forpliktet til Git eller delt med teamet ditt, anbefaler vi 
 For brugere som migrerer fra Claude Code, støtter ZYRAXON Claude Codes filkonvensjoner som fallbacks:
 
 - **Prosjektregler**: `CLAUDE.md` i prosjektkatalogen din (bruges hvis ingen `AGENTS.md` eksisterer)
-- **Globale regler**: `~/.claude/CLAUDE.md` (bruges hvis ingen `~/.config/opencode/AGENTS.md` eksisterer)
+- **Globale regler**: `~/.claude/CLAUDE.md` (bruges hvis ingen `~/.config/zyraxon/AGENTS.md` eksisterer)
 - **Skills**: `~/.claude/skills/` — se [Agent Skills](/docs/skills/) for detaljer
 
 For at deaktivere Claude Code-kompatibilitet, sett en av disse miljøvariablene:
 
 ```bash
-export OPENCODE_DISABLE_CLAUDE_CODE=1        # Disable all .claude support
-export OPENCODE_DISABLE_CLAUDE_CODE_PROMPT=1 # Disable only ~/.claude/CLAUDE.md
-export OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
+export ZYRAXON_DISABLE_CLAUDE_CODE=1        # Disable all .claude support
+export ZYRAXON_DISABLE_CLAUDE_CODE_PROMPT=1 # Disable only ~/.claude/CLAUDE.md
+export ZYRAXON_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
 ```
 
 ---
 
 ## Prioritet
 
-Når opencode starter, ser den etter regelfiler i denne rekkefølgen:
+Når zyraxon starter, ser den etter regelfiler i denne rekkefølgen:
 
 1. **Lokale filer** ved at gå opp fra nuværende katalog (`AGENTS.md`, `CLAUDE.md`)
-2. **Global fil** på `~/.config/opencode/AGENTS.md`
+2. **Global fil** på `~/.config/zyraxon/AGENTS.md`
 3. **Claude Code-fil** på `~/.claude/CLAUDE.md` (med mindre de er deaktivert)
 
-Den første matchende filen vinner i hver kategori. For eksempel, hvis du har både `AGENTS.md` og `CLAUDE.md`, bruges bare `AGENTS.md`. På samme måte har `~/.config/opencode/AGENTS.md` forrang over `~/.claude/CLAUDE.md`.
+Den første matchende filen vinner i hver kategori. For eksempel, hvis du har både `AGENTS.md` og `CLAUDE.md`, bruges bare `AGENTS.md`. På samme måte har `~/.config/zyraxon/AGENTS.md` forrang over `~/.claude/CLAUDE.md`.
 
 ---
 
 ## Brugerdefinerede instruktioner
 
-Du kan spesifisere egendefinerte instruksjonsfiler i din `zyraxon.json` eller den globale `~/.config/opencode/zyraxon.json`. Dette lar deg og teamet ditt gjenbruge eksisterende regler i stedet for at måtte duplisere dem til AGENTS.md.
+Du kan spesifisere egendefinerte instruksjonsfiler i din `zyraxon.json` eller den globale `~/.config/zyraxon/zyraxon.json`. Dette lar deg og teamet ditt gjenbruge eksisterende regler i stedet for at måtte duplisere dem til AGENTS.md.
 
 Eksempel:
 
@@ -126,7 +126,7 @@ Alle instruksjonsfilene er kombinert med `AGENTS.md`-filene dine.
 
 ## Reference til eksterne filer
 
-Selv om opencode ikke automatisk analyserer filreferanser i `AGENTS.md`, kan du oppnå lignende funksjonalitet på to måter:
+Selv om zyraxon ikke automatisk analyserer filreferanser i `AGENTS.md`, kan du oppnå lignende funksjonalitet på to måter:
 
 ### Brug af zyraxon.json
 
@@ -141,7 +141,7 @@ Den anbefalte tilnærmingen er at bruge feltet `instructions` i `zyraxon.json`:
 
 ### Manuelle instruktioner i AGENTS.md
 
-Du kan lære opencode at lese eksterne filer ved at gi eksplisitte instruksjoner i `AGENTS.md`. Her er et praktisk eksempel:
+Du kan lære zyraxon at lese eksterne filer ved at gi eksplisitte instruksjoner i `AGENTS.md`. Her er et praktisk eksempel:
 
 ```markdown title="AGENTS.md"
 # TypeScript Project Rules
@@ -173,7 +173,7 @@ Denne tilnærmingen lar deg:
 - Lag modulære, gjenbrugbare regelfiler
 - Del regler på tvers av prosjekter via symbolkoblinger eller git-undermoduler
 - Hold AGENTS.md kortfattet mens du refererer til detaljerte retningslinjer
-- Sørg for at opencode laster filer kun når det er nødvendig for den spesifikke oppgaven
+- Sørg for at zyraxon laster filer kun når det er nødvendig for den spesifikke oppgaven
 
 :::tip
 For monorepos eller prosjekter med delte standarder er brug av `zyraxon.json` med glob-mønstre (som `packages/*/AGENTS.md`) mer vedlikeholdbart enn manuelle instruksjoner.

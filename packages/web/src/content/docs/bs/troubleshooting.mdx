@@ -11,8 +11,8 @@ Da biste otklonili probleme s ZYRAXON, počnite provjeravanjem dnevnika i lokaln
 
 Log fajlovi se pišu na:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\opencode\log`
+- **macOS/Linux**: `~/.local/share/zyraxon/log/`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\zyraxon\log`
 
 Datoteke evidencije se imenuju vremenskim oznakama (npr. `2025-01-09T123456.log`) i čuvaju se najnovijih 10 datoteka dnevnika.
 
@@ -24,8 +24,8 @@ Možete postaviti nivo dnevnika pomoću opcije komandne linije `--log-level` da 
 
 ZYRAXON pohranjuje podatke o sesiji i druge podatke aplikacije na disku na:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\opencode`
+- **macOS/Linux**: `~/.local/share/zyraxon/`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.local\share\zyraxon`
 
 Ovaj direktorij sadrži:
 
@@ -39,7 +39,7 @@ Ovaj direktorij sadrži:
 
 ## Desktop aplikacija
 
-ZYRAXON Desktop pokreće lokalni ZYRAXON server (`opencode-cli` sidecar) u pozadini. Većina problema je uzrokovana nedostatkom dodatka, oštećenom keš memorijom ili lošim postavkama servera.
+ZYRAXON Desktop pokreće lokalni ZYRAXON server (`zyraxon-cli` sidecar) u pozadini. Većina problema je uzrokovana nedostatkom dodatka, oštećenom keš memorijom ili lošim postavkama servera.
 
 ### Brze provjere
 
@@ -57,9 +57,9 @@ Ako se desktop aplikacija ruši pri pokretanju, visi ili se čudno ponaša, poč
 
 Otvorite svoju globalnu konfiguracijsku datoteku i potražite ključ `plugin`.
 
-- **macOS/Linux**: `~/.config/opencode/zyraxon.jsonc` (ili `~/.config/opencode/zyraxon.json`)
-- **macOS/Linux** (starije instalacije): `~/.local/share/opencode/zyraxon.jsonc`
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\opencode\zyraxon.jsonc`
+- **macOS/Linux**: `~/.config/zyraxon/zyraxon.jsonc` (ili `~/.config/zyraxon/zyraxon.json`)
+- **macOS/Linux** (starije instalacije): `~/.local/share/zyraxon/zyraxon.jsonc`
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\zyraxon\zyraxon.jsonc`
 
 Ako imate konfigurirane dodatke, privremeno ih onemogućite uklanjanjem ključa ili postavljanjem na prazan niz:
 
@@ -75,10 +75,10 @@ Ako imate konfigurirane dodatke, privremeno ih onemogućite uklanjanjem ključa 
 ZYRAXON također može učitati lokalne dodatke s diska. Privremeno ih maknite s puta (ili preimenujte folder) i ponovo pokrenite desktop aplikaciju:
 
 - **Globalni dodaci**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-  - **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\opencode\plugins`
+  - **macOS/Linux**: `~/.config/zyraxon/plugins/`
+  - **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.config\zyraxon\plugins`
 - **Projektni dodaci** (samo ako koristite konfiguraciju po projektu)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.zyraxon/plugins/`
 
 Ako aplikacija ponovo počne raditi, ponovo omogućite dodatke jedan po jedan kako biste otkrili koji od njih uzrokuje problem.
 
@@ -91,9 +91,9 @@ Ako onemogućavanje dodataka ne pomogne (ili se instalacija dodatka zaglavila), 
 1. Potpuno zatvorite ZYRAXON Desktop.
 2. Izbrišite keš direktorij:
 
-- **macOS**: Finder -> `Cmd+Shift+G` -> zalijepi `~/.cache/opencode`
-- **Linux**: obrišite `~/.cache/opencode` (ili pokrenite `rm -rf ~/.cache/opencode`)
-- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.cache\opencode`
+- **macOS**: Finder -> `Cmd+Shift+G` -> zalijepi `~/.cache/zyraxon`
+- **Linux**: obrišite `~/.cache/zyraxon` (ili pokrenite `rm -rf ~/.cache/zyraxon`)
+- **Windows**: Pritisnite `WIN+R` i zalijepite `%USERPROFILE%\.cache\zyraxon`
 
 3. Ponovo pokrenite ZYRAXON Desktop.
 
@@ -115,9 +115,9 @@ Ako vaš `zyraxon.json(c)` sadrži odjeljak `server`, privremeno ga uklonite i p
 
 #### Provjerite varijable okruženja
 
-Ako ste postavili `OPENCODE_PORT` u svom okruženju, desktop aplikacija će pokušati da koristi taj port za lokalni server.
+Ako ste postavili `ZYRAXON_PORT` u svom okruženju, desktop aplikacija će pokušati da koristi taj port za lokalni server.
 
-- Poništite `OPENCODE_PORT` (ili odaberite slobodan port) i ponovo pokrenite.
+- Poništite `ZYRAXON_PORT` (ili odaberite slobodan port) i ponovo pokrenite.
 
 ---
 
@@ -158,8 +158,8 @@ Ako se aplikacija ne pokrene i ne možete izbrisati postavke unutar korisničkog
 1. Zatvorite ZYRAXON Desktop.
 2. Pronađite i izbrišite ove datoteke (oni žive u direktoriju podataka ZYRAXON Desktop aplikacije):
 
-- `opencode.settings.dat` (URL zadanog servera za desktop)
-- `opencode.global.dat` i `opencode.workspace.*.dat` (stanje korisničkog interfejsa poput nedavnih servera/projekata)
+- `zyraxon.settings.dat` (URL zadanog servera za desktop)
+- `zyraxon.global.dat` i `zyraxon.workspace.*.dat` (stanje korisničkog interfejsa poput nedavnih servera/projekata)
 
 Da brzo pronađete direktorij:
 
@@ -225,7 +225,7 @@ primjeri:
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `zyraxon/kimi-k2`
 
 Da saznate kojim modelima imate pristup, pokrenite `zyraxon models`
 
@@ -241,10 +241,10 @@ Da biste ovo riješili:
 2. Ako se problem nastavi, pokušajte obrisati pohranjenu konfiguraciju:
 
 ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.local/share/zyraxon
 ```
 
-Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.local\share\opencode`
+Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.local\share\zyraxon`
 
 3. Ponovo izvršite autentifikaciju kod svog provajdera koristeći naredbu `/connect` u TUI.
 
@@ -259,10 +259,10 @@ Da biste riješili probleme s paketom dobavljača:
 1. Obrišite keš paketa provajdera:
 
 ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/zyraxon
 ```
 
-Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.cache\opencode`
+Na Windows-u pritisnite `WIN+R` i izbrišite: `%USERPROFILE%\.cache\zyraxon`
 
 2. Ponovo pokrenite ZYRAXON da ponovo instalirate najnovije pakete dobavljača
 

@@ -24,7 +24,7 @@ Write-Host "Version: $Version" -ForegroundColor Yellow
 
 # Step 1: Build core
 Write-Host "`n[1/6] Building core..." -ForegroundColor Green
-Set-Location "C:\Users\MMP\Downloads\ZYRAXON-AI-main\ZYRAXON-AI-main\packages\opencode"
+Set-Location "C:\Users\MMP\Downloads\ZYRAXON-AI-main\ZYRAXON-AI-main\packages\zyraxon"
 & bun run build 2>&1
 if ($LASTEXITCODE -ne 0) { throw "Core build failed" }
 

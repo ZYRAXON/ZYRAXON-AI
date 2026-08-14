@@ -514,7 +514,7 @@ const dynamicImportToRequirePlugin = {
   setup(build) {
     build.onLoad({ filter: /\.ts$/ }, async (args) => {
       let contents = await fs.promises.readFile(args.path, 'utf8');
-      const isJarvisSrc = args.path.includes(`${path.sep}jarvis${path.sep}src${path.sep}`);
+      const isJarvisSrc = args.path.includes(`${path.sep}jarvis-browser-core${path.sep}src${path.sep}`) || args.path.includes(`${path.sep}jarvis${path.sep}src${path.sep}`) || args.path.includes(`${path.sep}injected${path.sep}src${path.sep}`);
       const hasAlias = isJarvisSrc && (contents.includes("'@isomorphic/") || contents.includes("'@utils/"));
       let hasVendored = false;
       for (const pkg of VENDORED_PACKAGES) {
@@ -529,14 +529,28 @@ const dynamicImportToRequirePlugin = {
         contents = _rewriteVendoredImports(args.path, contents);
       if (hasAlias) {
         contents = contents.replace(
-            /import\s*\{([^}]*)\}\s*from\s*'@isomorphic\/[^']+';?/g,
+            /import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*'@isomorphic\/[^']+';?/g,
             (_, names) => `const {${names}} = require('jarvis-core/lib/coreBundle').iso;`
         );
         contents = contents.replace(
-            /import\s*\{([^}]*)\}\s*from\s*'@utils\/[^']+';?/g,
+            /import\s+(?:type\s+)?\{([^}]*)\}\s*from\s*'@utils\/[^']+';?/g,
             (_, names) => `const {${names}} = require('jarvis-core/lib/coreBundle').utils;`
         );
+        contents = contents.replace(
+            /import\s+type\s+\*\s+as\s+(\w+)\s+from\s*'@isomorphic\/[^']+';?/g,
+            (_, ns) => `const ${ns} = require('jarvis-core/lib/coreBundle').iso;`
+        );
+        contents = contents.replace(
+            /import\s+type\s+\*\s+as\s+(\w+)\s+from\s*'@utils\/[^']+';?/g,
+            (_, ns) => `const ${ns} = require('jarvis-core/lib/coreBundle').utils;`
+        );
       }
+      contents = contents.replace(
+          /import\s+type\s+\{[^}]*\}\s*from\s*'@recorder\/[^']+';?/g, ''
+      );
+      contents = contents.replace(
+          /import\s+type\s+\*\s+as\s+\w+\s+from\s*'@recorder\/[^']+';?/g, ''
+      );
       return { contents, loader: 'ts' };
     });
   }

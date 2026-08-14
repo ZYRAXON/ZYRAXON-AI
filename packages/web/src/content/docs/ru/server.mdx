@@ -1,6 +1,6 @@
 ---
 title: Сервер
-description: Взаимодействуйте с сервером opencode через HTTP.
+description: Взаимодействуйте с сервером zyraxon через HTTP.
 ---
 
 import config from "../../../../config.mjs"
@@ -13,7 +13,7 @@ export const typesUrl = `${config.github}/blob/dev/packages/sdk/js/src/gen/types
 ### Использование
 
 ```bash
-opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
+zyraxon serve [--port <number>] [--hostname <string>] [--cors <origin>]
 ```
 
 #### Параметры
@@ -23,35 +23,35 @@ opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
 | `--port`        | Порт для прослушивания                      | `4096`           |
 | `--hostname`    | Имя хоста для прослушивания                 | `127.0.0.1`      |
 | `--mdns`        | Включить обнаружение mDNS                   | `false`          |
-| `--mdns-domain` | Пользовательское доменное имя для mDNS      | `opencode.local` |
+| `--mdns-domain` | Пользовательское доменное имя для mDNS      | `zyraxon.local` |
 | `--cors`        | Разрешенные дополнительные источники (CORS) | `[]`             |
 
 `--cors` можно передать несколько раз:
 
 ```bash
-opencode serve --cors http://localhost:5173 --cors https://app.example.com
+zyraxon serve --cors http://localhost:5173 --cors https://app.example.com
 ```
 
 ---
 
 ### Аутентификация
 
-Установите `OPENCODE_SERVER_PASSWORD`, чтобы защитить сервер с помощью базовой аутентификации HTTP. Имя пользователя по умолчанию — `opencode` или установите `OPENCODE_SERVER_USERNAME`, чтобы переопределить его. Это относится как к `zyraxon serve`, так и к `zyraxon web`.
+Установите `ZYRAXON_SERVER_PASSWORD`, чтобы защитить сервер с помощью базовой аутентификации HTTP. Имя пользователя по умолчанию — `zyraxon` или установите `ZYRAXON_SERVER_USERNAME`, чтобы переопределить его. Это относится как к `zyraxon serve`, так и к `zyraxon web`.
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve
 ```
 
 ---
 
 ### Как это работает
 
-Когда вы запускаете `opencode`, он запускает TUI и сервер. Где находится TUI
+Когда вы запускаете `zyraxon`, он запускает TUI и сервер. Где находится TUI
 клиент, который общается с сервером. Сервер предоставляет спецификацию OpenAPI 3.1.
 конечная точка. Эта конечная точка также используется для создания файла [SDK](/docs/sdk).
 
 :::tip
-Используйте сервер opencode для программного взаимодействия с открытым кодом.
+Используйте сервер zyraxon для программного взаимодействия с открытым кодом.
 :::
 
 Эта архитектура позволяет открытому коду поддерживать несколько клиентов и позволяет программно взаимодействовать с открытым кодом.
@@ -65,7 +65,7 @@ TUI с открытым кодом запущен, `zyraxon serve` запуст�
 
 Когда вы запускаете TUI, он случайным образом назначает порт и имя хоста. Вместо этого вы можете передать `--hostname` и `--port` [flags](/docs/cli). Затем используйте это для подключения к его серверу.
 
-Конечную точку [`/tui`](#tui) можно использовать для управления TUI через сервер. Например, вы можете предварительно заполнить или запустить подсказку. Эта настройка используется плагинами opencode [IDE](/docs/ide).
+Конечную точку [`/tui`](#tui) можно использовать для управления TUI через сервер. Например, вы можете предварительно заполнить или запустить подсказку. Эта настройка используется плагинами zyraxon [IDE](/docs/ide).
 
 ---
 
@@ -83,7 +83,7 @@ For example, `http://localhost:4096/doc`. Use the spec to generate clients or in
 
 ## API
 
-Сервер opencode предоставляет следующие API.
+Сервер zyraxon предоставляет следующие API.
 
 ---
 

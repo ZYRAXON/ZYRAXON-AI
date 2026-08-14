@@ -1,5 +1,5 @@
 import { createSignal, createEffect, onCleanup, Show, For } from "solid-js"
-import { Button } from "@opencode-ai/ui/button"
+import { Button } from "@zyraxon-ai/ui/button"
 import { showToast } from "@/utils/toast"
 import { useLanguage } from "@/context/language"
 import { viewerCount as sharedViewerCount, setViewerCount, streamStatus as sharedStreamStatus, setStreamStatus, captureMode as sharedCaptureMode, setCaptureMode, audioMode as sharedAudioMode, setAudioMode, systemAudioAvailable as sharedSystemAudio, setSystemAudioAvailable, probedDevices as sharedProbedDevices, setProbedDevices } from "@/hooks/stream-state"

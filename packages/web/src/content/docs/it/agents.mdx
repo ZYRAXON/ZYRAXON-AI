@@ -187,10 +187,10 @@ Configura gli agenti nel file `zyraxon.json`:
 
 Puoi anche definire agenti usando file markdown. Mettili in:
 
-- Globale: `~/.config/opencode/agents/`
-- Per progetto: `.opencode/agents/`
+- Globale: `~/.config/zyraxon/agents/`
+- Per progetto: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -365,7 +365,7 @@ Se non specifichi un modello, gli agenti primari usano il [modello configurato g
 }
 ```
 
-L'ID modello nella configurazione ZYRAXON usa il formato `provider/model-id`. Per esempio, se stai usando [ZYRAXON Zen](/docs/zen), useresti `opencode/gpt-5.1-codex` per GPT 5.1 Codex.
+L'ID modello nella configurazione ZYRAXON usa il formato `provider/model-id`. Per esempio, se stai usando [ZYRAXON Zen](/docs/zen), useresti `zyraxon/gpt-5.1-codex` per GPT 5.1 Codex.
 
 ---
 
@@ -453,7 +453,7 @@ Puoi sovrascrivere questi permessi per agente.
 
 Puoi anche impostare permessi negli agenti Markdown.
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -673,7 +673,7 @@ Esegui `zyraxon models` per vedere la lista dei modelli disponibili.
 Puoi creare nuovi agenti usando il comando seguente:
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Questo comando interattivo:
@@ -710,7 +710,7 @@ Hai un agente che vorresti condividere? [Invia una PR](https://github.com/onelpa
 
 ### Agente documentazione
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -732,7 +732,7 @@ Focus on:
 
 ### Auditor di sicurezza
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

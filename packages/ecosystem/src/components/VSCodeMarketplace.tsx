@@ -402,7 +402,7 @@ const Detail: Component<{ id: string; onBack: () => void }> = (props) => {
           description: ext()!.description,
           icon: ext()!.icon ?? undefined,
         })
-        if (result.success) {
+        if (result.ok) {
           incrementDownload(ext()!.id).catch(() => {})
           const ids = getInstalledIds()
           if (!ids.includes(ext()!.id)) {

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://zyraxon.ai/config.json",
+  "provider": {},
+  "permission": "allow",
+  "references": {
+    "effect": {
+      "repository": "github.com/Effect-TS/effect-smol",
+      "description": "Use for Effect v4 and effect-smol implementation details"
+    }
+  },
+  "mcp": {
+    "jarvis-browser": {
+      "type": "local",
+      "command": ["node", "packages/desktop/resources/jarvis-browser-mcp.cjs", "--headless", "--browser", "chrome", "--no-sandbox"],
+      "cwd": "."
+    }
+  },
+  "tools": {
+    "github-triage": false,
+    "github-pr-search": false
+  },
+  "agents": {
+    "apex": {
+      "model": "zyraxon/big-pickle",
+      "maxTokens": 200000,
+      "temperature": 0.3,
+      "description": "APEX PREDATOR mode — maximum power with 136+ tools, self-healing, and autonomous operation"
+    },
+    "beast": {
+      "model": "zyraxon/big-pickle",
+      "maxTokens": 200000,
+      "temperature": 0.3,
+      "description": "Beast mode — deep coding with aggressive file operations and auto-testing"
+    },
+    "dark-emperor": {
+      "model": "zyraxon/big-pickle",
+      "maxTokens": 200000,
+      "temperature": 0.3,
+      "description": "DARK EMPEROR — ultra mode with all 8 ULTRA tools, code generation, deployment, and debugging"
+    },
+    "pro": {
+      "model": "zyraxon/big-pickle",
+      "maxTokens": 200000,
+      "temperature": 0.3,
+      "description": "PRO mode — strict code quality, security scanning, and documentation"
+    }
+  },
+  "streaming": {
+    "captureMode": "SCR",
+    "audioMode": "system",
+    "quality": "1080p",
+    "rtmpEndpoint": "rtmp://a.rtmp.youtube.com/live2",
+    "maxBitrate": 12000000,
+    "audioBitrate": 192000,
+    "preset": "slow",
+    "tune": "film",
+    "profile": "high",
+    "level": "4.2"
+  },
+  "memory": {
+    "ringBufferSize": 50,
+    "autoSaveInterval": 2000,
+    "maxHistorySize": "10MB"
+  },
+  "selfHealing": {
+    "enabled": true,
+    "autoInstallMissingTools": true,
+    "maxRetries": 3,
+    "logActions": true
+  }
+}

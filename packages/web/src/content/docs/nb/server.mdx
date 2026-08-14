@@ -13,7 +13,7 @@ Kommandoen `zyraxon serve` kjører en hodeløs HTTP-server som eksponerer et Ope
 ### Bruk
 
 ```bash
-opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
+zyraxon serve [--port <number>] [--hostname <string>] [--cors <origin>]
 ```
 
 #### Alternativer
@@ -23,30 +23,30 @@ opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
 | `--port`        | Port å lytte på                               | `4096`           |
 | `--hostname`    | Vertsnavn å lytte på                          | `127.0.0.1`      |
 | `--mdns`        | Aktiver mDNS-oppdagelse                       | `false`          |
-| `--mdns-domain` | Egendefinert domenenavn for mDNS-tjeneste     | `opencode.local` |
+| `--mdns-domain` | Egendefinert domenenavn for mDNS-tjeneste     | `zyraxon.local` |
 | `--cors`        | Ytterligere nettleseropprinnelse som tillates | `[]`             |
 
 `--cors` kan angis flere ganger:
 
 ```bash
-opencode serve --cors http://localhost:5173 --cors https://app.example.com
+zyraxon serve --cors http://localhost:5173 --cors https://app.example.com
 ```
 
 ---
 
 ### Autentisering
 
-Sett `OPENCODE_SERVER_PASSWORD` for å beskytte serveren med HTTP grunnleggende autentisering. Brukernavnet er satt til `opencode` som standard, eller sett `OPENCODE_SERVER_USERNAME` for å overstyre det. Dette gjelder både `zyraxon serve` og `zyraxon web`.
+Sett `ZYRAXON_SERVER_PASSWORD` for å beskytte serveren med HTTP grunnleggende autentisering. Brukernavnet er satt til `zyraxon` som standard, eller sett `ZYRAXON_SERVER_USERNAME` for å overstyre det. Dette gjelder både `zyraxon serve` og `zyraxon web`.
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve
 ```
 
 ---
 
 ### Slik fungerer det
 
-Når du kjører `opencode` starter den en TUI og en server. Der TUI er
+Når du kjører `zyraxon` starter den en TUI og en server. Der TUI er
 klient som snakker med serveren. Serveren viser en OpenAPI 3.1-spesifikasjon
 endepunkt. Dette endepunktet brukes også til å generere en [SDK](/docs/sdk).
 
@@ -83,7 +83,7 @@ For eksempel `http://localhost:4096/doc`. Bruk spesifikasjonen til å generere k
 
 ## APIer
 
-opencode-serveren viser følgende APIer.
+zyraxon-serveren viser følgende APIer.
 
 ---
 

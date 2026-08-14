@@ -304,25 +304,13 @@ const main = Effect.gen(function* () {
   })
   registerWslIpcHandlers(wslServers)
 
-  // ─── VS Code Extension Host ───────────────────────────────────────────────
-  // Initializes the extension host which scans installed extensions,
-  // creates VS Code API shims, and handles activation/deactivation.
-  yield* Effect.promise(async () => {
-    try {
-      const { registerExtensionHostIPC } = await import("./extension-host-ipc")
-      registerExtensionHostIPC()
-    } catch (error) {
-      logger.warn("failed to initialize extension host", error)
-    }
-  })
-
   // ─── Jarvis Browser Integration ──────────────────────────────────────────
   // Real Chrome browser automation - 10x faster than any human
   // Connects to system Chrome via CDP, no Chromium download needed
   yield* Effect.promise(async () => {
     try {
       const { registerJarvisBrowserIPC } = await import("./jarvis-browser-integration")
-      registerJarvisBrowserIPC(mainWindow)
+      registerJarvisBrowserIPC(getLastFocusedWindow())
       logger.info("Jarvis Browser integration registered")
     } catch (error) {
       logger.warn("failed to initialize Jarvis Browser", error)
@@ -338,12 +326,14 @@ const main = Effect.gen(function* () {
       if (!existsSync(configDir)) mkdirSync(configDir, { recursive: true })
 
       const configPath = join(configDir, "zyraxon.jsonc")
+      const resourcesPath = app.isPackaged ? process.resourcesPath : join(import.meta.dirname, "..", "..", "..", "packages", "desktop", "resources")
+      const jarvisMcpPath = join(resourcesPath, "jarvis-browser-mcp.cjs")
       const defaultConfig = {
         "$schema": "https://zyraxon.ai/config.json",
         "mcp": {
           "jarvis-browser": {
             "type": "local",
-            "command": ["node", "__RESOURCES_PATH__/jarvis-browser-mcp.cjs", "--headless", "--browser", "chrome", "--no-sandbox"],
+            "command": ["node", jarvisMcpPath, "--headless", "--browser", "chrome", "--no-sandbox"],
             "enabled": true,
             "environment": {
               "PLAYWRIGHT_MCP_HEADLESS": "true"
@@ -353,16 +343,22 @@ const main = Effect.gen(function* () {
       }
 
       if (!existsSync(configPath)) {
-        writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2))
+        writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2), "utf-8")
         logger.info("created default MCP config", { path: configPath })
       } else {
-        const existing = readFileSync(configPath, "utf-8")
+        let existing = readFileSync(configPath, "utf-8")
+        // Strip BOM if present (Windows UTF-16 issue)
+        if (existing.charCodeAt(0) === 0xFEFF) existing = existing.slice(1)
         const parsed = JSON.parse(existing)
         if (!parsed.mcp || !parsed.mcp["jarvis-browser"]) {
           parsed.mcp = parsed.mcp || {}
           parsed.mcp["jarvis-browser"] = defaultConfig.mcp["jarvis-browser"]
-          writeFileSync(configPath, JSON.stringify(parsed, null, 2))
+          writeFileSync(configPath, JSON.stringify(parsed, null, 2), "utf-8")
           logger.info("added jarvis-browser to existing MCP config", { path: configPath })
+        } else if (parsed.mcp["jarvis-browser"].command?.[1]?.includes("__RESOURCES_PATH__") || parsed.mcp["jarvis-browser"].command?.[1]?.includes("app.asar")) {
+          parsed.mcp["jarvis-browser"].command = defaultConfig.mcp["jarvis-browser"].command
+          writeFileSync(configPath, JSON.stringify(parsed, null, 2), "utf-8")
+          logger.info("fixed jarvis-browser MCP path in existing config", { path: configPath })
         }
       }
     } catch (error) {

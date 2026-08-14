@@ -1,4 +1,4 @@
-import { Effect, Ref } from "effect"
+import { Effect, Ref, Context } from "effect"
 import type { AgentID, Task, PipelineStatus, CollabEvent } from "./types"
 
 export interface OrchestratorInterface {
@@ -50,7 +50,7 @@ export interface OrchestratorStatus {
   activeAgents: number
 }
 
-export class Orchestrator extends Effect.Service<OrchestratorInterface>()("@zyraxon/Orchestrator") {}
+export class Orchestrator extends Context.Service<Orchestrator, OrchestratorInterface>()("@zyraxon/Orchestrator") {}
 
 export const make = Effect.gen(function* () {
   const isRunning = yield* Ref.make(false)

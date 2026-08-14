@@ -33,6 +33,26 @@ function copyJarvisNodeModules(configuration: { appOutDir: string }) {
   }
 }
 
+function copyZyraxonCodeServer(configuration: { appOutDir: string }) {
+  // The packaged desktop VS Code runtime (~250MB) built from
+  // packages/zyraxon-code is embedded into the app so users never download or
+  // build VS Code separately. This is the full Electron-based desktop VS Code,
+  // not the web server variant.
+  const src = path.join(rootDir, "packages", "zyraxon-code", "VSCode-win32-x64")
+  if (!existsSync(src)) {
+    console.warn("[afterPack] Skipped zyraxon-code-server: build not found at", src)
+    return
+  }
+  const dst = path.join(configuration.appOutDir, "resources", "zyraxon-code-server")
+  cpSync(src, dst, { recursive: true })
+  console.log("[afterPack] Copied zyraxon-code-server (desktop VS Code) to", dst)
+}
+
+const afterPack = (context: { appOutDir: string }) => {
+  copyJarvisNodeModules(context)
+  copyZyraxonCodeServer(context)
+}
+
 const channel = (() => {
   const raw = process.env.ZYRAXON_CHANNEL
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw
@@ -46,7 +66,7 @@ const APP_IDS = {
 } as const
 
 const getBase = (appId: string): Configuration => ({
-  afterPack: copyJarvisNodeModules,
+  afterPack,
   artifactName: "zyraxon-desktop-${os}-${arch}.${ext}",
   directories: {
     output: "dist",
@@ -60,7 +80,7 @@ const getBase = (appId: string): Configuration => ({
   extraMetadata: {
     desktopName: `${appId}.desktop`,
   },
-  files: ["out/**/*", "resources/icons/**", "resources/entitlements.plist", "vscode-host/**/*"],
+  files: ["out/**/*", "resources/icons/**", "resources/entitlements.plist"],
   extraResources: [
     {
       from: "native/",
@@ -87,6 +107,10 @@ const getBase = (appId: string): Configuration => ({
       from: "resources/jarvis-browser",
       to: "jarvis-browser",
       filter: ["package.json", "node_modules/**/*"],
+    },
+    {
+      from: "assets/videos",
+      to: "videos",
     },
   ],
   mac: {

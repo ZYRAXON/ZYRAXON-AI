@@ -12,13 +12,13 @@ ZYRAXON kan køre som en webapplikation i din browser, hvilket giver den samme k
 Start webgrænsefladen ved at køre:
 
 ```bash
-opencode web
+zyraxon web
 ```
 
 Dette starter en lokal server på `127.0.0.1` med en tilfældig tilgængelig port og åbner automatisk ZYRAXON i din standardbrowser.
 
 :::caution
-Hvis `OPENCODE_SERVER_PASSWORD` ikke er indstillet, vil serveren være usikret. Dette er fint til lokal brug, men bør indstilles til netværksadgang.
+Hvis `ZYRAXON_SERVER_PASSWORD` ikke er indstillet, vil serveren være usikret. Dette er fint til lokal brug, men bør indstilles til netværksadgang.
 :::
 
 :::tip[Windows-brugere]
@@ -36,7 +36,7 @@ Du kan konfigurere webserveren ved hjælp af kommandolinjeflag eller i din [conf
 Som standard vælger ZYRAXON en tilgængelig port. Du kan angive en port:
 
 ```bash
-opencode web --port 4096
+zyraxon web --port 4096
 ```
 
 ### Værtsnavn
@@ -44,7 +44,7 @@ opencode web --port 4096
 Som standard binder serveren til `127.0.0.1` (kun lokal vært). Sådan gør du ZYRAXON tilgængelig på dit netværk:
 
 ```bash
-opencode web --hostname 0.0.0.0
+zyraxon web --hostname 0.0.0.0
 ```
 
 Når du bruger `0.0.0.0`, vil ZYRAXON vise både lokale adresser og netværksadresser:
@@ -59,15 +59,15 @@ Når du bruger `0.0.0.0`, vil ZYRAXON vise både lokale adresser og netværksadr
 Aktiver mDNS for at gøre din server synlig på det lokale netværk:
 
 ```bash
-opencode web --mdns
+zyraxon web --mdns
 ```
 
-Dette indstiller automatisk værtsnavnet til `0.0.0.0` og annoncerer serveren som `opencode.local`.
+Dette indstiller automatisk værtsnavnet til `0.0.0.0` og annoncerer serveren som `zyraxon.local`.
 
 Du kan tilpasse mDNS-domænenavnet til at køre flere forekomster på det samme netværk:
 
 ```bash
-opencode web --mdns --mdns-domain myproject.local
+zyraxon web --mdns --mdns-domain myproject.local
 ```
 
 ### CORS
@@ -75,18 +75,18 @@ opencode web --mdns --mdns-domain myproject.local
 For at tillade yderligere domæner til CORS (nyttigt til brugerdefinerede frontends):
 
 ```bash
-opencode web --cors https://example.com
+zyraxon web --cors https://example.com
 ```
 
 ### Godkendelse
 
-For at beskytte adgangen skal du angive en adgangskode ved hjælp af `OPENCODE_SERVER_PASSWORD` miljøvariablen:
+For at beskytte adgangen skal du angive en adgangskode ved hjælp af `ZYRAXON_SERVER_PASSWORD` miljøvariablen:
 
 ```bash
-OPENCODE_SERVER_PASSWORD=secret opencode web
+ZYRAXON_SERVER_PASSWORD=secret zyraxon web
 ```
 
-Brugernavnet er som standard `opencode`, men kan ændres med `OPENCODE_SERVER_USERNAME`.
+Brugernavnet er som standard `zyraxon`, men kan ændres med `ZYRAXON_SERVER_USERNAME`.
 
 ---
 
@@ -114,10 +114,10 @@ Du kan vedhæfte en terminal TUI til en kørende webserver:
 
 ```bash
 # Start the web server
-opencode web --port 4096
+zyraxon web --port 4096
 
 # In another terminal, attach the TUI
-opencode attach http://localhost:4096
+zyraxon attach http://localhost:4096
 ```
 
 Dette giver dig mulighed for at bruge både webgrænsefladen og terminalen samtidigt og dele de samme sessioner og tilstand.

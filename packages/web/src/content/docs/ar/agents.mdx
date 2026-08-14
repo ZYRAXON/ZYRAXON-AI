@@ -188,10 +188,10 @@ _الوضع_: `primary`
 
 يمكنك أيضا تعريف الوكلاء باستخدام ملفات Markdown. ضعها في:
 
-- عام: `~/.config/opencode/agents/`
-- لكل مشروع: `.opencode/agents/`
+- عام: `~/.config/zyraxon/agents/`
+- لكل مشروع: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -366,7 +366,7 @@ Provide constructive feedback without making direct changes.
 }
 ```
 
-يستخدم معرّف النموذج في إعدادات ZYRAXON الصيغة `provider/model-id`. على سبيل المثال، إذا كنت تستخدم [ZYRAXON Zen](/docs/zen)، فستستخدم `opencode/gpt-5.1-codex` لـ GPT 5.1 Codex.
+يستخدم معرّف النموذج في إعدادات ZYRAXON الصيغة `provider/model-id`. على سبيل المثال، إذا كنت تستخدم [ZYRAXON Zen](/docs/zen)، فستستخدم `zyraxon/gpt-5.1-codex` لـ GPT 5.1 Codex.
 
 ---
 
@@ -454,7 +454,7 @@ Provide constructive feedback without making direct changes.
 
 يمكنك أيضا ضبط الأذونات في وكلاء Markdown.
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -674,7 +674,7 @@ Only analyze code and suggest changes.
 يمكنك إنشاء وكلاء جدد باستخدام الأمر التالي:
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 سيقوم هذا الأمر التفاعلي بما يلي:
@@ -711,7 +711,7 @@ opencode agent create
 
 ### وكيل التوثيق
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -733,7 +733,7 @@ Focus on:
 
 ### مدقق أمني
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

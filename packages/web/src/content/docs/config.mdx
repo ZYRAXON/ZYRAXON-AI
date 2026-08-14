@@ -43,32 +43,32 @@ For example, if your global config sets `autoupdate: true` and your project conf
 
 Config sources are loaded in this order (later sources override earlier ones):
 
-1. **Remote config** (from `.well-known/opencode`) - organizational defaults
-2. **Global config** (`~/.config/opencode/zyraxon.json`) - user preferences
-3. **Custom config** (`OPENCODE_CONFIG` env var) - custom overrides
+1. **Remote config** (from `.well-known/zyraxon`) - organizational defaults
+2. **Global config** (`~/.config/zyraxon/zyraxon.json`) - user preferences
+3. **Custom config** (`ZYRAXON_CONFIG` env var) - custom overrides
 4. **Project config** (`zyraxon.json` in project) - project-specific settings
-5. **`.opencode` directories** - agents, commands, plugins
-6. **Inline config** (`OPENCODE_CONFIG_CONTENT` env var) - runtime overrides
-7. **Managed config files** (`/Library/Application Support/opencode/` on macOS) - admin-controlled
+5. **`.zyraxon` directories** - agents, commands, plugins
+6. **Inline config** (`ZYRAXON_CONFIG_CONTENT` env var) - runtime overrides
+7. **Managed config files** (`/Library/Application Support/zyraxon/` on macOS) - admin-controlled
 8. **macOS managed preferences** (`.mobileconfig` via MDM) - highest priority, not user-overridable
 
 This means project configs can override global defaults, and global configs can override remote organizational defaults. Managed settings override everything.
 
 :::note
-The `.opencode` and `~/.config/opencode` directories use **plural names** for subdirectories: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/`, and `themes/`. Singular names (e.g., `agent/`) are also supported for backwards compatibility.
+The `.zyraxon` and `~/.config/zyraxon` directories use **plural names** for subdirectories: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/`, and `themes/`. Singular names (e.g., `agent/`) are also supported for backwards compatibility.
 :::
 
 ---
 
 ### Remote
 
-Organizations can provide default configuration via the `.well-known/opencode` endpoint. This is fetched automatically when you authenticate with a provider that supports it.
+Organizations can provide default configuration via the `.well-known/zyraxon` endpoint. This is fetched automatically when you authenticate with a provider that supports it.
 
 Remote config is loaded first, serving as the base layer. All other config sources (global, project) can override these defaults.
 
 For example, if your organization provides MCP servers that are disabled by default:
 
-```json title="Remote config from .well-known/opencode"
+```json title="Remote config from .well-known/zyraxon"
 {
   "mcp": {
     "jira": {
@@ -98,9 +98,9 @@ You can enable specific servers in your local config:
 
 ### Global
 
-Place your global ZYRAXON config in `~/.config/opencode/zyraxon.json`. Use global config for user-wide server/runtime preferences like providers, models, and permissions.
+Place your global ZYRAXON config in `~/.config/zyraxon/zyraxon.json`. Use global config for user-wide server/runtime preferences like providers, models, and permissions.
 
-For TUI-specific settings, use `~/.config/opencode/tui.json`.
+For TUI-specific settings, use `~/.config/zyraxon/tui.json`.
 
 Global config overrides remote organizational defaults.
 
@@ -124,11 +124,11 @@ This is also safe to be checked into Git and uses the same schema as the global 
 
 ### Custom path
 
-Specify a custom config file path using the `OPENCODE_CONFIG` environment variable.
+Specify a custom config file path using the `ZYRAXON_CONFIG` environment variable.
 
 ```bash
-export OPENCODE_CONFIG=/path/to/my/custom-config.json
-opencode run "Hello world"
+export ZYRAXON_CONFIG=/path/to/my/custom-config.json
+zyraxon run "Hello world"
 ```
 
 Custom config is loaded between global and project configs in the precedence order.
@@ -137,17 +137,17 @@ Custom config is loaded between global and project configs in the precedence ord
 
 ### Custom directory
 
-Specify a custom config directory using the `OPENCODE_CONFIG_DIR`
+Specify a custom config directory using the `ZYRAXON_CONFIG_DIR`
 environment variable. This directory will be searched for agents, commands,
-modes, and plugins just like the standard `.opencode` directory, and should
+modes, and plugins just like the standard `.zyraxon` directory, and should
 follow the same structure.
 
 ```bash
-export OPENCODE_CONFIG_DIR=/path/to/my/config-directory
-opencode run "Hello world"
+export ZYRAXON_CONFIG_DIR=/path/to/my/config-directory
+zyraxon run "Hello world"
 ```
 
-The custom directory is loaded after the global config and `.opencode` directories, so it **can override** their settings.
+The custom directory is loaded after the global config and `.zyraxon` directories, so it **can override** their settings.
 
 ---
 
@@ -161,26 +161,26 @@ Drop an `zyraxon.json` or `zyraxon.jsonc` file in the system managed config dire
 
 | Platform | Path                                     |
 | -------- | ---------------------------------------- |
-| macOS    | `/Library/Application Support/opencode/` |
-| Linux    | `/etc/opencode/`                         |
-| Windows  | `%ProgramData%\opencode`                 |
+| macOS    | `/Library/Application Support/zyraxon/` |
+| Linux    | `/etc/zyraxon/`                         |
+| Windows  | `%ProgramData%\zyraxon`                 |
 
 These directories require admin/root access to write, so users cannot modify them.
 
 #### macOS managed preferences
 
-On macOS, ZYRAXON reads managed preferences from the `ai.opencode.managed` preference domain. Deploy a `.mobileconfig` via MDM (Jamf, Kandji, FleetDM) and the settings are enforced automatically.
+On macOS, ZYRAXON reads managed preferences from the `ai.zyraxon.managed` preference domain. Deploy a `.mobileconfig` via MDM (Jamf, Kandji, FleetDM) and the settings are enforced automatically.
 
 ZYRAXON checks these paths:
 
-1. `/Library/Managed Preferences/<user>/ai.opencode.managed.plist`
-2. `/Library/Managed Preferences/ai.opencode.managed.plist`
+1. `/Library/Managed Preferences/<user>/ai.zyraxon.managed.plist`
+2. `/Library/Managed Preferences/ai.zyraxon.managed.plist`
 
 The plist keys map directly to `zyraxon.json` fields. MDM metadata keys (`PayloadUUID`, `PayloadType`, etc.) are stripped automatically.
 
 **Creating a `.mobileconfig`**
 
-Use the `ai.opencode.managed` PayloadType. The ZYRAXON config keys go directly in the payload dict:
+Use the `ai.zyraxon.managed` PayloadType. The ZYRAXON config keys go directly in the payload dict:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -192,9 +192,9 @@ Use the `ai.opencode.managed` PayloadType. The ZYRAXON config keys go directly i
   <array>
     <dict>
       <key>PayloadType</key>
-      <string>ai.opencode.managed</string>
+      <string>ai.zyraxon.managed</string>
       <key>PayloadIdentifier</key>
-      <string>com.example.opencode.config</string>
+      <string>com.example.zyraxon.config</string>
       <key>PayloadUUID</key>
       <string>GENERATE-YOUR-OWN-UUID</string>
       <key>PayloadVersion</key>
@@ -223,7 +223,7 @@ Use the `ai.opencode.managed` PayloadType. The ZYRAXON config keys go directly i
   <key>PayloadType</key>
   <string>Configuration</string>
   <key>PayloadIdentifier</key>
-  <string>com.example.opencode</string>
+  <string>com.example.zyraxon</string>
   <key>PayloadUUID</key>
   <string>GENERATE-YOUR-OWN-UUID</string>
   <key>PayloadVersion</key>
@@ -244,7 +244,7 @@ Generate unique UUIDs with `uuidgen`. Customize the settings to match your organ
 Double-click the `.mobileconfig` to install locally for testing (shows in System Settings > Privacy & Security > Profiles), then run:
 
 ```bash
-opencode debug config
+zyraxon debug config
 ```
 
 All managed preference keys appear in the resolved config and cannot be overridden by user or project configuration.
@@ -283,7 +283,7 @@ Use a dedicated `tui.json` (or `tui.jsonc`) file for TUI-specific settings.
 }
 ```
 
-Use `OPENCODE_TUI_CONFIG` to point to a custom TUI config file.
+Use `ZYRAXON_TUI_CONFIG` to point to a custom TUI config file.
 
 Set `attention.enabled` to turn on TUI desktop notifications and sounds. See [TUI attention](/docs/tui#attention).
 
@@ -313,7 +313,7 @@ Available options:
 - `port` - Port to listen on.
 - `hostname` - Hostname to listen on. When `mdns` is enabled and no hostname is set, defaults to `0.0.0.0`.
 - `mdns` - Enable mDNS service discovery. This allows other devices on the network to discover your ZYRAXON server.
-- `mdnsDomain` - Custom domain name for mDNS service. Defaults to `opencode.local`. Useful for running multiple instances on the same network.
+- `mdnsDomain` - Custom domain name for mDNS service. Defaults to `zyraxon.local`. Useful for running multiple instances on the same network.
 - `cors` - Additional origins to allow for CORS when using the HTTP server from a browser-based client. Values must be full origins (scheme + host + optional port), eg `https://app.example.com`.
 
 [Learn more about the server here](/docs/server).
@@ -517,7 +517,7 @@ You can configure specialized agents for specific tasks through the `agent` opti
 }
 ```
 
-You can also define agents using markdown files in `~/.config/opencode/agents/` or `.opencode/agents/`. [Learn more here](/docs/agents).
+You can also define agents using markdown files in `~/.config/zyraxon/agents/` or `.zyraxon/agents/`. [Learn more here](/docs/agents).
 
 ---
 
@@ -596,7 +596,7 @@ You can configure custom commands for repetitive tasks through the `command` opt
 }
 ```
 
-You can also define commands using markdown files in `~/.config/opencode/commands/` or `.opencode/commands/`. [Learn more here](/docs/commands).
+You can also define commands using markdown files in `~/.config/zyraxon/commands/` or `.zyraxon/commands/`. [Learn more here](/docs/commands).
 
 ---
 
@@ -717,7 +717,7 @@ Use an object to keep built-ins enabled while configuring overrides or custom LS
 
 ### Permissions
 
-By default, opencode **allows all operations** without requiring explicit approval. You can change this using the `permission` option.
+By default, zyraxon **allows all operations** without requiring explicit approval. You can change this using the `permission` option.
 
 For example, to ensure that the `edit` and `bash` tools require user approval:
 
@@ -792,12 +792,12 @@ You can configure MCP servers you want to use through the `mcp` option.
 
 [Plugins](/docs/plugins) extend ZYRAXON with custom tools, hooks, and integrations.
 
-Place plugin files in `.opencode/plugins/` or `~/.config/opencode/plugins/`. You can also load plugins from npm through the `plugin` option.
+Place plugin files in `.zyraxon/plugins/` or `~/.config/zyraxon/plugins/`. You can also load plugins from npm through the `plugin` option.
 
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  "plugin": ["zyraxon-helicone-session", "@my-org/custom-plugin"]
 }
 ```
 
@@ -895,7 +895,7 @@ Use `{env:VARIABLE_NAME}` to substitute environment variables:
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "model": "{env:OPENCODE_MODEL}",
+  "model": "{env:ZYRAXON_MODEL}",
   "provider": {
     "anthropic": {
       "models": {},

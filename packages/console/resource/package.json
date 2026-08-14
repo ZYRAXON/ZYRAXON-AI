@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@opencode-ai/console-resource",
+  "name": "@zyraxon-ai/console-resource",
   "license": "BSL-1.1",
   "dependencies": {
     "@cloudflare/workers-types": "catalog:"

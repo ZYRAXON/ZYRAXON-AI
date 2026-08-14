@@ -42,30 +42,30 @@ Na primjer, ako vaša globalna konfiguracija postavlja `autoupdate: true`, a va�
 
 Izvori konfiguracije se učitavaju ovim redoslijedom (kasniji izvori poništavaju ranije):
 
-1. **Udaljena konfiguracija** (od `.well-known/opencode`) - organizacijske postavke
-2. **Globalna konfiguracija** (`~/.config/opencode/zyraxon.json`) - korisničke preferencije
-3. **Prilagođena konfiguracija** (`OPENCODE_CONFIG` env var) - prilagođena preinačenja
+1. **Udaljena konfiguracija** (od `.well-known/zyraxon`) - organizacijske postavke
+2. **Globalna konfiguracija** (`~/.config/zyraxon/zyraxon.json`) - korisničke preferencije
+3. **Prilagođena konfiguracija** (`ZYRAXON_CONFIG` env var) - prilagođena preinačenja
 4. **Konfiguracija projekta** (`zyraxon.json` u projektu) - postavke specifične za projekat
-5. **`.opencode` direktoriji** - agenti, komande, dodaci
-6. **Inline konfiguracija** (`OPENCODE_CONFIG_CONTENT` env var) - runtime preinačenja
+5. **`.zyraxon` direktoriji** - agenti, komande, dodaci
+6. **Inline konfiguracija** (`ZYRAXON_CONFIG_CONTENT` env var) - runtime preinačenja
 
 To znači da konfiguracije projekta mogu nadjačati globalne zadane postavke, a globalne konfiguracije mogu nadjačati postavke udaljene organizacije.
 
 :::note
-Direktoriji `.opencode` i `~/.config/opencode` koriste **imena u množini** za poddirektorije: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Pojedinačna imena (npr. `agent/`) su također podržana za kompatibilnost unatrag.
+Direktoriji `.zyraxon` i `~/.config/zyraxon` koriste **imena u množini** za poddirektorije: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` i `themes/`. Pojedinačna imena (npr. `agent/`) su također podržana za kompatibilnost unatrag.
 :::
 
 ---
 
 ### Udaljeno (Remote)
 
-Organizacije mogu pružiti zadanu konfiguraciju preko `.well-known/opencode` krajnje tačke. Ovo se automatski preuzima kada se autentifikujete kod provajdera koji to podržava.
+Organizacije mogu pružiti zadanu konfiguraciju preko `.well-known/zyraxon` krajnje tačke. Ovo se automatski preuzima kada se autentifikujete kod provajdera koji to podržava.
 
 Prvo se učitava udaljena konfiguracija koja služi kao osnovni sloj. Svi ostali izvori konfiguracije (globalni, projektni) mogu nadjačati ove zadane postavke.
 
 Na primjer, ako vaša organizacija nudi MCP servere koji su po defaultu onemogućeni:
 
-```json title="Remote config from .well-known/opencode"
+```json title="Remote config from .well-known/zyraxon"
 {
   "mcp": {
     "jira": {
@@ -95,9 +95,9 @@ Možete omogućiti određene servere u vašoj lokalnoj konfiguraciji:
 
 ### Globalno
 
-Postavite svoju globalnu ZYRAXON konfiguraciju u `~/.config/opencode/zyraxon.json`. Koristite globalnu konfiguraciju za korisničke preferencije kao što su provajderi, modeli i dozvole.
+Postavite svoju globalnu ZYRAXON konfiguraciju u `~/.config/zyraxon/zyraxon.json`. Koristite globalnu konfiguraciju za korisničke preferencije kao što su provajderi, modeli i dozvole.
 
-Za postavke specifične za TUI, koristite `~/.config/opencode/tui.json`.
+Za postavke specifične za TUI, koristite `~/.config/zyraxon/tui.json`.
 
 Globalna konfiguracija poništava zadane postavke udaljene organizacije.
 
@@ -121,11 +121,11 @@ Ovo je također sigurno provjeriti u Git i koristi istu shemu kao globalna.
 
 ### Prilagođena konfiguracija
 
-Navedite prilagođenu putanju konfiguracijske datoteke koristeći varijablu okruženja `OPENCODE_CONFIG`.
+Navedite prilagođenu putanju konfiguracijske datoteke koristeći varijablu okruženja `ZYRAXON_CONFIG`.
 
 ```bash
-export OPENCODE_CONFIG=/path/to/my/custom-config.json
-opencode run "Hello world"
+export ZYRAXON_CONFIG=/path/to/my/custom-config.json
+zyraxon run "Hello world"
 ```
 
 Prilagođena konfiguracija se učitava između globalne i projektne konfiguracije po redoslijedu prioriteta.
@@ -134,14 +134,14 @@ Prilagođena konfiguracija se učitava između globalne i projektne konfiguracij
 
 ### Prilagođeni direktorij
 
-Navedite prilagođeni konfiguracijski direktorij koristeći `OPENCODE_CONFIG_DIR` varijablu okruženja. U ovom direktoriju će se tražiti agenti, komande, modovi i dodaci baš kao standardni `.opencode` direktorij, i trebali bi pratiti istu strukturu.
+Navedite prilagođeni konfiguracijski direktorij koristeći `ZYRAXON_CONFIG_DIR` varijablu okruženja. U ovom direktoriju će se tražiti agenti, komande, modovi i dodaci baš kao standardni `.zyraxon` direktorij, i trebali bi pratiti istu strukturu.
 
 ```bash
-export OPENCODE_CONFIG_DIR=/path/to/my/config-directory
-opencode run "Hello world"
+export ZYRAXON_CONFIG_DIR=/path/to/my/config-directory
+zyraxon run "Hello world"
 ```
 
-Prilagođeni direktorij se učitava nakon direktorija globalne konfiguracije i `.opencode`, tako da **može nadjačati** njihove postavke.
+Prilagođeni direktorij se učitava nakon direktorija globalne konfiguracije i `.zyraxon`, tako da **može nadjačati** njihove postavke.
 
 ---
 
@@ -170,7 +170,7 @@ Koristite namjenski `tui.json` (ili `tui.jsonc`) fajl za postavke specifične za
 }
 ```
 
-Koristite `OPENCODE_TUI_CONFIG` da pokažete na prilagođeni TUI konfiguracijski fajl.
+Koristite `ZYRAXON_TUI_CONFIG` da pokažete na prilagođeni TUI konfiguracijski fajl.
 
 Stari `theme`, `keybinds`, i `tui` ključevi u `zyraxon.json` su zastarjeli i automatski će se migrirati kada je to moguće.
 
@@ -200,7 +200,7 @@ Dostupne opcije:
 - `port` - Port za slušanje.
 - `hostname` - Hostname za slušanje. Kada je `mdns` omogućen i nije postavljeno ime hosta, podrazumevano je `0.0.0.0`.
 - `mdns` - Omogući mDNS otkrivanje servisa. Ovo omogućava drugim uređajima na mreži da otkriju vaš ZYRAXON server.
-- `mdnsDomain` - Prilagođeno ime domene za mDNS servis. Zadano je `opencode.local`. Korisno za pokretanje više instanci na istoj mreži.
+- `mdnsDomain` - Prilagođeno ime domene za mDNS servis. Zadano je `zyraxon.local`. Korisno za pokretanje više instanci na istoj mreži.
 - `cors` - Dodatni origini koji omogućavaju CORS kada koristite HTTP server iz klijenta baziranog na pretraživaču. Vrijednosti moraju biti puni origin (shema + host + opcijski port), npr. `https://app.example.com`.
 
 [Saznajte više o serveru ovdje](/docs/server).
@@ -335,7 +335,7 @@ Možete konfigurirati specijalizirane agente za određene zadatke putem opcije `
 }
 ```
 
-Također možete definirati agente koristeći markdown datoteke u `~/.config/opencode/agents/` ili `.opencode/agents/`. [Saznajte više ovdje](/docs/agents).
+Također možete definirati agente koristeći markdown datoteke u `~/.config/zyraxon/agents/` ili `.zyraxon/agents/`. [Saznajte više ovdje](/docs/agents).
 
 ---
 
@@ -399,7 +399,7 @@ Možete konfigurirati prilagođene naredbe za ponavljanje zadataka putem opcije 
 }
 ```
 
-Također možete definirati naredbe koristeći markdown fajlove u `~/.config/opencode/commands/` ili `.opencode/commands/`. [Saznajte više ovdje](/docs/commands).
+Također možete definirati naredbe koristeći markdown fajlove u `~/.config/zyraxon/commands/` ili `.zyraxon/commands/`. [Saznajte više ovdje](/docs/commands).
 
 ---
 
@@ -537,12 +537,12 @@ Možete konfigurirati MCP servere koje želite koristiti putem opcije `mcp`.
 
 [Plugins](/docs/plugins) proširuju ZYRAXON sa prilagođenim alatima, kukicama i integracijama.
 
-Postavite datoteke dodataka u `.opencode/plugins/` ili `~/.config/opencode/plugins/`. Također možete učitati dodatke iz npm-a preko opcije `plugin`.
+Postavite datoteke dodataka u `.zyraxon/plugins/` ili `~/.config/zyraxon/plugins/`. Također možete učitati dodatke iz npm-a preko opcije `plugin`.
 
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  "plugin": ["zyraxon-helicone-session", "@my-org/custom-plugin"]
 }
 ```
 
@@ -639,7 +639,7 @@ Koristite `{env:VARIABLE_NAME}` za zamjenu varijabli okruženja:
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "model": "{env:OPENCODE_MODEL}",
+  "model": "{env:ZYRAXON_MODEL}",
   "provider": {
     "anthropic": {
       "models": {},

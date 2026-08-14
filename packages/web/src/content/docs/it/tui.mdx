@@ -10,13 +10,13 @@ ZYRAXON fornisce un'interfaccia interattiva da terminale (TUI) per lavorare sui 
 Eseguire ZYRAXON avvia la TUI per la directory corrente.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Oppure puoi avviarla per una specifica working directory.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Una volta nella TUI, puoi inviare un messaggio come prompt.
@@ -357,7 +357,7 @@ Puoi personalizzare il comportamento della TUI tramite `tui.json` (o `tui.jsonc`
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ Puoi personalizzare il comportamento della TUI tramite `tui.json` (o `tui.jsonc`
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -397,7 +397,7 @@ Questo è separato da `zyraxon.json`, che configura il comportamento di server/r
 - `mouse` - Abilita o disabilita la cattura del mouse nella TUI (default: `true`). Quando è disabilitata, il comportamento nativo del terminale per selezione e scorrimento con il mouse viene preservato.
 - `attention` - Configura notifiche desktop e suoni della TUI. Disabilitato per impostazione predefinita.
 
-Usa `OPENCODE_TUI_CONFIG` per caricare un path di configurazione TUI personalizzato.
+Usa `ZYRAXON_TUI_CONFIG` per caricare un path di configurazione TUI personalizzato.
 
 ### Attention
 
@@ -407,7 +407,7 @@ Attention permette alla TUI di avvisarti quando ZYRAXON aspetta una risposta, ri
 - `notifications` - Quando Attention è abilitato, consente alla TUI di inviare notifiche desktop tramite il terminale. Default: `true`.
 - `sound` - Quando Attention è abilitato, consente di riprodurre suoni di avviso. Default: `true`.
 - `volume` - Volume predefinito dei suoni, da `0` a `1`. Default: `0.4`.
-- `sound_pack` - ID del sound pack da usare. Default: `opencode.default`.
+- `sound_pack` - ID del sound pack da usare. Default: `zyraxon.default`.
 - `sounds` - Imposta file audio personalizzati per `default`, `question`, `permission`, `error`, `done` o `subagent_done`. I percorsi possono essere assoluti, URL `file://` o relativi a `tui.json`.
 
 ---

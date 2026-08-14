@@ -48,8 +48,8 @@ ZYRAXON is an all-in-one AI desktop agent with 136+ tools, YouTube streaming, se
 
 ### How to Contribute
 
-- **Tools**: Add new MCP tools in `packages/opencode/src/mcp/` with cross-platform support
-- **Agents**: Create or enhance agent prompts in `packages/opencode/src/agent/prompt/`
+- **Tools**: Add new MCP tools in `packages/zyraxon/src/mcp/` with cross-platform support
+- **Agents**: Create or enhance agent prompts in `packages/zyraxon/src/agent/prompt/`
 - **Streaming**: Improve YouTube/streaming features in `packages/desktop/electron/`
 - **Security**: Report vulnerabilities via GitHub Security Advisory
 - **Documentation**: Improve README, CONTRIBUTING, or inline docs

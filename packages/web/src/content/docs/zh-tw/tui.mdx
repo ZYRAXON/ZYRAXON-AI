@@ -10,13 +10,13 @@ ZYRAXON 提供了一個互動式終端機介面（TUI），用於配合 LLM 處�
 執行 ZYRAXON 即可啟動當前目錄的 TUI。
 
 ```bash
-opencode
+zyraxon
 ```
 
 或者您可以為指定的工作目錄啟動它。
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 進入 TUI 後，您可以輸入訊息進行提示。
@@ -357,7 +357,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -397,7 +397,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `mouse` - 在 TUI 中啟用或停用滑鼠捕捉（預設：`true`）。停用後，會保留終端機原生的滑鼠選取和捲動行為。
 - `attention` - 設定 TUI 桌面通知和聲音。預設停用。
 
-使用 `OPENCODE_TUI_CONFIG` 載入自訂 TUI 設定路徑。
+使用 `ZYRAXON_TUI_CONFIG` 載入自訂 TUI 設定路徑。
 
 ### Attention
 
@@ -407,7 +407,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `notifications` - 啟用 Attention 後，允許 TUI 透過終端機傳送桌面通知。預設為 `true`。
 - `sound` - 啟用 Attention 後，允許播放提示音。預設為 `true`。
 - `volume` - 預設提示音音量，範圍從 `0` 到 `1`。預設為 `0.4`。
-- `sound_pack` - 要使用的 sound pack ID。預設為 `opencode.default`。
+- `sound_pack` - 要使用的 sound pack ID。預設為 `zyraxon.default`。
 - `sounds` - 為 `default`、`question`、`permission`、`error`、`done` 或 `subagent_done` 指定自訂聲音檔案。路徑可以是絕對路徑、`file://` URL，或相對於 `tui.json` 的路徑。
 
 ---

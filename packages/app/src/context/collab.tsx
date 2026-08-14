@@ -7,7 +7,7 @@ import {
   onCleanup,
   type JSX,
 } from "solid-js"
-import type { AgentInfo } from "@opencode-ai/collab"
+import type { AgentInfo } from "@zyraxon-ai/collab"
 
 export interface ZyraxonAgentDef {
   id: string

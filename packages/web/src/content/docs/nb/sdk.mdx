@@ -28,9 +28,9 @@ npm install @zyraxon-ai/sdk
 Opprett en forekomst av ZYRAXON:
 
 ```javascript
-import { createOpencode } from "@zyraxon-ai/sdk"
+import { createZyraxon } from "@zyraxon-ai/sdk"
 
-const { client } = await createOpencode()
+const { client } = await createZyraxon()
 ```
 
 Dette starter både en server og en klient
@@ -52,9 +52,9 @@ Dette starter både en server og en klient
 Du kan sende et konfigurasjonsobjekt for å tilpasse virkemåten. Forekomsten henter fortsatt din `zyraxon.json`, men du kan overstyre eller legge til konfigurasjon inline:
 
 ```javascript
-import { createOpencode } from "@zyraxon-ai/sdk"
+import { createZyraxon } from "@zyraxon-ai/sdk"
 
-const opencode = await createOpencode({
+const zyraxon = await createZyraxon({
   hostname: "127.0.0.1",
   port: 4096,
   config: {
@@ -62,9 +62,9 @@ const opencode = await createOpencode({
   },
 })
 
-console.log(`Server running at ${opencode.server.url}`)
+console.log(`Server running at ${zyraxon.server.url}`)
 
-opencode.server.close()
+zyraxon.server.close()
 ```
 
 ## Kun klient
@@ -72,9 +72,9 @@ opencode.server.close()
 Hvis du allerede har en kjørende forekomst av ZYRAXON, kan du opprette en klientforekomst for å koble til den:
 
 ```javascript
-import { createOpencodeClient } from "@zyraxon-ai/sdk"
+import { createZyraxonClient } from "@zyraxon-ai/sdk"
 
-const client = createOpencodeClient({
+const client = createZyraxonClient({
   baseUrl: "http://localhost:4096",
 })
 ```
@@ -376,7 +376,7 @@ await client.session.prompt({
 ```javascript
 // Search and read files
 const textResults = await client.find.text({
-  query: { pattern: "function.*opencode" },
+  query: { pattern: "function.*zyraxon" },
 })
 
 const files = await client.find.files({

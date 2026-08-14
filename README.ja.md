@@ -126,4 +126,4 @@ ZYRAXON に関連するプロジェクトで、名前に "ZYRAXON"（例: "ZYRAX
 
 ---
 
-**コミュニティに参加** [Discord](https://discord.gg/DN4fZCCDJj)
+**コミュニティに参加** [Discord](https://discord.gg/GP8yX33NA)

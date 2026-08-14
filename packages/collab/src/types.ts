@@ -4,15 +4,15 @@ import { Schema } from "effect"
 export type AgentID = string
 
 // Task status
-export const TaskStatus = Schema.Literal("pending", "planning", "in-progress", "review", "done", "failed", "blocked")
+export const TaskStatus = Schema.Literals(["pending", "planning", "in-progress", "review", "done", "failed", "blocked"])
 export type TaskStatus = typeof TaskStatus.Type
 
 // Agent status
-export const AgentStatus = Schema.Literal("idle", "working", "waiting", "failed", "offline")
+export const AgentStatus = Schema.Literals(["idle", "working", "waiting", "failed", "offline"])
 export type AgentStatus = typeof AgentStatus.Type
 
 // Message types for agent communication
-export const MessageType = Schema.Literal(
+export const MessageType = Schema.Literals([
   "task-assign",
   "task-update",
   "task-complete",
@@ -22,7 +22,7 @@ export const MessageType = Schema.Literal(
   "status-response",
   "alert",
   "broadcast",
-)
+])
 export type MessageType = typeof MessageType.Type
 
 // Agent message schema
@@ -69,7 +69,7 @@ export const AgentInfo = Schema.Struct({
 export type AgentInfo = typeof AgentInfo.Type
 
 // Pipeline phase
-export const PipelinePhase = Schema.Literal("plan", "execute", "verify", "deploy")
+export const PipelinePhase = Schema.Literals(["plan", "execute", "verify", "deploy"])
 export type PipelinePhase = typeof PipelinePhase.Type
 
 // Pipeline status
@@ -92,7 +92,7 @@ export const LiveStatus = Schema.Struct({
 export type LiveStatus = typeof LiveStatus.Type
 
 // Event types for real-time updates
-export const CollabEventType = Schema.Literal(
+export const CollabEventType = Schema.Literals([
   "agent-status-changed",
   "task-created",
   "task-updated",
@@ -101,7 +101,8 @@ export const CollabEventType = Schema.Literal(
   "message-sent",
   "pipeline-updated",
   "plan-shared",
-)
+  "status-request",
+])
 export type CollabEventType = typeof CollabEventType.Type
 
 // Collaboration event

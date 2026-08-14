@@ -1,7 +1,7 @@
 // electron.vite.config.ts
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "electron-vite";
-import appPlugin from "@opencode-ai/app/vite";
+import appPlugin from "@zyraxon-ai/app/vite";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 var __electron_vite_injected_dirname = "C:\\Users\\MMP\\Downloads\\ZYRAXON-AI-main\\ZYRAXON-AI-main\\packages\\desktop";
@@ -9,7 +9,7 @@ if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
   const current = process.env.NODE_OPTIONS ?? "";
   process.env.NODE_OPTIONS = `${current} --max-old-space-size=8192`.trim();
 }
-var ZYRAXON_SERVER_DIST = "../opencode/dist/node";
+var ZYRAXON_SERVER_DIST = "../zyraxon/dist/node";
 var channel = (() => {
   const raw = process.env.ZYRAXON_CHANNEL;
   if (raw === "dev" || raw === "beta" || raw === "prod") return raw;
@@ -37,7 +37,7 @@ var electron_vite_config_default = defineConfig({
     },
     build: {
       rollupOptions: {
-        external: ["node-fetch", "opencode-web-ui.gen.ts"],
+        external: ["node-fetch", "zyraxon-web-ui.gen.ts"],
         input: { index: "src/main/index.ts", sidecar: "src/main/sidecar.ts" },
         // Keep this identical to electron-vite's Node 20.11+ shim. Its regex insertion can
         // corrupt bundled TypeScript, while a Rollup banner places the shim safely.
@@ -56,7 +56,7 @@ if (!import.meta.require) { import.meta.require = require; }
     },
     plugins: [
       {
-        name: "opencode:bun-protocol-shim",
+        name: "zyraxon:bun-protocol-shim",
         enforce: "pre",
         resolveId(id) {
           if (id === "bun:sqlite") return "\0bun:sqlite-shim.ts";
@@ -101,30 +101,30 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
         }
       },
       {
-        name: "opencode:node-pty-narrower",
+        name: "zyraxon:node-pty-narrower",
         enforce: "pre",
         resolveId(s) {
           if (s === "@lydell/node-pty") return nodePtyPkg;
         }
       },
       {
-        name: "opencode:virtual-server-module",
+        name: "zyraxon:virtual-server-module",
         enforce: "pre",
         resolveId(id) {
-          if (id === "virtual:opencode-server") {
-            return { id: "opencode-server-bundle", external: true };
+          if (id === "virtual:zyraxon-server") {
+            return { id: "zyraxon-server-bundle", external: true };
           }
         }
       },
       {
-        name: "opencode:copy-server-assets",
+        name: "zyraxon:copy-server-assets",
         async buildStart() {
           const chunksDir = "./out/main/chunks";
           await fs.mkdir(chunksDir, { recursive: true });
           const serverSource = path.join(ZYRAXON_SERVER_DIST, "node.js");
-          const serverDest = path.join(chunksDir, "opencode-server.js");
+          const serverDest = path.join(chunksDir, "zyraxon-server.js");
           await fs.copyFile(serverSource, serverDest);
-          console.log(`[opencode] Pre-copied server bundle to ${serverDest} (${(await fs.stat(serverDest)).size} bytes)`);
+          console.log(`[zyraxon] Pre-copied server bundle to ${serverDest} (${(await fs.stat(serverDest)).size} bytes)`);
         },
         async writeBundle() {
           const chunksDir = "./out/main/chunks";
@@ -134,7 +134,7 @@ export const FFIType = { void:0, i8:1, u8:2, i16:3, u16:4, i32:5, u32:6, i64:7, 
             }
           }
           const serverSource = path.join(ZYRAXON_SERVER_DIST, "node.js");
-          const serverDest = path.join(chunksDir, "opencode-server.js");
+          const serverDest = path.join(chunksDir, "zyraxon-server.js");
           await fs.copyFile(serverSource, serverDest);
           let serverCode = await fs.readFile(serverDest, "utf-8");
           serverCode = serverCode.replace(/from "bun:sqlite"/g, 'from "./bun-sqlite-shim.mjs"');
@@ -228,14 +228,14 @@ $1`
                       ""
                     ].join("\n");
                     serverCode = serverCode.substring(0, lineStart) + replacement + serverCode.substring(lineEnd);
-                    console.log("[opencode] Patched jsonc-parser: replaced broken UMD with pre-bundled CJS");
+                    console.log("[zyraxon] Patched jsonc-parser: replaced broken UMD with pre-bundled CJS");
                   }
                 }
               }
             }
           }
           await fs.writeFile(serverDest, serverCode);
-          console.log(`[opencode] Patched server bundle: replaced bun:sqlite/bun:ffi with local shims`);
+          console.log(`[zyraxon] Patched server bundle: replaced bun:sqlite/bun:ffi with local shims`);
           const shimDir = path.resolve(__electron_vite_injected_dirname, "src/main/shims");
           for (const shim of ["bun-sqlite-shim.mjs", "bun-ffi-shim.mjs"]) {
             const src = path.join(shimDir, shim);
@@ -243,20 +243,20 @@ $1`
               await fs.access(src);
               await fs.copyFile(src, path.join(chunksDir, shim));
             } catch {
-              console.warn(`[opencode] Warning: shim ${shim} not found at ${src}`);
+              console.warn(`[zyraxon] Warning: shim ${shim} not found at ${src}`);
             }
           }
           const wasmSource = path.resolve(__electron_vite_injected_dirname, "node_modules/sql.js/dist/sql-wasm.wasm");
           try {
             await fs.access(wasmSource);
             await fs.copyFile(wasmSource, path.join(chunksDir, "sql-wasm.wasm"));
-            console.log(`[opencode] Copied sql-wasm.wasm to ${chunksDir}`);
+            console.log(`[zyraxon] Copied sql-wasm.wasm to ${chunksDir}`);
           } catch {
-            console.warn(`[opencode] Warning: sql-wasm.wasm not found at ${wasmSource}`);
+            console.warn(`[zyraxon] Warning: sql-wasm.wasm not found at ${wasmSource}`);
           }
-          console.log(`[opencode] Copied bun: protocol shims to ${chunksDir}`);
-          const webUiSource = path.join(ZYRAXON_SERVER_DIST, "opencode-web-ui.gen.ts");
-          const webUiDest = "./out/main/opencode-web-ui.gen.ts";
+          console.log(`[zyraxon] Copied bun: protocol shims to ${chunksDir}`);
+          const webUiSource = path.join(ZYRAXON_SERVER_DIST, "zyraxon-web-ui.gen.ts");
+          const webUiDest = "./out/main/zyraxon-web-ui.gen.ts";
           try {
             await fs.access(webUiSource);
             await fs.copyFile(webUiSource, webUiDest);

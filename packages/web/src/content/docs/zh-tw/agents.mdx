@@ -188,10 +188,10 @@ _模式_：`primary`
 
 您還可以使用 Markdown 檔案定義代理。將它們放在：
 
-- 全域：`~/.config/opencode/agents/`
-- 專案級：`.opencode/agents/`
+- 全域：`~/.config/zyraxon/agents/`
+- 專案級：`.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -366,7 +366,7 @@ Markdown 檔案名稱即為代理名稱。例如，`review.md` 會建立一個�
 }
 ```
 
-ZYRAXON 設定中的模型 ID 使用 `provider/model-id` 格式。例如，如果您使用 [ZYRAXON Zen](/docs/zen)，則可以使用 `opencode/gpt-5.1-codex` 來表示 GPT 5.1 Codex。
+ZYRAXON 設定中的模型 ID 使用 `provider/model-id` 格式。例如，如果您使用 [ZYRAXON Zen](/docs/zen)，則可以使用 `zyraxon/gpt-5.1-codex` 來表示 GPT 5.1 Codex。
 
 ---
 
@@ -454,7 +454,7 @@ ZYRAXON 設定中的模型 ID 使用 `provider/model-id` 格式。例如，如�
 
 您還可以在 Markdown 代理中設定權限。
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -674,7 +674,7 @@ Only analyze code and suggest changes.
 您可以使用以下命令建立新代理：
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 此互動式命令將：
@@ -711,7 +711,7 @@ opencode agent create
 
 ### 文件代理
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -733,7 +733,7 @@ Focus on:
 
 ### 安全稽核代理
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

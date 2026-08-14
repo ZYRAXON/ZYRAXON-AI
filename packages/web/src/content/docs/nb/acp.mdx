@@ -1,6 +1,6 @@
 ---
 title: ACP-støtte
-description: Bruk opencode i en hvilken som helst ACP-kompatibel editor.
+description: Bruk zyraxon i en hvilken som helst ACP-kompatibel editor.
 ---
 
 ZYRAXON støtter [Agent Client Protocol](https://agentclientprotocol.com) eller (ACP), slik at du kan bruke den direkte i kompatible editorer og IDE-er.
@@ -31,7 +31,7 @@ Legg til i [Zed](https://zed.dev)-konfigurasjonen (`~/.config/zed/settings.json`
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "opencode",
+      "command": "zyraxon",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ Du kan også binde en hurtigtast ved å redigere `keymap.json`:
             "custom": {
               "name": "ZYRAXON",
               "command": {
-                "command": "opencode",
+                "command": "zyraxon",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Legg til [JetBrains IDE](https://www.jetbrains.com/) acp.json i henhold til [dok
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/zyraxon",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Legg til i [Avante.nvim](https://github.com/yetone/avante.nvim)-konfigurasjonen:
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" }
     }
   }
@@ -106,11 +106,11 @@ Hvis du trenger å sende miljøvariabler:
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" },
       env = {
-        OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
+        ZYRAXON_API_KEY = os.getenv("ZYRAXON_API_KEY")
       }
     }
   }
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "zyraxon",
         model = "claude-sonnet-4",
       },
     },
@@ -138,7 +138,7 @@ require("codecompanion").setup({
 
 Denne konfigurasjonen setter opp CodeCompanion.nvim til å bruke ZYRAXON som ACP-agent for chat.
 
-Hvis du trenger å sende miljøvariabler (som `OPENCODE_API_KEY`), se [Konfigurere adaptere: miljøvariabler](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) i CodeCompanion.nvim-dokumentasjonen for fullstendige detaljer.
+Hvis du trenger å sende miljøvariabler (som `ZYRAXON_API_KEY`), se [Konfigurere adaptere: miljøvariabler](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) i CodeCompanion.nvim-dokumentasjonen for fullstendige detaljer.
 
 ## Støtte
 

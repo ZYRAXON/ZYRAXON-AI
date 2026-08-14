@@ -58,7 +58,7 @@ ZYRAXON-konfigurasjon.
 }
 ```
 
-Her er hele ID `provider_id/model_id`. For eksempel, hvis du bruker [ZYRAXON Zen](/docs/zen), vil du bruke `opencode/gpt-5.1-codex` for GPT 5.1 Codex.
+Her er hele ID `provider_id/model_id`. For eksempel, hvis du bruker [ZYRAXON Zen](/docs/zen), vil du bruke `zyraxon/gpt-5.1-codex` for GPT 5.1 Codex.
 
 Hvis du har konfigurert en [egendefinert leverandør](/docs/providers#custom), er `provider_id` nøkkelen fra `provider`-delen av konfigurasjonen din, og `model_id` er nøkkelen fra `provider.models`.
 
@@ -111,7 +111,7 @@ Du kan også definere tilpassede varianter som utvider de innebygde. Varianter l
 {
   "$schema": "https://zyraxon.ai/config.json",
   "provider": {
-    "opencode": {
+    "zyraxon": {
       "models": {
         "gpt-5": {
           "variants": {
@@ -137,7 +137,7 @@ Du kan også definere tilpassede varianter som utvider de innebygde. Varianter l
 
 ## Varianter
 
-Mange modeller støtter flere varianter med forskjellige konfigurasjoner. opencode leveres med innebygde standardvarianter for populære leverandører.
+Mange modeller støtter flere varianter med forskjellige konfigurasjoner. zyraxon leveres med innebygde standardvarianter for populære leverandører.
 
 ### Innebygde varianter
 

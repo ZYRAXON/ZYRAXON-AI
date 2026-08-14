@@ -10,13 +10,13 @@ ZYRAXON proporciona una interfaz de terminal interactiva o TUI para trabajar en 
 Al ejecutar ZYRAXON se inicia TUI para el directorio actual.
 
 ```bash
-opencode
+zyraxon
 ```
 
 O puede iniciarlo para un directorio de trabajo específico.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Una vez que esté en TUI, puede indicarlo con un mensaje.
@@ -360,7 +360,7 @@ Puede personalizar el comportamiento de TUI a través de `tui.json` (o `tui.json
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ Puede personalizar el comportamiento de TUI a través de `tui.json` (o `tui.json
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -400,7 +400,7 @@ Esto es independiente de `zyraxon.json`, que configura el comportamiento del ser
 - `mouse`: habilita o deshabilita la captura del mouse en el TUI (predeterminado: `true`). Cuando está deshabilitada, se conserva el comportamiento nativo del terminal para seleccionar y desplazarse con el mouse.
 - `attention`: configura las notificaciones de escritorio y los sonidos del TUI. Deshabilitado de forma predeterminada.
 
-Utilice `OPENCODE_TUI_CONFIG` para cargar una ruta de configuración de TUI personalizada.
+Utilice `ZYRAXON_TUI_CONFIG` para cargar una ruta de configuración de TUI personalizada.
 
 ### Attention
 
@@ -410,7 +410,7 @@ Attention permite que el TUI te avise cuando ZYRAXON necesita que respondas una 
 - `notifications`: cuando Attention está activo, permite que el TUI envíe notificaciones de escritorio a través del terminal. El valor predeterminado es `true`.
 - `sound`: cuando Attention está activo, permite reproducir sonidos de aviso. El valor predeterminado es `true`.
 - `volume`: volumen predeterminado de los sonidos, de `0` a `1`. El valor predeterminado es `0.4`.
-- `sound_pack`: ID del sound pack que se usará. El valor predeterminado es `opencode.default`.
+- `sound_pack`: ID del sound pack que se usará. El valor predeterminado es `zyraxon.default`.
 - `sounds`: define archivos de sonido personalizados para `default`, `question`, `permission`, `error`, `done` o `subagent_done`. Las rutas pueden ser absolutas, URL `file://` o relativas a `tui.json`.
 
 ---

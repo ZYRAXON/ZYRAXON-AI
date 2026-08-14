@@ -149,11 +149,11 @@ export class CodexGenerator {
   }
 }
 
-export class OpencodeGenerator {
+export class ZyraxonGenerator {
   static async init(fullConfig: FullConfigInternal, projectName: string, prompts: boolean) {
     await initRepo(fullConfig, projectName, {
       defaultAgentName: 'Build',
-      promptsFolder: prompts ? '.opencode/prompts' : undefined
+      promptsFolder: prompts ? '.zyraxon/prompts' : undefined
     });
 
     const agents = await loadAgentSpecs();
@@ -162,24 +162,24 @@ export class OpencodeGenerator {
       const prompt = [agent.instructions];
       prompt.push('');
       prompt.push(...agent.examples.map(example => `<example>${example}</example>`));
-      await writeFile(`.opencode/prompts/${agent.name}.md`, prompt.join('\n'), '🤖', 'agent definition');
+      await writeFile(`.zyraxon/prompts/${agent.name}.md`, prompt.join('\n'), '🤖', 'agent definition');
     }
 
-    await writeFile('opencode.json', OpencodeGenerator.configuration(agents), '🔧', 'opencode configuration');
+    await writeFile('zyraxon.json', ZyraxonGenerator.configuration(agents), '🔧', 'zyraxon configuration');
 
     initRepoDone();
   }
 
   static configuration(agents: AgentSpec[]): string {
-    const opencodeToolMap = new Map<string, string[]>([
+    const zyraxonToolMap = new Map<string, string[]>([
       ['search', ['ls', 'glob', 'grep', 'read']],
       ['edit', ['edit', 'write']],
     ]);
 
-    const asOpencodeTool = (tools: Record<string, boolean>, tool: string) => {
+    const asZyraxonTool = (tools: Record<string, boolean>, tool: string) => {
       const [first, second] = tool.split('/');
       if (!second) {
-        for (const tool of opencodeToolMap.get(first) || [first])
+        for (const tool of zyraxonToolMap.get(first) || [first])
           tools[tool] = true;
       } else {
         tools[`${first}*${second}`] = true;
@@ -198,11 +198,11 @@ export class OpencodeGenerator {
       result['agent'][agent.name] = {
         description: agent.description,
         mode: 'subagent',
-        prompt: `{file:.opencode/prompts/${agent.name}.md}`,
+        prompt: `{file:.zyraxon/prompts/${agent.name}.md}`,
         tools,
       };
       for (const tool of agent.tools)
-        asOpencodeTool(tools, tool);
+        asZyraxonTool(tools, tool);
     }
 
     result['mcp']['jarvis-browser-test'] = {

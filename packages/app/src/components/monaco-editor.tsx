@@ -58,7 +58,23 @@ export function MonacoEditor(props: MonacoEditorProps) {
   let containerRef: HTMLDivElement | undefined
   let editor: Monaco.editor.IStandaloneCodeEditor | undefined
   let monaco: typeof import("monaco-editor") | undefined
+  let isSyncing = false
+  let lastSyncedValue: string | undefined
+  let userHasEdited = false
   const [ready, setReady] = createSignal(false)
+
+  // Detect theme from CSS custom property
+  const getTheme = () => {
+    if (props.theme) return props.theme
+    if (typeof document !== "undefined") {
+      const bg = getComputedStyle(document.documentElement).getPropertyValue("--v2-surface-base").trim()
+      // If background is dark-ish, use dark theme
+      if (bg && (bg.includes("0.1") || bg.includes("0.2") || bg.includes("0.3") || bg.includes("#1") || bg.includes("#2") || bg.includes("#0"))) {
+        return "vs-dark"
+      }
+    }
+    return "vs"
+  }
 
   onMount(async () => {
     if (!containerRef) return
@@ -68,15 +84,32 @@ export function MonacoEditor(props: MonacoEditorProps) {
     const monacoModule = await import("monaco-editor")
     monaco = monacoModule
 
-    // Stop keyboard events from bubbling to chat input
-    containerRef.addEventListener("keydown", (e) => e.stopPropagation(), true)
-    containerRef.addEventListener("keyup", (e) => e.stopPropagation(), true)
-    containerRef.addEventListener("keypress", (e) => e.stopPropagation(), true)
+    // Only stop non-editor keyboard events (like global shortcuts), but let paste/cut/undo work
+    containerRef.addEventListener("keydown", (e) => {
+      // Allow Ctrl/Cmd+Z (undo), Ctrl/Cmd+Y (redo), Ctrl/Cmd+X (cut), Ctrl/Cmd+V (paste)
+      const isEditorShortcut = (e.ctrlKey || e.metaKey) && ["z", "y", "x", "v", "c", "a"].includes(e.key.toLowerCase())
+      // Allow Ctrl/Cmd+S for save
+      const isSave = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s"
+      // Allow Delete, Backspace, Enter, Tab, Arrow keys
+      const isEditorKey = ["Delete", "Backspace", "Enter", "Tab", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End", "PageUp", "PageDown"].includes(e.key)
+      // Allow Ctrl+Shift+Z (redo alternative)
+      const isRedoAlt = (e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "z"
+      
+      // Let Monaco handle all editor keys, only stop global app shortcuts
+      if (isEditorShortcut || isSave || isEditorKey || isRedoAlt || e.key.length > 1) {
+        return // Let it pass through to Monaco
+      }
+      // Stop character keys from reaching chat input (Monaco handles them)
+      if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        return // Monaco will handle typing
+      }
+      e.stopPropagation()
+    }, true)
 
     editor = monaco.editor.create(containerRef, {
       value: props.value,
       language: props.language || "plaintext",
-      theme: props.theme || "vs-dark",
+      theme: getTheme(),
       readOnly: props.readOnly ?? false,
       minimap: { enabled: true },
       fontSize: 14,
@@ -94,6 +127,11 @@ export function MonacoEditor(props: MonacoEditorProps) {
       folding: true,
       formatOnPaste: true,
       formatOnType: true,
+      // Enable clipboard shortcuts
+      copyWithSyntaxHighlighting: true,
+      multiCursorModifier: "ctrlCmd",
+      // Enable word-based suggestions
+      wordBasedSuggestions: "allDocuments",
       suggest: {
         showMethods: true,
         showFunctions: true,
@@ -124,6 +162,8 @@ export function MonacoEditor(props: MonacoEditorProps) {
     })
 
     editor.onDidChangeModelContent(() => {
+      if (isSyncing) return
+      userHasEdited = true
       const value = editor?.getValue() || ""
       props.onChange?.(value)
     })
@@ -155,9 +195,21 @@ export function MonacoEditor(props: MonacoEditorProps) {
 
   createEffect(() => {
     if (!editor) return
+    const newValue = props.value
+    // Skip sync if user has edited since last sync (prevents overwriting user edits)
+    if (userHasEdited) {
+      // Only sync if the server value is genuinely different from what we last synced
+      // (meaning an external change happened, not just our own auto-save bouncing back)
+      if (newValue === lastSyncedValue) return
+      // Server has a truly different value (external edit) — sync it
+      userHasEdited = false
+    }
     const currentValue = editor.getValue()
-    if (props.value !== currentValue) {
-      editor.setValue(props.value)
+    if (newValue !== currentValue) {
+      isSyncing = true
+      lastSyncedValue = newValue
+      editor.setValue(newValue)
+      isSyncing = false
     }
   })
 

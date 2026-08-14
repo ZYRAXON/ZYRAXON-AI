@@ -1,7 +1,7 @@
 import { createMemo, Show } from "solid-js"
 import { useSync } from "@/context/sync"
 import { useParams } from "@solidjs/router"
-import { useTheme } from "@opencode-ai/ui/theme/context"
+import { useTheme } from "@zyraxon-ai/ui/theme/context"
 import aiEyesVideo from "@/assets/ai-eyes.mp4"
 
 export function AIEyesOverlay() {

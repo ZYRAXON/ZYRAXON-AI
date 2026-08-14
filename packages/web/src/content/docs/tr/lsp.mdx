@@ -50,14 +50,14 @@ ZYRAXON, popüler diller için çeşitli yerleşik LSP sunucularıyla birlikte g
 LSP varsayılan olarak devre dışıdır. Etkinleştirildiğinde, yukarıdaki dosya uzantılarından biri tespit edilir ve gereksinimler karşılanırsa sunucular başlatılır.
 
 :::note
-`OPENCODE_DISABLE_LSP_DOWNLOAD` ortam değişkenini `true` olarak ayarlayarak otomatik LSP sunucu indirmelerini devre dışı bırakabilirsiniz.
+`ZYRAXON_DISABLE_LSP_DOWNLOAD` ortam değişkenini `true` olarak ayarlayarak otomatik LSP sunucu indirmelerini devre dışı bırakabilirsiniz.
 :::
 
 ---
 
 ## Nasıl Çalışır?
 
-LSP etkinleştirildiğinde ve opencode bir dosyayı açtığında:
+LSP etkinleştirildiğinde ve zyraxon bir dosyayı açtığında:
 
 1. Dosya uzantısını tüm etkin LSP sunucularına göre kontrol eder.
 2. Henüz çalışmıyorsa uygun LSP sunucusunu başlatır.
@@ -74,7 +74,7 @@ Dil sunucuları senkronizasyonu kaybedebilir, önemli miktarda bellek kullanabil
 
 ## Yapılandırma
 
-LSP sunucularını, opencode yapılandırmanızdaki `lsp` bölümü aracılığıyla etkinleştirebilir ve özelleştirebilirsiniz.
+LSP sunucularını, zyraxon yapılandırmanızdaki `lsp` bölümü aracılığıyla etkinleştirebilir ve özelleştirebilirsiniz.
 
 Tüm yerleşik LSP sunucularını etkinleştirmek için `lsp` değerini `true` olarak ayarlayın.
 

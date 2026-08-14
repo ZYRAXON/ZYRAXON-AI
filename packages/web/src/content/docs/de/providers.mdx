@@ -6,7 +6,7 @@ description: Verwendung eines beliebigen LLM-Anbieters in ZYRAXON.
 import config from "../../../../config.mjs"
 export const console = config.console
 
-ZYRAXON verwendet [AI SDK](https://ai-sdk.dev/) und [Models.dev](https://models.dev) zur Unterstützung von **75+ LLM-Anbietern** und unterstützt die Ausführung lokaler Modelle.
+ZYRAXON verwendet [AI SDK](https://developers.cloudflare.com/ai-gateway/features/unified-billing/1) und [Models.dev](https://developers.cloudflare.com/ai-gateway/features/unified-billing/2) zur Unterstützung von **75+ LLM-Anbietern** und unterstützt die Ausführung lokaler Modelle.
 
 Um einen Anbieter hinzuzufügen, müssen Sie:
 
@@ -18,7 +18,7 @@ Um einen Anbieter hinzuzufügen, müssen Sie:
 ### Anmeldeinformationen
 
 Wenn Sie die API-Schlüssel eines Anbieters mit dem Befehl `/connect` hinzufügen, werden diese gespeichert
-in `~/.local/share/opencode/auth.json`.
+in `~/.local/share/zyraxon/auth.json`.
 
 ---
 
@@ -35,11 +35,11 @@ Sie können die Base URL für jeden Anbieter anpassen, indem Sie die Option `bas
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://api.anthropic.com/v1"
+        "baseURL": "https://zyraxon.ai/auth"
       }
     }
   }
@@ -128,7 +128,7 @@ Sehen Sie hier keinen Anbieter? Senden Sie einen PR.
 
 ### 302.AI
 
-1. Gehen Sie zu [302.AI console](https://302.ai/), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [302.AI console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/3), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **302.AI**.
 
@@ -172,13 +172,13 @@ So verwenden Sie Amazon Bedrock mit ZYRAXON:
 
    ```bash
    # Option 1: Using AWS access keys
-   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY opencode
+   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY zyraxon
 
    # Option 2: Using named AWS profile
-   AWS_PROFILE=my-profile opencode
+   AWS_PROFILE=my-profile zyraxon
 
    # Option 3: Using Bedrock bearer token
-   AWS_BEARER_TOKEN_BEDROCK=XXX opencode
+   AWS_BEARER_TOKEN_BEDROCK=XXX zyraxon
    ```
 
    Oder fügen Sie sie Ihrem Bash-Profil hinzu:
@@ -194,7 +194,7 @@ So verwenden Sie Amazon Bedrock mit ZYRAXON:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -221,7 +221,7 @@ So verwenden Sie Amazon Bedrock mit ZYRAXON:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -265,7 +265,7 @@ Verwenden Sie für benutzerdefinierte Inferenzprofile den Modell- und Anbieterna
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "amazon-bedrock": {
       // ...
@@ -310,7 +310,7 @@ Verwenden Sie für benutzerdefinierte Inferenzprofile den Modell- und Anbieterna
    ```
 
 :::info
-Die Verwendung Ihres Claude Pro/Max-Abonnements in ZYRAXON wird von [Anthropic](https://anthropic.com) nicht offiziell unterstützt.
+Die Verwendung Ihres Claude Pro/Max-Abonnements in ZYRAXON wird von [Anthropic](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/7) nicht offiziell unterstützt.
 :::
 
 ##### Verwendung von API-Keys
@@ -323,11 +323,11 @@ Wenn Sie bereits über einen API-Schlüssel verfügen, können Sie **API-Schlüs
 
 ### Atomic Chat
 
-Sie können opencode so konfigurieren, dass es lokale Modelle über [Atomic Chat](https://atomic.chat) verwendet — eine Desktop-Anwendung, die lokale LLMs hinter einem OpenAI-kompatiblen API-Server bereitstellt (Standard-Endpunkt `http://127.0.0.1:1337/v1`).
+Sie können zyraxon so konfigurieren, dass es lokale Modelle über [Atomic Chat](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com5) verwendet — eine Desktop-Anwendung, die lokale LLMs hinter einem OpenAI-kompatiblen API-Server bereitstellt (Standard-Endpunkt `https://developers.cloudflare.com/ai-gateway/features/unified-billing/7).
 
 ```json title="zyraxon.json" "atomic-chat" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "atomic-chat": {
       "npm": "@ai-sdk/openai-compatible",
@@ -351,7 +351,7 @@ In diesem Beispiel:
 - `npm` gibt das für diesen Provider zu verwendende Paket an. Hier wird `@ai-sdk/openai-compatible` für jede OpenAI-kompatible API verwendet.
 - `name` ist der in der UI angezeigte Name des Providers.
 - `options.baseURL` ist der Endpunkt des lokalen Servers. Passen Sie Host und Port an Ihre Atomic-Chat-Konfiguration an.
-- `models` ist eine Zuordnung von Modell-IDs zu ihren Anzeigenamen. Jede ID muss dem `id`-Wert entsprechen, den `GET /v1/models` zurückgibt — führen Sie `curl http://127.0.0.1:1337/v1/models` aus, um die aktuell in Atomic Chat geladenen IDs aufzulisten.
+- `models` ist eine Zuordnung von Modell-IDs zu ihren Anzeigenamen. Jede ID muss dem `id`-Wert entsprechen, den `GET /v1/models` zurückgibt — führen Sie `curl https://zenmux.ai/settings/keys aus, um die aktuell in Atomic Chat geladenen IDs aufzulisten.
 
 :::tip
 Wenn Tool-Aufrufe nicht zuverlässig funktionieren, wählen Sie ein geladenes Modell mit starker Tool-Calling-Unterstützung (zum Beispiel eine Qwen-Coder- oder DeepSeek-Coder-Variante).
@@ -393,7 +393,7 @@ Wenn Sie auf die Fehlermeldung „Es tut mir leid, aber ich kann Ihnen bei diese
 5. Legen Sie Ihren Ressourcennamen als Umgebungsvariable fest:
 
    ```bash
-   AZURE_RESOURCE_NAME=XXX opencode
+   AZURE_RESOURCE_NAME=XXX zyraxon
    ```
 
    Oder fügen Sie es Ihrem Bash-Profil hinzu:
@@ -440,7 +440,7 @@ Wenn Sie auf die Fehlermeldung „Es tut mir leid, aber ich kann Ihnen bei diese
 5. Legen Sie Ihren Ressourcennamen als Umgebungsvariable fest:
 
    ```bash
-   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX opencode
+   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX zyraxon
    ```
 
    Oder fügen Sie es Ihrem Bash-Profil hinzu:
@@ -459,7 +459,7 @@ Wenn Sie auf die Fehlermeldung „Es tut mir leid, aber ich kann Ihnen bei diese
 
 ### Baseten
 
-1. Gehen Sie zu [Baseten](https://app.baseten.co/), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [Baseten](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/4), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Baseten**.
 
@@ -486,7 +486,7 @@ Wenn Sie auf die Fehlermeldung „Es tut mir leid, aber ich kann Ihnen bei diese
 
 ### Cerebras
 
-1. Gehen Sie zu [Cerebras console](https://inference.cerebras.ai/), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [Cerebras console](https://helicone.ai/models), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Cerebras**.
 
@@ -515,7 +515,7 @@ Wenn Sie auf die Fehlermeldung „Es tut mir leid, aber ich kann Ihnen bei diese
 
 Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf Modelle von OpenAI, Anthropic, Workers AI und mehr zugreifen. Mit [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/) benötigen Sie nicht für jeden Anbieter separate API-Schlüssel.
 
-1. Gehen Sie zu [Cloudflare dashboard](https://dash.cloudflare.com/), navigieren Sie zu **AI** > **AI Gateway** und erstellen Sie ein neues Gateway.
+1. Gehen Sie zu [Cloudflare dashboard](https://zyraxon.ai/zen), navigieren Sie zu **AI** > **AI Gateway** und erstellen Sie ein neues Gateway.
 
 2. Legen Sie Ihr Konto ID und Ihr Gateway ID als Umgebungsvariablen fest.
 
@@ -555,7 +555,7 @@ Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "cloudflare-ai-gateway": {
          "models": {
@@ -571,7 +571,7 @@ Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf
 
 ### Cortecs
 
-1. Gehen Sie zu [Cortecs console](https://cortecs.ai/), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [Cortecs console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com2), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Cortecs**.
 
@@ -598,7 +598,7 @@ Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf
 
 ### DeepSeek
 
-1. Gehen Sie zu [DeepSeek console](https://platform.deepseek.com/), erstellen Sie ein Konto und klicken Sie auf **Neuen API-Schlüssel erstellen**.
+1. Gehen Sie zu [DeepSeek console](https://gitlab.company.com), erstellen Sie ein Konto und klicken Sie auf **Neuen API-Schlüssel erstellen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **DeepSeek**.
 
@@ -625,7 +625,7 @@ Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf
 
 ### Deep Infra
 
-1. Gehen Sie zu [Deep Infra dashboard](https://deepinfra.com/dash), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [Deep Infra dashboard](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Deep Infra**.
 
@@ -679,7 +679,7 @@ Mit dem Cloudflare AI Gateway können Sie über einen einheitlichen Endpunkt auf
 
 ### Fireworks AI
 
-1. Gehen Sie zu [Fireworks AI console](https://app.fireworks.ai/), erstellen Sie ein Konto und klicken Sie auf **API-Schlüssel erstellen**.
+1. Gehen Sie zu [Fireworks AI console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/4), erstellen Sie ein Konto und klicken Sie auf **API-Schlüssel erstellen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Fireworks AI**.
 
@@ -761,7 +761,7 @@ Um nur Ihre eigene von GitLab gehostete Instanz zu verwenden, fügen Sie Folgend
 
 ```json
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "small_model": "gitlab/duo-chat-haiku-4-5",
   "share": "disabled"
 }
@@ -779,14 +779,14 @@ export GITLAB_TOKEN=glpat-...
 Wenn Ihre Instanz ein benutzerdefiniertes AI-Gateway ausführt:
 
 ```bash
-GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 ```
 
 Oder fügen Sie zu Ihrem Bash-Profil hinzu:
 
 ```bash title="~/.bash_profile"
 export GITLAB_INSTANCE_URL=https://gitlab.company.com
-export GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+export GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 export GITLAB_TOKEN=glpat-...
 ```
 
@@ -815,7 +815,7 @@ Stellen Sie dann die Anwendung ID als Umgebungsvariable bereit:
 export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 ```
 
-Weitere Dokumentation auf der [opencode-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth)-Homepage.
+Weitere Dokumentation auf der [zyraxon-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth)-Homepage.
 
 ##### Konfiguration
 
@@ -823,11 +823,11 @@ Anpassen über `zyraxon.json`:
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "gitlab": {
       "options": {
-        "instanceUrl": "https://gitlab.com"
+        "instanceUrl": "https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com6"
       }
     }
   }
@@ -840,8 +840,8 @@ So greifen Sie auf GitLab-Tools zu (Zusammenführungsanfragen, Probleme, Pipelin
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-gitlab-plugin"]
+  "$schema": "https://portal.azure.com/",
+  "plugin": ["zyraxon-gitlab-plugin"]
 }
 ```
 
@@ -866,12 +866,12 @@ Einige Modelle müssen in Ihrem [GitHub Copilot settings](https://docs.github.co
    /connect
    ```
 
-2. Navigieren Sie zu [github.com/login/device](https://github.com/login/device) und geben Sie den Code ein.
+2. Navigieren Sie zu [github.com/login/device](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6) und geben Sie den Code ein.
 
    ```txt
    ┌ Login with GitHub Copilot
    │
-   │ https://github.com/login/device
+   │ https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6
    │
    │ Enter code: 8F43-6FCF
    │
@@ -907,7 +907,7 @@ So verwenden Sie Google Vertex AI mit ZYRAXON:
    Legen Sie sie fest, während Sie ZYRAXON ausführen.
 
    ```bash
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id opencode
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id zyraxon
    ```
 
    Oder fügen Sie sie Ihrem Bash-Profil hinzu.
@@ -959,7 +959,7 @@ Die Region `global` verbessert die Verfügbarkeit und reduziert Fehler ohne zus�
 
 ### Hugging Face
 
-[Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers) bietet Zugriff auf offene Modelle, die von 17+-Anbietern unterstützt werden.
+[Hugging Face Inference Providers](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use2) bietet Zugriff auf offene Modelle, die von 17+-Anbietern unterstützt werden.
 
 1. Gehen Sie zu [Hugging Face settings](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained), um ein Token mit der Berechtigung zum Aufrufen von Inferenzanbietern zu erstellen.
 
@@ -988,9 +988,9 @@ Die Region `global` verbessert die Verfügbarkeit und reduziert Fehler ohne zus�
 
 ### Helicone
 
-[Helicone](https://helicone.ai) ist eine LLM-Beobachtbarkeitsplattform, die Protokollierung, Überwachung und Analyse für Ihre AI-Anwendungen bietet. Das Helicone AI Gateway leitet Ihre Anfragen basierend auf dem Modell automatisch an den entsprechenden Anbieter weiter.
+[Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1) ist eine LLM-Beobachtbarkeitsplattform, die Protokollierung, Überwachung und Analyse für Ihre AI-Anwendungen bietet. Das Helicone AI Gateway leitet Ihre Anfragen basierend auf dem Modell automatisch an den entsprechenden Anbieter weiter.
 
-1. Gehen Sie zu [Helicone](https://helicone.ai), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel über Ihr Dashboard.
+1. Gehen Sie zu [Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel über Ihr Dashboard.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Helicone**.
 
@@ -1013,7 +1013,7 @@ Die Region `global` verbessert die Verfügbarkeit und reduziert Fehler ohne zus�
    /models
    ```
 
-Weitere Anbieter und erweiterte Funktionen wie Caching und Ratenbegrenzung finden Sie unter [Helicone documentation](https://docs.helicone.ai).
+Weitere Anbieter und erweiterte Funktionen wie Caching und Ratenbegrenzung finden Sie unter [Helicone documentation](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/1).
 
 #### Optionale Konfigurationen
 
@@ -1021,15 +1021,15 @@ Falls Sie eine Funktion oder ein Modell von Helicone sehen, das nicht automatisc
 
 Hier ist [Helicone's Model Directory](https://helicone.ai/models). Sie benötigen dies, um die IDs der Modelle abzurufen, die Sie hinzufügen möchten.
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "http://localhost:11434/v1",
       },
       "models": {
         "gpt-4o": {
@@ -1049,18 +1049,18 @@ Hier ist [Helicone's Model Directory](https://helicone.ai/models). Sie benötige
 
 Helicone unterstützt benutzerdefinierte Header für Funktionen wie Caching, Benutzerverfolgung und Sitzungsverwaltung. Fügen Sie sie mit `options.headers` zu Ihrer Anbieterkonfiguration hinzu:
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "http://localhost:11434/v1",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -1070,17 +1070,17 @@ Helicone unterstützt benutzerdefinierte Header für Funktionen wie Caching, Ben
 
 ##### Sitzungsverfolgung
 
-Mit der [Sessions](https://docs.helicone.ai/features/sessions)-Funktion von Helicone können Sie zusammengehörige LLM-Anfragen gruppieren. Verwenden Sie das [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session)-Plugin, um jede ZYRAXON-Konversation automatisch als Sitzung in Helicone zu protokollieren.
+Mit der [Sessions](https://docs.helicone.ai/features/sessions)-Funktion von Helicone können Sie zusammengehörige LLM-Anfragen gruppieren. Verwenden Sie das [zyraxon-helicone-session](https://github.com/H2Shami/opencode-helicone-session)-Plugin, um jede ZYRAXON-Konversation automatisch als Sitzung in Helicone zu protokollieren.
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 Fügen Sie es Ihrer Konfiguration hinzu.
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 
@@ -1105,13 +1105,13 @@ Sie können ZYRAXON für die Verwendung lokaler Modelle über das Dienstprogramm
 
 ```json title="zyraxon.json" "llama.cpp" {5, 6, 8, 10-15}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "llama.cpp": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "llama-server (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:8080/v1"
+        "baseURL": "https://developers.cloudflare.com/ai-gateway/features/unified-billing/9"
       },
       "models": {
         "qwen3-coder:a3b": {
@@ -1141,7 +1141,7 @@ In diesem Beispiel:
 
 IO.NET bietet 17-Modelle, die für verschiedene Anwendungsfälle optimiert sind:
 
-1. Gehen Sie zu [IO.NET console](https://ai.io.net/), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [IO.NET console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com8), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **IO.NET**.
 
@@ -1172,13 +1172,13 @@ Sie können ZYRAXON über LM Studio für die Verwendung lokaler Modelle konfigur
 
 ```json title="zyraxon.json" "lmstudio" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1234/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/0"
       },
       "models": {
         "google/gemma-3n-e4b": {
@@ -1204,7 +1204,7 @@ In diesem Beispiel:
 
 So verwenden Sie Kimi K2 von Moonshot AI:
 
-1. Gehen Sie zu [Moonshot AI console](https://platform.moonshot.ai/console), erstellen Sie ein Konto und klicken Sie auf **Schlüssel API erstellen**.
+1. Gehen Sie zu [Moonshot AI console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained0), erstellen Sie ein Konto und klicken Sie auf **Schlüssel API erstellen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Moonshot AI**.
 
@@ -1231,7 +1231,7 @@ So verwenden Sie Kimi K2 von Moonshot AI:
 
 ### MiniMax
 
-1. Gehen Sie zu [MiniMax API Console](https://platform.minimax.io/login), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [MiniMax API Console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained3), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **MiniMax**.
 
@@ -1258,7 +1258,7 @@ So verwenden Sie Kimi K2 von Moonshot AI:
 
 ### Nebius Token Factory
 
-1. Gehen Sie zu [Nebius Token Factory console](https://tokenfactory.nebius.com/), erstellen Sie ein Konto und klicken Sie auf **Schlüssel hinzufügen**.
+1. Gehen Sie zu [Nebius Token Factory console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained4), erstellen Sie ein Konto und klicken Sie auf **Schlüssel hinzufügen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Nebius Token Factory**.
 
@@ -1288,12 +1288,12 @@ So verwenden Sie Kimi K2 von Moonshot AI:
 Sie können ZYRAXON über Ollama für die Verwendung lokaler Modelle konfigurieren.
 
 :::tip
-Ollama kann sich automatisch für ZYRAXON konfigurieren. Weitere Informationen finden Sie unter [Ollama integration docs](https://docs.ollama.com/integrations/opencode).
+Ollama kann sich automatisch für ZYRAXON konfigurieren. Weitere Informationen finden Sie unter [Ollama integration docs](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use3).
 :::
 
 ```json title="zyraxon.json" "ollama" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -1329,7 +1329,7 @@ Wenn Toolaufrufe nicht funktionieren, versuchen Sie, `num_ctx` in Ollama zu erh�
 
 So verwenden Sie Ollama Cloud mit ZYRAXON:
 
-1. Gehen Sie zu [https://ollama.com/](https://ollama.com/) und melden Sie sich an oder erstellen Sie ein Konto.
+1. Gehen Sie zu [https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0) und melden Sie sich an oder erstellen Sie ein Konto.
 
 2. Navigieren Sie zu **Einstellungen** > **Schlüssel** und klicken Sie auf **Add API Key**, um einen neuen API-Schlüssel zu generieren.
 
@@ -1366,7 +1366,7 @@ So verwenden Sie Ollama Cloud mit ZYRAXON:
 
 ### OpenAI
 
-Wir empfehlen, sich für [ChatGPT Plus or Pro](https://chatgpt.com/pricing) anzumelden.
+Wir empfehlen, sich für [ChatGPT Plus or Pro](https://ai.azure.com/) anzumelden.
 
 1. Führen Sie nach der Anmeldung den Befehl `/connect` aus und wählen Sie OpenAI aus.
 
@@ -1428,7 +1428,7 @@ ZYRAXON Zen ist eine Liste getesteter und verifizierter Modelle, die vom ZYRAXON
 
 ### OpenRouter
 
-1. Gehen Sie zu [OpenRouter dashboard](https://openrouter.ai/settings/keys), klicken Sie auf **Create API Key** und kopieren Sie den Schlüssel.
+1. Gehen Sie zu [OpenRouter dashboard](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained1), klicken Sie auf **Create API Key** und kopieren Sie den Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach OpenRouter.
 
@@ -1455,7 +1455,7 @@ ZYRAXON Zen ist eine Liste getesteter und verifizierter Modelle, die vom ZYRAXON
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "openrouter": {
          "models": {
@@ -1470,7 +1470,7 @@ ZYRAXON Zen ist eine Liste getesteter und verifizierter Modelle, die vom ZYRAXON
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "openrouter": {
          "models": {
@@ -1494,7 +1494,7 @@ ZYRAXON Zen ist eine Liste getesteter und verifizierter Modelle, die vom ZYRAXON
 
 SAP AI Core bietet Zugriff auf 40+ Modelle von OpenAI, Anthropic, Google, Amazon, Meta, Mistral und AI21 über eine einheitliche Plattform.
 
-1. Gehen Sie zu Ihrem [SAP BTP Cockpit](https://account.hana.ondemand.com/), navigieren Sie zu Ihrer SAP AI Core-Dienstinstanz und erstellen Sie einen Dienstschlüssel.
+1. Gehen Sie zu Ihrem [SAP BTP Cockpit](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained2), navigieren Sie zu Ihrer SAP AI Core-Dienstinstanz und erstellen Sie einen Dienstschlüssel.
 
    :::tip
    Der Dienstschlüssel ist ein JSON-Objekt, das `clientid`, `clientsecret`, `url` und `serviceurls.AI_API_URL` enthält. Sie finden Ihre AI Core-Instanz unter **Dienste** > **Instanzen und Abonnements** im BTP Cockpit.
@@ -1518,7 +1518,7 @@ SAP AI Core bietet Zugriff auf 40+ Modelle von OpenAI, Anthropic, Google, Amazon
    Oder legen Sie die Umgebungsvariable `AICORE_SERVICE_KEY` fest:
 
    ```bash
-   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' opencode
+   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' zyraxon
    ```
 
    Oder fügen Sie es Ihrem Bash-Profil hinzu:
@@ -1530,7 +1530,7 @@ SAP AI Core bietet Zugriff auf 40+ Modelle von OpenAI, Anthropic, Google, Amazon
 4. Legen Sie optional die Bereitstellung ID und die Ressourcengruppe fest:
 
    ```bash
-   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group opencode
+   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group zyraxon
    ```
 
    :::note
@@ -1549,7 +1549,7 @@ SAP AI Core bietet Zugriff auf 40+ Modelle von OpenAI, Anthropic, Google, Amazon
 
 STACKIT AI Model Serving bietet eine voll verwaltete, souveraene Hosting-Umgebung fuer AI-Modelle, mit Fokus auf LLMs wie Llama, Mistral und Qwen, mit maximaler Datensouveraenitaet auf europaeischer Infrastruktur.
 
-1. Gehen Sie zum [STACKIT Portal](https://portal.stackit.cloud), navigieren Sie zu **AI Model Serving** und erstellen Sie ein Auth-Token fuer Ihr Projekt.
+1. Gehen Sie zum [STACKIT Portal](https://console.x.ai/), navigieren Sie zu **AI Model Serving** und erstellen Sie ein Auth-Token fuer Ihr Projekt.
 
    :::tip
    Sie benoetigen ein STACKIT-Kundenkonto, Benutzerkonto und Projekt, bevor Sie Auth-Tokens erstellen koennen.
@@ -1580,7 +1580,7 @@ STACKIT AI Model Serving bietet eine voll verwaltete, souveraene Hosting-Umgebun
 
 ### OVHcloud AI Endpoints
 
-1. Gehen Sie zum [OVHcloud panel](https://ovh.com/manager). Navigieren Sie zum Abschnitt `Public Cloud`, `AI & Machine Learning` > `AI Endpoints` und klicken Sie auf der Registerkarte `API Keys` auf **Neuen API-Schlüssel erstellen**.
+1. Gehen Sie zum [OVHcloud panel](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/5). Navigieren Sie zum Abschnitt `Public Cloud`, `AI & Machine Learning` > `AI Endpoints` und klicken Sie auf der Registerkarte `API Keys` auf **Neuen API-Schlüssel erstellen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **OVHcloud AI Endpoints**.
 
@@ -1636,7 +1636,7 @@ So verwenden Sie [Scaleway Generative APIs](https://www.scaleway.com/en/docs/gen
 
 ### Together AI
 
-1. Gehen Sie zu [Together AI console](https://api.together.ai), erstellen Sie ein Konto und klicken Sie auf **Schlüssel hinzufügen**.
+1. Gehen Sie zu [Together AI console](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/3), erstellen Sie ein Konto und klicken Sie auf **Schlüssel hinzufügen**.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Together AI**.
 
@@ -1663,7 +1663,7 @@ So verwenden Sie [Scaleway Generative APIs](https://www.scaleway.com/en/docs/gen
 
 ### Venice AI
 
-1. Gehen Sie zu [Venice AI console](https://venice.ai), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
+1. Gehen Sie zu [Venice AI console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com9), erstellen Sie ein Konto und generieren Sie einen API-Schlüssel.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Venice AI**.
 
@@ -1692,7 +1692,7 @@ So verwenden Sie [Scaleway Generative APIs](https://www.scaleway.com/en/docs/gen
 
 Mit dem Vercel AI Gateway können Sie über einen einheitlichen Endpunkt auf Modelle von OpenAI, Anthropic, Google, xAI und mehr zugreifen. Die Modelle werden zum Listenpreis ohne Aufschlag angeboten.
 
-1. Gehen Sie zum [Vercel dashboard](https://vercel.com/), navigieren Sie zur Registerkarte **AI Gateway** und klicken Sie auf **API-Schlüssel**, um einen neuen API-Schlüssel zu erstellen.
+1. Gehen Sie zum [Vercel dashboard](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0), navigieren Sie zur Registerkarte **AI Gateway** und klicken Sie auf **API-Schlüssel**, um einen neuen API-Schlüssel zu erstellen.
 
 2. Führen Sie den Befehl `/connect` aus und suchen Sie nach **Vercel AI Gateway**.
 
@@ -1719,7 +1719,7 @@ Sie können Modelle auch über Ihre ZYRAXON-Konfiguration anpassen. Hier ist ein
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "vercel": {
       "models": {
@@ -1829,7 +1829,7 @@ Einige nützliche Routing-Optionen:
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "zenmux": {
          "models": {
@@ -1897,13 +1897,13 @@ Sie können jeden OpenAI-kompatiblen Anbieter mit ZYRAXON verwenden. Die meisten
 
    ```json title="zyraxon.json" ""myprovider"" {5-15}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "myprovider": {
          "npm": "@ai-sdk/openai-compatible",
          "name": "My AI ProviderDisplay Name",
          "options": {
-           "baseURL": "https://api.myprovider.com/v1"
+           "baseURL": "http://127.0.0.1:1337/v1"
          },
          "models": {
            "my-model-name": {
@@ -1935,13 +1935,13 @@ Hier ist ein Beispiel für die Einstellung der Optionen `apiKey`, `headers` und 
 
 ```json title="zyraxon.json" {9,11,17-20}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "myprovider": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "My AI ProviderDisplay Name",
       "options": {
-        "baseURL": "https://api.myprovider.com/v1",
+        "baseURL": "http://127.0.0.1:1337/v1",
         "apiKey": "{env:ANTHROPIC_API_KEY}",
         "headers": {
           "Authorization": "Bearer custom-token"

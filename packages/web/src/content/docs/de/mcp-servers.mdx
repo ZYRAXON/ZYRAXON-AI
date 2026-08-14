@@ -46,7 +46,7 @@ Sie können einen Server auch deaktivieren, indem Sie `enabled` auf `false` setz
 
 ### Überschreiben von Remote-Standardwerten
 
-Organisationen können über ihren `.well-known/opencode`-Endpunkt Standard-MCP-Server bereitstellen. Diese Server sind möglicherweise standardmäßig deaktiviert, sodass Benutzer sich für den Server entscheiden können, die sie benötigen.
+Organisationen können über ihren `.well-known/zyraxon`-Endpunkt Standard-MCP-Server bereitstellen. Diese Server sind möglicherweise standardmäßig deaktiviert, sodass Benutzer sich für den Server entscheiden können, die sie benötigen.
 
 Um einen bestimmten Server aus der Remote-Konfiguration Ihrer Organisation zu aktivieren, fügen Sie ihn mit `enabled: true` zu Ihrer lokalen Konfiguration hinzu:
 
@@ -223,22 +223,22 @@ Sie können die Authentifizierung manuell auslösen oder Anmeldeinformationen ve
 Authentifizieren Sie sich bei einem bestimmten MCP-Server:
 
 ```bash
-opencode mcp auth my-oauth-server
+zyraxon mcp auth my-oauth-server
 ```
 
 Hören Sie alle MCP-Server und ihren Authentifizierungsstatus auf:
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 Gespeicherte Zugangsdaten entfernen:
 
 ```bash
-opencode mcp logout my-oauth-server
+zyraxon mcp logout my-oauth-server
 ```
 
-Der Befehl `mcp auth` öffnet Ihren Browser zur Autorisierung. Nach der Autorisierung speichert ZYRAXON die Token sicher in `~/.local/share/opencode/mcp-auth.json`.
+Der Befehl `mcp auth` öffnet Ihren Browser zur Autorisierung. Nach der Autorisierung speichert ZYRAXON die Token sicher in `~/.local/share/zyraxon/mcp-auth.json`.
 
 ---
 
@@ -279,10 +279,10 @@ Wenn die Authentifizierung eines Remote-Servers MCP fehlschlägt, können Sie Pr
 
 ```bash
 # View auth status for all OAuth-capable servers
-opencode mcp auth list
+zyraxon mcp auth list
 
 # Debug connection and OAuth flow for a specific server
-opencode mcp debug my-oauth-server
+zyraxon mcp debug my-oauth-server
 ```
 
 Der Befehl `mcp debug` zeigt den aktuellen Authentifizierungsstatus an, testet die HTTP-Konnektivität und versucht den OAuth-Erkennungsfluss.
@@ -420,7 +420,7 @@ Fügen Sie [Sentry MCP server](https://mcp.sentry.dev) hinzu, um mit Ihren Sentr
 Authentifizieren Sie sich nach dem Hinzufügen der Konfiguration mit Sentry:
 
 ```bash
-opencode mcp auth sentry
+zyraxon mcp auth sentry
 ```
 
 Dadurch wird ein Browserfenster geöffnet, um den OAuth-Ablauf abzuschließen und ZYRAXON mit Ihrem Sentry-Konto zu verbinden.
@@ -484,7 +484,7 @@ When you need to search docs, use `context7` tools.
 
 ### Grep by Vercel
 
-Fügen Sie den Server [Grep by Vercel](https://grep.app) MCP hinzu, um Codefragmente auf GitHub zu durchsuchen.
+Fügen Sie den Server [Grep by Vercel](https://github.com/upstash/context71) MCP hinzu, um Codefragmente auf GitHub zu durchsuchen.
 
 ```json title="zyraxon.json" {4-7}
 {

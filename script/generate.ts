@@ -10,7 +10,7 @@ console.log("=".repeat(60))
 await $`bun ./packages/sdk/js/script/build.ts`
 
 // Generate OpenAPI spec
-await $`bun dev generate > ../sdk/openapi.json`.cwd("packages/opencode")
+await $`bun dev generate > ../sdk/openapi.json`.cwd("packages/zyraxon")
 
 // Format code
 await $`./script/format.ts`

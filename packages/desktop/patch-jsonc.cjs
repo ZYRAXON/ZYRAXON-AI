@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const serverDest = path.join(__dirname, 'out/main/chunks/opencode-server.js');
+const serverDest = path.join(__dirname, 'out/main/chunks/zyraxon-server.js');
 const bundledPath = path.join(__dirname, '../../node_modules/.bun/jsonc-parser@3.3.1/node_modules/jsonc-parser/lib/esm/main.js.bundled');
 
 let code = fs.readFileSync(serverDest, 'utf-8');

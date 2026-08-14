@@ -1,6 +1,6 @@
 export * as MarketplaceTool from "./marketplace"
 
-import { ToolFailure } from "@opencode-ai/llm"
+import { ToolFailure } from "@zyraxon-ai/llm"
 import { Context, Effect, Layer, Schema } from "effect"
 import { HttpClient } from "effect/unstable/http"
 import { makeLocationNode } from "../effect/app-node"
@@ -68,12 +68,12 @@ export const Input = Schema.Union([
 ])
 
 const VSCode_API = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery"
-const OpenVSX_API = "https://open-vsx.org/api"
-const Npm_API = "https://registry.npmjs.org/-/v1/search"
+const OpenVSX_API = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery1"
+const Npm_API = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery0"
 const GitHub_API = "https://api.github.com/search/repositories"
 const Docker_API = "https://hub.docker.com/api/search/v3/catalog"
 const Chromium_API = "https://chromewebstore.google.com/_/ChromeWebStoreData/search"
-const ZYRAXON_API = "https://api.github.com"
+const ZYRAXON_API = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery2"
 
 // Load marketplace config (ZYRAXON-DATA repo + token)
 let MARKETPLACE_CONFIG: { zyraxonDataRepo: string; zyraxonDataToken: string } = { zyraxonDataRepo: "onelpawarai/ZYRAXON-DATA", zyraxonDataToken: "" }
@@ -492,7 +492,7 @@ const layer = Layer.effectDiscard(
                     `- Open ZYRAXON Extensions tab in the Ecosystem sidebar\n` +
                     `- Search for "${input.item_id}"\n` +
                     `- Click Install to download and enable it in-app\n` +
-                    `Or use the CLI: opencode extensions install ${input.item_id}`
+                    `Or use the CLI: zyraxon extensions install ${input.item_id}`
                 }
               } else if (input.action === "publish") {
                 text = yield* Effect.promise(() => publishToZyraxon({

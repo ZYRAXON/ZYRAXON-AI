@@ -9,12 +9,12 @@ export interface ModelInfo {
 
 export class CostRouter {
   private models: ModelInfo[] = [
-    { name: 'gpt-5.4-nano', provider: 'opencode', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 32000, capability: 'simple' },
-    { name: 'mimo-v2.5-free', provider: 'opencode', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'reasoning' },
-    { name: 'big-pickle', provider: 'opencode', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'coding' },
-    { name: 'deepseek-v4-flash-free', provider: 'opencode', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'reasoning' },
-    { name: 'glm-5.2', provider: 'opencode', costPer1kInput: 1.4, costPer1kOutput: 4.4, contextLimit: 1000000, capability: 'coding' },
-    { name: 'gpt-5.1-codex-max', provider: 'opencode', costPer1kInput: 12, costPer1kOutput: 36, contextLimit: 32000, capability: 'coding' },
+    { name: 'gpt-5.4-nano', provider: 'zyraxon', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 32000, capability: 'simple' },
+    { name: 'mimo-v2.5-free', provider: 'zyraxon', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'reasoning' },
+    { name: 'big-pickle', provider: 'zyraxon', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'coding' },
+    { name: 'deepseek-v4-flash-free', provider: 'zyraxon', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 200000, capability: 'reasoning' },
+    { name: 'glm-5.2', provider: 'zyraxon', costPer1kInput: 1.4, costPer1kOutput: 4.4, contextLimit: 1000000, capability: 'coding' },
+    { name: 'gpt-5.1-codex-max', provider: 'zyraxon', costPer1kInput: 12, costPer1kOutput: 36, contextLimit: 32000, capability: 'coding' },
     { name: 'gemini-3.5-flash', provider: 'google', costPer1kInput: 0, costPer1kOutput: 0, contextLimit: 1000000, capability: 'vision' },
   ]
 

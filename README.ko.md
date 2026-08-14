@@ -126,4 +126,4 @@ ZYRAXON 와 관련된 프로젝트를 진행하면서 이름에 "ZYRAXON"(예: "
 
 ---
 
-**커뮤니티에 참여하기** [Discord](https://discord.gg/DN4fZCCDJj)
+**커뮤니티에 참여하기** [Discord](https://discord.gg/GP8yX33NA)

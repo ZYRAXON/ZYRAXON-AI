@@ -666,7 +666,7 @@ export const dict = {
   "workspace.lite.subscription.useBalance":
     "Utilisez votre solde disponible après avoir atteint les limites d'utilisation",
   "workspace.lite.subscription.selectProvider":
-    'Sélectionnez "ZYRAXON Go" comme fournisseur dans votre configuration opencode pour utiliser les modèles Go.',
+    'Sélectionnez "ZYRAXON Go" comme fournisseur dans votre configuration zyraxon pour utiliser les modèles Go.',
   "workspace.lite.providers.title": "Fournisseurs",
   "workspace.lite.providers.description": "Contrôlez les fournisseurs utilisés pour le routage.",
   "workspace.lite.providers.useChina": "Activer les modèles hébergés en Chine",

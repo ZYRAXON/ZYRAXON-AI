@@ -1,6 +1,6 @@
 ---
 title: TUI
-description: Bruke opencode-terminalbrukergrensesnittet.
+description: Bruke zyraxon-terminalbrukergrensesnittet.
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components"
@@ -10,13 +10,13 @@ ZYRAXON gir et interaktivt terminalgrensesnitt (TUI) for å jobbe med prosjekten
 Å kjøre ZYRAXON starter TUI for gjeldende katalog.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Eller du kan starte den for en spesifikk arbeidskatalog.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Når du er i TUI, kan du stille den spørsmål med en prompt.
@@ -360,7 +360,7 @@ Du kan tilpasse TUI-oppførselen gjennom `tui.json` (eller `tui.jsonc`).
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ Du kan tilpasse TUI-oppførselen gjennom `tui.json` (eller `tui.jsonc`).
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -400,7 +400,7 @@ Dette er atskilt fra `zyraxon.json`, som konfigurerer server-/kjøretidsoppførs
 - `mouse` - Aktiverer eller deaktiverer musefangst i TUI (standard: `true`). Når dette er deaktivert, bevares terminalens opprinnelige oppførsel for musemarkering og rulling.
 - `attention` - Konfigurerer skrivebordsvarsler og lyder for TUI. Deaktivert som standard.
 
-Bruk `OPENCODE_TUI_CONFIG` for å laste en egendefinert TUI-konfigurasjonsbane.
+Bruk `ZYRAXON_TUI_CONFIG` for å laste en egendefinert TUI-konfigurasjonsbane.
 
 ### Attention
 
@@ -410,7 +410,7 @@ Attention lar TUI varsle deg når ZYRAXON venter på et svar, trenger godkjennin
 - `notifications` - Når Attention er aktivert, lar dette TUI sende skrivebordsvarsler via terminalen. Standard er `true`.
 - `sound` - Når Attention er aktivert, tillater dette varslingslyder. Standard er `true`.
 - `volume` - Standard volum for varslingslyder fra `0` til `1`. Standard er `0.4`.
-- `sound_pack` - Sound pack-ID som skal brukes. Standard er `opencode.default`.
+- `sound_pack` - Sound pack-ID som skal brukes. Standard er `zyraxon.default`.
 - `sounds` - Angir egendefinerte lydfiler for `default`, `question`, `permission`, `error`, `done` eller `subagent_done`. Stier kan være absolutte, `file://` URL-er eller relative til `tui.json`.
 
 ---

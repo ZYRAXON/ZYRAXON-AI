@@ -42,30 +42,30 @@ ZYRAXON 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 
 設定來源按以下順序載入（後面的來源覆寫前面的來源）：
 
-1. **遠端設定**（來自 `.well-known/opencode`）- 組織預設值
-2. **全域設定**（`~/.config/opencode/zyraxon.json`）- 使用者偏好
-3. **自訂設定**（`OPENCODE_CONFIG` 環境變數）- 自訂覆寫
+1. **遠端設定**（來自 `.well-known/zyraxon`）- 組織預設值
+2. **全域設定**（`~/.config/zyraxon/zyraxon.json`）- 使用者偏好
+3. **自訂設定**（`ZYRAXON_CONFIG` 環境變數）- 自訂覆寫
 4. **專案設定**（專案中的 `zyraxon.json`）- 專案特定設定
-5. **`.opencode` 目錄** - 代理、指令、外掛程式
-6. **內嵌設定**（`OPENCODE_CONFIG_CONTENT` 環境變數）- 執行時覆寫
+5. **`.zyraxon` 目錄** - 代理、指令、外掛程式
+6. **內嵌設定**（`ZYRAXON_CONFIG_CONTENT` 環境變數）- 執行時覆寫
 
 這意味著專案設定可以覆寫全域預設值，全域設定可以覆寫遠端組織預設值。
 
 :::note
-`.opencode` 和 `~/.config/opencode` 目錄的子目錄使用**複數名稱**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。為了向後相容，也支援單數名稱（例如 `agent/`）。
+`.zyraxon` 和 `~/.config/zyraxon` 目錄的子目錄使用**複數名稱**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。為了向後相容，也支援單數名稱（例如 `agent/`）。
 :::
 
 ---
 
 ### 遠端
 
-組織可以透過 `.well-known/opencode` 端點提供預設設定。當您使用支援該功能的供應商進行身分驗證時，會自動擷取此設定。
+組織可以透過 `.well-known/zyraxon` 端點提供預設設定。當您使用支援該功能的供應商進行身分驗證時，會自動擷取此設定。
 
 遠端設定最先載入，作為基礎層。所有其他設定來源（全域、專案）都可以覆寫這些預設值。
 
 例如，如果您的組織提供了預設停用的 MCP 伺服器：
 
-```json title="Remote config from .well-known/opencode"
+```json title="Remote config from .well-known/zyraxon"
 {
   "mcp": {
     "jira": {
@@ -95,7 +95,7 @@ ZYRAXON 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 
 ### 全域
 
-將全域 ZYRAXON 設定放在 `~/.config/opencode/zyraxon.json` 中。使用全域設定來設定使用者層級的偏好，例如主題、供應商或快捷鍵。
+將全域 ZYRAXON 設定放在 `~/.config/zyraxon/zyraxon.json` 中。使用全域設定來設定使用者層級的偏好，例如主題、供應商或快捷鍵。
 
 全域設定覆寫遠端組織預設值。
 
@@ -117,11 +117,11 @@ ZYRAXON 支援 **JSON** 和 **JSONC**（帶註解的 JSON）格式。
 
 ### 自訂路徑
 
-使用 `OPENCODE_CONFIG` 環境變數指定自訂設定檔路徑。
+使用 `ZYRAXON_CONFIG` 環境變數指定自訂設定檔路徑。
 
 ```bash
-export OPENCODE_CONFIG=/path/to/my/custom-config.json
-opencode run "Hello world"
+export ZYRAXON_CONFIG=/path/to/my/custom-config.json
+zyraxon run "Hello world"
 ```
 
 自訂設定在優先順序中位於全域設定和專案設定之間載入。
@@ -130,14 +130,14 @@ opencode run "Hello world"
 
 ### 自訂目錄
 
-使用 `OPENCODE_CONFIG_DIR` 環境變數指定自訂設定目錄。該目錄會像標準 `.opencode` 目錄一樣被搜尋代理、指令、模式和外掛程式，並且應遵循相同的結構。
+使用 `ZYRAXON_CONFIG_DIR` 環境變數指定自訂設定目錄。該目錄會像標準 `.zyraxon` 目錄一樣被搜尋代理、指令、模式和外掛程式，並且應遵循相同的結構。
 
 ```bash
-export OPENCODE_CONFIG_DIR=/path/to/my/config-directory
-opencode run "Hello world"
+export ZYRAXON_CONFIG_DIR=/path/to/my/config-directory
+zyraxon run "Hello world"
 ```
 
-自訂目錄在全域設定和 `.opencode` 目錄之後載入，因此**可以覆寫**它們的設定。
+自訂目錄在全域設定和 `.zyraxon` 目錄之後載入，因此**可以覆寫**它們的設定。
 
 ---
 
@@ -172,7 +172,7 @@ opencode run "Hello world"
 - `scroll_speed` - 自訂捲動速度倍率（預設值：`3`，最小值：`1`）。如果 `scroll_acceleration.enabled` 為 `true`，則忽略此選項。
 - `diff_style` - 控制差異呈現方式。`"auto"` 根據終端機寬度自適應，`"stacked"` 始終顯示單列。
 
-使用 `OPENCODE_TUI_CONFIG` 指向自訂 TUI 設定檔。
+使用 `ZYRAXON_TUI_CONFIG` 指向自訂 TUI 設定檔。
 
 `zyraxon.json` 中的舊版 `theme`、`keybinds` 和 `tui` 鍵已被棄用，並將在可能的情況下自動遷移。
 
@@ -202,7 +202,7 @@ opencode run "Hello world"
 - `port` - 監聽連接埠。
 - `hostname` - 監聽主機名稱。當 `mdns` 啟用且未設定主機名稱時，預設為 `0.0.0.0`。
 - `mdns` - 啟用 mDNS 服務探索。這允許網路上的其他裝置發現您的 ZYRAXON 伺服器。
-- `mdnsDomain` - mDNS 服務的自訂網域名稱。預設為 `opencode.local`。適用於在同一網路上執行多個實例的情境。
+- `mdnsDomain` - mDNS 服務的自訂網域名稱。預設為 `zyraxon.local`。適用於在同一網路上執行多個實例的情境。
 - `cors` - 從基於瀏覽器的用戶端使用 HTTP 伺服器時允許 CORS 的額外來源。值必須是完整的來源（通訊協定 + 主機 + 可選連接埠），例如 `https://app.example.com`。
 
 [在此了解更多關於伺服器的資訊](/docs/server)。
@@ -337,7 +337,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）優先於基於設定
 }
 ```
 
-您還可以使用 `~/.config/opencode/agents/` 或 `.opencode/agents/` 中的 Markdown 檔案定義代理。[在此了解更多](/docs/agents)。
+您還可以使用 `~/.config/zyraxon/agents/` 或 `.zyraxon/agents/` 中的 Markdown 檔案定義代理。[在此了解更多](/docs/agents)。
 
 ---
 
@@ -401,7 +401,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）優先於基於設定
 }
 ```
 
-您還可以使用 `~/.config/opencode/commands/` 或 `.opencode/commands/` 中的 Markdown 檔案定義指令。[在此了解更多](/docs/commands)。
+您還可以使用 `~/.config/zyraxon/commands/` 或 `.zyraxon/commands/` 中的 Markdown 檔案定義指令。[在此了解更多](/docs/commands)。
 
 ---
 
@@ -539,12 +539,12 @@ ZYRAXON 啟動時會自動下載新版本。您可以使用 `autoupdate` 選項�
 
 [外掛程式](/docs/plugins)透過自訂工具、掛鉤和整合來擴展 ZYRAXON。
 
-將外掛程式檔案放置在 `.opencode/plugins/` 或 `~/.config/opencode/plugins/` 中。您還可以透過 `plugin` 選項從 npm 載入外掛程式。
+將外掛程式檔案放置在 `.zyraxon/plugins/` 或 `~/.config/zyraxon/plugins/` 中。您還可以透過 `plugin` 選項從 npm 載入外掛程式。
 
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  "plugin": ["zyraxon-helicone-session", "@my-org/custom-plugin"]
 }
 ```
 
@@ -641,7 +641,7 @@ ZYRAXON 啟動時會自動下載新版本。您可以使用 `autoupdate` 選項�
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "model": "{env:OPENCODE_MODEL}",
+  "model": "{env:ZYRAXON_MODEL}",
   "provider": {
     "anthropic": {
       "models": {},

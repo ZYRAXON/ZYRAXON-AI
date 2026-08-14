@@ -1,4 +1,4 @@
-﻿# Contributing
+# Contributing
 
 ## Choosing an Issue
 
@@ -138,10 +138,10 @@ You will also find `DEBUG=pw:browser` useful for debugging custom-builds.
 
 **Building documentation site**
 
-The [jarvisbrowser.dev](https://jarvisbrowser.dev/) documentation site lives in a separate repository, and documentation from [`docs/src`](https://github.com/zyraxon-ai/jarvis-browser/blob/main/docs/src) is frequently rolled there.
+The [jarvisbrowser.dev](https://github.com/zyraxon-ai/jarvis-browser/blob/main/packages/jarvis-browser-core6) documentation site lives in a separate repository, and documentation from [`docs/src`](https://github.com/zyraxon-ai/jarvis-browser/blob/main/docs/src) is frequently rolled there.
 
 Most of the time this should not concern you. However, if you are doing something unusual in the docs, you can build locally and test how your changes will look in practice:
-1. Clone the [microsoft/jarvisbrowser.dev](https://github.com/microsoft/jarvisbrowser.dev) repo.
+1. Clone the [microsoft/jarvisbrowser.dev](https://github.com/zyraxon-ai/jarvis-browser/blob/main/packages/jarvis-browser-core2) repo.
 1. Follow [the jarvisbrowser.dev README instructions to "roll docs"](https://github.com/microsoft/jarvisbrowser.dev/#roll-docs) against your local `playwright` repo with your changes in progress.
 1. Follow [the jarvisbrowser.dev README instructions to "run dev server"](https://github.com/microsoft/jarvisbrowser.dev/#run-dev-server) to view your changes.
 
@@ -149,7 +149,7 @@ Most of the time this should not concern you. However, if you are doing somethin
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+the rights to use your contribution. For details, visit https://github.com/zyraxon-ai/jarvis-browser/blob/main/packages/jarvis-browser-core5.
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
@@ -157,6 +157,6 @@ provided by the bot. You will only need to do this once across all repos using o
 
 ### Code of Conduct
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This project has adopted the [Microsoft Open Source Code of Conduct](https://github.com/zyraxon-ai/jarvis-browser/blob/main/packages/jarvis-browser-core1).
+For more information see the [Code of Conduct FAQ](https://github.com/zyraxon-ai/jarvis-browser/blob/main/packages/jarvis-browser-core0) or
+contact [zyraxon@microsoft.com](mailto:zyraxon@microsoft.com) with any additional questions or comments.

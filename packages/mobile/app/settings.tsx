@@ -54,7 +54,7 @@ export default function SettingsScreen() {
         <Text style={[styles.sectionTitle, { marginTop: 32 }]}>AI Connection</Text>
         <View style={styles.infoCard}>
           <Text style={styles.infoText}>
-            <Text style={styles.bold}>AI:</Text> OpenCode.ai (free, no API key needed){'\n'}
+            <Text style={styles.bold}>AI:</Text> Zyraxon.ai (free, no API key needed){'\n'}
             <Text style={styles.bold}>Internet:</Text> Required for AI responses{'\n'}
             <Text style={styles.bold}>Automation:</Text> Works offline via Helper APK
           </Text>
@@ -66,7 +66,7 @@ export default function SettingsScreen() {
           <Text style={styles.aboutVersion}>Version 2.0.0</Text>
           <Text style={styles.aboutDesc}>
             Full mobile AI agent with voice, vision, and device automation.{'\n'}
-            AI powered by OpenCode.ai (free models).{'\n'}
+            AI powered by Zyraxon.ai (free models).{'\n'}
             Device control via Helper APK (Accessibility Service).
           </Text>
         </View>

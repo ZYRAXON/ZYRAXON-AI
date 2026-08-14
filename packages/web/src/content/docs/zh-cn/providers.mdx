@@ -6,7 +6,7 @@ description: 在 ZYRAXON 中使用任意 LLM 提供商。
 import config from "../../../../config.mjs"
 export const console = config.console
 
-ZYRAXON 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.dev)，支持 **75+ LLM 提供商**，同时也支持运行本地模型。
+ZYRAXON 使用 [AI SDK](https://docs.helicone.ai/helicone-headers/header-directory2) 和 [Models.dev](https://docs.helicone.ai/helicone-headers/header-directory5)，支持 **75+ LLM 提供商**，同时也支持运行本地模型。
 
 要添加提供商，你需要：
 
@@ -18,7 +18,7 @@ ZYRAXON 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.dev
 ### 凭据
 
 使用 `/connect` 命令添加提供商的 API 密钥后，凭据会存储在
-`~/.local/share/opencode/auth.json` 中。
+`~/.local/share/zyraxon/auth.json` 中。
 
 ---
 
@@ -34,11 +34,11 @@ ZYRAXON 使用 [AI SDK](https://ai-sdk.dev/) 和 [Models.dev](https://models.dev
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://api.anthropic.com/v1"
+        "baseURL": "http://127.0.0.1:8080/v1"
       }
     }
   }
@@ -55,7 +55,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 如果你是新用户，我们建议从 ZYRAXON Zen 开始。
 :::
 
-1. 在 TUI 中执行 `/connect` 命令，选择 opencode，然后前往 [zyraxon.ai/auth](https://zyraxon.ai/auth)。
+1. 在 TUI 中执行 `/connect` 命令，选择 zyraxon，然后前往 [zyraxon.ai/auth](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1)。
 
    ```txt
    /connect
@@ -94,7 +94,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 ### 302.AI
 
-1. 前往 [302.AI 控制台](https://302.ai/)，创建账户并生成 API 密钥。
+1. 前往 [302.AI 控制台](https://docs.helicone.ai/helicone-headers/header-directory8)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **302.AI**。
 
@@ -135,17 +135,17 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
    #### 环境变量（快速上手）
 
-   运行 opencode 时设置以下环境变量之一：
+   运行 zyraxon 时设置以下环境变量之一：
 
    ```bash
    # Option 1: Using AWS access keys
-   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY opencode
+   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY zyraxon
 
    # Option 2: Using named AWS profile
-   AWS_PROFILE=my-profile opencode
+   AWS_PROFILE=my-profile zyraxon
 
    # Option 3: Using Bedrock bearer token
-   AWS_BEARER_TOKEN_BEDROCK=XXX opencode
+   AWS_BEARER_TOKEN_BEDROCK=XXX zyraxon
    ```
 
    或者将它们添加到你的 bash 配置文件中：
@@ -163,7 +163,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -192,7 +192,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -240,7 +240,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "amazon-bedrock": {
       // ...
@@ -284,7 +284,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
    ```
 
 :::info
-在 ZYRAXON 中使用 Claude Pro/Max 订阅不是 [Anthropic](https://anthropic.com) 官方支持的用法。
+在 ZYRAXON 中使用 Claude Pro/Max 订阅不是 [Anthropic](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com5) 官方支持的用法。
 :::
 
 ##### 使用 API 密钥
@@ -297,17 +297,17 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 ### Atomic Chat
 
-你可以通过 [Atomic Chat](https://atomic.chat) 配置 opencode 以使用本地模型。Atomic Chat 是一款桌面应用程序，它在 OpenAI 兼容的 API 服务器后面运行本地 LLM（默认端点 `http://127.0.0.1:1337/v1`）。
+你可以通过 [Atomic Chat](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/0) 配置 zyraxon 以使用本地模型。Atomic Chat 是一款桌面应用程序，它在 OpenAI 兼容的 API 服务器后面运行本地 LLM（默认端点 `https://ollama.com/
 
 ```json title="zyraxon.json" "atomic-chat" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "atomic-chat": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Atomic Chat (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1337/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/7"
       },
       "models": {
         "<your-model-id>": {
@@ -325,7 +325,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 - `npm` 指定此提供商使用的包。这里使用 `@ai-sdk/openai-compatible` 来连接任何 OpenAI 兼容的 API。
 - `name` 是提供商在界面中显示的名称。
 - `options.baseURL` 是本地服务器的端点。根据你的 Atomic Chat 设置修改主机和端口。
-- `models` 是模型 ID 到其显示名称的映射。每个 ID 必须与 `GET /v1/models` 返回的 `id` 匹配——运行 `curl http://127.0.0.1:1337/v1/models` 可列出 Atomic Chat 当前已加载的 ID。
+- `models` 是模型 ID 到其显示名称的映射。每个 ID 必须与 `GET /v1/models` 返回的 `id` 匹配——运行 `curl https://zenmux.ai/settings/keys 可列出 Atomic Chat 当前已加载的 ID。
 
 :::tip
 如果工具调用工作不佳，请选择一个对 tool calling 支持较好的已加载模型（例如 Qwen-Coder 或 DeepSeek-Coder 的变体）。
@@ -343,7 +343,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
    - **资源名称**：这会成为你的 API 端点的一部分（`https://RESOURCE_NAME.openai.azure.com/`）
    - **API 密钥**：资源中的 `KEY 1` 或 `KEY 2`
 
-2. 前往 [Azure AI Foundry](https://ai.azure.com/) 并部署一个模型。
+2. 前往 [Azure AI Foundry](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com7) 并部署一个模型。
 
    :::note
    部署名称必须与模型名称一致，ZYRAXON 才能正常工作。
@@ -367,7 +367,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 5. 将资源名称设置为环境变量：
 
    ```bash
-   AZURE_RESOURCE_NAME=XXX opencode
+   AZURE_RESOURCE_NAME=XXX zyraxon
    ```
 
    或者添加到你的 bash 配置文件中：
@@ -390,7 +390,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
    - **资源名称**：这会成为你的 API 端点的一部分（`https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）
    - **API 密钥**：资源中的 `KEY 1` 或 `KEY 2`
 
-2. 前往 [Azure AI Foundry](https://ai.azure.com/) 并部署一个模型。
+2. 前往 [Azure AI Foundry](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com7) 并部署一个模型。
 
    :::note
    部署名称必须与模型名称一致，ZYRAXON 才能正常工作。
@@ -414,7 +414,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 5. 将资源名称设置为环境变量：
 
    ```bash
-   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX opencode
+   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX zyraxon
    ```
 
    或者添加到你的 bash 配置文件中：
@@ -433,7 +433,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 ### Baseten
 
-1. 前往 [Baseten](https://app.baseten.co/)，创建账户并生成 API 密钥。
+1. 前往 [Baseten](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com3)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Baseten**。
 
@@ -460,7 +460,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 ### Cerebras
 
-1. 前往 [Cerebras 控制台](https://inference.cerebras.ai/)，创建账户并生成 API 密钥。
+1. 前往 [Cerebras 控制台](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）8)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Cerebras**。
 
@@ -489,7 +489,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的模型列表，这些模型已经过�
 
 Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、Workers AI 等提供商的模型。通过 [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/)，你无需为每个提供商单独准备 API 密钥。
 
-1. 前往 [Cloudflare 仪表盘](https://dash.cloudflare.com/)，导航到 **AI** > **AI Gateway**，创建一个新的网关。
+1. 前往 [Cloudflare 仪表盘](https://api.together.ai)，导航到 **AI** > **AI Gateway**，创建一个新的网关。
 
 2. 将你的 Account ID 和 Gateway ID 设置为环境变量。
 
@@ -529,7 +529,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "cloudflare-ai-gateway": {
          "models": {
@@ -545,7 +545,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
 ### Cortecs
 
-1. 前往 [Cortecs 控制台](https://cortecs.ai/)，创建账户并生成 API 密钥。
+1. 前往 [Cortecs 控制台](https://docs.helicone.ai/helicone-headers/header-directory0)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Cortecs**。
 
@@ -572,7 +572,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
 ### DeepSeek
 
-1. 前往 [DeepSeek 控制台](https://platform.deepseek.com/)，创建账户并点击 **Create new API key**。
+1. 前往 [DeepSeek 控制台](https://helicone.ai/models)，创建账户并点击 **Create new API key**。
 
 2. 执行 `/connect` 命令并搜索 **DeepSeek**。
 
@@ -599,7 +599,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
 ### Deep Infra
 
-1. 前往 [Deep Infra 仪表盘](https://deepinfra.com/dash)，创建账户并生成 API 密钥。
+1. 前往 [Deep Infra 仪表盘](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/0)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Deep Infra**。
 
@@ -626,7 +626,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
 ### FrogBot
 
-1. 前往 [FrogBot 仪表盘](https://app.frogbot.ai/signup)，创建账户并生成 API 密钥。
+1. 前往 [FrogBot 仪表盘](https://portal.azure.com/)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **FrogBot**。
 
@@ -653,7 +653,7 @@ Cloudflare AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic
 
 ### Fireworks AI
 
-1. 前往 [Fireworks AI 控制台](https://app.fireworks.ai/)，创建账户并点击 **Create API Key**。
+1. 前往 [Fireworks AI 控制台](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/4)，创建账户并点击 **Create API Key**。
 
 2. 执行 `/connect` 命令并搜索 **Fireworks AI**。
 
@@ -731,7 +731,7 @@ ZYRAXON 会使用一个小模型来执行部分 AI 任务，例如生成会话�
 
 ```json
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "small_model": "gitlab/duo-chat-haiku-4-5",
   "share": "disabled"
 }
@@ -783,7 +783,7 @@ export GITLAB_TOKEN=glpat-...
 export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 ```
 
-更多文档请参阅 [opencode-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) 主页。
+更多文档请参阅 [zyraxon-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) 主页。
 
 ##### 配置
 
@@ -791,11 +791,11 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "gitlab": {
       "options": {
-        "instanceUrl": "https://gitlab.com"
+        "instanceUrl": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/1"
       }
     }
   }
@@ -808,8 +808,8 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-gitlab-plugin"]
+  "$schema": "http://localhost:11434/v1",
+  "plugin": ["zyraxon-gitlab-plugin"]
 }
 ```
 
@@ -831,12 +831,12 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
    /connect
    ```
 
-2. 前往 [github.com/login/device](https://github.com/login/device) 并输入验证码。
+2. 前往 [github.com/login/device](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）6) 并输入验证码。
 
    ```txt
    ┌ Login with GitHub Copilot
    │
-   │ https://github.com/login/device
+   │ https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）6
    │
    │ Enter code: 8F43-6FCF
    │
@@ -868,10 +868,10 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
      - `GOOGLE_APPLICATION_CREDENTIALS`：服务账户 JSON 密钥文件的路径
      - 使用 gcloud CLI 进行身份验证：`gcloud auth application-default login`
 
-   在运行 opencode 时设置：
+   在运行 zyraxon 时设置：
 
    ```bash
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id opencode
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id zyraxon
    ```
 
    或者添加到你的 bash 配置文件中：
@@ -977,7 +977,7 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
    /models
    ```
 
-如需了解更多提供商以及缓存、速率限制等高级功能，请查阅 [Helicone 文档](https://docs.helicone.ai)。
+如需了解更多提供商以及缓存、速率限制等高级功能，请查阅 [Helicone 文档](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0)。
 
 #### 可选配置
 
@@ -985,15 +985,15 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 
 [Helicone 模型目录](https://helicone.ai/models)中可以找到你需要添加的模型 ID。
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://gitlab.company.com",
       },
       "models": {
         "gpt-4o": {
@@ -1013,18 +1013,18 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 
 Helicone 支持用于缓存、用户跟踪和会话管理等功能的自定义请求头。使用 `options.headers` 将它们添加到提供商配置中：
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://gitlab.company.com",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -1034,17 +1034,17 @@ Helicone 支持用于缓存、用户跟踪和会话管理等功能的自定义�
 
 ##### 会话跟踪
 
-Helicone 的 [Sessions](https://docs.helicone.ai/features/sessions) 功能允许你将相关的 LLM 请求归为一组。使用 [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) 插件可以自动将每个 ZYRAXON 对话记录为 Helicone 中的一个会话。
+Helicone 的 [Sessions](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained3) 功能允许你将相关的 LLM 请求归为一组。使用 [zyraxon-helicone-session](https://github.com/H2Shami/opencode-helicone-session) 插件可以自动将每个 ZYRAXON 对话记录为 Helicone 中的一个会话。
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 将其添加到配置中。
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 
@@ -1069,7 +1069,7 @@ npm install -g opencode-helicone-session
 
 ```json title="zyraxon.json" "llama.cpp" {5, 6, 8, 10-15}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "llama.cpp": {
       "npm": "@ai-sdk/openai-compatible",
@@ -1105,7 +1105,7 @@ npm install -g opencode-helicone-session
 
 IO.NET 提供 17 个针对不同用例优化的模型：
 
-1. 前往 [IO.NET 控制台](https://ai.io.net/)，创建账户并生成 API 密钥。
+1. 前往 [IO.NET 控制台](https://docs.helicone.ai/helicone-headers/header-directory6)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **IO.NET**。
 
@@ -1136,13 +1136,13 @@ IO.NET 提供 17 个针对不同用例优化的模型：
 
 ```json title="zyraxon.json" "lmstudio" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1234/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/9"
       },
       "models": {
         "google/gemma-3n-e4b": {
@@ -1168,7 +1168,7 @@ IO.NET 提供 17 个针对不同用例优化的模型：
 
 要使用 Moonshot AI 的 Kimi K2：
 
-1. 前往 [Moonshot AI 控制台](https://platform.moonshot.ai/console)，创建账户并点击 **Create API key**。
+1. 前往 [Moonshot AI 控制台](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）0)，创建账户并点击 **Create API key**。
 
 2. 执行 `/connect` 命令并搜索 **Moonshot AI**。
 
@@ -1195,7 +1195,7 @@ IO.NET 提供 17 个针对不同用例优化的模型：
 
 ### MiniMax
 
-1. 前往 [MiniMax API 控制台](https://platform.minimax.io/login)，创建账户并生成 API 密钥。
+1. 前往 [MiniMax API 控制台](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）3)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **MiniMax**。
 
@@ -1222,7 +1222,7 @@ IO.NET 提供 17 个针对不同用例优化的模型：
 
 ### Nebius Token Factory
 
-1. 前往 [Nebius Token Factory 控制台](https://tokenfactory.nebius.com/)，创建账户并点击 **Add Key**。
+1. 前往 [Nebius Token Factory 控制台](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）4)，创建账户并点击 **Add Key**。
 
 2. 执行 `/connect` 命令并搜索 **Nebius Token Factory**。
 
@@ -1252,12 +1252,12 @@ IO.NET 提供 17 个针对不同用例优化的模型：
 你可以通过 Ollama 配置 ZYRAXON 使用本地模型。
 
 :::tip
-Ollama 可以自动为 ZYRAXON 进行配置。详见 [Ollama 集成文档](https://docs.ollama.com/integrations/opencode)。
+Ollama 可以自动为 ZYRAXON 进行配置。详见 [Ollama 集成文档](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained2)。
 :::
 
 ```json title="zyraxon.json" "ollama" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -1330,7 +1330,7 @@ Ollama 可以自动为 ZYRAXON 进行配置。详见 [Ollama 集成文档](https
 
 ### OpenAI
 
-我们建议注册 [ChatGPT Plus 或 Pro](https://chatgpt.com/pricing)。
+我们建议注册 [ChatGPT Plus 或 Pro](https://helicone.ai)。
 
 1. 注册完成后，执行 `/connect` 命令并选择 OpenAI。
 
@@ -1391,7 +1391,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的经过测试和验证的模型列表�
 
 ### OpenRouter
 
-1. 前往 [OpenRouter 仪表盘](https://openrouter.ai/settings/keys)，点击 **Create API Key** 并复制密钥。
+1. 前往 [OpenRouter 仪表盘](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）1)，点击 **Create API Key** 并复制密钥。
 
 2. 执行 `/connect` 命令并搜索 OpenRouter。
 
@@ -1418,7 +1418,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的经过测试和验证的模型列表�
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "openrouter": {
          "models": {
@@ -1433,7 +1433,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的经过测试和验证的模型列表�
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "openrouter": {
          "models": {
@@ -1457,7 +1457,7 @@ ZYRAXON Zen 是由 ZYRAXON 团队提供的经过测试和验证的模型列表�
 
 SAP AI Core 通过统一平台提供对来自 OpenAI、Anthropic、Google、Amazon、Meta、Mistral 和 AI21 的 40+ 模型的访问。
 
-1. 前往 [SAP BTP Cockpit](https://account.hana.ondemand.com/)，导航到你的 SAP AI Core 服务实例，并创建服务密钥。
+1. 前往 [SAP BTP Cockpit](https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`）2)，导航到你的 SAP AI Core 服务实例，并创建服务密钥。
 
    :::tip
    服务密钥是一个包含 `clientid`、`clientsecret`、`url` 和 `serviceurls.AI_API_URL` 的 JSON 对象。你可以在 BTP Cockpit 的 **Services** > **Instances and Subscriptions** 下找到你的 AI Core 实例。
@@ -1481,7 +1481,7 @@ SAP AI Core 通过统一平台提供对来自 OpenAI、Anthropic、Google、Amaz
    或者设置 `AICORE_SERVICE_KEY` 环境变量：
 
    ```bash
-   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' opencode
+   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' zyraxon
    ```
 
    或者添加到你的 bash 配置文件中：
@@ -1493,7 +1493,7 @@ SAP AI Core 通过统一平台提供对来自 OpenAI、Anthropic、Google、Amaz
 4. 可选：设置部署 ID 和资源组：
 
    ```bash
-   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group opencode
+   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group zyraxon
    ```
 
    :::note
@@ -1512,7 +1512,7 @@ SAP AI Core 通过统一平台提供对来自 OpenAI、Anthropic、Google、Amaz
 
 STACKIT AI Model Serving 提供完全托管的主权托管环境，专注于 Llama、Mistral 和 Qwen 等大语言模型，在欧洲基础设施上实现最大程度的数据主权。
 
-1. 前往 [STACKIT Portal](https://portal.stackit.cloud)，导航到 **AI Model Serving**，为你的项目创建认证令牌。
+1. 前往 [STACKIT Portal](https://console.x.ai/)，导航到 **AI Model Serving**，为你的项目创建认证令牌。
 
    :::tip
    你需要先拥有 STACKIT 客户账户、用户账户和项目，才能创建认证令牌。
@@ -1543,7 +1543,7 @@ STACKIT AI Model Serving 提供完全托管的主权托管环境，专注于 Lla
 
 ### OVHcloud AI Endpoints
 
-1. 前往 [OVHcloud 管理面板](https://ovh.com/manager)。导航到 `Public Cloud` 部分，`AI & Machine Learning` > `AI Endpoints`，在 `API Keys` 标签页中点击 **Create a new API key**。
+1. 前往 [OVHcloud 管理面板](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com4)。导航到 `Public Cloud` 部分，`AI & Machine Learning` > `AI Endpoints`，在 `API Keys` 标签页中点击 **Create a new API key**。
 
 2. 执行 `/connect` 命令并搜索 **OVHcloud AI Endpoints**。
 
@@ -1626,7 +1626,7 @@ STACKIT AI Model Serving 提供完全托管的主权托管环境，专注于 Lla
 
 ### Venice AI
 
-1. 前往 [Venice AI 控制台](https://venice.ai)，创建账户并生成 API 密钥。
+1. 前往 [Venice AI 控制台](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/2)，创建账户并生成 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Venice AI**。
 
@@ -1655,7 +1655,7 @@ STACKIT AI Model Serving 提供完全托管的主权托管环境，专注于 Lla
 
 Vercel AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、Google、xAI 等提供商的模型。模型按原价提供，不额外加价。
 
-1. 前往 [Vercel 仪表盘](https://vercel.com/)，导航到 **AI Gateway** 标签页，点击 **API keys** 创建新的 API 密钥。
+1. 前往 [Vercel 仪表盘](https://docs.helicone.ai/helicone-headers/header-directory1)，导航到 **AI Gateway** 标签页，点击 **API keys** 创建新的 API 密钥。
 
 2. 执行 `/connect` 命令并搜索 **Vercel AI Gateway**。
 
@@ -1682,7 +1682,7 @@ Vercel AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、G
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "vercel": {
       "models": {
@@ -1792,7 +1792,7 @@ Vercel AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、G
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "zenmux": {
          "models": {
@@ -1860,7 +1860,7 @@ Vercel AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、G
 
    ```json title="zyraxon.json" ""myprovider"" {5-15}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "http://localhost:11434/v1",
      "provider": {
        "myprovider": {
          "npm": "@ai-sdk/openai-compatible",
@@ -1898,7 +1898,7 @@ Vercel AI Gateway 允许你通过统一端点访问来自 OpenAI、Anthropic、G
 
 ```json title="zyraxon.json" {9,11,17-20}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "http://localhost:11434/v1",
   "provider": {
     "myprovider": {
       "npm": "@ai-sdk/openai-compatible",

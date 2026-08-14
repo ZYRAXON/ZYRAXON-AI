@@ -12,13 +12,13 @@ ZYRAXON kann als Webanwendung in Ihrem Browser ausgeführt werden und bietet das
 Starten Sie die Weboberfläche, indem Sie Folgendes ausführen:
 
 ```bash
-opencode web
+zyraxon web
 ```
 
 Dadurch wird ein lokaler Server auf `127.0.0.1` mit einem zufällig verfügbaren Port gestartet und ZYRAXON automatisch in Ihrem Standardbrowser geöffnet.
 
 :::caution
-Wenn `OPENCODE_SERVER_PASSWORD` nicht gesetzt ist, ist der Server ungesichert. Dies ist für den lokalen Gebrauch in Ordnung, sollte aber für den Netzwerkzugriff eingestellt werden.
+Wenn `ZYRAXON_SERVER_PASSWORD` nicht gesetzt ist, ist der Server ungesichert. Dies ist für den lokalen Gebrauch in Ordnung, sollte aber für den Netzwerkzugriff eingestellt werden.
 :::
 
 :::tip[Windows-Nutzer]
@@ -36,7 +36,7 @@ Sie können den Webserver mithilfe von Befehlszeilen-Flags oder in Ihrer [Konfig
 Standardmäßig wählt ZYRAXON einen verfügbaren Port aus. Sie können einen Port angeben:
 
 ```bash
-opencode web --port 4096
+zyraxon web --port 4096
 ```
 
 ### Hostname
@@ -44,7 +44,7 @@ opencode web --port 4096
 Standardmäßig bindet der Server an `127.0.0.1` (nur localhost). So machen Sie ZYRAXON in Ihrem Netzwerk zugänglich:
 
 ```bash
-opencode web --hostname 0.0.0.0
+zyraxon web --hostname 0.0.0.0
 ```
 
 Bei Verwendung von `0.0.0.0` zeigt ZYRAXON sowohl lokale als auch Netzwerkadressen an:
@@ -59,15 +59,15 @@ Bei Verwendung von `0.0.0.0` zeigt ZYRAXON sowohl lokale als auch Netzwerkadress
 Aktivieren Sie mDNS, um Ihren Server im lokalen Netzwerk erkennbar zu machen:
 
 ```bash
-opencode web --mdns
+zyraxon web --mdns
 ```
 
-Dadurch wird der Hostname automatisch auf `0.0.0.0` gesetzt und der Server als `opencode.local` angekündigt.
+Dadurch wird der Hostname automatisch auf `0.0.0.0` gesetzt und der Server als `zyraxon.local` angekündigt.
 
 Sie können den mDNS-Domänennamen anpassen, um mehrere Instanzen im selben Netzwerk auszuführen:
 
 ```bash
-opencode web --mdns --mdns-domain myproject.local
+zyraxon web --mdns --mdns-domain myproject.local
 ```
 
 ### CORS
@@ -75,18 +75,18 @@ opencode web --mdns --mdns-domain myproject.local
 So erlauben Sie zusätzliche Domänen für CORS (nützlich für benutzerdefinierte Frontends):
 
 ```bash
-opencode web --cors https://example.com
+zyraxon web --cors https://example.com
 ```
 
 ### Authentifizierung
 
-Um den Zugriff zu schützen, legen Sie mithilfe der Umgebungsvariablen `OPENCODE_SERVER_PASSWORD` ein Passwort fest:
+Um den Zugriff zu schützen, legen Sie mithilfe der Umgebungsvariablen `ZYRAXON_SERVER_PASSWORD` ein Passwort fest:
 
 ```bash
-OPENCODE_SERVER_PASSWORD=secret opencode web
+ZYRAXON_SERVER_PASSWORD=secret zyraxon web
 ```
 
-Der Benutzername ist standardmäßig `opencode`, kann aber mit `OPENCODE_SERVER_USERNAME` geändert werden.
+Der Benutzername ist standardmäßig `zyraxon`, kann aber mit `ZYRAXON_SERVER_USERNAME` geändert werden.
 
 ---
 
@@ -114,10 +114,10 @@ Sie können eine Terminal-TUI an einen laufenden Webserver anschließen:
 
 ```bash
 # Start the web server
-opencode web --port 4096
+zyraxon web --port 4096
 
 # In another terminal, attach the TUI
-opencode attach http://localhost:4096
+zyraxon attach http://localhost:4096
 ```
 
 Dadurch können Sie sowohl die Weboberfläche als auch das Terminal gleichzeitig verwenden und dieselben Sitzungen und denselben Status teilen.

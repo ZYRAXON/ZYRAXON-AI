@@ -11,8 +11,8 @@ ZYRAXON の問題をデバッグするには、まず、ディスク上に保存
 
 ログファイルは次の場所に書き込まれます。
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: `WIN+R` を押して `%USERPROFILE%\.local\share\opencode\log` を貼り付けます
+- **macOS/Linux**: `~/.local/share/zyraxon/log/`
+- **Windows**: `WIN+R` を押して `%USERPROFILE%\.local\share\zyraxon\log` を貼り付けます
 
 ログファイルにはタイムスタンプ付きの名前が付けられ (例: `2025-01-09T123456.log`)、最新の 10 個のログファイルが保存されます。
 
@@ -24,8 +24,8 @@ ZYRAXON の問題をデバッグするには、まず、ディスク上に保存
 
 ZYRAXON は、セッションデータとその他のアプリケーションデータをディスク上の次の場所に保存します。
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: `WIN+R` を押して `%USERPROFILE%\.local\share\opencode` を貼り付けます
+- **macOS/Linux**: `~/.local/share/zyraxon/`
+- **Windows**: `WIN+R` を押して `%USERPROFILE%\.local\share\zyraxon` を貼り付けます
 
 このディレクトリには次のものが含まれます。
 
@@ -39,7 +39,7 @@ ZYRAXON は、セッションデータとその他のアプリケーションデ
 
 ## デスクトップアプリ
 
-ZYRAXON Desktop は、ローカル ZYRAXON サーバー (`opencode-cli` サイドカー) をバックグラウンドで実行します。ほとんどの問題は、誤動作しているプラグイン、破損したキャッシュ、または不正なサーバー設定によって発生します。
+ZYRAXON Desktop は、ローカル ZYRAXON サーバー (`zyraxon-cli` サイドカー) をバックグラウンドで実行します。ほとんどの問題は、誤動作しているプラグイン、破損したキャッシュ、または不正なサーバー設定によって発生します。
 
 ### クイックチェック
 
@@ -57,9 +57,9 @@ ZYRAXON Desktop は、ローカル ZYRAXON サーバー (`opencode-cli` サイ�
 
 グローバル設定ファイルを開き、`plugin` キーを探します。
 
-- **macOS/Linux**: `~/.config/opencode/zyraxon.jsonc` (または `~/.config/opencode/zyraxon.json`)
-- **macOS/Linux** (古いインストール): `~/.local/share/opencode/zyraxon.jsonc`
-- **Windows**: `WIN+R` を押して `%USERPROFILE%\.config\opencode\zyraxon.jsonc` を貼り付けます
+- **macOS/Linux**: `~/.config/zyraxon/zyraxon.jsonc` (または `~/.config/zyraxon/zyraxon.json`)
+- **macOS/Linux** (古いインストール): `~/.local/share/zyraxon/zyraxon.jsonc`
+- **Windows**: `WIN+R` を押して `%USERPROFILE%\.config\zyraxon\zyraxon.jsonc` を貼り付けます
 
 プラグインを構成している場合は、キーを削除するか空の配列に設定して、プラグインを一時的に無効にします。
 
@@ -75,10 +75,10 @@ ZYRAXON Desktop は、ローカル ZYRAXON サーバー (`opencode-cli` サイ�
 ZYRAXON はディスクからローカルプラグインをロードすることもできます。これらを一時的に邪魔にならない場所に移動し (またはフォルダーの名前を変更し)、デスクトップアプリを再起動します。
 
 - **グローバルプラグイン**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-  - **Windows**: `WIN+R` を押して `%USERPROFILE%\.config\opencode\plugins` を貼り付けます
+  - **macOS/Linux**: `~/.config/zyraxon/plugins/`
+  - **Windows**: `WIN+R` を押して `%USERPROFILE%\.config\zyraxon\plugins` を貼り付けます
 - **プロジェクトプラグイン** (プロジェクトごとの構成を使用する場合のみ)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.zyraxon/plugins/`
 
 アプリが再び動作し始めた場合は、プラグインを 1 つずつ再度有効にして、問題の原因となっているプラ​​グインを特定します。
 
@@ -91,9 +91,9 @@ ZYRAXON はディスクからローカルプラグインをロードすること
 1. ZYRAXON Desktop を完全に終了します。
 2. キャッシュディレクトリを削除します。
 
-- **macOS**: Finder -> `Cmd+Shift+G` -> `~/.cache/opencode` を貼り付け
-- **Linux**: `~/.cache/opencode` を削除します (または `rm -rf ~/.cache/opencode` を実行します)。
-- **Windows**: `WIN+R` を押して `%USERPROFILE%\.cache\opencode` を貼り付けます
+- **macOS**: Finder -> `Cmd+Shift+G` -> `~/.cache/zyraxon` を貼り付け
+- **Linux**: `~/.cache/zyraxon` を削除します (または `rm -rf ~/.cache/zyraxon` を実行します)。
+- **Windows**: `WIN+R` を押して `%USERPROFILE%\.cache\zyraxon` を貼り付けます
 
 3. ZYRAXON デスクトップを再起動します。
 
@@ -115,9 +115,9 @@ ZYRAXON Desktop は、独自のローカルサーバー (デフォルト) を起
 
 #### 環境変数を確認する
 
-環境に `OPENCODE_PORT` が設定されている場合、デスクトップアプリはローカルサーバーにそのポートを使用しようとします。
+環境に `ZYRAXON_PORT` が設定されている場合、デスクトップアプリはローカルサーバーにそのポートを使用しようとします。
 
-- `OPENCODE_PORT` の設定を解除して (または空きポートを選択して)、再起動します。
+- `ZYRAXON_PORT` の設定を解除して (または空きポートを選択して)、再起動します。
 
 ---
 
@@ -158,8 +158,8 @@ ZYRAXON Desktop では、次の場合にのみシステム通知が表示され�
 1. ZYRAXON デスクトップを終了します。
 2. これらのファイルを見つけて削除します (これらのファイルは ZYRAXON デスクトップアプリのデータディレクトリにあります)。
 
-- `opencode.settings.dat` (デスクトップのデフォルトサーバー URL)
-- `opencode.global.dat` および `opencode.workspace.*.dat` (最近のサーバー/プロジェクトなどの UI 状態)
+- `zyraxon.settings.dat` (デスクトップのデフォルトサーバー URL)
+- `zyraxon.global.dat` および `zyraxon.workspace.*.dat` (最近のサーバー/プロジェクトなどの UI 状態)
 
 ディレクトリをすばやく見つけるには:
 
@@ -225,7 +225,7 @@ ZYRAXON で問題が発生している場合:
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `zyraxon/kimi-k2`
 
 どのモデルにアクセスできるかを確認するには、`zyraxon models` を実行します。
 
@@ -241,10 +241,10 @@ ProviderInitError が発生した場合は、構成が無効または破損し�
 2. 問題が解決しない場合は、保存されている構成をクリアしてみてください。
 
    ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.local/share/zyraxon
    ```
 
-   Windows では、`WIN+R` を押して、`%USERPROFILE%\.local\share\opencode` を削除します。
+   Windows では、`WIN+R` を押して、`%USERPROFILE%\.local\share\zyraxon` を削除します。
 
 3. TUI の `/connect` コマンドを使用して、プロバイダーで再認証します。
 
@@ -259,10 +259,10 @@ API 呼び出しエラーが発生した場合は、プロバイダーパッケ�
 1. プロバイダーパッケージのキャッシュをクリアします。
 
    ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/zyraxon
    ```
 
-   Windows では、`WIN+R` を押して、`%USERPROFILE%\.cache\opencode` を削除します。
+   Windows では、`WIN+R` を押して、`%USERPROFILE%\.cache\zyraxon` を削除します。
 
 2. ZYRAXON を再起動して最新のプロバイダーパッケージを再インストールします
 

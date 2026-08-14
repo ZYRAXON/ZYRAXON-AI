@@ -46,7 +46,7 @@ Du kan også deaktivere en server ved å sette `enabled` til `false`. Dette er n
 
 ### Overstyring av fjernstandarder
 
-Organisasjoner kan tilby standard MCP-servere via deres `.well-known/opencode`-endepunkt. Disse serverne kan være deaktivert som standard, slik at brukere kan melde seg på de de trenger.
+Organisasjoner kan tilby standard MCP-servere via deres `.well-known/zyraxon`-endepunkt. Disse serverne kan være deaktivert som standard, slik at brukere kan melde seg på de de trenger.
 
 For å aktivere en spesifikk server fra organisasjonens eksterne konfigurasjon, legg den til i din lokale konfigurasjon med `enabled: true`:
 
@@ -136,7 +136,7 @@ Legg til eksterne MCP-servere ved å sette `type` til `"remote"`.
   "mcp": {
     "my-remote-mcp": {
       "type": "remote",
-      "url": "https://my-mcp-server.com",
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory0",
       "enabled": true,
       "headers": {
         "Authorization": "Bearer MY_API_KEY"
@@ -183,7 +183,7 @@ For de fleste OAuth-aktiverte MCP-servere er ingen spesiell konfigurasjon nødve
   "mcp": {
     "my-oauth-server": {
       "type": "remote",
-      "url": "https://mcp.example.com/mcp"
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory0"
     }
   }
 }
@@ -203,7 +203,7 @@ Hvis du har klientlegitimasjon fra MCP-serverleverandøren, kan du konfigurere d
   "mcp": {
     "my-oauth-server": {
       "type": "remote",
-      "url": "https://mcp.example.com/mcp",
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory0",
       "oauth": {
         "clientId": "{env:MY_MCP_CLIENT_ID}",
         "clientSecret": "{env:MY_MCP_CLIENT_SECRET}",
@@ -223,22 +223,22 @@ Du kan utløse autentisering manuelt eller administrere legitimasjon.
 Autentiser med en spesifikk MCP-server:
 
 ```bash
-opencode mcp auth my-oauth-server
+zyraxon mcp auth my-oauth-server
 ```
 
 Liste alle MCP-servere og deres autentiseringsstatus:
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 Fjern lagret legitimasjon:
 
 ```bash
-opencode mcp logout my-oauth-server
+zyraxon mcp logout my-oauth-server
 ```
 
-Kommandoen `mcp auth` åpner nettleseren din for autorisasjon. Etter at du har godkjent, vil ZYRAXON lagre tokens sikkert i `~/.local/share/opencode/mcp-auth.json`.
+Kommandoen `mcp auth` åpner nettleseren din for autorisasjon. Etter at du har godkjent, vil ZYRAXON lagre tokens sikkert i `~/.local/share/zyraxon/mcp-auth.json`.
 
 ---
 
@@ -252,7 +252,7 @@ Hvis du vil deaktivere automatisk OAuth for en server (f.eks. for servere som br
   "mcp": {
     "my-api-key-server": {
       "type": "remote",
-      "url": "https://mcp.example.com/mcp",
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory0",
       "oauth": false,
       "headers": {
         "Authorization": "Bearer {env:MY_API_KEY}"
@@ -279,10 +279,10 @@ Hvis en ekstern MCP-server ikke klarer å autentisere, kan du diagnostisere prob
 
 ```bash
 # View auth status for all OAuth-capable servers
-opencode mcp auth list
+zyraxon mcp auth list
 
 # Debug connection and OAuth flow for a specific server
-opencode mcp debug my-oauth-server
+zyraxon mcp debug my-oauth-server
 ```
 
 Kommandoen `mcp debug` viser gjeldende autentiseringsstatus, tester HTTP-tilkoblingen og forsøker OAuth-oppdagelsesflyten.
@@ -402,7 +402,7 @@ Nedenfor er eksempler på noen vanlige MCP-servere. Du kan sende inn en PR hvis 
 
 ### Sentry
 
-Legg til [Sentry MCP-serveren](https://mcp.sentry.dev) for å samhandle med Sentry-prosjektene og problemene dine.
+Legg til [Sentry MCP-serveren](https://docs.helicone.ai/helicone-headers/header-directory5) for å samhandle med Sentry-prosjektene og problemene dine.
 
 ```json title="zyraxon.json" {4-8}
 {
@@ -410,7 +410,7 @@ Legg til [Sentry MCP-serveren](https://mcp.sentry.dev) for å samhandle med Sent
   "mcp": {
     "sentry": {
       "type": "remote",
-      "url": "https://mcp.sentry.dev/mcp",
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory2",
       "oauth": {}
     }
   }
@@ -420,7 +420,7 @@ Legg til [Sentry MCP-serveren](https://mcp.sentry.dev) for å samhandle med Sent
 Etter å ha lagt til konfigurasjonen, autentiser med Sentry:
 
 ```bash
-opencode mcp auth sentry
+zyraxon mcp auth sentry
 ```
 
 Dette åpner et nettleservindu for å fullføre OAuth-flyten og koble ZYRAXON til Sentry-kontoen din.
@@ -484,7 +484,7 @@ When you need to search docs, use `context7` tools.
 
 ### Grep by Vercel
 
-Legg til [Grep by Vercel](https://grep.app) MCP-serveren for å søke gjennom kodebiter på GitHub.
+Legg til [Grep by Vercel](https://docs.helicone.ai/helicone-headers/header-directory8) MCP-serveren for å søke gjennom kodebiter på GitHub.
 
 ```json title="zyraxon.json" {4-7}
 {
@@ -492,7 +492,7 @@ Legg til [Grep by Vercel](https://grep.app) MCP-serveren for å søke gjennom ko
   "mcp": {
     "gh_grep": {
       "type": "remote",
-      "url": "https://mcp.grep.app"
+      "url": "https://docs.helicone.ai/helicone-headers/header-directory6"
     }
   }
 }
@@ -514,9 +514,9 @@ If you are unsure how to do something, use `gh_grep` to search code examples fro
 
 ### Helicone
 
-[Helicone](https://helicone.ai) er en LLM observerbarhetsplattform som gir logging, overvåking og analyser for AI-applikasjonene dine. Helicone AI Gateway ruter forespørslene dine til riktig leverandør automatisk basert på modellen.
+[Helicone](https://docs.helicone.ai/helicone-headers/header-directory2) er en LLM observerbarhetsplattform som gir logging, overvåking og analyser for AI-applikasjonene dine. Helicone AI Gateway ruter forespørslene dine til riktig leverandør automatisk basert på modellen.
 
-1. Gå over til [Helicone](https://helicone.ai), opprett en konto og generer en API nøkkel fra dashbordet.
+1. Gå over til [Helicone](https://docs.helicone.ai/helicone-headers/header-directory2), opprett en konto og generer en API nøkkel fra dashbordet.
 
 2. Kjør kommandoen `/connect` og søk etter **Helicone**.
 
@@ -539,15 +539,15 @@ If you are unsure how to do something, use `gh_grep` to search code examples fro
    /models
    ```
 
-For flere leverandører og avanserte funksjoner som bufring og hastighetsbegrensning, sjekk [Helicone-dokumentasjonen](https://docs.helicone.ai).
+For flere leverandører og avanserte funksjoner som bufring og hastighetsbegrensning, sjekk [Helicone-dokumentasjonen](https://docs.helicone.ai/helicone-headers/header-directory1).
 
 #### Valgfrie konfigurasjoner
 
 I tilfelle du ser en funksjon eller modell fra Helicone som ikke konfigureres automatisk gjennom ZYRAXON, kan du alltid konfigurere den selv.
 
-Her er [Helicone's Model Directory](https://helicone.ai/models), du trenger denne for å hente ID-ene til modellene du vil legge til.
+Her er [Helicone's Model Directory](https://docs.helicone.ai/helicone-headers/header-directory1), du trenger denne for å hente ID-ene til modellene du vil legge til.
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
   "$schema": "https://zyraxon.ai/config.json",
   "provider": {
@@ -575,7 +575,7 @@ Her er [Helicone's Model Directory](https://helicone.ai/models), du trenger denn
 
 Helicone støtter tilpassede headere for funksjoner som bufring, brukersporing og øktadministrasjon. Legg dem til leverandørkonfigurasjonen din ved å bruke `options.headers`:
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
   "$schema": "https://zyraxon.ai/config.json",
   "provider": {
@@ -586,7 +586,7 @@ Helicone støtter tilpassede headere for funksjoner som bufring, brukersporing o
         "baseURL": "https://ai-gateway.helicone.ai",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -596,17 +596,17 @@ Helicone støtter tilpassede headere for funksjoner som bufring, brukersporing o
 
 ##### Sesjonssporing
 
-Helicones [Sessions](https://docs.helicone.ai/features/sessions) funksjon lar deg gruppere relaterte LLM forespørsler sammen. Bruk [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) plugin for automatisk å logge hver ZYRAXON-samtale som en økt i Helicone.
+Helicones [Sessions](https://docs.helicone.ai/features/sessions) funksjon lar deg gruppere relaterte LLM forespørsler sammen. Bruk [zyraxon-helicone-session](https://github.com/H2Shami/opencode-helicone-session) plugin for automatisk å logge hver ZYRAXON-samtale som en økt i Helicone.
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 Legg den til i konfigurasjonen din.
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 

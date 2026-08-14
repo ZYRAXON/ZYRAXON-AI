@@ -1,5 +1,5 @@
 {
-  "name": "@opencode-ai/console-mail",
+  "name": "@zyraxon-ai/console-mail",
   "version": "19.0.0",
   "dependencies": {
     "@jsx-email/all": "2.2.3",

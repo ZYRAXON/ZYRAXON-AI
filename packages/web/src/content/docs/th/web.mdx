@@ -12,13 +12,13 @@ ZYRAXON สามารถทำงานเป็นเว็บแอปพล
 เริ่มเว็บอินเตอร์เฟสด้วยการรัน:
 
 ```bash
-opencode web
+zyraxon web
 ```
 
 สิ่งนี้จะเริ่มต้นเซิร์ฟเวอร์ท้องถิ่นบน `127.0.0.1` ด้วยพอร์ตที่มีอยู่แบบสุ่มและเปิด ZYRAXON โดยอัตโนมัติในเบราว์เซอร์เริ่มต้นของคุณ
 
 :::caution
-หากไม่ได้ตั้งค่า `OPENCODE_SERVER_PASSWORD` เซิร์ฟเวอร์จะไม่ปลอดภัย นี่เป็นเรื่องปกติสำหรับการใช้งานภายในเครื่อง แต่ควรตั้งค่าสำหรับการเข้าถึงเครือข่าย
+หากไม่ได้ตั้งค่า `ZYRAXON_SERVER_PASSWORD` เซิร์ฟเวอร์จะไม่ปลอดภัย นี่เป็นเรื่องปกติสำหรับการใช้งานภายในเครื่อง แต่ควรตั้งค่าสำหรับการเข้าถึงเครือข่าย
 :::
 
 :::tip[ผู้ใช้ Windows]
@@ -36,7 +36,7 @@ opencode web
 ตามค่าเริ่มต้น ZYRAXON จะเลือกพอร์ตที่พร้อมใช้งาน คุณสามารถระบุพอร์ต:
 
 ```bash
-opencode web --port 4096
+zyraxon web --port 4096
 ```
 
 ### ชื่อโฮสต์
@@ -44,7 +44,7 @@ opencode web --port 4096
 ตามค่าเริ่มต้น เซิร์ฟเวอร์จะเชื่อมโยงกับ `127.0.0.1` (เฉพาะโลคัลโฮสต์เท่านั้น) หากต้องการให้ ZYRAXON เข้าถึงได้บนเครือข่ายของคุณ:
 
 ```bash
-opencode web --hostname 0.0.0.0
+zyraxon web --hostname 0.0.0.0
 ```
 
 เมื่อใช้ `0.0.0.0` ZYRAXON จะแสดงทั้งที่อยู่ในท้องถิ่นและเครือข่าย:
@@ -59,15 +59,15 @@ opencode web --hostname 0.0.0.0
 เปิดใช้งาน mDNS เพื่อให้เซิร์ฟเวอร์ของคุณค้นพบได้บนเครือข่ายท้องถิ่น:
 
 ```bash
-opencode web --mdns
+zyraxon web --mdns
 ```
 
-สิ่งนี้จะตั้งชื่อโฮสต์เป็น `0.0.0.0` โดยอัตโนมัติและโฆษณาเซิร์ฟเวอร์เป็น `opencode.local`
+สิ่งนี้จะตั้งชื่อโฮสต์เป็น `0.0.0.0` โดยอัตโนมัติและโฆษณาเซิร์ฟเวอร์เป็น `zyraxon.local`
 
 คุณสามารถปรับแต่งชื่อโดเมน mDNS เพื่อเรียกใช้หลายอินสแตนซ์บนเครือข่ายเดียวกันได้:
 
 ```bash
-opencode web --mdns --mdns-domain myproject.local
+zyraxon web --mdns --mdns-domain myproject.local
 ```
 
 ### CORS
@@ -75,18 +75,18 @@ opencode web --mdns --mdns-domain myproject.local
 หากต้องการอนุญาตโดเมนเพิ่มเติมสำหรับ CORS (มีประโยชน์สำหรับส่วนหน้าที่กำหนดเอง):
 
 ```bash
-opencode web --cors https://example.com
+zyraxon web --cors https://example.com
 ```
 
 ### การรับรองความถูกต้อง
 
-เพื่อป้องกันการเข้าถึง ให้ตั้งรหัสผ่านโดยใช้ตัวแปรสภาพแวดล้อม `OPENCODE_SERVER_PASSWORD`:
+เพื่อป้องกันการเข้าถึง ให้ตั้งรหัสผ่านโดยใช้ตัวแปรสภาพแวดล้อม `ZYRAXON_SERVER_PASSWORD`:
 
 ```bash
-OPENCODE_SERVER_PASSWORD=secret opencode web
+ZYRAXON_SERVER_PASSWORD=secret zyraxon web
 ```
 
-ชื่อผู้ใช้มีค่าเริ่มต้นเป็น `opencode` แต่สามารถเปลี่ยนได้ด้วย `OPENCODE_SERVER_USERNAME`
+ชื่อผู้ใช้มีค่าเริ่มต้นเป็น `zyraxon` แต่สามารถเปลี่ยนได้ด้วย `ZYRAXON_SERVER_USERNAME`
 
 ---
 
@@ -114,10 +114,10 @@ OPENCODE_SERVER_PASSWORD=secret opencode web
 
 ```bash
 # Start the web server
-opencode web --port 4096
+zyraxon web --port 4096
 
 # In another terminal, attach the TUI
-opencode attach http://localhost:4096
+zyraxon attach http://localhost:4096
 ```
 
 ซึ่งจะทำให้คุณสามารถใช้ทั้งเว็บอินเทอร์เฟซและ terminal พร้อมกัน โดยแชร์เซสชันและสถานะเดียวกัน

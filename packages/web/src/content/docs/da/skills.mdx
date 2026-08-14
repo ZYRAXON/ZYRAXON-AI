@@ -13,8 +13,8 @@ Ferdigheter lastes inn på forespørsel via det opprinnelige `skill`-verktøyet 
 Opret én mappe per ferdighetsnavn og tilføj inn en `SKILL.md` i den.
 ZYRAXON søker etter disse stedene:
 
-- Prosjektkonfigurasjon: `.opencode/skills/<name>/SKILL.md`
-- Global konfigurasjon: `~/.config/opencode/skills/<name>/SKILL.md`
+- Prosjektkonfigurasjon: `.zyraxon/skills/<name>/SKILL.md`
+- Global konfigurasjon: `~/.config/zyraxon/skills/<name>/SKILL.md`
 - Prosjekt Claude-kompatibel: `.claude/skills/<name>/SKILL.md`
 - Global Claude-kompatibel: `~/.claude/skills/<name>/SKILL.md`
 - Prosjektagent-kompatibel: `.agents/skills/<name>/SKILL.md`
@@ -25,9 +25,9 @@ ZYRAXON søker etter disse stedene:
 ## Forstå opdagelsen
 
 For prosjektlokale stier går ZYRAXON opp fra din nåværende arbejdskatalog til den når git-arbeidstreet.
-Den laster alle matchende `skills/*/SKILL.md` i `.opencode/` og alle matchende `.claude/skills/*/SKILL.md` eller `.agents/skills/*/SKILL.md` underveis.
+Den laster alle matchende `skills/*/SKILL.md` i `.zyraxon/` og alle matchende `.claude/skills/*/SKILL.md` eller `.agents/skills/*/SKILL.md` underveis.
 
-Globale definisjoner lastes også inn fra `~/.config/opencode/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` og `~/.agents/skills/*/SKILL.md`.
+Globale definisjoner lastes også inn fra `~/.config/zyraxon/skills/*/SKILL.md`, `~/.claude/skills/*/SKILL.md` og `~/.agents/skills/*/SKILL.md`.
 
 ---
 
@@ -73,14 +73,14 @@ Hold det spesifikt nok til at agenten kan velge riktig.
 
 ## Brug et eksempel
 
-Lag `.opencode/skills/git-release/SKILL.md` slik:
+Lag `.zyraxon/skills/git-release/SKILL.md` slik:
 
 ```markdown
 ---
 name: git-release
 description: Create consistent releases and changelogs
 license: MIT
-compatibility: opencode
+compatibility: zyraxon
 metadata:
   audience: maintainers
   workflow: github

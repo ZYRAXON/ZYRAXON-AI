@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
   "version": "19.0.0",
-  "name": "@opencode-ai/effect-sqlite-node",
+  "name": "@zyraxon-ai/effect-sqlite-node",
   "type": "module",
   "license": "BSL-1.1",
   "private": true,

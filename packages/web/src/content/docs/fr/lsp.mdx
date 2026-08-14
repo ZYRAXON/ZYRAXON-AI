@@ -50,14 +50,14 @@ ZYRAXON est livré avec plusieurs serveurs LSP intégrés pour les langages popu
 LSP est désactivé par défaut. Lorsqu'il est activé, les serveurs démarrent lorsqu'une des extensions de fichier ci-dessus est détectée et que les exigences sont remplies.
 
 :::note
-Vous pouvez désactiver les téléchargements automatiques du serveur LSP en définissant la variable d'environnement `OPENCODE_DISABLE_LSP_DOWNLOAD` sur `true`.
+Vous pouvez désactiver les téléchargements automatiques du serveur LSP en définissant la variable d'environnement `ZYRAXON_DISABLE_LSP_DOWNLOAD` sur `true`.
 :::
 
 ---
 
 ## Comment ça marche
 
-Lorsque LSP est activé et qu'opencode ouvre un fichier, il :
+Lorsque LSP est activé et qu'zyraxon ouvre un fichier, il :
 
 1. Vérifie l'extension du fichier par rapport à tous les serveurs LSP activés.
 2. Démarre le serveur LSP approprié s'il n'est pas déjà en cours d'exécution.
@@ -74,7 +74,7 @@ Les serveurs de langage peuvent se désynchroniser, consommer beaucoup de mémoi
 
 ## Configuration
 
-Vous pouvez activer et personnaliser les serveurs LSP via la section `lsp` de votre configuration opencode.
+Vous pouvez activer et personnaliser les serveurs LSP via la section `lsp` de votre configuration zyraxon.
 
 Pour activer tous les serveurs LSP intégrés, définissez `lsp` sur `true`.
 

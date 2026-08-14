@@ -1,6 +1,6 @@
 // strip-bom.js — Removes BOM from all JSON files in node_modules
 // This fixes the Vite PostCSS config loading error caused by
-// BOM characters (0xEF 0xBB 0xBF) in upstream @opencode-ai packages
+// BOM characters (0xEF 0xBB 0xBF) in upstream @zyraxon-ai packages
 // Run after: bun install
 
 const fs = require("fs")

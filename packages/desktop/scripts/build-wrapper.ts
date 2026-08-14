@@ -13,22 +13,22 @@ if (!process.env.NODE_OPTIONS?.includes("max-old-space-size")) {
 
 console.log(`Setting Node.js heap limit to 4096MB`)
 
-// Build opencode dist/node first if it doesn't exist
-const opencodeDistNode = path.join(rootDir, "packages", "opencode", "dist", "node")
-const opencodeWebUI = path.join(opencodeDistNode, "opencode-web-ui.gen.ts")
+// Build zyraxon dist/node first if it doesn't exist
+const zyraxonDistNode = path.join(rootDir, "packages", "zyraxon", "dist", "node")
+const zyraxonWebUI = path.join(zyraxonDistNode, "zyraxon-web-ui.gen.ts")
 
-if (!Bun.file(opencodeWebUI).exists()) {
-  console.log("Building opencode dist/node...")
-  await $`bun run script/build-node.ts`.cwd(path.join(rootDir, "packages", "opencode"))
+if (!Bun.file(zyraxonWebUI).exists()) {
+  console.log("Building zyraxon dist/node...")
+  await $`bun run script/build-node.ts`.cwd(path.join(rootDir, "packages", "zyraxon"))
 }
 
 // Always copy web-ui to dist/node (may be stale)
-const srcWebUI = path.join(rootDir, "packages", "opencode", "opencode-web-ui.gen.ts")
+const srcWebUI = path.join(rootDir, "packages", "zyraxon", "zyraxon-web-ui.gen.ts")
 if (Bun.file(srcWebUI).exists()) {
-  await Bun.write(opencodeWebUI, await Bun.file(srcWebUI).arrayBuffer())
-  console.log("Copied opencode-web-ui.gen.ts to dist/node")
+  await Bun.write(zyraxonWebUI, await Bun.file(srcWebUI).arrayBuffer())
+  console.log("Copied zyraxon-web-ui.gen.ts to dist/node")
 } else {
-  console.error("ERROR: opencode-web-ui.gen.ts not found! Run: bun run --cwd packages/app bun run build")
+  console.error("ERROR: zyraxon-web-ui.gen.ts not found! Run: bun run --cwd packages/app bun run build")
   process.exit(1)
 }
 

@@ -1,4 +1,4 @@
-import { Effect, Ref } from "effect"
+import { Effect, Ref, Context } from "effect"
 import type { Task, AgentInfo, LiveStatus, TaskStatus, AgentStatus, PipelineStatus } from "./types"
 
 export interface WorkBoardInterface {
@@ -42,7 +42,7 @@ export interface WorkBoardInterface {
   readonly getFailedCount: () => Effect.Effect<number>
 }
 
-export class WorkBoard extends Effect.Service<WorkBoardInterface>()("@zyraxon/WorkBoard") {}
+export class WorkBoard extends Context.Service<WorkBoard, WorkBoardInterface>()("@zyraxon/WorkBoard") {}
 
 export const make = Effect.gen(function* () {
   const tasksRef = yield* Ref.make<Map<string, Task>>(new Map())

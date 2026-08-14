@@ -8,13 +8,13 @@ import { Tabs, TabItem } from "@astrojs/starlight/components"
 La CLI di ZYRAXON, per impostazione predefinita, avvia la [TUI](/docs/tui) quando viene eseguita senza argomenti.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Ma accetta anche i comandi documentati in questa pagina. Questo ti permette di interagire con ZYRAXON in modo programmatico.
 
 ```bash
-opencode run "Explain how closures work in JavaScript"
+zyraxon run "Explain how closures work in JavaScript"
 ```
 
 ---
@@ -24,7 +24,7 @@ opencode run "Explain how closures work in JavaScript"
 Avvia l'interfaccia testuale di ZYRAXON (interfaccia utente da terminale).
 
 ```bash
-opencode [project]
+zyraxon [project]
 ```
 
 #### Flag
@@ -53,7 +53,7 @@ La CLI di ZYRAXON include anche i seguenti comandi.
 Gestisci gli agenti per ZYRAXON.
 
 ```bash
-opencode agent [command]
+zyraxon agent [command]
 ```
 
 ---
@@ -63,17 +63,17 @@ opencode agent [command]
 Collega un terminale a un backend server di ZYRAXON già in esecuzione avviato tramite i comandi `serve` o `web`.
 
 ```bash
-opencode attach [url]
+zyraxon attach [url]
 ```
 
 Questo consente di usare la TUI con un backend ZYRAXON remoto. Per esempio:
 
 ```bash
 # Start the backend server for web/mobile access
-opencode web --port 4096 --hostname 0.0.0.0
+zyraxon web --port 4096 --hostname 0.0.0.0
 
 # In un altro terminale, collega la TUI al backend in esecuzione
-opencode attach http://10.20.30.40:4096
+zyraxon attach http://10.20.30.40:4096
 ```
 
 #### Flag
@@ -84,8 +84,8 @@ opencode attach http://10.20.30.40:4096
 | <nobr><code>{"--continue"}</code></nobr> | `-c`  | Continua l'ultima sessione                                                                      |
 | <nobr><code>{"--session"}</code></nobr>  | `-s`  | ID sessione da continuare                                                                       |
 | <nobr><code>{"--fork"}</code></nobr>     |       | Crea un fork della sessione durante la continuazione (usa con `--continue` o `--session`)       |
-| <nobr><code>{"--password"}</code></nobr> | `-p`  | Password per l'autenticazione di base (predefinita: `OPENCODE_SERVER_PASSWORD`)                 |
-| <nobr><code>{"--username"}</code></nobr> | `-u`  | Nome utente per l'autenticazione di base (predefinito: `OPENCODE_SERVER_USERNAME` o `opencode`) |
+| <nobr><code>{"--password"}</code></nobr> | `-p`  | Password per l'autenticazione di base (predefinita: `ZYRAXON_SERVER_PASSWORD`)                 |
+| <nobr><code>{"--username"}</code></nobr> | `-u`  | Nome utente per l'autenticazione di base (predefinito: `ZYRAXON_SERVER_USERNAME` o `zyraxon`) |
 
 ---
 
@@ -94,7 +94,7 @@ opencode attach http://10.20.30.40:4096
 Crea un nuovo agente con configurazione personalizzata.
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Questo comando ti guida nella creazione di un nuovo agente con un system prompt personalizzato e configurazione degli strumenti.
@@ -106,7 +106,7 @@ Questo comando ti guida nella creazione di un nuovo agente con un system prompt 
 Elenca tutti gli agenti disponibili.
 
 ```bash
-opencode agent list
+zyraxon agent list
 ```
 
 ---
@@ -116,17 +116,17 @@ opencode agent list
 Comando per gestire le credenziali e il login dei provider.
 
 ```bash
-opencode auth [command]
+zyraxon auth [command]
 ```
 
 ---
 
 #### login
 
-ZYRAXON si basa sull'elenco provider di [Models.dev](https://models.dev), quindi puoi usare `zyraxon auth login` per configurare le API key per qualunque provider tu voglia usare. Le credenziali vengono salvate in `~/.local/share/opencode/auth.json`.
+ZYRAXON si basa sull'elenco provider di [Models.dev](https://models.dev), quindi puoi usare `zyraxon auth login` per configurare le API key per qualunque provider tu voglia usare. Le credenziali vengono salvate in `~/.local/share/zyraxon/auth.json`.
 
 ```bash
-opencode auth login
+zyraxon auth login
 ```
 
 Quando ZYRAXON si avvia, carica i provider dal file delle credenziali e, se presenti, anche eventuali key definite nell'ambiente o in un file `.env` nel progetto.
@@ -138,13 +138,13 @@ Quando ZYRAXON si avvia, carica i provider dal file delle credenziali e, se pres
 Elenca tutti i provider autenticati come salvati nel file delle credenziali.
 
 ```bash
-opencode auth list
+zyraxon auth list
 ```
 
 Oppure la versione corta.
 
 ```bash
-opencode auth ls
+zyraxon auth ls
 ```
 
 ---
@@ -154,7 +154,7 @@ opencode auth ls
 Esegue il logout da un provider rimuovendolo dal file delle credenziali.
 
 ```bash
-opencode auth logout
+zyraxon auth logout
 ```
 
 ---
@@ -164,7 +164,7 @@ opencode auth logout
 Gestisci l'agente GitHub per l'automazione dei repository.
 
 ```bash
-opencode github [command]
+zyraxon github [command]
 ```
 
 ---
@@ -174,7 +174,7 @@ opencode github [command]
 Installa l'agente GitHub nel tuo repository.
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 Questo configura il workflow GitHub Actions necessario e ti guida nel processo di configurazione. [Scopri di più](/docs/github).
@@ -186,7 +186,7 @@ Questo configura il workflow GitHub Actions necessario e ti guida nel processo d
 Esegui l'agente GitHub. Tipicamente usato in GitHub Actions.
 
 ```bash
-opencode github run
+zyraxon github run
 ```
 
 ##### Flag
@@ -203,7 +203,7 @@ opencode github run
 Gestisci i server Model Context Protocol.
 
 ```bash
-opencode mcp [command]
+zyraxon mcp [command]
 ```
 
 ---
@@ -213,7 +213,7 @@ opencode mcp [command]
 Aggiungi un server MCP alla tua configurazione.
 
 ```bash
-opencode mcp add
+zyraxon mcp add
 ```
 
 Questo comando ti guida nell'aggiunta di un server MCP locale o remoto.
@@ -225,13 +225,13 @@ Questo comando ti guida nell'aggiunta di un server MCP locale o remoto.
 Elenca tutti i server MCP configurati e il loro stato di connessione.
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 Oppure la versione corta.
 
 ```bash
-opencode mcp ls
+zyraxon mcp ls
 ```
 
 ---
@@ -241,7 +241,7 @@ opencode mcp ls
 Autentica con un server MCP con OAuth abilitato.
 
 ```bash
-opencode mcp auth [name]
+zyraxon mcp auth [name]
 ```
 
 Se non fornisci un nome server, ti verrà chiesto di selezionare tra i server OAuth-capable disponibili.
@@ -249,13 +249,13 @@ Se non fornisci un nome server, ti verrà chiesto di selezionare tra i server OA
 Puoi anche elencare i server OAuth-capable e il loro stato di autenticazione.
 
 ```bash
-opencode mcp auth list
+zyraxon mcp auth list
 ```
 
 Oppure la versione corta.
 
 ```bash
-opencode mcp auth ls
+zyraxon mcp auth ls
 ```
 
 ---
@@ -265,7 +265,7 @@ opencode mcp auth ls
 Rimuovi le credenziali OAuth per un server MCP.
 
 ```bash
-opencode mcp logout [name]
+zyraxon mcp logout [name]
 ```
 
 ---
@@ -275,7 +275,7 @@ opencode mcp logout [name]
 Esegui debug di problemi di connessione OAuth per un server MCP.
 
 ```bash
-opencode mcp debug <name>
+zyraxon mcp debug <name>
 ```
 
 ---
@@ -285,7 +285,7 @@ opencode mcp debug <name>
 Elenca tutti i modelli disponibili dai provider configurati.
 
 ```bash
-opencode models [provider]
+zyraxon models [provider]
 ```
 
 Questo comando mostra tutti i modelli disponibili tra i provider configurati nel formato `provider/model`.
@@ -295,7 +295,7 @@ Questo comando mostra tutti i modelli disponibili tra i provider configurati nel
 Puoi anche passare opzionalmente un ID provider per filtrare i modelli a quel provider.
 
 ```bash
-opencode models anthropic
+zyraxon models anthropic
 ```
 
 #### Flag
@@ -308,33 +308,33 @@ opencode models anthropic
 Usa `--refresh` per aggiornare l'elenco modelli in cache. È utile quando nuovi modelli vengono aggiunti a un provider e vuoi vederli in ZYRAXON.
 
 ```bash
-opencode models --refresh
+zyraxon models --refresh
 ```
 
 ---
 
 ### run
 
-Esegui opencode in modalità non interattiva passando un prompt direttamente.
+Esegui zyraxon in modalità non interattiva passando un prompt direttamente.
 
 ```bash
-opencode run [message..]
+zyraxon run [message..]
 ```
 
 È utile per scripting, automazione o quando vuoi una risposta rapida senza avviare la TUI completa. Per esempio:
 
-```bash "opencode run"
-opencode run Explain the use of context in Go
+```bash "zyraxon run"
+zyraxon run Explain the use of context in Go
 ```
 
 Puoi anche collegarti a una istanza `zyraxon serve` già in esecuzione per evitare i cold boot dei server MCP ad ogni esecuzione:
 
 ```bash
 # Avvia un server headless in un terminale
-opencode serve
+zyraxon serve
 
 # In un altro terminale, esegui comandi che si collegano ad esso
-opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
+zyraxon run --attach http://localhost:4096 "Explain async/await in JavaScript"
 ```
 
 #### Flag
@@ -351,9 +351,9 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 | <nobr><code>{"--file"}</code></nobr>     | `-f`  | File da allegare al messaggio                                                                   |
 | <nobr><code>{"--format"}</code></nobr>   |       | Formato: default (formattato) o json (eventi JSON grezzi)                                       |
 | <nobr><code>{"--title"}</code></nobr>    |       | Titolo sessione (usa prompt troncato se non viene fornito un valore)                            |
-| <nobr><code>{"--attach"}</code></nobr>   |       | Attach a un server opencode in esecuzione (es. http://localhost:4096)                           |
-| <nobr><code>{"--password"}</code></nobr> | `-p`  | Password per l'autenticazione di base (predefinita: `OPENCODE_SERVER_PASSWORD`)                 |
-| <nobr><code>{"--username"}</code></nobr> | `-u`  | Nome utente per l'autenticazione di base (predefinito: `OPENCODE_SERVER_USERNAME` o `opencode`) |
+| <nobr><code>{"--attach"}</code></nobr>   |       | Attach a un server zyraxon in esecuzione (es. http://localhost:4096)                           |
+| <nobr><code>{"--password"}</code></nobr> | `-p`  | Password per l'autenticazione di base (predefinita: `ZYRAXON_SERVER_PASSWORD`)                 |
+| <nobr><code>{"--username"}</code></nobr> | `-u`  | Nome utente per l'autenticazione di base (predefinito: `ZYRAXON_SERVER_USERNAME` o `zyraxon`) |
 | <nobr><code>{"--dir"}</code></nobr>      |       | Directory di esecuzione, o percorso sul server remoto durante il collegamento                   |
 | <nobr><code>{"--variant"}</code></nobr>  |       | Variante del modello (sforzo di ragionamento specifico del provider)                            |
 | <nobr><code>{"--thinking"}</code></nobr> |       | Mostra blocchi di pensiero                                                                      |
@@ -366,10 +366,10 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 Avvia un server ZYRAXON headless per accesso via API. Vedi le [server docs](/docs/server) per l'interfaccia HTTP completa.
 
 ```bash
-opencode serve
+zyraxon serve
 ```
 
-Avvia un server HTTP che espone accesso API alle funzionalità di opencode senza la TUI. Imposta `OPENCODE_SERVER_PASSWORD` per abilitare HTTP basic auth (username di default `opencode`).
+Avvia un server HTTP che espone accesso API alle funzionalità di zyraxon senza la TUI. Imposta `ZYRAXON_SERVER_PASSWORD` per abilitare HTTP basic auth (username di default `zyraxon`).
 
 #### Flag
 
@@ -387,7 +387,7 @@ Avvia un server HTTP che espone accesso API alle funzionalità di opencode senza
 Gestisci le sessioni ZYRAXON.
 
 ```bash
-opencode session [command]
+zyraxon session [command]
 ```
 
 ---
@@ -397,7 +397,7 @@ opencode session [command]
 Elenca tutte le sessioni ZYRAXON.
 
 ```bash
-opencode session list
+zyraxon session list
 ```
 
 ##### Flag
@@ -414,7 +414,7 @@ opencode session list
 Mostra statistiche di utilizzo token e costo per le sessioni ZYRAXON.
 
 ```bash
-opencode stats
+zyraxon stats
 ```
 
 #### Flag
@@ -433,7 +433,7 @@ opencode stats
 Esporta i dati di sessione come JSON.
 
 ```bash
-opencode export [sessionID]
+zyraxon export [sessionID]
 ```
 
 Se non fornisci un ID sessione, ti verrà chiesto di selezionare tra le sessioni disponibili.
@@ -445,14 +445,14 @@ Se non fornisci un ID sessione, ti verrà chiesto di selezionare tra le sessioni
 Importa i dati di sessione da un file JSON o da un URL di condivisione ZYRAXON.
 
 ```bash
-opencode import <file>
+zyraxon import <file>
 ```
 
 Puoi importare da un file locale o da un URL di condivisione ZYRAXON.
 
 ```bash
-opencode import session.json
-opencode import https://zyraxonai.lovable.app/share/abc123
+zyraxon import session.json
+zyraxon import https://zyraxonai.lovable.app/share/abc123
 ```
 
 ---
@@ -462,10 +462,10 @@ opencode import https://zyraxonai.lovable.app/share/abc123
 Avvia un server ZYRAXON headless con interfaccia web.
 
 ```bash
-opencode web
+zyraxon web
 ```
 
-Avvia un server HTTP e apre un browser per accedere a ZYRAXON tramite interfaccia web. Imposta `OPENCODE_SERVER_PASSWORD` per abilitare HTTP basic auth (username di default `opencode`).
+Avvia un server HTTP e apre un browser per accedere a ZYRAXON tramite interfaccia web. Imposta `ZYRAXON_SERVER_PASSWORD` per abilitare HTTP basic auth (username di default `zyraxon`).
 
 #### Flag
 
@@ -483,7 +483,7 @@ Avvia un server HTTP e apre un browser per accedere a ZYRAXON tramite interfacci
 Avvia un server ACP (Agent Client Protocol).
 
 ```bash
-opencode acp
+zyraxon acp
 ```
 
 Questo comando avvia un server ACP che comunica via stdin/stdout usando nd-JSON.
@@ -503,7 +503,7 @@ Questo comando avvia un server ACP che comunica via stdin/stdout usando nd-JSON.
 Disinstalla ZYRAXON e rimuove tutti i file correlati.
 
 ```bash
-opencode uninstall
+zyraxon uninstall
 ```
 
 #### Flag
@@ -519,22 +519,22 @@ opencode uninstall
 
 ### upgrade
 
-Aggiorna opencode all'ultima versione o a una versione specifica.
+Aggiorna zyraxon all'ultima versione o a una versione specifica.
 
 ```bash
-opencode upgrade [target]
+zyraxon upgrade [target]
 ```
 
 Per aggiornare all'ultima versione:
 
 ```bash
-opencode upgrade
+zyraxon upgrade
 ```
 
 Per aggiornare a una versione specifica:
 
 ```bash
-opencode upgrade v0.1.48
+zyraxon upgrade v0.1.48
 ```
 
 #### Flag
@@ -547,7 +547,7 @@ opencode upgrade v0.1.48
 
 ## Flag globali
 
-La CLI di opencode accetta i seguenti flag globali.
+La CLI di zyraxon accetta i seguenti flag globali.
 
 | Flag                                       | Breve | Descrizione                            |
 | ------------------------------------------ | ----- | -------------------------------------- |
@@ -564,30 +564,30 @@ ZYRAXON può essere configurato tramite variabili d'ambiente.
 
 | Variabile                             | Tipo    | Descrizione                                                 |
 | ------------------------------------- | ------- | ----------------------------------------------------------- |
-| `OPENCODE_AUTO_SHARE`                 | boolean | Condivide automaticamente le sessioni                       |
-| `OPENCODE_GIT_BASH_PATH`              | string  | Percorso all'eseguibile Git Bash su Windows                 |
-| `OPENCODE_CONFIG`                     | string  | Percorso al file di configurazione                          |
-| `OPENCODE_TUI_CONFIG`                 | string  | Percorso al file di configurazione TUI                      |
-| `OPENCODE_CONFIG_DIR`                 | string  | Percorso alla directory di configurazione                   |
-| `OPENCODE_CONFIG_CONTENT`             | string  | Contenuto JSON di config inline                             |
-| `OPENCODE_DISABLE_AUTOUPDATE`         | boolean | Disabilita i controlli automatici di aggiornamento          |
-| `OPENCODE_DISABLE_PRUNE`              | boolean | Disabilita la potatura dei dati vecchi                      |
-| `OPENCODE_DISABLE_TERMINAL_TITLE`     | boolean | Disabilita aggiornamenti automatici del titolo terminale    |
-| `OPENCODE_PERMISSION`                 | string  | Config permessi JSON inline                                 |
-| `OPENCODE_DISABLE_DEFAULT_PLUGINS`    | boolean | Disabilita i plugin di default                              |
-| `OPENCODE_DISABLE_LSP_DOWNLOAD`       | boolean | Disabilita download automatico dei server LSP               |
-| `OPENCODE_ENABLE_EXPERIMENTAL_MODELS` | boolean | Abilita modelli sperimentali                                |
-| `OPENCODE_DISABLE_AUTOCOMPACT`        | boolean | Disabilita compaction automatica del contesto               |
-| `OPENCODE_DISABLE_CLAUDE_CODE`        | boolean | Disabilita lettura da `.claude` (prompt + skill)            |
-| `OPENCODE_DISABLE_CLAUDE_CODE_PROMPT` | boolean | Disabilita lettura di `~/.claude/CLAUDE.md`                 |
-| `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS` | boolean | Disabilita caricamento di `.claude/skills`                  |
-| `OPENCODE_DISABLE_MODELS_FETCH`       | boolean | Disabilita fetch dei modelli da fonti remote                |
-| `OPENCODE_FAKE_VCS`                   | string  | Provider VCS finto per scopi di test                        |
-| `OPENCODE_CLIENT`                     | string  | Identificatore client (default `cli`)                       |
-| `OPENCODE_ENABLE_EXA`                 | boolean | Abilita gli strumenti di web search Exa                     |
-| `OPENCODE_SERVER_PASSWORD`            | string  | Abilita basic auth per `serve`/`web`                        |
-| `OPENCODE_SERVER_USERNAME`            | string  | Sovrascrive lo username basic auth (default `opencode`)     |
-| `OPENCODE_MODELS_URL`                 | string  | URL personalizzato per recuperare la configurazione modelli |
+| `ZYRAXON_AUTO_SHARE`                 | boolean | Condivide automaticamente le sessioni                       |
+| `ZYRAXON_GIT_BASH_PATH`              | string  | Percorso all'eseguibile Git Bash su Windows                 |
+| `ZYRAXON_CONFIG`                     | string  | Percorso al file di configurazione                          |
+| `ZYRAXON_TUI_CONFIG`                 | string  | Percorso al file di configurazione TUI                      |
+| `ZYRAXON_CONFIG_DIR`                 | string  | Percorso alla directory di configurazione                   |
+| `ZYRAXON_CONFIG_CONTENT`             | string  | Contenuto JSON di config inline                             |
+| `ZYRAXON_DISABLE_AUTOUPDATE`         | boolean | Disabilita i controlli automatici di aggiornamento          |
+| `ZYRAXON_DISABLE_PRUNE`              | boolean | Disabilita la potatura dei dati vecchi                      |
+| `ZYRAXON_DISABLE_TERMINAL_TITLE`     | boolean | Disabilita aggiornamenti automatici del titolo terminale    |
+| `ZYRAXON_PERMISSION`                 | string  | Config permessi JSON inline                                 |
+| `ZYRAXON_DISABLE_DEFAULT_PLUGINS`    | boolean | Disabilita i plugin di default                              |
+| `ZYRAXON_DISABLE_LSP_DOWNLOAD`       | boolean | Disabilita download automatico dei server LSP               |
+| `ZYRAXON_ENABLE_EXPERIMENTAL_MODELS` | boolean | Abilita modelli sperimentali                                |
+| `ZYRAXON_DISABLE_AUTOCOMPACT`        | boolean | Disabilita compaction automatica del contesto               |
+| `ZYRAXON_DISABLE_CLAUDE_CODE`        | boolean | Disabilita lettura da `.claude` (prompt + skill)            |
+| `ZYRAXON_DISABLE_CLAUDE_CODE_PROMPT` | boolean | Disabilita lettura di `~/.claude/CLAUDE.md`                 |
+| `ZYRAXON_DISABLE_CLAUDE_CODE_SKILLS` | boolean | Disabilita caricamento di `.claude/skills`                  |
+| `ZYRAXON_DISABLE_MODELS_FETCH`       | boolean | Disabilita fetch dei modelli da fonti remote                |
+| `ZYRAXON_FAKE_VCS`                   | string  | Provider VCS finto per scopi di test                        |
+| `ZYRAXON_CLIENT`                     | string  | Identificatore client (default `cli`)                       |
+| `ZYRAXON_ENABLE_EXA`                 | boolean | Abilita gli strumenti di web search Exa                     |
+| `ZYRAXON_SERVER_PASSWORD`            | string  | Abilita basic auth per `serve`/`web`                        |
+| `ZYRAXON_SERVER_USERNAME`            | string  | Sovrascrive lo username basic auth (default `zyraxon`)     |
+| `ZYRAXON_MODELS_URL`                 | string  | URL personalizzato per recuperare la configurazione modelli |
 
 ---
 
@@ -597,21 +597,21 @@ Queste variabili d'ambiente abilitano funzionalità sperimentali che potrebbero 
 
 | Variabile                                       | Tipo    | Descrizione                                             |
 | ----------------------------------------------- | ------- | ------------------------------------------------------- |
-| `OPENCODE_EXPERIMENTAL`                         | boolean | Abilita funzionalità sperimentali sotto il flag globale |
-| `OPENCODE_EXPERIMENTAL_ICON_DISCOVERY`          | boolean | Abilita icon discovery                                  |
-| `OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT`  | boolean | Disabilita copy on select nella TUI                     |
-| `OPENCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` | number  | Timeout di default per comandi bash in ms               |
-| `OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX`        | number  | Massimo token di output per risposte LLM                |
-| `OPENCODE_EXPERIMENTAL_FILEWATCHER`             | boolean | Abilita file watcher per l'intera dir                   |
-| `OPENCODE_EXPERIMENTAL_OXFMT`                   | boolean | Abilita formatter oxfmt                                 |
-| `OPENCODE_EXPERIMENTAL_LSP_TOOL`                | boolean | Abilita strumento LSP sperimentale                      |
-| `OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER`     | boolean | Disabilita file watcher                                 |
-| `OPENCODE_EXPERIMENTAL_EXA`                     | boolean | Abilita funzionalità Exa sperimentali                   |
-| `OPENCODE_EXPERIMENTAL_LSP_TY`                  | boolean | Abilita TY LSP per i file python                        |
-| `OPENCODE_EXPERIMENTAL_PLAN_MODE`               | boolean | Abilita plan mode                                       |
-| `OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS`    | boolean | Abilita task subagent in background                     |
-| `OPENCODE_EXPERIMENTAL_EVENT_SYSTEM`            | boolean | Abilita sistema eventi sperimentale                     |
-| `OPENCODE_EXPERIMENTAL_NATIVE_LLM`              | boolean | Abilita percorso nativo di richiesta LLM                |
-| `OPENCODE_EXPERIMENTAL_PARALLEL`                | boolean | Abilita esecuzione parallela della ricerca web          |
-| `OPENCODE_EXPERIMENTAL_SCOUT`                   | boolean | Abilita subagent Scout                                  |
-| `OPENCODE_EXPERIMENTAL_WORKSPACES`              | boolean | Abilita supporto workspace                              |
+| `ZYRAXON_EXPERIMENTAL`                         | boolean | Abilita funzionalità sperimentali sotto il flag globale |
+| `ZYRAXON_EXPERIMENTAL_ICON_DISCOVERY`          | boolean | Abilita icon discovery                                  |
+| `ZYRAXON_EXPERIMENTAL_DISABLE_COPY_ON_SELECT`  | boolean | Disabilita copy on select nella TUI                     |
+| `ZYRAXON_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` | number  | Timeout di default per comandi bash in ms               |
+| `ZYRAXON_EXPERIMENTAL_OUTPUT_TOKEN_MAX`        | number  | Massimo token di output per risposte LLM                |
+| `ZYRAXON_EXPERIMENTAL_FILEWATCHER`             | boolean | Abilita file watcher per l'intera dir                   |
+| `ZYRAXON_EXPERIMENTAL_OXFMT`                   | boolean | Abilita formatter oxfmt                                 |
+| `ZYRAXON_EXPERIMENTAL_LSP_TOOL`                | boolean | Abilita strumento LSP sperimentale                      |
+| `ZYRAXON_EXPERIMENTAL_DISABLE_FILEWATCHER`     | boolean | Disabilita file watcher                                 |
+| `ZYRAXON_EXPERIMENTAL_EXA`                     | boolean | Abilita funzionalità Exa sperimentali                   |
+| `ZYRAXON_EXPERIMENTAL_LSP_TY`                  | boolean | Abilita TY LSP per i file python                        |
+| `ZYRAXON_EXPERIMENTAL_PLAN_MODE`               | boolean | Abilita plan mode                                       |
+| `ZYRAXON_EXPERIMENTAL_BACKGROUND_SUBAGENTS`    | boolean | Abilita task subagent in background                     |
+| `ZYRAXON_EXPERIMENTAL_EVENT_SYSTEM`            | boolean | Abilita sistema eventi sperimentale                     |
+| `ZYRAXON_EXPERIMENTAL_NATIVE_LLM`              | boolean | Abilita percorso nativo di richiesta LLM                |
+| `ZYRAXON_EXPERIMENTAL_PARALLEL`                | boolean | Abilita esecuzione parallela della ricerca web          |
+| `ZYRAXON_EXPERIMENTAL_SCOUT`                   | boolean | Abilita subagent Scout                                  |
+| `ZYRAXON_EXPERIMENTAL_WORKSPACES`              | boolean | Abilita supporto workspace                              |

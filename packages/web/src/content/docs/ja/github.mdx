@@ -3,7 +3,7 @@ title: GitHub
 description: GitHub の問題とプルリクエストで ZYRAXON を使用します。
 ---
 
-ZYRAXON は GitHub ワークフローと統合します。コメントで `/opencode` または `/oc` に言及すると、ZYRAXON が GitHub Actions ランナー内でタスクを実行します。
+ZYRAXON は GitHub ワークフローと統合します。コメントで `/zyraxon` または `/oc` に言及すると、ZYRAXON が GitHub Actions ランナー内でタスクを実行します。
 
 ---
 
@@ -20,7 +20,7 @@ ZYRAXON は GitHub ワークフローと統合します。コメントで `/open
 GitHub リポジトリにあるプロジェクトで次のコマンドを実行します。
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 ここでは、GitHub アプリのインストール、ワークフローの作成、シークレットの設定について説明します。
@@ -33,14 +33,14 @@ opencode github install
 
 1. **GitHub アプリをインストールします**
 
-[**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent) にアクセスしてください。ターゲットリポジトリにインストールされていることを確認してください。
+[**github.com/apps/zyraxon-agent**](https://github.com/apps/opencode-agent) にアクセスしてください。ターゲットリポジトリにインストールされていることを確認してください。
 
 2. **ワークフローを追加**
 
-次のワークフローファイルをリポジトリの `.github/workflows/opencode.yml` に追加します。適切な `model` と必要な API キーを `env` に設定してください。
+次のワークフローファイルをリポジトリの `.github/workflows/zyraxon.yml` に追加します。適切な `model` と必要な API キーを `env` に設定してください。
 
-```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+```yml title=".github/workflows/zyraxon.yml" {24,26}
+   name: zyraxon
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ opencode github install
        types: [created]
 
    jobs:
-     opencode:
+     zyraxon:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/zyraxon')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -107,8 +107,8 @@ ZYRAXON は、次の GitHub イベントによってトリガーできます。
 
 | イベントの種類                | トリガー                            | 詳細                                                                                                                                                        |
 | ----------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `issue_comment`               | 問題または PR についてコメントする  | コメントで `/opencode` または `/oc` について言及してください。 ZYRAXON はコンテキストを読み取り、ブランチを作成したり、PR を開いたり、返信したりできます。 |
-| `pull_request_review_comment` | PR 内の特定のコード行にコメントする | コードをレビューするときに、`/opencode` または `/oc` について言及します。 ZYRAXON は、ファイルパス、行番号、および diff コンテキストを受け取ります。       |
+| `issue_comment`               | 問題または PR についてコメントする  | コメントで `/zyraxon` または `/oc` について言及してください。 ZYRAXON はコンテキストを読み取り、ブランチを作成したり、PR を開いたり、返信したりできます。 |
+| `pull_request_review_comment` | PR 内の特定のコード行にコメントする | コードをレビューするときに、`/zyraxon` または `/oc` について言及します。 ZYRAXON は、ファイルパス、行番号、および diff コンテキストを受け取ります。       |
 | `issues`                      | 問題がオープンまたは編集されました  | 問題が作成または変更されると、ZYRAXON が自動的にトリガーされます。 `prompt` 入力が必要です。                                                               |
 | `pull_request`                | PR がオープンまたは更新されました   | PR が開かれる、同期される、または再度開かれるときに、ZYRAXON を自動的にトリガーします。自動レビューに役立ちます。                                          |
 | `schedule`                    | Cron ベースのスケジュール           | スケジュールに従って ZYRAXON を実行します。 `prompt` 入力が必要です。出力はログと PR に送られます (コメントする問題はありません)。                         |
@@ -118,7 +118,7 @@ ZYRAXON は、次の GitHub イベントによってトリガーできます。
 
 スケジュールに従って ZYRAXON を実行し、自動化されたタスクを実行します。
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/zyraxon-scheduled.yml"
 name: Scheduled ZYRAXON Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  zyraxon:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -158,8 +158,8 @@ jobs:
 
 PR が開かれるか更新されるときに、PR を自動的にレビューします。
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/zyraxon-review.yml"
+name: zyraxon-review
 
 on:
   pull_request:
@@ -199,7 +199,7 @@ jobs:
 
 新しい問題を自動的に優先順位付けします。この例では、スパムを減らすために 30 日より古いアカウントにフィルターを適用します。
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/zyraxon-triage.yml"
 name: Issue Triage
 
 on:
@@ -254,7 +254,7 @@ jobs:
 
 デフォルトのプロンプトをオーバーライドして、ワークフローに合わせて ZYRAXON の動作をカスタマイズします。
 
-```yaml title=".github/workflows/opencode.yml"
+```yaml title=".github/workflows/zyraxon.yml"
 - uses: onelpawarai/ZYRAXON-AI/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
@@ -278,7 +278,7 @@ GitHub で ZYRAXON を使用する方法の例をいくつか示します。
 このコメントを GitHub の問題に追加します。
 
 ```
-  /opencode explain this issue
+  /zyraxon explain this issue
 ```
 
 ZYRAXON は、すべてのコメントを含むスレッド全体を読み取り、明確な説明を返信します。
@@ -288,7 +288,7 @@ ZYRAXON は、すべてのコメントを含むスレッド全体を読み取り
 GitHub の問題で次のように言います。
 
 ```
-  /opencode fix this
+  /zyraxon fix this
 ```
 
 そして、ZYRAXON は新しいブランチを作成し、変更を実装し、変更を含む PR を開きます。

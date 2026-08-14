@@ -31,7 +31,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "opencode",
+      "command": "zyraxon",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
             "custom": {
               "name": "ZYRAXON",
               "command": {
-                "command": "opencode",
+                "command": "zyraxon",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/zyraxon",
       "args": ["acp"]
     }
   }
@@ -93,24 +93,24 @@ ACP เป็นมาตรฐานเปิดสำหรับการส�
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" }
     }
   }
 }
 ```
 
-หากคุณต้องการส่งผ่าน environment variables (เช่น `OPENCODE_API_KEY`) คุณต้องระบุใน `env`:
+หากคุณต้องการส่งผ่าน environment variables (เช่น `ZYRAXON_API_KEY`) คุณต้องระบุใน `env`:
 
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" },
       env = {
-        OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
+        ZYRAXON_API_KEY = os.getenv("ZYRAXON_API_KEY")
       }
     }
   }
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "zyraxon",
         model = "claude-sonnet-4",
       },
     },
@@ -136,13 +136,13 @@ require("codecompanion").setup({
 })
 ```
 
-คุณสามารถใช้ CodeCompanion เพื่อใช้ opencode เป็น ACP agent สำหรับแชท
+คุณสามารถใช้ CodeCompanion เพื่อใช้ zyraxon เป็น ACP agent สำหรับแชท
 
-หากคุณต้องส่ง environment variables (เช่น `OPENCODE_API_KEY`) โปรดดู [Configuring Adapters: Environment Variables](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) ในเอกสารของ CodeCompanion.nvim สำหรับรายละเอียดทั้งหมด
+หากคุณต้องส่ง environment variables (เช่น `ZYRAXON_API_KEY`) โปรดดู [Configuring Adapters: Environment Variables](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) ในเอกสารของ CodeCompanion.nvim สำหรับรายละเอียดทั้งหมด
 
 ## การรองรับ
 
-opencode ทำงานผ่าน ACP เหมือนกับใน terminal และรองรับฟีเจอร์ทั้งหมด:
+zyraxon ทำงานผ่าน ACP เหมือนกับใน terminal และรองรับฟีเจอร์ทั้งหมด:
 
 :::note
 คำสั่ง slash ในตัวบางคำสั่งเช่น `/undo` และ `/redo` ยังไม่รองรับในขณะนี้

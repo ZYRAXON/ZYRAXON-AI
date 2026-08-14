@@ -1,9 +1,14 @@
-import { Effect, Queue, PubSub } from "effect"
+import { Effect, Queue, PubSub, Context, type Scope } from "effect"
 import type { AgentMessage, AgentID, CollabEvent } from "./types"
+
+const newMessageId = (): string => {
+  const cryptoObj = (globalThis as { crypto?: { randomUUID?: () => string } }).crypto
+  return cryptoObj?.randomUUID ? cryptoObj.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+}
 
 export interface AgentBusInterface {
   // Subscribe to messages for a specific agent
-  readonly subscribe: (agentId: AgentID, callback: (message: AgentMessage) => void) => Effect.Effect<void>
+  readonly subscribe: (agentId: AgentID, callback: (message: AgentMessage) => void) => Effect.Effect<void, never, Scope.Scope>
 
   // Unsubscribe from messages
   readonly unsubscribe: (agentId: AgentID) => Effect.Effect<void>
@@ -24,7 +29,7 @@ export interface AgentBusInterface {
   readonly getSubscribers: () => Effect.Effect<AgentID[]>
 }
 
-export class AgentBus extends Effect.Service<AgentBusInterface>()("@zyraxon/AgentBus") {}
+export class AgentBus extends Context.Service<AgentBus, AgentBusInterface>()("@zyraxon/AgentBus") {}
 
 export const make = Effect.gen(function* () {
   // PubSub for agent messages
@@ -88,7 +93,7 @@ export const make = Effect.gen(function* () {
 
   const broadcast = (from: AgentID, type: AgentMessage["type"], payload: unknown) =>
     publish({
-      id: crypto.randomUUID(),
+      id: newMessageId(),
       from,
       to: "*",
       type,

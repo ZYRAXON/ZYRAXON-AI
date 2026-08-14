@@ -188,10 +188,10 @@ Skonfiguruj agenta w pliku `zyraxon.json`:
 
 Możesz także definiować agentów za pomocą plików markdown. Przechowuj je w:
 
-- Globalnie: `~/.config/opencode/agents/`
-- W projekcie: `.opencode/agents/`
+- Globalnie: `~/.config/zyraxon/agents/`
+- W projekcie: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -366,7 +366,7 @@ Jeśli model nie zostanie określony, agenci główni używają [modelu skonfigu
 }
 ```
 
-Identyfikator modelu jest taki sam, jak w konfiguracji ZYRAXON w `provider/model-id`. Na przykład, [ZYRAXON Zen](/docs/zen), użyj `opencode/gpt-5.1-codex` dla GPT 5.1 Codex.
+Identyfikator modelu jest taki sam, jak w konfiguracji ZYRAXON w `provider/model-id`. Na przykład, [ZYRAXON Zen](/docs/zen), użyj `zyraxon/gpt-5.1-codex` dla GPT 5.1 Codex.
 
 ---
 
@@ -454,7 +454,7 @@ Możesz nadpisać to dla każdego agenta.
 
 Można to również ustawić w agentach Markdown.
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -674,7 +674,7 @@ Uruchom `zyraxon models`, aby zobaczyć dostępne modele.
 Możesz stworzyć nowych agentów interaktywnie za pomocą polecenia:
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Poprowadzi Cię to przez proces:
@@ -711,7 +711,7 @@ Masz agenta, którym warto się podzielić? [Prześlij PR](https://github.com/on
 
 ### Agent Documentation
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -733,7 +733,7 @@ Focus on:
 
 ### Security Auditor
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

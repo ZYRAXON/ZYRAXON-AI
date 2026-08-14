@@ -3,7 +3,7 @@ title: GitHub
 description: Use ZYRAXON in GitHub issues and pull-requests.
 ---
 
-ZYRAXON integrates with your GitHub workflow. Mention `/opencode` or `/oc` in your comment, and ZYRAXON will execute tasks within your GitHub Actions runner.
+ZYRAXON integrates with your GitHub workflow. Mention `/zyraxon` or `/oc` in your comment, and ZYRAXON will execute tasks within your GitHub Actions runner.
 
 ---
 
@@ -20,7 +20,7 @@ ZYRAXON integrates with your GitHub workflow. Mention `/opencode` or `/oc` in yo
 Run the following command in a project that is in a GitHub repo:
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 This will walk you through installing the GitHub app, creating the workflow, and setting up secrets.
@@ -33,14 +33,14 @@ Or you can set it up manually.
 
 1. **Install the GitHub app**
 
-   Head over to [**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent). Make sure it's installed on the target repository.
+   Head over to [**github.com/apps/zyraxon-agent**](https://github.com/apps/opencode-agent). Make sure it's installed on the target repository.
 
 2. **Add the workflow**
 
-   Add the following workflow file to `.github/workflows/opencode.yml` in your repo. Make sure to set the appropriate `model` and required API keys in `env`.
+   Add the following workflow file to `.github/workflows/zyraxon.yml` in your repo. Make sure to set the appropriate `model` and required API keys in `env`.
 
-   ```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+   ```yml title=".github/workflows/zyraxon.yml" {24,26}
+   name: zyraxon
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ Or you can set it up manually.
        types: [created]
 
    jobs:
-     opencode:
+     zyraxon:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/zyraxon')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -107,8 +107,8 @@ ZYRAXON can be triggered by the following GitHub events:
 
 | Event Type                    | Triggered By                           | Details                                                                                                           |
 | ----------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `issue_comment`               | Comment on an issue or PR              | Mention `/opencode` or `/oc` in your comment. ZYRAXON reads context and can create branches, open PRs, or reply. |
-| `pull_request_review_comment` | Comment on specific code lines in a PR | Mention `/opencode` or `/oc` while reviewing code. ZYRAXON receives file path, line numbers, and diff context.   |
+| `issue_comment`               | Comment on an issue or PR              | Mention `/zyraxon` or `/oc` in your comment. ZYRAXON reads context and can create branches, open PRs, or reply. |
+| `pull_request_review_comment` | Comment on specific code lines in a PR | Mention `/zyraxon` or `/oc` while reviewing code. ZYRAXON receives file path, line numbers, and diff context.   |
 | `issues`                      | Issue opened or edited                 | Automatically trigger ZYRAXON when issues are created or modified. Requires `prompt` input.                      |
 | `pull_request`                | PR opened or updated                   | Automatically trigger ZYRAXON when PRs are opened, synchronized, or reopened. Useful for automated reviews.      |
 | `schedule`                    | Cron-based schedule                    | Run ZYRAXON on a schedule. Requires `prompt` input. Output goes to logs and PRs (no issue to comment on).        |
@@ -118,7 +118,7 @@ ZYRAXON can be triggered by the following GitHub events:
 
 Run ZYRAXON on a schedule to perform automated tasks:
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/zyraxon-scheduled.yml"
 name: Scheduled ZYRAXON Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  zyraxon:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -158,8 +158,8 @@ For scheduled events, the `prompt` input is **required** since there's no commen
 
 Automatically review PRs when they are opened or updated:
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/zyraxon-review.yml"
+name: zyraxon-review
 
 on:
   pull_request:
@@ -199,7 +199,7 @@ For `pull_request` events, if no `prompt` is provided, ZYRAXON defaults to revie
 
 Automatically triage new issues. This example filters to accounts older than 30 days to reduce spam:
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/zyraxon-triage.yml"
 name: Issue Triage
 
 on:
@@ -254,7 +254,7 @@ For `issues` events, the `prompt` input is **required** since there's no comment
 
 Override the default prompt to customize ZYRAXON's behavior for your workflow.
 
-```yaml title=".github/workflows/opencode.yml"
+```yaml title=".github/workflows/zyraxon.yml"
 - uses: onelpawarai/ZYRAXON-AI/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
@@ -278,7 +278,7 @@ Here are some examples of how you can use ZYRAXON in GitHub.
   Add this comment in a GitHub issue.
 
   ```
-  /opencode explain this issue
+  /zyraxon explain this issue
   ```
 
   ZYRAXON will read the entire thread, including all comments, and reply with a clear explanation.
@@ -288,7 +288,7 @@ Here are some examples of how you can use ZYRAXON in GitHub.
   In a GitHub issue, say:
 
   ```
-  /opencode fix this
+  /zyraxon fix this
   ```
 
   And ZYRAXON will create a new branch, implement the changes, and open a PR with the changes.

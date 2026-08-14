@@ -1,13 +1,13 @@
 import "@/index.css"
 import * as Sentry from "@sentry/solid"
-import { I18nProvider } from "@opencode-ai/ui/context"
-import { DialogProvider } from "@opencode-ai/ui/context/dialog"
-import { FileComponentProvider } from "@opencode-ai/ui/context/file"
-import { MarkedProvider } from "@opencode-ai/ui/context/marked"
-import { File } from "@opencode-ai/session-ui/file"
-import { Font } from "@opencode-ai/ui/font"
-import { Splash } from "@opencode-ai/ui/logo"
-import { ThemeProvider } from "@opencode-ai/ui/theme/context"
+import { I18nProvider } from "@zyraxon-ai/ui/context"
+import { DialogProvider } from "@zyraxon-ai/ui/context/dialog"
+import { FileComponentProvider } from "@zyraxon-ai/ui/context/file"
+import { MarkedProvider } from "@zyraxon-ai/ui/context/marked"
+import { File } from "@zyraxon-ai/session-ui/file"
+import { Font } from "@zyraxon-ai/ui/font"
+import { Splash } from "@zyraxon-ai/ui/logo"
+import { ThemeProvider } from "@zyraxon-ai/ui/theme/context"
 import { MetaProvider } from "@solidjs/meta"
 import {
   type BaseRouterProps,
@@ -21,7 +21,7 @@ import {
 } from "@solidjs/router"
 import { QueryClient, QueryClientProvider } from "@tanstack/solid-query"
 import { Effect } from "effect"
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@zyraxon-ai/core/util/encode"
 import {
   type Component,
   createEffect,
@@ -248,6 +248,11 @@ declare global {
     api?: {
       setTitlebar?: (theme: { mode: "light" | "dark"; scheme?: "system" | "light" | "dark" }) => Promise<void>
       exportDebugLogs?: () => Promise<string>
+      setEditorMode?: (active: boolean, directory?: string) => Promise<void>
+      setEditorBounds?: (bounds: { x: number; y: number; width: number; height: number }) => Promise<void>
+      installEditorExtension?: (sourceDir: string) => Promise<{ ok: boolean; error?: string }>
+      installVsix?: (vsixUrl: string, extensionId: string, meta?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => Promise<{ ok: boolean; error?: string }>
+      getEditorState?: () => Promise<{ active: boolean }>
     }
   }
 }

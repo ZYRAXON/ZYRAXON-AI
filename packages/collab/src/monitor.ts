@@ -1,4 +1,4 @@
-import { Effect, Ref } from "effect"
+import { Effect, Ref, Context } from "effect"
 import type { AgentID, AgentInfo, Task, CollabEvent } from "./types"
 
 export interface MonitorInterface {
@@ -57,7 +57,7 @@ export interface RealTimeStatus {
   lastEvent: CollabEvent | undefined
 }
 
-export class Monitor extends Effect.Service<MonitorInterface>()("@zyraxon/Monitor") {}
+export class Monitor extends Context.Service<Monitor, MonitorInterface>()("@zyraxon/Monitor") {}
 
 export const make = Effect.gen(function* () {
   const isRunning = yield* Ref.make(false)
@@ -85,6 +85,8 @@ export const make = Effect.gen(function* () {
       })
 
       // Update agent stats
+      const now = Date.now()
+      const startedAt = yield* Ref.get(startTime)
       yield* Ref.update(agentStats, (stats) => {
         const newStats = new Map(stats)
         const existing = newStats.get(agentId) ?? {
@@ -93,7 +95,7 @@ export const make = Effect.gen(function* () {
           completedTasks: 0,
           failedTasks: 0,
           averageDuration: 0,
-          lastActive: Date.now(),
+          lastActive: now,
           uptime: 0,
         }
 
@@ -102,8 +104,8 @@ export const make = Effect.gen(function* () {
           totalTasks: activity.type === "task-started" ? existing.totalTasks + 1 : existing.totalTasks,
           completedTasks: activity.type === "task-completed" ? existing.completedTasks + 1 : existing.completedTasks,
           failedTasks: activity.type === "task-failed" ? existing.failedTasks + 1 : existing.failedTasks,
-          lastActive: Date.now(),
-          uptime: Date.now() - (yield* Ref.get(startTime)),
+          lastActive: now,
+          uptime: now - startedAt,
         }
 
         // Update average duration

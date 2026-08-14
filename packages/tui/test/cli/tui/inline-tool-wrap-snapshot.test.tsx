@@ -30,25 +30,25 @@ const tools: readonly ToolFixture[] = [
   {
     icon: "✱",
     label:
-      'Grep "OPENCODE.*DB|database|sqlite|drizzle|dev.*db|data.*dir|xdg|APPDATA" in packages/opencode/src (151 matches)',
+      'Grep "ZYRAXON.*DB|database|sqlite|drizzle|dev.*db|data.*dir|xdg|APPDATA" in packages/zyraxon/src (151 matches)',
   },
   {
     icon: "✱",
-    label: 'Glob "**/*db*" in packages/opencode (6 matches)',
+    label: 'Glob "**/*db*" in packages/zyraxon (6 matches)',
   },
   {
     icon: "→",
-    label: "Read packages/opencode/src/storage/db.ts [offset=1, limit=130]",
+    label: "Read packages/zyraxon/src/storage/db.ts [offset=1, limit=130]",
   },
   {
     icon: "→",
-    label: "Read packages/opencode/src/index.ts [offset=1, limit=100]",
+    label: "Read packages/zyraxon/src/index.ts [offset=1, limit=100]",
     error: "No LSP server available for this file type.",
   },
   {
     icon: "✱",
     label:
-      'Grep "export const ZYRAXON_DB|ZYRAXON_DB|ZYRAXON_DEV|Global\\.Path\\.data|data =" in packages/opencode/src (115 matches)',
+      'Grep "export const ZYRAXON_DB|ZYRAXON_DB|ZYRAXON_DEV|Global\\.Path\\.data|data =" in packages/zyraxon/src (115 matches)',
   },
 ] as const
 

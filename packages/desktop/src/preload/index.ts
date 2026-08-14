@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, webUtils } from "electron"
 import type { ElectronAPI, PreviewState, StreamState, WslServersEvent } from "./types"
-import type { UpdaterState } from "@opencode-ai/app/updater"
+import type { UpdaterState } from "@zyraxon-ai/app/updater"
 
 const updaterCallbacks = new Set<(state: UpdaterState) => void>()
 let updaterState: UpdaterState | undefined
@@ -30,7 +30,7 @@ const api: ElectronAPI = {
     installWsl: () => ipcRenderer.invoke("wsl-servers-install-wsl"),
     installDistro: (name) => ipcRenderer.invoke("wsl-servers-install-distro", name),
     probeAddable: (distros) => ipcRenderer.invoke("wsl-servers-probe-addable", distros),
-    installOpencode: (name) => ipcRenderer.invoke("wsl-servers-install-opencode", name),
+    installZyraxon: (name) => ipcRenderer.invoke("wsl-servers-install-zyraxon", name),
     openTerminal: (name) => ipcRenderer.invoke("wsl-servers-open-terminal", name),
     addServer: (distro) => ipcRenderer.invoke("wsl-servers-add", distro),
     removeServer: (id) => ipcRenderer.invoke("wsl-servers-remove", id),
@@ -76,46 +76,6 @@ const api: ElectronAPI = {
   storeLength: (name) => ipcRenderer.invoke("store-length", name),
   saveEcosystemAuth: (data) => ipcRenderer.invoke("save-ecosystem-auth", data),
   getGithubToken: () => ipcRenderer.invoke("get-github-token"),
-  // ZYRAXON Extension Manager — installs directly, no VS Code dependency
-  installVsix: (vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) =>
-    ipcRenderer.invoke("install-vsix", vsixUrl, extensionId, options),
-  getInstalledExtensions: () => ipcRenderer.invoke("get-installed-extensions"),
-  uninstallExtension: (extensionId: string) => ipcRenderer.invoke("uninstall-extension", extensionId),
-  toggleExtensionStatus: (extensionId: string) => ipcRenderer.invoke("toggle-extension-status", extensionId),
-  isExtensionInstalled: (extensionId: string) => ipcRenderer.invoke("is-extension-installed", extensionId),
-  queryVscodeMarketplace: (body: unknown) => ipcRenderer.invoke("vscode-marketplace-api", body),
-
-  // ─── ZYRAXON Extension Host (VS Code compatible) ──────────────────────────
-  extensionHost: {
-    getExtensions: () => ipcRenderer.invoke("extension-host:get-extensions"),
-    activateExtension: (extensionId: string) => ipcRenderer.invoke("extension-host:activate-extension", extensionId),
-    deactivateExtension: (extensionId: string) => ipcRenderer.invoke("extension-host:deactivate-extension", extensionId),
-    isActive: (extensionId: string) => ipcRenderer.invoke("extension-host:is-active", extensionId),
-    checkUpdates: () => ipcRenderer.invoke("extension-host:check-updates"),
-    getLastCheck: () => ipcRenderer.invoke("extension-host:get-last-check"),
-    getRegisteredModels: () => ipcRenderer.invoke("extension-host:get-registered-models"),
-    onNotification: (cb: (data: any) => void) => {
-      const handler = (_: unknown, data: any) => cb(data)
-      ipcRenderer.on("extension-host:notification", handler)
-      return () => ipcRenderer.removeListener("extension-host:notification", handler)
-    },
-    onUpdatesAvailable: (cb: (result: any) => void) => {
-      const handler = (_: unknown, result: any) => cb(result)
-      ipcRenderer.on("extension-host:updates-available", handler)
-      return () => ipcRenderer.removeListener("extension-host:updates-available", handler)
-    },
-    onUpdateProgress: (cb: (data: any) => void) => {
-      const handler = (_: unknown, data: any) => cb(data)
-      ipcRenderer.on("extension-host:update-progress", handler)
-      return () => ipcRenderer.removeListener("extension-host:update-progress", handler)
-    },
-  },
-
-  onExtensionInstalled: (cb: (data: any) => void) => {
-    const handler = (_: unknown, data: any) => cb(data)
-    ipcRenderer.on("extension-installed", handler)
-    return () => ipcRenderer.removeListener("extension-installed", handler)
-  },
 
   getWindowCount: () => ipcRenderer.invoke("get-window-count"),
   getWindowID: () => ipcRenderer.invoke("get-window-id"),
@@ -167,6 +127,17 @@ const api: ElectronAPI = {
   setForceFocus: (enabled) => ipcRenderer.invoke("set-force-focus", enabled),
   recordFatalRendererError: (error) => ipcRenderer.invoke("record-fatal-renderer-error", error),
   transcribeAudio: (audioBase64, mimeType) => ipcRenderer.invoke("transcribe-audio", audioBase64, mimeType),
+
+  setEditorMode: (active, directory) => ipcRenderer.invoke("set-editor-mode", active, directory),
+  setEditorBounds: (bounds) => ipcRenderer.invoke("set-editor-bounds", bounds),
+  installEditorExtension: (sourceDir) => ipcRenderer.invoke("install-editor-extension", sourceDir),
+  installVsix: (vsixUrl, extensionId, meta) => ipcRenderer.invoke("install-vsix", vsixUrl, extensionId, meta),
+  getEditorState: () => ipcRenderer.invoke("get-editor-state"),
+  onEditorModeChanged: (cb) => {
+    const handler = (_: unknown, active: boolean) => cb(active)
+    ipcRenderer.on("editor-mode-changed", handler)
+    return () => ipcRenderer.removeListener("editor-mode-changed", handler)
+  },
 
   youtubeStreamStart: (config) => ipcRenderer.invoke("youtube-stream-start", config),
   youtubeStreamStop: () => ipcRenderer.invoke("youtube-stream-stop"),

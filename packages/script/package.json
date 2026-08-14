@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "@opencode-ai/script",
+  "name": "@zyraxon-ai/script",
   "license": "BSL-1.1",
   "dependencies": {
     "semver": "^7.6.3"

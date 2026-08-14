@@ -13,18 +13,18 @@
 </p>
 
 <p align="center">
-  <a href="https://zyraxonai.lovable.app/"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
-  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
-  <a href="https://github.com/onelpawarai/ZYRAXON-AI/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=yellow" /></a>
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8"><img alt="Website" src="https://img.shields.io/badge/Website-zyraxonai.lovable.app-00f5ff?style=for-the-badge&logo=googlechrome&logoColor=white" /></a>
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><img alt="Version" src="https://img.shields.io/github/v/release/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=blue" /></a>
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github0"><img alt="Stars" src="https://img.shields.io/github/stars/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=yellow" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/issues"><img alt="Issues" src="https://img.shields.io/github/issues/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=red" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-BSL%201.1-green?style=for-the-badge" /></a>
-  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple" /></a>
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><img alt="Downloads" src="https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple" /></a>
   <a href="https://github.com/onelpawarai/ZYRAXON-AI/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/onelpawarai/ZYRAXON-AI?style=for-the-badge&color=cyan" /></a>
 </p>
 
 <p align="center">
-  <a href="https://zyraxonai.lovable.app/"><strong>Visit our Website</strong></a> &nbsp;|&nbsp;
-  <a href="https://github.com/onelpawarai/ZYRAXON-AI/releases"><strong>Download</strong></a> &nbsp;|&nbsp;
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8"><strong>Visit our Website</strong></a> &nbsp;|&nbsp;
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1"><strong>Download</strong></a> &nbsp;|&nbsp;
   <a href="https://youtube.com/@zyraxon-aix"><strong>YouTube</strong></a>
 </p>
 
@@ -35,7 +35,7 @@
 </p>
 
 ---
-https://zyraxonai.lovable.app/ecosystem
+https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github6
 ## What is ZYRAXON-AI?
 
 ZYRAXON-AI is an open-source desktop AI agent built on Electron + SolidJS + Bun. Unlike ChatGPT or other chatbots that just *talk*, ZYRAXON **takes action** - it has full access to your filesystem, terminal, browser, and more.
@@ -105,7 +105,7 @@ Website genesis intelligence — creates complete, production-ready websites fro
 
 ## Download
 
-Download the latest release from our **[Releases page](https://github.com/onelpawarai/ZYRAXON-AI/releases)**:
+Download the latest release from our **[Releases page](https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github1)**:
 
 | Platform | File | Architecture |
 |----------|------|:------------:|
@@ -123,16 +123,25 @@ Download the latest release from our **[Releases page](https://github.com/onelpa
 
 - **[Bun](https://bun.sh)** 1.3.14+ (JavaScript runtime & package manager)
 - **[Git](https://git-scm.com/)** (version control)
-- **[Node.js](https://nodejs.org/)** 22+ (required for some native modules)
+- **[Node.js](https://img.shields.io/github/downloads/onelpawarai/ZYRAXON-AI/total?style=for-the-badge&color=purple0)** 22+ (required for some native modules)
 
 ### Quick Build (All-in-One)
 
-The build process has **4 steps** that MUST be run in order:
+The build process has **7 steps** that MUST be run in order:
 
 1. Install all dependencies (root)
-2. Build the core engine (`packages/opencode`)
-3. Build the node server bundle + generate web UI
-4. Build + package the desktop app
+2. Build the core engine binary (`packages/zyraxon`) — the AI engine
+3. Build the node server bundle (`packages/zyraxon/dist/node`)
+4. Build the web UI (`packages/app`) — the chat interface
+5. Build the full desktop VS Code editor (`packages/zyraxon-code`) — the code editor runtime
+6. Build the desktop app (`packages/desktop`) — Electron shell
+7. Package the installer EXE
+
+The editor (step 5) is a full Electron-based desktop VS Code fork (~250MB). It is
+embedded into the desktop app at `resources/zyraxon-code-server` by
+`packages/desktop/electron-builder.config.ts` (`copyZyraxonCodeServer`). When the
+user clicks the editor button, the editor renders **inside** the ZYRAXON app window
+(no separate window, no browser tab), fully integrated with the ZYRAXON AI engine.
 
 **Windows:**
 ```bash
@@ -142,20 +151,26 @@ cd ZYRAXON-AI
 # Step 1: Install all dependencies
 bun install
 
-# Step 2: Build opencode binary (platform builds)
-bun run --cwd packages/opencode bun run build
+# Step 2: Build zyraxon binary (single current-platform build)
+bun run --cwd packages/zyraxon script/build.ts --single --skip-install
 
 # Step 3: Build node server bundle (dist/node/node.js)
-bun run --cwd packages/opencode bun run script/build-node.ts
+bun run --cwd packages/zyraxon script/build-node.ts
 
 # Step 4: Build web UI (packages/app/dist)
-bun run --cwd packages/app bun run build
+bun run --cwd packages/app build
 
-# Step 5: Build desktop app (electron-vite build)
-bun run --cwd packages/desktop bun run build
+# Step 5: Build the full desktop VS Code editor (first build takes 10-30 min,
+#         afterwards it is skipped automatically). Needs Node 22+.
+cd packages/zyraxon-code
+node --experimental-strip-types --max-old-space-size=8192 ./node_modules/gulp/bin/gulp.js vscode-win32-x64-min
+cd ../..
 
-# Step 6: Package as Windows EXE
-bun run --cwd packages/desktop bun run package:win
+# Step 6: Build desktop app (electron-vite build)
+bun run --cwd packages/desktop build
+
+# Step 7: Package as Windows EXE
+bun run --cwd packages/desktop package:win
 ```
 
 **Linux:**
@@ -163,11 +178,12 @@ bun run --cwd packages/desktop bun run package:win
 git clone https://github.com/onelpawarai/ZYRAXON-AI.git
 cd ZYRAXON-AI
 bun install
-bun run --cwd packages/opencode bun run build
-bun run --cwd packages/opencode bun run script/build-node.ts
-bun run --cwd packages/app bun run build
-bun run --cwd packages/desktop bun run build
-bun run --cwd packages/desktop bun run package:linux
+bun run --cwd packages/zyraxon script/build.ts --single --skip-install
+bun run --cwd packages/zyraxon script/build-node.ts
+bun run --cwd packages/app build
+# editor server (step 5): use the gulp task matching your platform, e.g. vscode-linux-x64-min
+bun run --cwd packages/desktop build
+bun run --cwd packages/desktop package:linux
 ```
 
 **macOS:**
@@ -175,14 +191,23 @@ bun run --cwd packages/desktop bun run package:linux
 git clone https://github.com/onelpawarai/ZYRAXON-AI.git
 cd ZYRAXON-AI
 bun install
-bun run --cwd packages/opencode bun run build
-bun run --cwd packages/opencode bun run script/build-node.ts
-bun run --cwd packages/app bun run build
-bun run --cwd packages/desktop bun run build
-bun run --cwd packages/desktop bun run package:mac
+bun run --cwd packages/zyraxon script/build.ts --single --skip-install
+bun run --cwd packages/zyraxon script/build-node.ts
+bun run --cwd packages/app build
+# editor server (step 5): use the gulp task matching your platform, e.g. vscode-darwin-arm64-min
+bun run --cwd packages/desktop build
+bun run --cwd packages/desktop package:mac
 ```
 
-> **Important:** `build-node.ts` produces `packages/opencode/dist/node/node.js`. After running it, you MUST copy the web UI file: `cp packages/opencode/opencode-web-ui.gen.ts packages/opencode/dist/node/`. The desktop build-wrapper also does this automatically if the file is missing. Both files must exist for the desktop build to succeed.
+> **Tip:** A one-command orchestrator is also available. It checks each artifact
+> and skips anything already built (it never re-downloads libraries that exist):
+> ```bash
+> bun run scripts/zyraxon-build-all.ts            # everything, skipping what exists
+> bun run scripts/zyraxon-build-all.ts --force    # force rebuild everything
+> bun run scripts/zyraxon-build-all.ts --skip desktop-exe   # skip specific steps
+> ```
+
+> **Important:** `build-node.ts` produces `packages/zyraxon/dist/node/node.js`. After running it, you MUST copy the web UI file: `cp packages/zyraxon/zyraxon-web-ui.gen.ts packages/zyraxon/dist/node/`. The desktop build-wrapper also does this automatically if the file is missing. Both files must exist for the desktop build to succeed.
 
 ### Development Mode
 
@@ -192,7 +217,7 @@ cd packages/desktop
 bun run dev
 
 # Run core engine in TUI mode
-cd packages/opencode
+cd packages/zyraxon
 bun run dev
 ```
 
@@ -268,7 +293,7 @@ This works across all agent modes — Build, Beast, PRO, APEX, and DARK EMPEROR.
 ```
 ZYRAXON-AI/
   packages/
-    opencode/          # Core AI agent engine
+    zyraxon/          # Core AI agent engine
       src/
         agent/         # Agent modes (9 modes)
         mcp/           # MCP servers + ULTRA tools
@@ -296,9 +321,9 @@ We love contributions! ZYRAXON-AI is open-source and we welcome everyone.
 
 ### How to Contribute
 1. **Fork** the repository
-2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/ZYRAXON-AI.git`
+2. **Clone** your fork: `git clone https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github2
 3. **Install**: `bun install`
-4. **Build**: `cd packages/opencode && bun run build`
+4. **Build**: `cd packages/zyraxon && bun run build`
 5. **Create branch**: `git checkout -b feat/my-feature`
 6. **Commit**: `git commit -m "feat: add my feature"`
 7. **Push**: `git push origin feat/my-feature`
@@ -314,7 +339,7 @@ We love contributions! ZYRAXON-AI is open-source and we welcome everyone.
 ### Contact Us
 - **GitHub Issues** - [Open an issue](https://github.com/onelpawarai/ZYRAXON-AI/issues) for bugs or feature requests
 - **YouTube** - [@zyraxon-aix](https://youtube.com/@zyraxon-aix)
-- **Website** - [zyraxonai.lovable.app](https://zyraxonai.lovable.app/)
+- **Website** - [zyraxonai.lovable.app](https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github8)
 
 > Whether you want to contribute code, report bugs, suggest features, or just learn from the project - you are welcome. Contact us and we will work together!
 
@@ -348,12 +373,12 @@ See [open issues](https://github.com/onelpawarai/ZYRAXON-AI/issues) for planned 
 ## License
 
 [Business Source License 1.1 (BSL 1.1)](./LICENSE) - Free for non-commercial use. Commercial use requires a paid license. Converts to Apache 2.0 on 2030-07-21.
-https://zyraxonai.lovable.app/ecosystem
+https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github6
 ---
 
 <p align="center">
   <strong>Built with obsession. Powered by AI.</strong><br><br>
-  <a href="https://github.com/onelpawarai/ZYRAXON-AI">
+  <a href="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github5">
     <img alt="ZYRAXON" src="https://img.shields.io/badge/ZYRAXON-All_in_one._Anything._Nothing_is_impossible-blue?style=for-the-badge&logo=github" />
   </a>
 </p>

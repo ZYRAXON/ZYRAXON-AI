@@ -10,13 +10,13 @@ ZYRAXON 提供了一个交互式终端界面（TUI），用于配合 LLM 处理�
 运行 ZYRAXON 即可启动当前目录的 TUI。
 
 ```bash
-opencode
+zyraxon
 ```
 
 或者您可以为指定的工作目录启动它。
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 进入 TUI 后，您可以输入消息进行提示。
@@ -357,7 +357,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -397,7 +397,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `mouse` - 在 TUI 中启用或禁用鼠标捕获（默认：`true`）。禁用后，终端原生的鼠标选择和滚动行为会保留下来。
 - `attention` - 配置 TUI 桌面通知和声音。默认禁用。
 
-使用 `OPENCODE_TUI_CONFIG` 可以加载自定义的 TUI 配置文件路径。
+使用 `ZYRAXON_TUI_CONFIG` 可以加载自定义的 TUI 配置文件路径。
 
 ### Attention
 
@@ -407,7 +407,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `notifications` - 启用 Attention 后，允许 TUI 通过终端发送桌面通知。默认为 `true`。
 - `sound` - 启用 Attention 后，允许播放提示音。默认为 `true`。
 - `volume` - 默认提示音音量，范围从 `0` 到 `1`。默认为 `0.4`。
-- `sound_pack` - 要使用的 sound pack ID。默认为 `opencode.default`。
+- `sound_pack` - 要使用的 sound pack ID。默认为 `zyraxon.default`。
 - `sounds` - 为 `default`、`question`、`permission`、`error`、`done` 或 `subagent_done` 指定自定义声音文件。路径可以是绝对路径、`file://` URL，或相对于 `tui.json` 的路径。
 
 ---

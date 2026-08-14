@@ -1,7 +1,7 @@
 import { createSignal, For, Show, onMount, onCleanup } from "solid-js"
-import { Icon } from "@opencode-ai/ui/icon"
-import { IconButtonV2 } from "@opencode-ai/ui/v2/icon-button-v2"
-import { TooltipV2 } from "@opencode-ai/ui/v2/tooltip-v2"
+import { Icon } from "@zyraxon-ai/ui/icon"
+import { IconButtonV2 } from "@zyraxon-ai/ui/v2/icon-button-v2"
+import { TooltipV2 } from "@zyraxon-ai/ui/v2/tooltip-v2"
 
 type ItemCategory = "website" | "sdk" | "pdf" | "ai_bot" | "plugin" | "template" | "mobile_app" | "api"
 

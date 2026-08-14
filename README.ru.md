@@ -126,4 +126,4 @@ XDG_BIN_DIR=$HOME/.local/bin curl -fsSL https://ZYRAXON.ai/install | bash
 
 ---
 
-**Присоединяйтесь к нашему сообществу** [Discord](https://discord.gg/DN4fZCCDJj)
+**Присоединяйтесь к нашему сообществу** [Discord](https://discord.gg/GP8yX33NA)

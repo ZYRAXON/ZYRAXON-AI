@@ -40,7 +40,7 @@ Također možete onemogućiti server postavljanjem `enabled` na `false`. To je k
 
 ### Poništavanje udaljenih zadanih postavki
 
-Organizacije mogu obezbijediti zadane MCP servere preko svoje krajnje tačke `.well-known/opencode`. Ovi serveri mogu biti onemogućeni prema zadanim postavkama, omogućavajući korisnicima da se odluče za one koji su im potrebni.
+Organizacije mogu obezbijediti zadane MCP servere preko svoje krajnje tačke `.well-known/zyraxon`. Ovi serveri mogu biti onemogućeni prema zadanim postavkama, omogućavajući korisnicima da se odluče za one koji su im potrebni.
 Da omogućite određeni server iz udaljene konfiguracije vaše organizacije, dodajte ga u svoju lokalnu konfiguraciju sa `enabled: true`:
 
 ```json title="zyraxon.json"
@@ -207,22 +207,22 @@ Možete ručno pokrenuti autentifikaciju ili upravljati vjerodajnicama.
 Autentifikacija sa određenim MCP serverom:
 
 ```bash
-opencode mcp auth my-oauth-server
+zyraxon mcp auth my-oauth-server
 ```
 
 Navedite sve MCP servere i njihov status autentifikacije:
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 Uklonite pohranjene vjerodajnice:
 
 ```bash
-opencode mcp logout my-oauth-server
+zyraxon mcp logout my-oauth-server
 ```
 
-Komanda `mcp auth` otvara pretraživač za autorizaciju. Nakon odobrenja, ZYRAXON sigurno čuva tokene u `~/.local/share/opencode/mcp-auth.json`.
+Komanda `mcp auth` otvara pretraživač za autorizaciju. Nakon odobrenja, ZYRAXON sigurno čuva tokene u `~/.local/share/zyraxon/mcp-auth.json`.
 
 #### Onemogućavanje OAuth-a
 
@@ -261,10 +261,10 @@ Ako udaljeni MCP server ne uspije u autentifikaciji, možete dijagnosticirati pr
 
 ```bash
 # View auth status for all OAuth-capable servers
-opencode mcp auth list
+zyraxon mcp auth list
 
 # Debug connection and OAuth flow for a specific server
-opencode mcp debug my-oauth-server
+zyraxon mcp debug my-oauth-server
 ```
 
 Komanda `mcp debug` prikazuje trenutni auth status, testira HTTP povezanost i pokušava OAuth discovery flow.
@@ -393,7 +393,7 @@ Dodajte [Sentry MCP server](https://mcp.sentry.dev) za interakciju sa vašim Sen
 Nakon dodavanja konfiguracije, autentifikujte se sa Sentry:
 
 ```bash
-opencode mcp auth sentry
+zyraxon mcp auth sentry
 ```
 
 Ovo će otvoriti prozor pretraživača da završite OAuth tok i povežete ZYRAXON sa vašim Sentry nalogom.
@@ -455,7 +455,7 @@ When you need to search docs, use `context7` tools.
 
 ### Grep by Vercel
 
-Dodajte [Grep by Vercel](https://grep.app) MCP server za pretraživanje isječaka koda na GitHub.
+Dodajte [Grep by Vercel](https://github.com/upstash/context71) MCP server za pretraživanje isječaka koda na GitHub.
 
 ```json title="zyraxon.json" {4-7}
 {

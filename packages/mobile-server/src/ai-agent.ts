@@ -2,9 +2,9 @@ import { MOBILE_AGENT_SYSTEM_PROMPT } from './system-prompt'
 import type { AgentRequest, AgentResponse } from './types'
 
 /**
- * AI Agent — opencode.ai Free Models Provider
+ * AI Agent — zyraxon.ai Free Models Provider
  *
- * Uses opencode.ai's free models (big-pickle, mimo-v2.5-free, deepseek-v4-flash-free, etc.)
+ * Uses zyraxon.ai's free models (big-pickle, mimo-v2.5-free, deepseek-v4-flash-free, etc.)
  * These are completely FREE with NO rate limits.
  *
  * API: https://api.opencode.ai/v1 (OpenAI-compatible)
@@ -16,14 +16,14 @@ interface ProviderConfig {
   model: string
 }
 
-type ProviderName = 'opencode' | 'openai' | 'anthropic' | 'google' | 'openrouter'
+type ProviderName = 'zyraxon' | 'openai' | 'anthropic' | 'google' | 'openrouter'
 
 function getProvider(): ProviderConfig {
-  const provider = (process.env.MOBILE_AI_PROVIDER ?? 'opencode') as ProviderName
+  const provider = (process.env.MOBILE_AI_PROVIDER ?? 'zyraxon') as ProviderName
   const configs: Record<ProviderName, ProviderConfig> = {
-    opencode: {
+    zyraxon: {
       apiKey: '',
-      baseUrl: process.env.OPENCODE_API_URL ?? 'https://opencode.ai/zen/v1',
+      baseUrl: process.env.ZYRAXON_API_URL ?? 'https://opencode.ai/zen/v1',
       model: process.env.MOBILE_AI_MODEL ?? 'mimo-v2.5-free',
     },
     openai: {
@@ -47,7 +47,7 @@ function getProvider(): ProviderConfig {
       model: process.env.MOBILE_AI_MODEL ?? 'qwen/qwen3-coder:free',
     },
   }
-  return configs[provider] ?? configs.opencode
+  return configs[provider] ?? configs.zyraxon
 }
 
 function buildMessages(req: AgentRequest): Array<{ role: string; content: any }> {

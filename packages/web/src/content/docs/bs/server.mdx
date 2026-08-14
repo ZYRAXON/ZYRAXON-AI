@@ -1,19 +1,19 @@
 ---
 title: Server
-description: Komunicirajte s opencode serverom preko HTTP-a.
+description: Komunicirajte s zyraxon serverom preko HTTP-a.
 ---
 
 import config from "../../../../config.mjs"
 export const typesUrl = `${config.github}/blob/dev/packages/sdk/js/src/gen/types.gen.ts`
 
-Komanda `zyraxon serve` pokrece headless HTTP server koji izlaže OpenAPI endpoint koji opencode klijent moze koristiti.
+Komanda `zyraxon serve` pokrece headless HTTP server koji izlaže OpenAPI endpoint koji zyraxon klijent moze koristiti.
 
 ---
 
 ### Korištenje
 
 ```bash
-opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
+zyraxon serve [--port <number>] [--hostname <string>] [--cors <origin>]
 ```
 
 #### Opcije
@@ -23,38 +23,38 @@ opencode serve [--port <number>] [--hostname <string>] [--cors <origin>]
 | `--port`        | Port na kojem slusa                 | `4096`           |
 | `--hostname`    | Hostname na kojem slusa             | `127.0.0.1`      |
 | `--mdns`        | Ukljuci mDNS otkrivanje             | `false`          |
-| `--mdns-domain` | Prilagodeni domen za mDNS servis    | `opencode.local` |
+| `--mdns-domain` | Prilagodeni domen za mDNS servis    | `zyraxon.local` |
 | `--cors`        | Dodatni browser origin-i koje dozv. | `[]`             |
 
 `--cors` mozete navesti vise puta:
 
 ```bash
-opencode serve --cors http://localhost:5173 --cors https://app.example.com
+zyraxon serve --cors http://localhost:5173 --cors https://app.example.com
 ```
 
 ---
 
 ### Autentifikacija
 
-Postavite `OPENCODE_SERVER_PASSWORD` da zastitite server HTTP basic auth mehanizmom. Korisnicko ime je po defaultu `opencode`, ili postavite `OPENCODE_SERVER_USERNAME` za nadjacavanje. Ovo vazi i za `zyraxon serve` i za `zyraxon web`.
+Postavite `ZYRAXON_SERVER_PASSWORD` da zastitite server HTTP basic auth mehanizmom. Korisnicko ime je po defaultu `zyraxon`, ili postavite `ZYRAXON_SERVER_USERNAME` za nadjacavanje. Ovo vazi i za `zyraxon serve` i za `zyraxon web`.
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve
 ```
 
 ---
 
 ### Kako radi
 
-Kada pokrenete `opencode`, pokrecu se TUI i server. TUI je klijent koji komunicira sa serverom. Server izlaže OpenAPI 3.1 spec endpoint koji se koristi i za generisanje [SDK-a](/docs/sdk).
+Kada pokrenete `zyraxon`, pokrecu se TUI i server. TUI je klijent koji komunicira sa serverom. Server izlaže OpenAPI 3.1 spec endpoint koji se koristi i za generisanje [SDK-a](/docs/sdk).
 
 :::tip
-Koristite opencode server za programsku interakciju sa opencode-om.
+Koristite zyraxon server za programsku interakciju sa zyraxon-om.
 :::
 
-Ova arhitektura omogucava opencode podrsku za vise klijenata i programsku interakciju.
+Ova arhitektura omogucava zyraxon podrsku za vise klijenata i programsku interakciju.
 
-Mozete pokrenuti `zyraxon serve` da startate standalone server. Ako je opencode TUI vec pokrenut, `zyraxon serve` ce pokrenuti novi server.
+Mozete pokrenuti `zyraxon serve` da startate standalone server. Ako je zyraxon TUI vec pokrenut, `zyraxon serve` ce pokrenuti novi server.
 
 ---
 
@@ -80,7 +80,7 @@ Na primjer, `http://localhost:4096/doc`. Koristite specifikaciju da generisete k
 
 ## API-ji
 
-opencode server izlaže sljedece API-je.
+zyraxon server izlaže sljedece API-je.
 
 ---
 

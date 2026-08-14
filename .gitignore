@@ -48,6 +48,12 @@ packages/desktop/dist/
 packages/opencode/dist/
 packages/*/dist/
 
+# Android build outputs (generated, never committed)
+packages/mobile/android-automation/app/build/
+packages/mobile/android-automation/.gradle/
+packages/mobile/android-automation/app/.cxx/
+packages/mobile/android-automation/local.properties
+
 # ZYRAXON temporary files
 *.tmp
 *.temp

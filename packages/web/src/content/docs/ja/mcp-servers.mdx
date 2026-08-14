@@ -46,7 +46,7 @@ MCP サーバーは、`mcp` の下の [ZYRAXON 設定](https://zyraxon.ai/docs/c
 
 ### リモートのデフォルトを上書きする
 
-組織は、`.well-known/opencode` エンドポイント経由でデフォルトの MCP サーバーを提供できます。これらのサーバーはデフォルトで無効になっている場合があり、ユーザーは必要なサーバーにオプトインできます。
+組織は、`.well-known/zyraxon` エンドポイント経由でデフォルトの MCP サーバーを提供できます。これらのサーバーはデフォルトで無効になっている場合があり、ユーザーは必要なサーバーにオプトインできます。
 
 組織のリモート設定から特定のサーバーを有効にするには、`enabled: true` を使用してローカル設定に追加します。
 
@@ -223,22 +223,22 @@ MCP サーバープロバイダーからクライアント認証情報を取得�
 特定の MCP サーバーで認証します。
 
 ```bash
-opencode mcp auth my-oauth-server
+zyraxon mcp auth my-oauth-server
 ```
 
 すべての MCP サーバーとその認証ステータスをリストします。
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 保存されている認証情報を削除します。
 
 ```bash
-opencode mcp logout my-oauth-server
+zyraxon mcp logout my-oauth-server
 ```
 
-`mcp auth` コマンドは、認証のためにブラウザを開きます。承認後、ZYRAXON はトークンを `~/.local/share/opencode/mcp-auth.json` に安全に保存します。
+`mcp auth` コマンドは、認証のためにブラウザを開きます。承認後、ZYRAXON はトークンを `~/.local/share/zyraxon/mcp-auth.json` に安全に保存します。
 
 ---
 
@@ -279,10 +279,10 @@ opencode mcp logout my-oauth-server
 
 ```bash
 # View auth status for all OAuth-capable servers
-opencode mcp auth list
+zyraxon mcp auth list
 
 # Debug connection and OAuth flow for a specific server
-opencode mcp debug my-oauth-server
+zyraxon mcp debug my-oauth-server
 ```
 
 `mcp debug` コマンドは、現在の認証ステータスを表示し、HTTP 接続をテストし、OAuth 検出フローを試行します。
@@ -420,7 +420,7 @@ MCP サーバーツールはサーバー名をプレフィックスとして登�
 設定を追加した後、Sentry で認証します。
 
 ```bash
-opencode mcp auth sentry
+zyraxon mcp auth sentry
 ```
 
 これにより、ブラウザウィンドウが開き、OAuth フローが完了し、ZYRAXON が Sentry アカウントに接続されます。
@@ -484,7 +484,7 @@ When you need to search docs, use `context7` tools.
 
 ### Grep by Vercel
 
-GitHub 上のコードスニペットを検索するには、[Grep by Vercel](https://grep.app) MCP サーバーを追加します。
+GitHub 上のコードスニペットを検索するには、[Grep by Vercel](https://github.com/upstash/context71) MCP サーバーを追加します。
 
 ```json title="zyraxon.json" {4-7}
 {

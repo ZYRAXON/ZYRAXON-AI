@@ -8,13 +8,13 @@ import { Tabs, TabItem } from "@astrojs/starlight/components"
 ZYRAXON CLI starter som standard [TUI](/docs/tui) når den kjøres uten noen argumenter.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Men den godtar også kommandoer som dokumentert på denne siden. Dette lar deg samhandle med ZYRAXON programmatisk.
 
 ```bash
-opencode run "Explain how closures work in JavaScript"
+zyraxon run "Explain how closures work in JavaScript"
 ```
 
 ---
@@ -24,7 +24,7 @@ opencode run "Explain how closures work in JavaScript"
 Start ZYRAXON-terminalbrukergrensesnittet.
 
 ```bash
-opencode [project]
+zyraxon [project]
 ```
 
 #### Flagg
@@ -53,7 +53,7 @@ ZYRAXON CLI har også følgende kommandoer.
 Administrer agenter for ZYRAXON.
 
 ```bash
-opencode agent [command]
+zyraxon agent [command]
 ```
 
 ---
@@ -63,17 +63,17 @@ opencode agent [command]
 Koble en terminal til en allerede kjørende ZYRAXON-backend-server startet via `serve` eller `web` kommandoer.
 
 ```bash
-opencode attach [url]
+zyraxon attach [url]
 ```
 
 Dette gjør det mulig å bruke TUI med en ekstern ZYRAXON-backend. For eksempel:
 
 ```bash
 # Start the backend server for web/mobile access
-opencode web --port 4096 --hostname 0.0.0.0
+zyraxon web --port 4096 --hostname 0.0.0.0
 
 # In another terminal, attach the TUI to the running backend
-opencode attach http://10.20.30.40:4096
+zyraxon attach http://10.20.30.40:4096
 ```
 
 #### Flagg
@@ -84,8 +84,8 @@ opencode attach http://10.20.30.40:4096
 | <nobr><code>{"--continue"}</code></nobr> | `-c` | Fortsett siste økt                                                                                 |
 | <nobr><code>{"--session"}</code></nobr>  | `-s` | Økt ID for å fortsette                                                                             |
 | <nobr><code>{"--fork"}</code></nobr>     |      | Forgren økten ved fortsettelse (bruk med `--continue` eller `--session`)                           |
-| <nobr><code>{"--password"}</code></nobr> | `-p` | Passord for grunnleggende autentisering (standard: `OPENCODE_SERVER_PASSWORD`)                     |
-| <nobr><code>{"--username"}</code></nobr> | `-u` | Brukernavn for grunnleggende autentisering (standard: `OPENCODE_SERVER_USERNAME` eller `opencode`) |
+| <nobr><code>{"--password"}</code></nobr> | `-p` | Passord for grunnleggende autentisering (standard: `ZYRAXON_SERVER_PASSWORD`)                     |
+| <nobr><code>{"--username"}</code></nobr> | `-u` | Brukernavn for grunnleggende autentisering (standard: `ZYRAXON_SERVER_USERNAME` eller `zyraxon`) |
 
 ---
 
@@ -94,7 +94,7 @@ opencode attach http://10.20.30.40:4096
 Opprett en ny agent med tilpasset konfigurasjon.
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Denne kommandoen vil veilede deg gjennom å lage en ny agent med en tilpasset systemmelding og verktøykonfigurasjon.
@@ -106,7 +106,7 @@ Denne kommandoen vil veilede deg gjennom å lage en ny agent med en tilpasset sy
 List opp alle tilgjengelige agenter.
 
 ```bash
-opencode agent list
+zyraxon agent list
 ```
 
 ---
@@ -116,17 +116,17 @@ opencode agent list
 Kommando for administrasjon av påloggingsinformasjon og innlogging for leverandører.
 
 ```bash
-opencode auth [command]
+zyraxon auth [command]
 ```
 
 ---
 
 #### login
 
-ZYRAXON drives av leverandørlisten på [Models.dev](https://models.dev), så du kan bruke `zyraxon auth login` til å konfigurere API-nøkler for enhver leverandør du vil bruke. Dette er lagret i `~/.local/share/opencode/auth.json`.
+ZYRAXON drives av leverandørlisten på [Models.dev](https://models.dev), så du kan bruke `zyraxon auth login` til å konfigurere API-nøkler for enhver leverandør du vil bruke. Dette er lagret i `~/.local/share/zyraxon/auth.json`.
 
 ```bash
-opencode auth login
+zyraxon auth login
 ```
 
 Når ZYRAXON starter opp, laster den leverandørene fra filen med påloggingsinformasjon. Og hvis det er noen nøkler definert i miljøene dine eller en `.env`-fil i prosjektet ditt.
@@ -138,13 +138,13 @@ Når ZYRAXON starter opp, laster den leverandørene fra filen med påloggingsinf
 Viser alle de autentiserte leverandørene som er lagret i filen med påloggingsinformasjon.
 
 ```bash
-opencode auth list
+zyraxon auth list
 ```
 
 Eller bruk kortversjonen.
 
 ```bash
-opencode auth ls
+zyraxon auth ls
 ```
 
 ---
@@ -154,7 +154,7 @@ opencode auth ls
 Logger deg ut av en leverandør ved å fjerne den fra filen med påloggingsinformasjon.
 
 ```bash
-opencode auth logout
+zyraxon auth logout
 ```
 
 ---
@@ -164,7 +164,7 @@ opencode auth logout
 Administrer GitHub-agenten for depotautomatisering.
 
 ```bash
-opencode github [command]
+zyraxon github [command]
 ```
 
 ---
@@ -174,7 +174,7 @@ opencode github [command]
 Installer GitHub-agenten i depotet ditt.
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 Dette setter opp den nødvendige GitHub Actions-arbeidsflyten og veileder deg gjennom konfigurasjonsprosessen. [Finn ut mer](/docs/github).
@@ -186,7 +186,7 @@ Dette setter opp den nødvendige GitHub Actions-arbeidsflyten og veileder deg gj
 Kjør GitHub-agenten. Dette brukes vanligvis i GitHub Actions.
 
 ```bash
-opencode github run
+zyraxon github run
 ```
 
 ##### Flagg
@@ -203,7 +203,7 @@ opencode github run
 Administrer Model Context Protocol-servere.
 
 ```bash
-opencode mcp [command]
+zyraxon mcp [command]
 ```
 
 ---
@@ -213,7 +213,7 @@ opencode mcp [command]
 Legg til en MCP-server til konfigurasjonen.
 
 ```bash
-opencode mcp add
+zyraxon mcp add
 ```
 
 Denne kommandoen vil veilede deg gjennom å legge til enten en lokal eller ekstern MCP-server.
@@ -225,13 +225,13 @@ Denne kommandoen vil veilede deg gjennom å legge til enten en lokal eller ekste
 Liste alle konfigurerte MCP-servere og deres tilkoblingsstatus.
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 Eller bruk den korte versjonen.
 
 ```bash
-opencode mcp ls
+zyraxon mcp ls
 ```
 
 ---
@@ -241,7 +241,7 @@ opencode mcp ls
 Autentiser med en OAuth-aktivert MCP-server.
 
 ```bash
-opencode mcp auth [name]
+zyraxon mcp auth [name]
 ```
 
 Hvis du ikke oppgir et servernavn, blir du bedt om å velge blant tilgjengelige OAuth-kompatible servere.
@@ -249,13 +249,13 @@ Hvis du ikke oppgir et servernavn, blir du bedt om å velge blant tilgjengelige 
 Du kan også liste opp OAuth-kompatible servere og deres autentiseringsstatus.
 
 ```bash
-opencode mcp auth list
+zyraxon mcp auth list
 ```
 
 Eller bruk den korte versjonen.
 
 ```bash
-opencode mcp auth ls
+zyraxon mcp auth ls
 ```
 
 ---
@@ -265,7 +265,7 @@ opencode mcp auth ls
 Fjern OAuth-påloggingsinformasjon for en MCP-server.
 
 ```bash
-opencode mcp logout [name]
+zyraxon mcp logout [name]
 ```
 
 ---
@@ -275,7 +275,7 @@ opencode mcp logout [name]
 Feilsøk OAuth-tilkoblingsproblemer for en MCP-server.
 
 ```bash
-opencode mcp debug <name>
+zyraxon mcp debug <name>
 ```
 
 ---
@@ -285,7 +285,7 @@ opencode mcp debug <name>
 List opp alle tilgjengelige modeller fra konfigurerte leverandører.
 
 ```bash
-opencode models [provider]
+zyraxon models [provider]
 ```
 
 Denne kommandoen viser alle modeller som er tilgjengelige på tvers av dine konfigurerte leverandører i formatet `provider/model`.
@@ -295,7 +295,7 @@ Dette er nyttig for å finne ut det eksakte modellnavnet som skal brukes i [din 
 Du kan eventuelt sende en leverandør ID for å filtrere modeller etter den leverandøren.
 
 ```bash
-opencode models anthropic
+zyraxon models anthropic
 ```
 
 #### Flagg
@@ -308,7 +308,7 @@ opencode models anthropic
 Bruk `--refresh`-flagget for å oppdatere den bufrede modelllisten. Dette er nyttig når nye modeller er lagt til en leverandør og du vil se dem i ZYRAXON.
 
 ```bash
-opencode models --refresh
+zyraxon models --refresh
 ```
 
 ---
@@ -318,23 +318,23 @@ opencode models --refresh
 Kjør ZYRAXON i ikke-interaktiv modus ved å sende en melding direkte.
 
 ```bash
-opencode run [message..]
+zyraxon run [message..]
 ```
 
 Dette er nyttig for skripting, automatisering eller når du vil ha et raskt svar uten å starte hele TUI. For eksempel.
 
-```bash "opencode run"
-opencode run Explain the use of context in Go
+```bash "zyraxon run"
+zyraxon run Explain the use of context in Go
 ```
 
 Du kan også koble til en kjørende `zyraxon serve`-forekomst for å unngå MCP-serveres kaldstarttid ved hver kjøring:
 
 ```bash
 # Start a headless server in one terminal
-opencode serve
+zyraxon serve
 
 # In another terminal, run commands that attach to it
-opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
+zyraxon run --attach http://localhost:4096 "Explain async/await in JavaScript"
 ```
 
 #### Flagg
@@ -352,8 +352,8 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 | <nobr><code>{"--format"}</code></nobr>   |      | Format: standard (formatert) eller json (rå JSON hendelser)                                        |
 | <nobr><code>{"--title"}</code></nobr>    |      | Tittel for økten (bruker avkortet ledetekst hvis ingen verdi er oppgitt)                           |
 | <nobr><code>{"--attach"}</code></nobr>   |      | Koble til en kjørende ZYRAXON-server (f.eks. http://localhost:4096)                               |
-| <nobr><code>{"--password"}</code></nobr> | `-p` | Passord for grunnleggende autentisering (standard: `OPENCODE_SERVER_PASSWORD`)                     |
-| <nobr><code>{"--username"}</code></nobr> | `-u` | Brukernavn for grunnleggende autentisering (standard: `OPENCODE_SERVER_USERNAME` eller `opencode`) |
+| <nobr><code>{"--password"}</code></nobr> | `-p` | Passord for grunnleggende autentisering (standard: `ZYRAXON_SERVER_PASSWORD`)                     |
+| <nobr><code>{"--username"}</code></nobr> | `-u` | Brukernavn for grunnleggende autentisering (standard: `ZYRAXON_SERVER_USERNAME` eller `zyraxon`) |
 | <nobr><code>{"--dir"}</code></nobr>      |      | Katalog å kjøre i, eller sti på fjernserveren ved tilkobling                                       |
 | <nobr><code>{"--variant"}</code></nobr>  |      | Modellvariant (leverandørspesifikk resonneringsinnsats)                                            |
 | <nobr><code>{"--thinking"}</code></nobr> |      | Vis tenkeblokker                                                                                   |
@@ -366,10 +366,10 @@ opencode run --attach http://localhost:4096 "Explain async/await in JavaScript"
 Start en headless ZYRAXON-server for API-tilgang. Sjekk ut [server-dokumentene](/docs/server) for hele HTTP-grensesnittet.
 
 ```bash
-opencode serve
+zyraxon serve
 ```
 
-Dette starter en HTTP-server som gir API tilgang til ZYRAXON-funksjonalitet uten TUI-grensesnittet. Sett `OPENCODE_SERVER_PASSWORD` for å aktivere HTTP grunnleggende autentisering (brukernavn er standard til `opencode`).
+Dette starter en HTTP-server som gir API tilgang til ZYRAXON-funksjonalitet uten TUI-grensesnittet. Sett `ZYRAXON_SERVER_PASSWORD` for å aktivere HTTP grunnleggende autentisering (brukernavn er standard til `zyraxon`).
 
 #### Flagg
 
@@ -387,7 +387,7 @@ Dette starter en HTTP-server som gir API tilgang til ZYRAXON-funksjonalitet uten
 Administrer ZYRAXON-økter.
 
 ```bash
-opencode session [command]
+zyraxon session [command]
 ```
 
 ---
@@ -397,7 +397,7 @@ opencode session [command]
 List opp alle ZYRAXON-økter.
 
 ```bash
-opencode session list
+zyraxon session list
 ```
 
 ##### Flagg
@@ -414,7 +414,7 @@ opencode session list
 Vis tokenbruk og kostnadsstatistikk for ZYRAXON-øktene dine.
 
 ```bash
-opencode stats
+zyraxon stats
 ```
 
 #### Flagg
@@ -433,7 +433,7 @@ opencode stats
 Eksporter øktdata som JSON.
 
 ```bash
-opencode export [sessionID]
+zyraxon export [sessionID]
 ```
 
 Hvis du ikke gir en økt ID, blir du bedt om å velge fra tilgjengelige økter.
@@ -445,14 +445,14 @@ Hvis du ikke gir en økt ID, blir du bedt om å velge fra tilgjengelige økter.
 Importer øktdata fra en JSON-fil eller en ZYRAXON share-URL.
 
 ```bash
-opencode import <file>
+zyraxon import <file>
 ```
 
 Du kan importere fra en lokal fil eller en ZYRAXON share-URL.
 
 ```bash
-opencode import session.json
-opencode import https://zyraxonai.lovable.app/share/abc123
+zyraxon import session.json
+zyraxon import https://zyraxonai.lovable.app/share/abc123
 ```
 
 ---
@@ -462,10 +462,10 @@ opencode import https://zyraxonai.lovable.app/share/abc123
 Start en headless ZYRAXON-server med et webgrensesnitt.
 
 ```bash
-opencode web
+zyraxon web
 ```
 
-Dette starter en HTTP-server og åpner en nettleser for å få tilgang til ZYRAXON via et nettgrensesnitt. Sett `OPENCODE_SERVER_PASSWORD` for å aktivere HTTP grunnleggende autentisering (brukernavn er standard til `opencode`).
+Dette starter en HTTP-server og åpner en nettleser for å få tilgang til ZYRAXON via et nettgrensesnitt. Sett `ZYRAXON_SERVER_PASSWORD` for å aktivere HTTP grunnleggende autentisering (brukernavn er standard til `zyraxon`).
 
 #### Flagg
 
@@ -483,7 +483,7 @@ Dette starter en HTTP-server og åpner en nettleser for å få tilgang til ZYRAX
 Start en ACP (Agent Client Protocol) server.
 
 ```bash
-opencode acp
+zyraxon acp
 ```
 
 Denne kommandoen starter en ACP-server som kommuniserer via stdin/stdout ved å bruke nd-JSON.
@@ -503,7 +503,7 @@ Denne kommandoen starter en ACP-server som kommuniserer via stdin/stdout ved å 
 Avinstaller ZYRAXON og fjern alle relaterte filer.
 
 ```bash
-opencode uninstall
+zyraxon uninstall
 ```
 
 #### Flagg
@@ -522,19 +522,19 @@ opencode uninstall
 Oppdaterer ZYRAXON til siste versjon eller en spesifikk versjon.
 
 ```bash
-opencode upgrade [target]
+zyraxon upgrade [target]
 ```
 
 For å oppgradere til siste versjon.
 
 ```bash
-opencode upgrade
+zyraxon upgrade
 ```
 
 For å oppgradere til en bestemt versjon.
 
 ```bash
-opencode upgrade v0.1.48
+zyraxon upgrade v0.1.48
 ```
 
 #### Flagg
@@ -564,30 +564,30 @@ ZYRAXON kan konfigureres ved hjelp av miljøvariabler.
 
 | Variabel                              | Type   | Beskrivelse                                                           |
 | ------------------------------------- | ------ | --------------------------------------------------------------------- |
-| `OPENCODE_AUTO_SHARE`                 | boolsk | Del økter automatisk                                                  |
-| `OPENCODE_GIT_BASH_PATH`              | streng | Bane til Git Bash-kjørbar på Windows                                  |
-| `OPENCODE_CONFIG`                     | streng | Bane til konfigurasjonsfil                                            |
-| `OPENCODE_TUI_CONFIG`                 | streng | Bane til TUI-konfigurasjonsfil                                        |
-| `OPENCODE_CONFIG_DIR`                 | streng | Bane til konfigurasjonskatalog                                        |
-| `OPENCODE_CONFIG_CONTENT`             | streng | Innebygd json-konfigurasjonsinnhold                                   |
-| `OPENCODE_DISABLE_AUTOUPDATE`         | boolsk | Deaktiver automatiske oppdateringskontroller                          |
-| `OPENCODE_DISABLE_PRUNE`              | boolsk | Deaktiver beskjæring av gamle data                                    |
-| `OPENCODE_DISABLE_TERMINAL_TITLE`     | boolsk | Deaktiver automatiske terminaltitteloppdateringer                     |
-| `OPENCODE_PERMISSION`                 | streng | Innebygd json-tillatelseskonfigurasjon                                |
-| `OPENCODE_DISABLE_DEFAULT_PLUGINS`    | boolsk | Deaktiver standard plugins                                            |
-| `OPENCODE_DISABLE_LSP_DOWNLOAD`       | boolsk | Deaktiver automatiske LSP servernedlastinger                          |
-| `OPENCODE_ENABLE_EXPERIMENTAL_MODELS` | boolsk | Aktiver eksperimentelle modeller                                      |
-| `OPENCODE_DISABLE_AUTOCOMPACT`        | boolsk | Deaktiver automatisk kontekstkomprimering                             |
-| `OPENCODE_DISABLE_CLAUDE_CODE`        | boolsk | Deaktiver lesing fra `.claude` (spørsmål + ferdigheter)               |
-| `OPENCODE_DISABLE_CLAUDE_CODE_PROMPT` | boolsk | Deaktiver lesing `~/.claude/CLAUDE.md`                                |
-| `OPENCODE_DISABLE_CLAUDE_CODE_SKILLS` | boolsk | Deaktiver innlasting av `.claude/skills`                              |
-| `OPENCODE_DISABLE_MODELS_FETCH`       | boolsk | Deaktiver henting av modeller fra eksterne kilder                     |
-| `OPENCODE_FAKE_VCS`                   | streng | Falsk VCS-leverandør for testformål                                   |
-| `OPENCODE_CLIENT`                     | streng | Klientidentifikator (standard til `cli`)                              |
-| `OPENCODE_ENABLE_EXA`                 | boolsk | Aktiver Exa-nettsøkeverktøy                                           |
-| `OPENCODE_SERVER_PASSWORD`            | streng | Aktiver grunnleggende autentisering for `serve`/`web`                 |
-| `OPENCODE_SERVER_USERNAME`            | streng | Overstyr grunnleggende autentiseringsbrukernavn (standard `opencode`) |
-| `OPENCODE_MODELS_URL`                 | streng | Egendefinert URL for henting av modellkonfigurasjon                   |
+| `ZYRAXON_AUTO_SHARE`                 | boolsk | Del økter automatisk                                                  |
+| `ZYRAXON_GIT_BASH_PATH`              | streng | Bane til Git Bash-kjørbar på Windows                                  |
+| `ZYRAXON_CONFIG`                     | streng | Bane til konfigurasjonsfil                                            |
+| `ZYRAXON_TUI_CONFIG`                 | streng | Bane til TUI-konfigurasjonsfil                                        |
+| `ZYRAXON_CONFIG_DIR`                 | streng | Bane til konfigurasjonskatalog                                        |
+| `ZYRAXON_CONFIG_CONTENT`             | streng | Innebygd json-konfigurasjonsinnhold                                   |
+| `ZYRAXON_DISABLE_AUTOUPDATE`         | boolsk | Deaktiver automatiske oppdateringskontroller                          |
+| `ZYRAXON_DISABLE_PRUNE`              | boolsk | Deaktiver beskjæring av gamle data                                    |
+| `ZYRAXON_DISABLE_TERMINAL_TITLE`     | boolsk | Deaktiver automatiske terminaltitteloppdateringer                     |
+| `ZYRAXON_PERMISSION`                 | streng | Innebygd json-tillatelseskonfigurasjon                                |
+| `ZYRAXON_DISABLE_DEFAULT_PLUGINS`    | boolsk | Deaktiver standard plugins                                            |
+| `ZYRAXON_DISABLE_LSP_DOWNLOAD`       | boolsk | Deaktiver automatiske LSP servernedlastinger                          |
+| `ZYRAXON_ENABLE_EXPERIMENTAL_MODELS` | boolsk | Aktiver eksperimentelle modeller                                      |
+| `ZYRAXON_DISABLE_AUTOCOMPACT`        | boolsk | Deaktiver automatisk kontekstkomprimering                             |
+| `ZYRAXON_DISABLE_CLAUDE_CODE`        | boolsk | Deaktiver lesing fra `.claude` (spørsmål + ferdigheter)               |
+| `ZYRAXON_DISABLE_CLAUDE_CODE_PROMPT` | boolsk | Deaktiver lesing `~/.claude/CLAUDE.md`                                |
+| `ZYRAXON_DISABLE_CLAUDE_CODE_SKILLS` | boolsk | Deaktiver innlasting av `.claude/skills`                              |
+| `ZYRAXON_DISABLE_MODELS_FETCH`       | boolsk | Deaktiver henting av modeller fra eksterne kilder                     |
+| `ZYRAXON_FAKE_VCS`                   | streng | Falsk VCS-leverandør for testformål                                   |
+| `ZYRAXON_CLIENT`                     | streng | Klientidentifikator (standard til `cli`)                              |
+| `ZYRAXON_ENABLE_EXA`                 | boolsk | Aktiver Exa-nettsøkeverktøy                                           |
+| `ZYRAXON_SERVER_PASSWORD`            | streng | Aktiver grunnleggende autentisering for `serve`/`web`                 |
+| `ZYRAXON_SERVER_USERNAME`            | streng | Overstyr grunnleggende autentiseringsbrukernavn (standard `zyraxon`) |
+| `ZYRAXON_MODELS_URL`                 | streng | Egendefinert URL for henting av modellkonfigurasjon                   |
 
 ---
 
@@ -597,21 +597,21 @@ Disse miljøvariablene muliggjør eksperimentelle funksjoner som kan endres elle
 
 | Variabel                                        | Type   | Beskrivelse                                           |
 | ----------------------------------------------- | ------ | ----------------------------------------------------- |
-| `OPENCODE_EXPERIMENTAL`                         | boolsk | Aktiver eksperimentelle funksjoner under samleflagget |
-| `OPENCODE_EXPERIMENTAL_ICON_DISCOVERY`          | boolsk | Aktiver ikonoppdagelse                                |
-| `OPENCODE_EXPERIMENTAL_DISABLE_COPY_ON_SELECT`  | boolsk | Deaktiver kopi ved valg i TUI                         |
-| `OPENCODE_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` | tall   | Standard tidsavbrudd for bash-kommandoer i ms         |
-| `OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX`        | tall   | Maks Output Tokens for LLM-svar                       |
-| `OPENCODE_EXPERIMENTAL_FILEWATCHER`             | boolsk | Aktiver filovervåker for hele dir                     |
-| `OPENCODE_EXPERIMENTAL_OXFMT`                   | boolsk | Aktiver oxfmt formatter                               |
-| `OPENCODE_EXPERIMENTAL_LSP_TOOL`                | boolsk | Aktiver eksperimentelt LSP-verktøy                    |
-| `OPENCODE_EXPERIMENTAL_DISABLE_FILEWATCHER`     | boolsk | Deaktiver filovervåking                               |
-| `OPENCODE_EXPERIMENTAL_EXA`                     | boolsk | Aktiver eksperimentelle Exa-funksjoner                |
-| `OPENCODE_EXPERIMENTAL_LSP_TY`                  | boolsk | Aktiver TY LSP for python-filer                       |
-| `OPENCODE_EXPERIMENTAL_PLAN_MODE`               | boolsk | Aktiver planmodus                                     |
-| `OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS`    | boolsk | Aktiver bakgrunnsoppgaver for subagenter              |
-| `OPENCODE_EXPERIMENTAL_EVENT_SYSTEM`            | boolsk | Aktiver eksperimentelt hendelsessystem                |
-| `OPENCODE_EXPERIMENTAL_NATIVE_LLM`              | boolsk | Aktiver innebygd LLM-forespørselsvei                  |
-| `OPENCODE_EXPERIMENTAL_PARALLEL`                | boolsk | Aktiver parallell kjøring av websøk                   |
-| `OPENCODE_EXPERIMENTAL_SCOUT`                   | boolsk | Aktiver Scout-subagent                                |
-| `OPENCODE_EXPERIMENTAL_WORKSPACES`              | boolsk | Aktiver arbeidsområde-støtte                          |
+| `ZYRAXON_EXPERIMENTAL`                         | boolsk | Aktiver eksperimentelle funksjoner under samleflagget |
+| `ZYRAXON_EXPERIMENTAL_ICON_DISCOVERY`          | boolsk | Aktiver ikonoppdagelse                                |
+| `ZYRAXON_EXPERIMENTAL_DISABLE_COPY_ON_SELECT`  | boolsk | Deaktiver kopi ved valg i TUI                         |
+| `ZYRAXON_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS` | tall   | Standard tidsavbrudd for bash-kommandoer i ms         |
+| `ZYRAXON_EXPERIMENTAL_OUTPUT_TOKEN_MAX`        | tall   | Maks Output Tokens for LLM-svar                       |
+| `ZYRAXON_EXPERIMENTAL_FILEWATCHER`             | boolsk | Aktiver filovervåker for hele dir                     |
+| `ZYRAXON_EXPERIMENTAL_OXFMT`                   | boolsk | Aktiver oxfmt formatter                               |
+| `ZYRAXON_EXPERIMENTAL_LSP_TOOL`                | boolsk | Aktiver eksperimentelt LSP-verktøy                    |
+| `ZYRAXON_EXPERIMENTAL_DISABLE_FILEWATCHER`     | boolsk | Deaktiver filovervåking                               |
+| `ZYRAXON_EXPERIMENTAL_EXA`                     | boolsk | Aktiver eksperimentelle Exa-funksjoner                |
+| `ZYRAXON_EXPERIMENTAL_LSP_TY`                  | boolsk | Aktiver TY LSP for python-filer                       |
+| `ZYRAXON_EXPERIMENTAL_PLAN_MODE`               | boolsk | Aktiver planmodus                                     |
+| `ZYRAXON_EXPERIMENTAL_BACKGROUND_SUBAGENTS`    | boolsk | Aktiver bakgrunnsoppgaver for subagenter              |
+| `ZYRAXON_EXPERIMENTAL_EVENT_SYSTEM`            | boolsk | Aktiver eksperimentelt hendelsessystem                |
+| `ZYRAXON_EXPERIMENTAL_NATIVE_LLM`              | boolsk | Aktiver innebygd LLM-forespørselsvei                  |
+| `ZYRAXON_EXPERIMENTAL_PARALLEL`                | boolsk | Aktiver parallell kjøring av websøk                   |
+| `ZYRAXON_EXPERIMENTAL_SCOUT`                   | boolsk | Aktiver Scout-subagent                                |
+| `ZYRAXON_EXPERIMENTAL_WORKSPACES`              | boolsk | Aktiver arbeidsområde-støtte                          |

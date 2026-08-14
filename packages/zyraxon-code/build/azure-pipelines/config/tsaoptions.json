@@ -1,0 +1,12 @@
+{
+	"codebaseName": "devdiv_Zyraxon_vscode",
+	"serviceTreeID": "79c048b2-322f-4ed5-a1ea-252a1250e4b3",
+	"instanceUrl": "https://devdiv.visualstudio.com/defaultcollection",
+	"projectName": "DevDiv",
+	"areaPath": "DevDiv\\ZYRAXON Code (compliance tracking only)\\ZYRAXON Code Client",
+	"notificationAliases": [
+		"monacotools@microsoft.com"
+	],
+	"validateToolOutput": "None",
+	"allTools": true
+}

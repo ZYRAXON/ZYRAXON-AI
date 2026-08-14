@@ -6,7 +6,7 @@ import { createSimpleContext } from "./helper"
 import { markedCodeSpanBoundary } from "./marked-code-span"
 import { getSharedHighlighter, registerCustomTheme, ThemeRegistrationResolved } from "@pierre/diffs"
 
-export const OpenCodeTheme = {
+export const ZyraxonTheme = {
   name: "ZYRAXON",
   bg: "var(--color-background-stronger)",
   fg: "var(--text-base)",
@@ -377,7 +377,7 @@ export const OpenCodeTheme = {
   },
 } as unknown as ThemeRegistrationResolved
 
-registerCustomTheme("ZYRAXON", () => Promise.resolve(OpenCodeTheme))
+registerCustomTheme("ZYRAXON", () => Promise.resolve(ZyraxonTheme))
 
 function renderMathInText(text: string): string {
   let result = text

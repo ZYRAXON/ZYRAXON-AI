@@ -248,7 +248,7 @@ ZYRAXON has a built-in memory system via the `memory` tool:
 3. **Auto-injection** — Automatically injects relevant memories into session context
 4. **Session persistence** — Sessions survive restarts through zyraxon.db
 
-The memory system lives in `packages/opencode/src/tool/memory.ts` and `packages/opencode/src/memory/auto-injection.ts`. Memories are stored in the data directory under `memory/`.
+The memory system lives in `packages/zyraxon/src/tool/memory.ts` and `packages/zyraxon/src/memory/auto-injection.ts`. Memories are stored in the data directory under `memory/`.
 
 ## ZYRAXON All-in-One Power
 

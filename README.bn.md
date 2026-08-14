@@ -126,4 +126,4 @@ ZYRAXON এ দুটি বিল্ট-ইন এজেন্ট রয়ে�
 
 ---
 
-**আমাদের কমিউনিটিতে যুক্ত হোন** [Discord](https://discord.gg/DN4fZCCDJj)
+**আমাদের কমিউনিটিতে যুক্ত হোন** [Discord](https://discord.gg/GP8yX33NA)

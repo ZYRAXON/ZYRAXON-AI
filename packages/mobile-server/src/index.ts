@@ -11,8 +11,8 @@ app.get('/health', (c) => c.json({
   status: 'ok',
   service: 'zyraxon-mobile-agent',
   version: '1.0.0',
-  api_url: process.env.OPENCODE_API_URL ?? '(not set)',
-  api_key_set: process.env.OPENCODE_API_KEY ? 'yes' : 'no',
+  api_url: process.env.ZYRAXON_API_URL ?? '(not set)',
+  api_key_set: process.env.ZYRAXON_API_KEY ? 'yes' : 'no',
   model: process.env.MOBILE_AI_MODEL ?? '(not set)',
 }))
 
@@ -66,7 +66,7 @@ const PORT = parseInt(process.env.PORT ?? '3001', 10)
 console.log(`\n╔══════════════════════════════════════╗`)
 console.log(`║  ZYRAXON Mobile Agent Server        ║`)
 console.log(`║  Port: ${PORT}                        ║`)
-console.log(`║  AI: ${process.env.MOBILE_AI_PROVIDER ?? 'opencode'} / ${process.env.MOBILE_AI_MODEL ?? 'mimo-v2.5-free'}  ║`)
+console.log(`║  AI: ${process.env.MOBILE_AI_PROVIDER ?? 'zyraxon'} / ${process.env.MOBILE_AI_MODEL ?? 'mimo-v2.5-free'}  ║`)
 console.log(`╚══════════════════════════════════════╝\n`)
 console.log(`Mobile Agent API: http://localhost:${PORT}/api/mobile/agent`)
 console.log(`Health:           http://localhost:${PORT}/health`)

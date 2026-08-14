@@ -31,7 +31,7 @@ Dodajte u svoju [Zed](https://zed.dev) konfiguraciju (`~/.config/zed/settings.js
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "opencode",
+      "command": "zyraxon",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ Također možete vezati prečicu na tastaturi uređivanjem vašeg `keymap.json`:
             "custom": {
               "name": "ZYRAXON",
               "command": {
-                "command": "opencode",
+                "command": "zyraxon",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Dodajte u svoj [JetBrains IDE](https://www.jetbrains.com/) `acp.json` prema [dok
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/zyraxon",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Dodajte u svoju [Avante.nvim](https://github.com/yetone/avante.nvim) konfiguraci
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" }
     }
   }
@@ -106,11 +106,11 @@ Ako trebate proslijediti varijable okruženja:
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" },
       env = {
-        OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
+        ZYRAXON_API_KEY = os.getenv("ZYRAXON_API_KEY")
       }
     }
   }
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "zyraxon",
         model = "claude-sonnet-4",
       },
     },
@@ -138,7 +138,7 @@ require("codecompanion").setup({
 
 Ova konfiguracija postavlja CodeCompanion da koristi ZYRAXON kao ACP chat agenta.
 
-Ako trebate proslijediti varijable okruženja (kao što je `OPENCODE_API_KEY`), pogledajte [Configuring Adapters: Environment Variables](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) u dokumentaciji CodeCompanion.nvim.
+Ako trebate proslijediti varijable okruženja (kao što je `ZYRAXON_API_KEY`), pogledajte [Configuring Adapters: Environment Variables](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) u dokumentaciji CodeCompanion.nvim.
 
 ## Podržane funkcije
 

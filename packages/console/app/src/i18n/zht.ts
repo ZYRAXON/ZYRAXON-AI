@@ -634,7 +634,7 @@ export const dict = {
   "workspace.lite.subscription.resetsIn": "重置時間：",
   "workspace.lite.subscription.useBalance": "達到使用限制後使用您的可用餘額",
   "workspace.lite.subscription.selectProvider":
-    "在您的 opencode 設定中選擇「ZYRAXON Go」作為提供商，即可使用 Go 模型。",
+    "在您的 zyraxon 設定中選擇「ZYRAXON Go」作為提供商，即可使用 Go 模型。",
   "workspace.lite.providers.title": "提供商",
   "workspace.lite.providers.description": "控制用於路由的提供商。",
   "workspace.lite.providers.useChina": "啟用部署在中國的模型",

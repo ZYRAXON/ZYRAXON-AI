@@ -1,25 +1,25 @@
 ---
 title: Regeln
-description: Lege eigene Anweisungen fuer opencode fest.
+description: Lege eigene Anweisungen fuer zyraxon fest.
 ---
 
-Du kannst opencode ueber eine `AGENTS.md`-Datei mit eigenen Anweisungen steuern.
+Du kannst zyraxon ueber eine `AGENTS.md`-Datei mit eigenen Anweisungen steuern.
 Das ist aehnlich zu den Regeln in Cursor und wird direkt in den LLM-Kontext geladen.
 
 ---
 
 ## Initialisierung
 
-Um eine neue `AGENTS.md` zu erstellen, fuehre in opencode den Befehl `/init` aus.
+Um eine neue `AGENTS.md` zu erstellen, fuehre in zyraxon den Befehl `/init` aus.
 
 :::tip
 Du solltest die `AGENTS.md` deines Projekts in Git committen.
 :::
 
 Der Befehl scannt dein Projekt und erzeugt daraus eine passende `AGENTS.md`.
-So kann opencode sich in deinem Code besser orientieren.
+So kann zyraxon sich in deinem Code besser orientieren.
 
-Wenn bereits eine `AGENTS.md` existiert, versucht opencode sie zu erweitern.
+Wenn bereits eine `AGENTS.md` existiert, versucht zyraxon sie zu erweitern.
 
 ---
 
@@ -57,7 +57,7 @@ Hier hinterlegst du projektspezifische Regeln, die dein Team gemeinsam nutzt.
 
 ## Typen
 
-opencode kann `AGENTS.md` aus mehreren Orten lesen.
+zyraxon kann `AGENTS.md` aus mehreren Orten lesen.
 Die Orte haben unterschiedliche Zwecke.
 
 ### Projekt
@@ -67,8 +67,8 @@ Diese gelten nur in diesem Verzeichnis und seinen Unterordnern.
 
 ### Global
 
-Du kannst auch globale Regeln in `~/.config/opencode/AGENTS.md` speichern.
-Diese gelten in allen opencode-Sitzungen.
+Du kannst auch globale Regeln in `~/.config/zyraxon/AGENTS.md` speichern.
+Diese gelten in allen zyraxon-Sitzungen.
 
 Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet sie sich fuer persoenliche Regeln.
 
@@ -77,25 +77,25 @@ Da diese Datei nicht in Git landet und nicht mit dem Team geteilt wird, eignet s
 Wenn du von Claude Code kommst, unterstuetzt ZYRAXON dessen Dateikonventionen als Fallback:
 
 - **Projektregeln**: `CLAUDE.md` im Projekt (wenn keine `AGENTS.md` existiert)
-- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/opencode/AGENTS.md` existiert)
+- **Globale Regeln**: `~/.claude/CLAUDE.md` (wenn keine `~/.config/zyraxon/AGENTS.md` existiert)
 - **Skills**: `~/.claude/skills/` - siehe [Agent Skills](/docs/skills/) fuer Details
 
 Um die Claude-Code-Kompatibilitaet zu deaktivieren, setze eine dieser Umgebungsvariablen:
 
 ```bash
-export OPENCODE_DISABLE_CLAUDE_CODE=1        # Disable all .claude support
-export OPENCODE_DISABLE_CLAUDE_CODE_PROMPT=1 # Disable only ~/.claude/CLAUDE.md
-export OPENCODE_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
+export ZYRAXON_DISABLE_CLAUDE_CODE=1        # Disable all .claude support
+export ZYRAXON_DISABLE_CLAUDE_CODE_PROMPT=1 # Disable only ~/.claude/CLAUDE.md
+export ZYRAXON_DISABLE_CLAUDE_CODE_SKILLS=1 # Disable only .claude/skills
 ```
 
 ---
 
 ## Rangfolge
 
-Beim Start sucht opencode in dieser Reihenfolge nach Regeldateien:
+Beim Start sucht zyraxon in dieser Reihenfolge nach Regeldateien:
 
 1. **Lokale Dateien** beim Hochlaufen ab dem aktuellen Verzeichnis (`AGENTS.md`, `CLAUDE.md`)
-2. **Globale Datei** unter `~/.config/opencode/AGENTS.md`
+2. **Globale Datei** unter `~/.config/zyraxon/AGENTS.md`
 3. **Claude-Code-Datei** unter `~/.claude/CLAUDE.md` (falls nicht deaktiviert)
 
 Pro Kategorie gewinnt die zuerst passende Datei.
@@ -105,7 +105,7 @@ Wenn sowohl `AGENTS.md` als auch `CLAUDE.md` existieren, wird nur `AGENTS.md` ve
 
 ## Eigene Anweisungen
 
-Du kannst zusaetzliche Anweisungsdateien in deiner `zyraxon.json` oder in `~/.config/opencode/zyraxon.json` angeben.
+Du kannst zusaetzliche Anweisungsdateien in deiner `zyraxon.json` oder in `~/.config/zyraxon/zyraxon.json` angeben.
 So kann dein Team bestehende Regeln wiederverwenden, statt Inhalte in `AGENTS.md` zu duplizieren.
 
 Beispiel:
@@ -134,7 +134,7 @@ Alle Anweisungsdateien werden mit deinen `AGENTS.md`-Dateien kombiniert.
 
 ## Externe Dateien referenzieren
 
-opencode parst Datei-Referenzen in `AGENTS.md` nicht automatisch.
+zyraxon parst Datei-Referenzen in `AGENTS.md` nicht automatisch.
 Du erreichst aehnliches Verhalten auf zwei Wegen.
 
 ### Mit zyraxon.json
@@ -150,7 +150,7 @@ Empfohlen ist das `instructions`-Feld in der `zyraxon.json`:
 
 ### Manuelle Anweisungen in AGENTS.md
 
-Du kannst opencode explizit anweisen, externe Dateien zu lesen.
+Du kannst zyraxon explizit anweisen, externe Dateien zu lesen.
 Hier ein praxisnahes Beispiel:
 
 ```markdown title="AGENTS.md"

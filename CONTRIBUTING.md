@@ -43,7 +43,7 @@ Thank you for your interest in contributing to ZYRAXON-AI! This document provide
 5. **Make your changes**
 6. **Build and test**:
    ```bash
-   cd packages/opencode
+   cd packages/zyraxon
    bun run build
    cd ../desktop
    bun run build
@@ -77,7 +77,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 ZYRAXON-AI/
 â”œâ”€â”€ packages/
-â”‚   â”œâ”€â”€ opencode/        # Core AI agent
+â”‚   â”œâ”€â”€ zyraxon/        # Core AI agent
 â”‚   â”‚   â”œâ”€â”€ src/
 â”‚   â”‚   â”‚   â”œâ”€â”€ agent/   # Agent definitions
 â”‚   â”‚   â”‚   â”œâ”€â”€ tool/    # Built-in tools
@@ -91,20 +91,20 @@ ZYRAXON-AI/
 
 ### Adding a New Tool
 
-1. Create `packages/opencode/src/tool/your_tool.ts`
-2. Create `packages/opencode/src/tool/your_tool.txt` (description)
-3. Import and register in `packages/opencode/src/tool/registry.ts`
+1. Create `packages/zyraxon/src/tool/your_tool.ts`
+2. Create `packages/zyraxon/src/tool/your_tool.txt` (description)
+3. Import and register in `packages/zyraxon/src/tool/registry.ts`
 4. Build and test:
    ```bash
-   cd packages/opencode
+   cd packages/zyraxon
    bun run build
    ```
 
 ### Adding a New Agent
 
-1. Edit `packages/opencode/src/agent/agent.ts`
+1. Edit `packages/zyraxon/src/agent/agent.ts`
 2. Add agent definition with name, description, permissions
-3. Create prompt file in `packages/opencode/src/agent/prompt/`
+3. Create prompt file in `packages/zyraxon/src/agent/prompt/`
 4. Build and test
 
 ### Code Style

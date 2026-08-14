@@ -1,7 +1,7 @@
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { Tag } from "@opencode-ai/ui/v2/badge-v2"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
+import { ButtonV2 } from "@zyraxon-ai/ui/v2/button-v2"
+import { Tag } from "@zyraxon-ai/ui/v2/badge-v2"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
+import { ProviderIcon } from "@zyraxon-ai/ui/provider-icon"
 import { showToast } from "@/utils/toast"
 import { popularProviders, useProviders } from "@/hooks/use-providers"
 import { createMemo, type Component, For, Show } from "solid-js"
@@ -17,8 +17,8 @@ type ProviderSource = "env" | "api" | "config" | "custom"
 type ProviderItem = ReturnType<ReturnType<typeof useProviders>["connected"]>[number]
 
 const PROVIDER_NOTES = [
-  { match: (id: string) => id === "opencode", key: "dialog.provider.opencode.note" },
-  { match: (id: string) => id === "opencode-go", key: "dialog.provider.opencodeGo.tagline" },
+  { match: (id: string) => id === "zyraxon", key: "dialog.provider.zyraxon.note" },
+  { match: (id: string) => id === "zyraxon-go", key: "dialog.provider.zyraxonGo.tagline" },
   { match: (id: string) => id === "anthropic", key: "dialog.provider.anthropic.note" },
   { match: (id: string) => id.startsWith("github-copilot"), key: "dialog.provider.copilot.note" },
   { match: (id: string) => id === "openai", key: "dialog.provider.openai.note" },
@@ -202,7 +202,7 @@ export const SettingsProvidersV2: Component<{ onBack?: () => void }> = (props) =
                     <div class="settings-v2-provider-copy">
                       <div class="settings-v2-provider-main">
                         <span class="settings-v2-provider-name">{item.name}</span>
-                        <Show when={item.id === "zyraxon" || item.id === "opencode-go"}>
+                        <Show when={item.id === "zyraxon" || item.id === "zyraxon-go"}>
                           <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
                         </Show>
                       </div>

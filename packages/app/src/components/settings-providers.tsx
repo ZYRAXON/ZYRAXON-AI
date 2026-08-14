@@ -1,7 +1,7 @@
-import { Button } from "@opencode-ai/ui/button"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
-import { Tag } from "@opencode-ai/ui/tag"
+import { Button } from "@zyraxon-ai/ui/button"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
+import { ProviderIcon } from "@zyraxon-ai/ui/provider-icon"
+import { Tag } from "@zyraxon-ai/ui/tag"
 import { showToast } from "@/utils/toast"
 import { popularProviders, useProviders } from "@/hooks/use-providers"
 import { createMemo, type Component, For, Show } from "solid-js"
@@ -17,8 +17,8 @@ type ProviderSource = "env" | "api" | "config" | "custom"
 type ProviderItem = ReturnType<ReturnType<typeof useProviders>["connected"]>[number]
 
 const PROVIDER_NOTES = [
-  { match: (id: string) => id === "opencode", key: "dialog.provider.opencode.note" },
-  { match: (id: string) => id === "opencode-go", key: "dialog.provider.opencodeGo.tagline" },
+  { match: (id: string) => id === "zyraxon", key: "dialog.provider.zyraxon.note" },
+  { match: (id: string) => id === "zyraxon-go", key: "dialog.provider.zyraxonGo.tagline" },
   { match: (id: string) => id === "anthropic", key: "dialog.provider.anthropic.note" },
   { match: (id: string) => id.startsWith("github-copilot"), key: "dialog.provider.copilot.note" },
   { match: (id: string) => id === "openai", key: "dialog.provider.openai.note" },
@@ -203,7 +203,7 @@ const SettingsProvidersContent: Component<{ onBack?: () => void }> = (props) => 
                       <Show when={item.id === "zyraxon"}>
                         <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
                       </Show>
-                      <Show when={item.id === "opencode-go"}>
+                      <Show when={item.id === "zyraxon-go"}>
                         <Tag>{language.t("dialog.provider.tag.recommended")}</Tag>
                       </Show>
                     </div>

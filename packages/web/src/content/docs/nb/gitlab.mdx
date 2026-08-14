@@ -1,6 +1,6 @@
 ---
 title: GitLab
-description: Bruk opencode i GitLab-problemer og Merge Requests.
+description: Bruk zyraxon i GitLab-problemer og Merge Requests.
 ---
 
 ZYRAXON integreres med GitLab arbeidsflyten gjennom GitLab CI/CD pipeline eller med GitLab Duo.
@@ -13,7 +13,7 @@ I begge tilfeller vil ZYRAXON kjøre på GitLab Runners.
 
 ZYRAXON fungerer i en vanlig GitLab-pipeline. Du kan bygge den inn i en pipeline som en [CI-komponent](https://docs.gitlab.com/ee/ci/components/)
 
-Her bruker vi en fellesskapsskapt CI/CD-komponent for ZYRAXON — [nagyv/gitlab-opencode](https://gitlab.com/nagyv/gitlab-opencode).
+Her bruker vi en fellesskapsskapt CI/CD-komponent for ZYRAXON — [nagyv/gitlab-zyraxon](https://gitlab.com/nagyv/gitlab-opencode).
 
 ---
 
@@ -32,10 +32,10 @@ Her bruker vi en fellesskapsskapt CI/CD-komponent for ZYRAXON — [nagyv/gitlab-
 
    ```yaml title=".gitlab-ci.yml"
    include:
-     - component: $CI_SERVER_FQDN/nagyv/gitlab-opencode/opencode@2
+     - component: $CI_SERVER_FQDN/nagyv/gitlab-zyraxon/zyraxon@2
        inputs:
-         config_dir: ${CI_PROJECT_DIR}/opencode-config
-         auth_json: $OPENCODE_AUTH_JSON # The variable name for your ZYRAXON authentication JSON
+         config_dir: ${CI_PROJECT_DIR}/zyraxon-config
+         auth_json: $ZYRAXON_AUTH_JSON # The variable name for your ZYRAXON authentication JSON
          command: optional-custom-command
          message: "Your prompt here"
    ```
@@ -47,7 +47,7 @@ For flere inndata og brukstilfeller [sjekk ut dokumentene](https://gitlab.com/ex
 ## GitLab Duo
 
 ZYRAXON integreres med din GitLab arbeidsflyt.
-Nevn `@opencode` i en kommentar, og ZYRAXON vil utføre oppgaver innenfor din GitLab CI-pipeline.
+Nevn `@zyraxon` i en kommentar, og ZYRAXON vil utføre oppgaver innenfor din GitLab CI-pipeline.
 
 ---
 
@@ -82,19 +82,19 @@ Sjekk ut [**GitLab-dokumentene**](https://docs.gitlab.com/user/duo_agent_platfor
     ```yaml
     image: node:22-slim
     commands:
-      - echo "Installing opencode"
+      - echo "Installing zyraxon"
       - npm install --global zyraxon-ai
       - echo "Installing glab"
-      - export GITLAB_TOKEN=$GITLAB_TOKEN_OPENCODE
+      - export GITLAB_TOKEN=$GITLAB_TOKEN_ZYRAXON
       - apt-get update --quiet && apt-get install --yes curl wget gpg git && rm --recursive --force /var/lib/apt/lists/*
       - curl --silent --show-error --location "https://raw.githubusercontent.com/upciti/wakemeops/main/assets/install_repository" | bash
       - apt-get install --yes glab
       - echo "Configuring glab"
       - echo $GITLAB_HOST
       - echo "Creating ZYRAXON auth configuration"
-      - mkdir --parents ~/.local/share/opencode
+      - mkdir --parents ~/.local/share/zyraxon
       - |
-        cat > ~/.local/share/opencode/auth.json << EOF
+        cat > ~/.local/share/zyraxon/auth.json << EOF
         {
           "anthropic": {
             "type": "api",
@@ -103,13 +103,13 @@ Sjekk ut [**GitLab-dokumentene**](https://docs.gitlab.com/user/duo_agent_platfor
         }
         EOF
       - echo "Configuring git"
-      - git config --global user.email "opencode@gitlab.com"
+      - git config --global user.email "zyraxon@gitlab.com"
       - git config --global user.name "ZYRAXON"
       - echo "Testing glab"
       - glab issue list
       - echo "Running ZYRAXON"
       - |
-        opencode run "
+        zyraxon run "
         You are an AI assistant helping with GitLab operations.
 
         Context: $AI_FLOW_CONTEXT
@@ -146,7 +146,7 @@ Sjekk ut [**GitLab-dokumentene**](https://docs.gitlab.com/user/duo_agent_platfor
         fi
     variables:
       - ANTHROPIC_API_KEY
-      - GITLAB_TOKEN_OPENCODE
+      - GITLAB_TOKEN_ZYRAXON
       - GITLAB_HOST
     ```
 
@@ -161,7 +161,7 @@ Du kan se [GitLab CLI agents docs](https://docs.gitlab.com/user/duo_agent_platfo
 Her er noen eksempler på hvordan du kan bruke ZYRAXON i GitLab.
 
 :::tip
-Du kan konfigurere til å bruke en annen triggerfrase enn `@opencode`.
+Du kan konfigurere til å bruke en annen triggerfrase enn `@zyraxon`.
 :::
 
 - **Forklar en sak**
@@ -169,7 +169,7 @@ Du kan konfigurere til å bruke en annen triggerfrase enn `@opencode`.
   Legg til denne kommentaren i en GitLab-sak.
 
   ```
-  @opencode explain this issue
+  @zyraxon explain this issue
   ```
 
   ZYRAXON vil lese saken og svare med en klar forklaring.
@@ -179,7 +179,7 @@ Du kan konfigurere til å bruke en annen triggerfrase enn `@opencode`.
   I en GitLab-sak, si:
 
   ```
-  @opencode fix this
+  @zyraxon fix this
   ```
 
   ZYRAXON vil opprette en ny gren, implementere endringene og åpne en Merge Request med endringene.
@@ -189,7 +189,7 @@ Du kan konfigurere til å bruke en annen triggerfrase enn `@opencode`.
   Legg igjen følgende kommentar på en GitLab Merge Request.
 
   ```
-  @opencode review this merge request
+  @zyraxon review this merge request
   ```
 
   ZYRAXON vil gjennomgå Merge Request-en og gi tilbakemelding.

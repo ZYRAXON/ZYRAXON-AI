@@ -6,7 +6,7 @@ description: Using any LLM provider in ZYRAXON.
 import config from "../../../config.mjs"
 export const console = config.console
 
-ZYRAXON uses the [AI SDK](https://ai-sdk.dev/) and [Models.dev](https://models.dev) to support **75+ LLM providers** and it supports running local models.
+ZYRAXON uses the [AI SDK](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/4) and [Models.dev](https://models.dev) to support **75+ LLM providers** and it supports running local models.
 
 To add a provider you need to:
 
@@ -18,7 +18,7 @@ To add a provider you need to:
 ### Credentials
 
 When you add a provider's API keys with the `/connect` command, they are stored
-in `~/.local/share/opencode/auth.json`.
+in `~/.local/share/zyraxon/auth.json`.
 
 ---
 
@@ -35,11 +35,11 @@ You can customize the base URL for any provider by setting the `baseURL` option.
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://api.anthropic.com/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off3"
       }
     }
   }
@@ -54,7 +54,7 @@ You can hide specific models from the `/models` picker for a provider using the 
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "anthropic": {
       "blacklist": ["claude-opus-4-20250514"]
@@ -67,7 +67,7 @@ The inverse `whitelist` option hides every model except the ones listed.
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "anthropic": {
       "whitelist": ["claude-sonnet-4-20250514"]
@@ -93,7 +93,7 @@ tested and verified to work well with ZYRAXON. [Learn more](/docs/zen).
 If you are new, we recommend starting with ZYRAXON Zen.
 :::
 
-1. Run the `/connect` command in the TUI, select `ZYRAXON Zen`, and head to [zyraxon.ai/auth](https://zyraxon.ai/zen).
+1. Run the `/connect` command in the TUI, select `ZYRAXON Zen`, and head to [zyraxon.ai/auth](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider9).
 
    ```txt
    /connect
@@ -125,7 +125,7 @@ It works like any other provider in ZYRAXON and is completely optional to use.
 ZYRAXON Go is a low cost subscription plan that provides reliable access to popular open coding models provided by the ZYRAXON team that have been
 tested and verified to work well with ZYRAXON.
 
-1. Run the `/connect` command in the TUI, select `ZYRAXON Go`, and head to [zyraxon.ai/auth](https://zyraxon.ai/zen).
+1. Run the `/connect` command in the TUI, select `ZYRAXON Go`, and head to [zyraxon.ai/auth](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider9).
 
    ```txt
    /connect
@@ -165,7 +165,7 @@ Don't see a provider here? Submit a PR.
 
 ### 302.AI
 
-1. Head over to the [302.AI console](https://302.ai/), create an account, and generate an API key.
+1. Head over to the [302.AI console](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off3), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **302.AI**.
 
@@ -207,17 +207,17 @@ To use Amazon Bedrock with ZYRAXON:
 
    #### Environment Variables (Quick Start)
 
-   Set one of these environment variables while running opencode:
+   Set one of these environment variables while running zyraxon:
 
    ```bash
    # Option 1: Using AWS access keys
-   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY opencode
+   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY zyraxon
 
    # Option 2: Using named AWS profile
-   AWS_PROFILE=my-profile opencode
+   AWS_PROFILE=my-profile zyraxon
 
    # Option 3: Using Bedrock bearer token
-   AWS_BEARER_TOKEN_BEDROCK=XXX opencode
+   AWS_BEARER_TOKEN_BEDROCK=XXX zyraxon
    ```
 
    Or add them to your bash profile:
@@ -235,7 +235,7 @@ To use Amazon Bedrock with ZYRAXON:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -264,7 +264,7 @@ To use Amazon Bedrock with ZYRAXON:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -313,7 +313,7 @@ For custom inference profiles, use the model and provider name in the key and se
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "amazon-bedrock": {
       // ...
@@ -372,17 +372,17 @@ the following subscriptions in ZYRAXON with zero setup:
 
 ### Atomic Chat
 
-You can configure opencode to use local models through [Atomic Chat](https://atomic.chat), a desktop application that runs local LLMs behind an OpenAI-compatible API server (default endpoint `http://127.0.0.1:1337/v1`).
+You can configure zyraxon to use local models through [Atomic Chat](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/5), a desktop application that runs local LLMs behind an OpenAI-compatible API server (default endpoint `https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/6).
 
 ```json title="zyraxon.json" "atomic-chat" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "atomic-chat": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Atomic Chat (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1337/v1"
+        "baseURL": "https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider2"
       },
       "models": {
         "<your-model-id>": {
@@ -400,7 +400,7 @@ In this example:
 - `npm` specifies the package to use for this provider. Here, `@ai-sdk/openai-compatible` is used for any OpenAI-compatible API.
 - `name` is the display name for the provider in the UI.
 - `options.baseURL` is the endpoint for the local server. Change the host and port to match your Atomic Chat setup.
-- `models` is a map of model IDs to their display names. Each ID must match the `id` returned by `GET /v1/models` — run `curl http://127.0.0.1:1337/v1/models` to list the ids currently loaded in Atomic Chat.
+- `models` is a map of model IDs to their display names. Each ID must match the `id` returned by `GET /v1/models` — run `curl https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider0 to list the ids currently loaded in Atomic Chat.
 
 :::tip
 If tool calls aren't working well, pick a loaded model with strong tool-calling support (for example, a Qwen-Coder or DeepSeek-Coder variant).
@@ -414,14 +414,14 @@ If tool calls aren't working well, pick a loaded model with strong tool-calling 
 If you encounter "I'm sorry, but I cannot assist with that request" errors, try changing the content filter from **DefaultV2** to **Default** in your Azure resource.
 :::
 
-1. Head over to the [Azure portal](https://portal.azure.com/) and create an **Azure OpenAI** resource. You'll need:
-   - **Resource name**: This becomes part of your API endpoint (`https://RESOURCE_NAME.openai.azure.com/`)
+1. Head over to the [Azure portal](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider1) and create an **Azure OpenAI** resource. You'll need:
+   - **Resource name**: This becomes part of your API endpoint (`https://zenmux.ai/settings/keys)
    - **API key**: Either `KEY 1` or `KEY 2` from your resource
 
-2. Go to [Azure AI Foundry](https://ai.azure.com/) and deploy a model.
+2. Go to [Azure AI Foundry](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0) and deploy a model.
 
    :::note
-   The deployment name must match the model name for opencode to work properly.
+   The deployment name must match the model name for zyraxon to work properly.
    :::
 
 3. Run the `/connect` command and search for **Azure**.
@@ -442,7 +442,7 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 5. Set your resource name as an environment variable:
 
    ```bash
-   AZURE_RESOURCE_NAME=XXX opencode
+   AZURE_RESOURCE_NAME=XXX zyraxon
    ```
 
    Or add it to your bash profile:
@@ -461,14 +461,14 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 
 ### Azure Cognitive Services
 
-1. Head over to the [Azure portal](https://portal.azure.com/) and create an **Azure OpenAI** resource. You'll need:
+1. Head over to the [Azure portal](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider1) and create an **Azure OpenAI** resource. You'll need:
    - **Resource name**: This becomes part of your API endpoint (`https://AZURE_COGNITIVE_SERVICES_RESOURCE_NAME.cognitiveservices.azure.com/`)
    - **API key**: Either `KEY 1` or `KEY 2` from your resource
 
-2. Go to [Azure AI Foundry](https://ai.azure.com/) and deploy a model.
+2. Go to [Azure AI Foundry](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0) and deploy a model.
 
    :::note
-   The deployment name must match the model name for opencode to work properly.
+   The deployment name must match the model name for zyraxon to work properly.
    :::
 
 3. Run the `/connect` command and search for **Azure Cognitive Services**.
@@ -489,7 +489,7 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 5. Set your resource name as an environment variable:
 
    ```bash
-   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX opencode
+   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX zyraxon
    ```
 
    Or add it to your bash profile:
@@ -508,7 +508,7 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 
 ### Baseten
 
-1. Head over to the [Baseten](https://app.baseten.co/), create an account, and generate an API key.
+1. Head over to the [Baseten](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider7), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **Baseten**.
 
@@ -535,7 +535,7 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 
 ### Cerebras
 
-1. Head over to the [Cerebras console](https://inference.cerebras.ai/), create an account, and generate an API key.
+1. Head over to the [Cerebras console](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider7), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **Cerebras**.
 
@@ -562,9 +562,9 @@ If you encounter "I'm sorry, but I cannot assist with that request" errors, try 
 
 ### Cloudflare AI Gateway
 
-Cloudflare AI Gateway lets you access models from OpenAI, Anthropic, Workers AI, and more through a unified endpoint. With [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/) you don't need separate API keys for each provider.
+Cloudflare AI Gateway lets you access models from OpenAI, Anthropic, Workers AI, and more through a unified endpoint. With [Unified Billing](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained2) you don't need separate API keys for each provider.
 
-1. Head over to the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to **AI** > **AI Gateway**, and create a new gateway. Note your **Account ID** and **Gateway ID**.
+1. Head over to the [Cloudflare dashboard](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off4), navigate to **AI** > **AI Gateway**, and create a new gateway. Note your **Account ID** and **Gateway ID**.
 
 2. Run the `/connect` command and search for **Cloudflare AI Gateway**.
 
@@ -605,11 +605,11 @@ Cloudflare AI Gateway lets you access models from OpenAI, Anthropic, Workers AI,
    /models
    ```
 
-   You can also add models through your opencode config.
+   You can also add models through your zyraxon config.
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "cloudflare-ai-gateway": {
          "models": {
@@ -635,7 +635,7 @@ Cloudflare AI Gateway lets you access models from OpenAI, Anthropic, Workers AI,
 
 Cloudflare Workers AI lets you run AI models on Cloudflare's global network directly via REST API, with no separate provider accounts needed for supported models.
 
-1. Head over to the [Cloudflare dashboard](https://dash.cloudflare.com/), navigate to **Workers AI**, and select **Use REST API** to get your **Account ID** and create an API token.
+1. Head over to the [Cloudflare dashboard](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off4), navigate to **Workers AI**, and select **Use REST API** to get your **Account ID** and create an API token.
 
 2. Run the `/connect` command and search for **Cloudflare Workers AI**.
 
@@ -678,7 +678,7 @@ Cloudflare Workers AI lets you run AI models on Cloudflare's global network dire
 
 ### Cortecs
 
-1. Head over to the [Cortecs console](https://cortecs.ai/), create an account, and generate an API key.
+1. Head over to the [Cortecs console](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/1), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **Cortecs**.
 
@@ -759,7 +759,7 @@ Cloudflare Workers AI lets you run AI models on Cloudflare's global network dire
 
 ### DigitalOcean
 
-DigitalOcean's [Inference Engine](https://docs.digitalocean.com/products/inference/) provides access to open models like GPT-OSS, Llama, Qwen, and DeepSeek, plus custom [Inference Routers](https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/) that route each request to the cheapest, fastest, or best-fit model for a task.
+DigitalOcean's [Inference Engine](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off4) provides access to open models like GPT-OSS, Llama, Qwen, and DeepSeek, plus custom [Inference Routers](https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/) that route each request to the cheapest, fastest, or best-fit model for a task.
 
 ZYRAXON supports two authentication methods:
 
@@ -845,7 +845,7 @@ Selecting a router model is a drop-in replacement for any other model — ZYRAXO
 
 ### FrogBot
 
-1. Head over to the [FrogBot dashboard](https://app.frogbot.ai/signup), create an account, and generate an API key.
+1. Head over to the [FrogBot dashboard](https://ollama.com/), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **FrogBot**.
 
@@ -872,7 +872,7 @@ Selecting a router model is a drop-in replacement for any other model — ZYRAXO
 
 ### Fireworks AI
 
-1. Head over to the [Fireworks AI console](https://app.fireworks.ai/), create an account, and click **Create API Key**.
+1. Head over to the [Fireworks AI console](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider0), create an account, and click **Create API Key**.
 
 2. Run the `/connect` command and search for **Fireworks AI**.
 
@@ -904,7 +904,7 @@ GitLab Duo support in ZYRAXON is experimental. Features, configuration, and
 behavior may change in future releases.
 :::
 
-ZYRAXON integrates with the [GitLab Duo Agent Platform](https://docs.gitlab.com/user/duo_agent_platform/),
+ZYRAXON integrates with the [GitLab Duo Agent Platform](https://huggingface.co/docs/inference-providers),
 providing AI-powered agentic chat with native tool calling capabilities.
 
 :::note[License requirements]
@@ -935,7 +935,7 @@ for full requirements.
    Select **OAuth** and your browser will open for authorization.
 
    #### Using Personal Access Token
-   1. Go to [GitLab User Settings > Access Tokens](https://gitlab.com/-/user_settings/personal_access_tokens)
+   1. Go to [GitLab User Settings > Access Tokens](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off0)
    2. Click **Add new token**
    3. Name: `ZYRAXON`, Scopes: `api`
    4. Copy the token (starts with `glpat-`)
@@ -954,7 +954,7 @@ for full requirements.
 
 :::note
 You can also specify 'GITLAB_TOKEN' environment variable if you don't want
-to store token in opencode auth storage.
+to store token in zyraxon auth storage.
 :::
 
 ##### Self-Hosted GitLab
@@ -967,7 +967,7 @@ to only use your own GitLab-hosted instance, add the following to your
 
 ```json
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "small_model": "gitlab/duo-chat-haiku-4-5",
   "share": "disabled"
 }
@@ -978,7 +978,7 @@ to only use your own GitLab-hosted instance, add the following to your
 For self-hosted GitLab instances:
 
 ```bash
-export GITLAB_INSTANCE_URL=https://gitlab.company.com
+export GITLAB_INSTANCE_URL=https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/1
 export GITLAB_TOKEN=glpat-...
 ```
 
@@ -991,7 +991,7 @@ GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
 Or add to your bash profile:
 
 ```bash title="~/.bash_profile"
-export GITLAB_INSTANCE_URL=https://gitlab.company.com
+export GITLAB_INSTANCE_URL=https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/1
 export GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
 export GITLAB_TOKEN=glpat-...
 ```
@@ -1023,7 +1023,7 @@ Then expose application ID as environment variable:
 export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 ```
 
-More documentation on [opencode-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) homepage.
+More documentation on [zyraxon-gitlab-auth](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off2) homepage.
 
 ##### Configuration
 
@@ -1031,11 +1031,11 @@ Customize through `zyraxon.json`:
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "gitlab": {
       "options": {
-        "instanceUrl": "https://gitlab.com"
+        "instanceUrl": "https://docs.digitalocean.com/products/inference/how-to/use-inference-router/6"
       }
     }
   }
@@ -1062,8 +1062,8 @@ To access GitLab tools (merge requests, issues, pipelines, CI/CD, etc.):
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-gitlab-plugin"]
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
+  "plugin": ["zyraxon-gitlab-plugin"]
 }
 ```
 
@@ -1073,11 +1073,11 @@ This plugin provides comprehensive GitLab repository management capabilities inc
 
 ### GitHub Copilot
 
-To use your GitHub Copilot subscription with opencode:
+To use your GitHub Copilot subscription with zyraxon:
 
 :::note
 Some models might need a [Pro+
-subscription](https://github.com/features/copilot/plans) to use.
+subscription](https://cloud.digitalocean.com/) to use.
 :::
 
 1. Run the `/connect` command and search for GitHub Copilot.
@@ -1086,12 +1086,12 @@ subscription](https://github.com/features/copilot/plans) to use.
    /connect
    ```
 
-2. Navigate to [github.com/login/device](https://github.com/login/device) and enter the code.
+2. Navigate to [github.com/login/device](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider4) and enter the code.
 
    ```txt
    ┌ Login with GitHub Copilot
    │
-   │ https://github.com/login/device
+   │ https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider4
    │
    │ Enter code: 8F43-6FCF
    │
@@ -1153,10 +1153,10 @@ To use Google Vertex AI with ZYRAXON:
      - `GOOGLE_APPLICATION_CREDENTIALS`: Path to your service account JSON key file
      - Authenticate using gcloud CLI: `gcloud auth application-default login`
 
-   Set them while running opencode.
+   Set them while running zyraxon.
 
    ```bash
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id opencode
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id zyraxon
    ```
 
    Or add them to your bash profile.
@@ -1181,7 +1181,7 @@ The `global` region improves availability and reduces errors at no extra cost. U
 
 ### Groq
 
-1. Head over to the [Groq console](https://console.groq.com/), click **Create API Key**, and copy the key.
+1. Head over to the [Groq console](https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/5), click **Create API Key**, and copy the key.
 
 2. Run the `/connect` command and search for Groq.
 
@@ -1237,9 +1237,9 @@ The `global` region improves availability and reduces errors at no extra cost. U
 
 ### Helicone
 
-[Helicone](https://helicone.ai) is an LLM observability platform that provides logging, monitoring, and analytics for your AI applications. The Helicone AI Gateway routes your requests to the appropriate provider automatically based on the model.
+[Helicone](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/0) is an LLM observability platform that provides logging, monitoring, and analytics for your AI applications. The Helicone AI Gateway routes your requests to the appropriate provider automatically based on the model.
 
-1. Head over to [Helicone](https://helicone.ai), create an account, and generate an API key from your dashboard.
+1. Head over to [Helicone](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/0), create an account, and generate an API key from your dashboard.
 
 2. Run the `/connect` command and search for **Helicone**.
 
@@ -1262,23 +1262,23 @@ The `global` region improves availability and reduces errors at no extra cost. U
    /models
    ```
 
-For more providers and advanced features like caching and rate limiting, check the [Helicone documentation](https://docs.helicone.ai).
+For more providers and advanced features like caching and rate limiting, check the [Helicone documentation](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider5).
 
 #### Optional Configs
 
-In the event you see a feature or model from Helicone that isn't configured automatically through opencode, you can always configure it yourself.
+In the event you see a feature or model from Helicone that isn't configured automatically through zyraxon, you can always configure it yourself.
 
-Here's [Helicone's Model Directory](https://helicone.ai/models), you'll need this to grab the IDs of the models you want to add.
+Here's [Helicone's Model Directory](https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/0), you'll need this to grab the IDs of the models you want to add.
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider9",
       },
       "models": {
         "gpt-4o": {
@@ -1298,18 +1298,18 @@ Here's [Helicone's Model Directory](https://helicone.ai/models), you'll need thi
 
 Helicone supports custom headers for features like caching, user tracking, and session management. Add them to your provider config using `options.headers`:
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider9",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -1319,17 +1319,17 @@ Helicone supports custom headers for features like caching, user tracking, and s
 
 ##### Session tracking
 
-Helicone's [Sessions](https://docs.helicone.ai/features/sessions) feature lets you group related LLM requests together. Use the [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) plugin to automatically log each ZYRAXON conversation as a session in Helicone.
+Helicone's [Sessions](https://docs.helicone.ai/features/sessions) feature lets you group related LLM requests together. Use the [zyraxon-helicone-session](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off1) plugin to automatically log each ZYRAXON conversation as a session in Helicone.
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 Add it to your config.
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 
@@ -1350,17 +1350,17 @@ See the [Helicone Header Directory](https://docs.helicone.ai/helicone-headers/he
 
 ### llama.cpp
 
-You can configure opencode to use local models through [llama.cpp's](https://github.com/ggml-org/llama.cpp) llama-server utility
+You can configure zyraxon to use local models through [llama.cpp's](http://127.0.0.1:8080/callback`) llama-server utility
 
 ```json title="zyraxon.json" "llama.cpp" {5, 6, 8, 10-15}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "llama.cpp": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "llama-server (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:8080/v1"
+        "baseURL": "https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/8"
       },
       "models": {
         "qwen3-coder:a3b": {
@@ -1390,7 +1390,7 @@ In this example:
 
 IO.NET offers 17 models optimized for various use cases:
 
-1. Head over to the [IO.NET console](https://ai.io.net/), create an account, and generate an API key.
+1. Head over to the [IO.NET console](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/8), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **IO.NET**.
 
@@ -1417,17 +1417,17 @@ IO.NET offers 17 models optimized for various use cases:
 
 ### LM Studio
 
-You can configure opencode to use local models through LM Studio.
+You can configure zyraxon to use local models through LM Studio.
 
 ```json title="zyraxon.json" "lmstudio" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1234/v1"
+        "baseURL": "https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider3"
       },
       "models": {
         "google/gemma-3n-e4b": {
@@ -1480,7 +1480,7 @@ To use Kimi K2 from Moonshot AI:
 
 ### MiniMax
 
-1. Head over to the [MiniMax API Console](https://platform.minimax.io/login), create an account, and generate an API key.
+1. Head over to the [MiniMax API Console](https://console.gmicloud.ai/), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **MiniMax**.
 
@@ -1507,9 +1507,9 @@ To use Kimi K2 from Moonshot AI:
 
 ### NVIDIA
 
-NVIDIA provides access to Nemotron models and many other open models through [build.nvidia.com](https://build.nvidia.com) for free.
+NVIDIA provides access to Nemotron models and many other open models through [build.nvidia.com](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider4) for free.
 
-1. Head over to [build.nvidia.com](https://build.nvidia.com), create an account, and generate an API key.
+1. Head over to [build.nvidia.com](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider4), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **NVIDIA**.
 
@@ -1534,15 +1534,15 @@ NVIDIA provides access to Nemotron models and many other open models through [bu
 
 #### On-Prem / NIM
 
-You can also use NVIDIA models locally via [NVIDIA NIM](https://docs.nvidia.com/nim/) by setting a custom base URL.
+You can also use NVIDIA models locally via [NVIDIA NIM](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off7) by setting a custom base URL.
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "nvidia": {
       "options": {
-        "baseURL": "http://localhost:8000/v1"
+        "baseURL": "https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/9"
       }
     }
   }
@@ -1561,7 +1561,7 @@ export NVIDIA_API_KEY=nvapi-your-key-here
 
 ### Nebius Token Factory
 
-1. Head over to the [Nebius Token Factory console](https://tokenfactory.nebius.com/), create an account, and click **Add Key**.
+1. Head over to the [Nebius Token Factory console](https://deepinfra.com/dash), create an account, and click **Add Key**.
 
 2. Run the `/connect` command and search for **Nebius Token Factory**.
 
@@ -1588,21 +1588,21 @@ export NVIDIA_API_KEY=nvapi-your-key-here
 
 ### Ollama
 
-You can configure opencode to use local models through Ollama.
+You can configure zyraxon to use local models through Ollama.
 
 :::tip
-Ollama can automatically configure itself for ZYRAXON. See the [Ollama integration docs](https://docs.ollama.com/integrations/opencode) for details.
+Ollama can automatically configure itself for ZYRAXON. See the [Ollama integration docs](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off6) for details.
 :::
 
 ```json title="zyraxon.json" "ollama" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://localhost:11434/v1"
+        "baseURL": "https://docs.digitalocean.com/products/genai-platform/concepts/inference-routers/2"
       },
       "models": {
         "llama2": {
@@ -1731,7 +1731,7 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
 
 ### OpenRouter
 
-1. Head over to the [OpenRouter dashboard](https://openrouter.ai/settings/keys), click **Create API Key**, and copy the key.
+1. Head over to the [OpenRouter dashboard](https://platform.deepseek.com/), click **Create API Key**, and copy the key.
 
 2. Run the `/connect` command and search for OpenRouter.
 
@@ -1754,11 +1754,11 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
    /models
    ```
 
-   You can also add additional models through your opencode config.
+   You can also add additional models through your zyraxon config.
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "openrouter": {
          "models": {
@@ -1769,11 +1769,11 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
    }
    ```
 
-5. You can also customize them through your opencode config. Here's an example of specifying a provider
+5. You can also customize them through your zyraxon config. Here's an example of specifying a provider
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "openrouter": {
          "models": {
@@ -1818,11 +1818,11 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
    /models
    ```
 
-   You can also add additional models through your opencode config.
+   You can also add additional models through your zyraxon config.
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "llmgateway": {
          "models": {
@@ -1833,11 +1833,11 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
    }
    ```
 
-5. You can also customize them through your opencode config. Here's an example of specifying a provider
+5. You can also customize them through your zyraxon config. Here's an example of specifying a provider
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "llmgateway": {
          "models": {
@@ -1865,7 +1865,7 @@ ZYRAXON Zen is a list of tested and verified models provided by the ZYRAXON team
 
 SAP AI Core provides access to 40+ models from OpenAI, Anthropic, Google, Amazon, Meta, Mistral, and AI21 through a unified platform.
 
-1. Go to your [SAP BTP Cockpit](https://account.hana.ondemand.com/), navigate to your SAP AI Core service instance, and create a service key.
+1. Go to your [SAP BTP Cockpit](https://api.myprovider.com/v1), navigate to your SAP AI Core service instance, and create a service key.
 
    :::tip
    The service key is a JSON object containing `clientid`, `clientsecret`, `url`, and `serviceurls.AI_API_URL`. You can find your AI Core instance under **Services** > **Instances and Subscriptions** in the BTP Cockpit.
@@ -1889,7 +1889,7 @@ SAP AI Core provides access to 40+ models from OpenAI, Anthropic, Google, Amazon
    Or set the `AICORE_SERVICE_KEY` environment variable:
 
    ```bash
-   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' opencode
+   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' zyraxon
    ```
 
    Or add it to your bash profile:
@@ -1901,7 +1901,7 @@ SAP AI Core provides access to 40+ models from OpenAI, Anthropic, Google, Amazon
 4. Optionally set deployment ID and resource group:
 
    ```bash
-   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group opencode
+   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group zyraxon
    ```
 
    :::note
@@ -1920,7 +1920,7 @@ SAP AI Core provides access to 40+ models from OpenAI, Anthropic, Google, Amazon
 
 STACKIT AI Model Serving provides fully managed sovereign hosting environment for AI models, focusing on LLMs like Llama, Mistral, and Qwen, with maximum data sovereignty on European infrastructure.
 
-1. Head over to [STACKIT Portal](https://portal.stackit.cloud), navigate to **AI Model Serving**, and create an auth token for your project.
+1. Head over to [STACKIT Portal](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off5), navigate to **AI Model Serving**, and create an auth token for your project.
 
    :::tip
    You need a STACKIT customer account, user account, and project before creating auth tokens.
@@ -1951,7 +1951,7 @@ STACKIT AI Model Serving provides fully managed sovereign hosting environment fo
 
 ### OVHcloud AI Endpoints
 
-1. Head over to the [OVHcloud panel](https://ovh.com/manager). Navigate to the `Public Cloud` section, `AI & Machine Learning` > `AI Endpoints` and in `API Keys` tab, click **Create a new API key**.
+1. Head over to the [OVHcloud panel](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider8). Navigate to the `Public Cloud` section, `AI & Machine Learning` > `AI Endpoints` and in `API Keys` tab, click **Create a new API key**.
 
 2. Run the `/connect` command and search for **OVHcloud AI Endpoints**.
 
@@ -1978,9 +1978,9 @@ STACKIT AI Model Serving provides fully managed sovereign hosting environment fo
 
 ### Scaleway
 
-To use [Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-apis/) with Opencode:
+To use [Scaleway Generative APIs](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off3) with Zyraxon:
 
-1. Head over to the [Scaleway Console IAM settings](https://console.scaleway.com/iam/api-keys) to generate a new API key.
+1. Head over to the [Scaleway Console IAM settings](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-agent-platform-on-or-off8) to generate a new API key.
 
 2. Run the `/connect` command and search for **Scaleway**.
 
@@ -2011,7 +2011,7 @@ To use [Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-ap
 
 Don't have a Snowflake account? [Sign up for a free trial](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider).
 
-opencode's core workflow for coding, editing files, and running commands relies on tool calling. Only the Claude and OpenAI families within Snowflake Cortex support this. The provider is limited to those families to support the core workflow.
+zyraxon's core workflow for coding, editing files, and running commands relies on tool calling. Only the Claude and OpenAI families within Snowflake Cortex support this. The provider is limited to those families to support the core workflow.
 
 ZYRAXON supports two authentication methods:
 
@@ -2069,7 +2069,7 @@ If the result is empty, use the **Manual bearer token** method below while the i
 
 If you prefer to paste a token directly, or if `SNOWFLAKE$LOCAL_APPLICATION` is not yet available in your account:
 
-1. Generate a [Programmatic Access Token (PAT)](https://docs.snowflake.com/en/user-guide/programmatic-access-tokens) in your Snowflake account.
+1. Generate a [Programmatic Access Token (PAT)](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained3) in your Snowflake account.
 
 2. Run the `/connect` command, search for **Snowflake Cortex**, and select **Paste PAT or bearer token manually**.
 
@@ -2085,7 +2085,7 @@ If you prefer to paste a token directly, or if `SNOWFLAKE$LOCAL_APPLICATION` is 
 
 #### Environment variable
 
-For CI or headless environments, set a PAT or JWT before starting opencode:
+For CI or headless environments, set a PAT or JWT before starting zyraxon:
 
 ```bash
 export SNOWFLAKE_ACCOUNT=myorg-myaccount
@@ -2100,7 +2100,7 @@ The model catalog is provided automatically. A minimal `zyraxon.json` is all tha
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "model": "snowflake-cortex/claude-sonnet-4-6",
   "small_model": "snowflake-cortex/claude-haiku-4-5"
 }
@@ -2110,7 +2110,7 @@ The model catalog is provided automatically. A minimal `zyraxon.json` is all tha
 
 ### Together AI
 
-1. Head over to the [Together AI console](https://api.together.ai), create an account, and click **Add Key**.
+1. Head over to the [Together AI console](https://signup.snowflake.com/?utm_source=opencode&utm_medium=docs&utm_campaign=cortex-provider6), create an account, and click **Add Key**.
 
 2. Run the `/connect` command and search for **Together AI**.
 
@@ -2137,7 +2137,7 @@ The model catalog is provided automatically. A minimal `zyraxon.json` is all tha
 
 ### Venice AI
 
-1. Head over to the [Venice AI console](https://venice.ai), create an account, and generate an API key.
+1. Head over to the [Venice AI console](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/9), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **Venice AI**.
 
@@ -2166,7 +2166,7 @@ The model catalog is provided automatically. A minimal `zyraxon.json` is all tha
 
 Vercel AI Gateway lets you access models from OpenAI, Anthropic, Google, xAI, and more through a unified endpoint. Models are offered at list price with no markup.
 
-1. Head over to the [Vercel dashboard](https://vercel.com/), navigate to the **AI Gateway** tab, and click **API keys** to create a new API key.
+1. Head over to the [Vercel dashboard](https://docs.digitalocean.com/products/inference/how-to/use-inference-router/2), navigate to the **AI Gateway** tab, and click **API keys** to create a new API key.
 
 2. Run the `/connect` command and search for **Vercel AI Gateway**.
 
@@ -2189,11 +2189,11 @@ Vercel AI Gateway lets you access models from OpenAI, Anthropic, Google, xAI, an
    /models
    ```
 
-You can also customize models through your opencode config. Here's an example of specifying provider routing order.
+You can also customize models through your zyraxon config. Here's an example of specifying provider routing order.
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "vercel": {
       "models": {
@@ -2230,7 +2230,7 @@ Three ways to authenticate: a SuperGrok subscription via browser OAuth, the same
    /connect
    ```
 
-2. Select **xAI Grok OAuth (SuperGrok Subscription)**. ZYRAXON opens xAI's consent screen in your browser and waits for the callback on `http://127.0.0.1:56121/callback`.
+2. Select **xAI Grok OAuth (SuperGrok Subscription)**. ZYRAXON opens xAI's consent screen in your browser and waits for the callback on `https://chatgpt.com/pricing.
 
 3. Run the `/models` command to select a Grok model.
 
@@ -2253,14 +2253,14 @@ Use this when ZYRAXON is running somewhere a browser can't reach the loopback re
 2. Select **xAI Grok OAuth (Headless / Remote / VPS)**. ZYRAXON prints a verification URL and a short user code.
 
    ```txt
-   Open https://x.ai/device on any device and enter code: ABCD-1234
+   Open https://docs.digitalocean.com/products/inference/how-to/use-inference-router/3 on any device and enter code: ABCD-1234
    ```
 
 3. Open the URL on a device that has a browser (your laptop or phone), enter the code, and approve the consent screen. ZYRAXON polls xAI's token endpoint and stores the resulting OAuth tokens once you approve. Token refresh works the same as Option A.
 
 #### Option C — API key
 
-1. Head over to the [xAI console](https://console.x.ai/), create an account, and generate an API key.
+1. Head over to the [xAI console](https://docs.gitlab.com/administration/gitlab_duo/configure/gitlab_self_managed/7), create an account, and generate an API key.
 
 2. Run the `/connect` command and search for **xAI**.
 
@@ -2287,7 +2287,7 @@ Use this when ZYRAXON is running somewhere a browser can't reach the loopback re
 
 ### Z.AI
 
-1. Head over to the [Z.AI API console](https://z.ai/manage-apikey/apikey-list), create an account, and click **Create a new API key**.
+1. Head over to the [Z.AI API console](https://llmgateway.io/dashboard), create an account, and click **Create a new API key**.
 
 2. Run the `/connect` command and search for **Z.AI**.
 
@@ -2339,11 +2339,11 @@ Use this when ZYRAXON is running somewhere a browser can't reach the loopback re
    /models
    ```
 
-   You can also add additional models through your opencode config.
+   You can also add additional models through your zyraxon config.
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "zenmux": {
          "models": {
@@ -2361,7 +2361,7 @@ Use this when ZYRAXON is running somewhere a browser can't reach the loopback re
 To add any **OpenAI-compatible** provider that's not listed in the `/connect` command:
 
 :::tip
-You can use any OpenAI-compatible provider with opencode. Most modern AI providers offer OpenAI-compatible APIs.
+You can use any OpenAI-compatible provider with zyraxon. Most modern AI providers offer OpenAI-compatible APIs.
 :::
 
 1. Run the `/connect` command and scroll down to **Other**.
@@ -2411,7 +2411,7 @@ You can use any OpenAI-compatible provider with opencode. Most modern AI provide
 
    ```json title="zyraxon.json" ""myprovider"" {5-15}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
      "provider": {
        "myprovider": {
          "npm": "@ai-sdk/openai-compatible",
@@ -2449,7 +2449,7 @@ Here's an example setting the `apiKey`, `headers`, and model `limit` options.
 
 ```json title="zyraxon.json" {9,11,17-20}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/#turn-gitlab-duo-on-or-off0",
   "provider": {
     "myprovider": {
       "npm": "@ai-sdk/openai-compatible",
@@ -2495,7 +2495,7 @@ If you are having trouble with configuring a provider, check the following:
 
    This doesn't apply to providers like Amazon Bedrock, that rely on environment variables for their auth.
 
-2. For custom providers, check the opencode config and:
-   - Make sure the provider ID used in the `/connect` command matches the ID in your opencode config.
+2. For custom providers, check the zyraxon config and:
+   - Make sure the provider ID used in the `/connect` command matches the ID in your zyraxon config.
    - The right npm package is used for the provider. For example, use `@ai-sdk/cerebras` for Cerebras. And for all other OpenAI-compatible providers, use `@ai-sdk/openai-compatible` (for `/v1/chat/completions`); if a model uses `/v1/responses`, use `@ai-sdk/openai`. For mixed setups under one provider, you can override per model via `provider.npm`.
    - Check correct API endpoint is used in the `options.baseURL` field.

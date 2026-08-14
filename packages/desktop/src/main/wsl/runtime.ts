@@ -259,7 +259,7 @@ export async function installWslDistro(name: string, opts?: RunWslOptions) {
   )
 }
 
-export async function installWslOpencode(version: string, distro: string, opts?: RunWslOptions) {
+export async function installWslZyraxon(version: string, distro: string, opts?: RunWslOptions) {
   return runInteractiveCommand(
     resolveSystem32Command("wsl.exe"),
     wslArgs(
@@ -302,11 +302,11 @@ export async function probeWslDistro(name: string, opts?: RunWslOptions): Promis
   }
 }
 
-export async function resolveWslOpencode(distro: string, opts?: RunWslOptions) {
+export async function resolveWslZyraxon(distro: string, opts?: RunWslOptions) {
   return firstLine(
     (
       await runWslSh(
-        'if [ -x "$HOME/.zyraxon/bin/opencode" ]; then printf "%s\\n" "$HOME/.zyraxon/bin/opencode"; fi',
+        'if [ -x "$HOME/.zyraxon/bin/zyraxon" ]; then printf "%s\\n" "$HOME/.zyraxon/bin/zyraxon"; fi',
         distro,
         opts,
       )

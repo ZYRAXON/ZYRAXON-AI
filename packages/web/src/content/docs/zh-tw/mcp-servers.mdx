@@ -46,7 +46,7 @@ MCP 伺服器會佔用您的上下文空間，所以請謹慎選擇啟用哪些�
 
 ### 覆寫遠端預設值
 
-組織可以透過其 `.well-known/opencode` 端點提供預設的 MCP 伺服器。這些伺服器可能預設處於停用狀態，允許使用者按需啟用。
+組織可以透過其 `.well-known/zyraxon` 端點提供預設的 MCP 伺服器。這些伺服器可能預設處於停用狀態，允許使用者按需啟用。
 
 要啟用組織遠端設定中的某個伺服器，請在本地設定中新增該伺服器並設定 `enabled: true`：
 
@@ -223,22 +223,22 @@ ZYRAXON 會自動處理遠端 MCP 伺服器的 OAuth 身分驗證。當伺服器
 對特定 MCP 伺服器進行身分驗證：
 
 ```bash
-opencode mcp auth my-oauth-server
+zyraxon mcp auth my-oauth-server
 ```
 
 列出所有 MCP 伺服器及其認證狀態：
 
 ```bash
-opencode mcp list
+zyraxon mcp list
 ```
 
 刪除已儲存的憑證：
 
 ```bash
-opencode mcp logout my-oauth-server
+zyraxon mcp logout my-oauth-server
 ```
 
-`mcp auth` 指令會開啟瀏覽器進行授權。授權完成後，ZYRAXON 會將 Token 安全地儲存在 `~/.local/share/opencode/mcp-auth.json` 中。
+`mcp auth` 指令會開啟瀏覽器進行授權。授權完成後，ZYRAXON 會將 Token 安全地儲存在 `~/.local/share/zyraxon/mcp-auth.json` 中。
 
 ---
 
@@ -279,10 +279,10 @@ opencode mcp logout my-oauth-server
 
 ```bash
 # 查看所有支援 OAuth 的伺服器的認證狀態
-opencode mcp auth list
+zyraxon mcp auth list
 
 # 偵錯特定伺服器的連線和 OAuth 流程
-opencode mcp debug my-oauth-server
+zyraxon mcp debug my-oauth-server
 ```
 
 `mcp debug` 指令會顯示當前認證狀態、測試 HTTP 連線，並嘗試執行 OAuth 發現流程。
@@ -420,7 +420,7 @@ MCP 伺服器工具在註冊時以伺服器名稱作為前綴，因此要停用�
 新增設定後，使用 Sentry 進行身分驗證：
 
 ```bash
-opencode mcp auth sentry
+zyraxon mcp auth sentry
 ```
 
 這會開啟瀏覽器視窗完成 OAuth 流程，將 ZYRAXON 連結到您的 Sentry 帳號。
@@ -484,7 +484,7 @@ When you need to search docs, use `context7` tools.
 
 ### Grep by Vercel
 
-新增 [Grep by Vercel](https://grep.app) MCP 伺服器以搜尋 GitHub 上的程式碼片段。
+新增 [Grep by Vercel](https://github.com/upstash/context71) MCP 伺服器以搜尋 GitHub 上的程式碼片段。
 
 ```json title="zyraxon.json" {4-7}
 {

@@ -31,7 +31,7 @@ Agregue a su configuración [Zed](https://zed.dev) (`~/.config/zed/settings.json
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "opencode",
+      "command": "zyraxon",
       "args": ["acp"]
     }
   }
@@ -53,7 +53,7 @@ También puedes vincular un atajo de teclado editando tu `keymap.json`:
             "custom": {
               "name": "ZYRAXON",
               "command": {
-                "command": "opencode",
+                "command": "zyraxon",
                 "args": ["acp"]
               }
             }
@@ -75,7 +75,7 @@ Agregue a su [JetBrains IDE](https://www.jetbrains.com/) acp.json de acuerdo con
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/zyraxon",
       "args": ["acp"]
     }
   }
@@ -93,8 +93,8 @@ Agregue a su configuración [Avante.nvim](https://github.com/yetone/avante.nvim)
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" }
     }
   }
@@ -106,11 +106,11 @@ Si necesita pasar variables de entorno:
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" },
       env = {
-        OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
+        ZYRAXON_API_KEY = os.getenv("ZYRAXON_API_KEY")
       }
     }
   }
@@ -128,7 +128,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "zyraxon",
         model = "claude-sonnet-4",
       },
     },
@@ -138,7 +138,7 @@ require("codecompanion").setup({
 
 Esta configuración configura CodeCompanion para usar ZYRAXON como agente ACP para el chat.
 
-Si necesita pasar variables de entorno (como `OPENCODE_API_KEY`), consulte [Configuración de adaptadores: variables de entorno](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) en la documentación de CodeCompanion.nvim para obtener detalles completos.
+Si necesita pasar variables de entorno (como `ZYRAXON_API_KEY`), consulte [Configuración de adaptadores: variables de entorno](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key) en la documentación de CodeCompanion.nvim para obtener detalles completos.
 
 ## Soporte
 

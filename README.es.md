@@ -126,4 +126,4 @@ Si estás trabajando en un proyecto basado en ZYRAXON y usas "ZYRAXON" como part
 
 ---
 
-**Únete a nuestra comunidad** [Discord](https://discord.gg/DN4fZCCDJj)
+**Únete a nuestra comunidad** [Discord](https://discord.gg/GP8yX33NA)

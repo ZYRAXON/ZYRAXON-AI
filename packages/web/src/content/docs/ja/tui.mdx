@@ -10,13 +10,13 @@ ZYRAXON は、LLM を使用してプロジェクトを作業するための対�
 ZYRAXON を実行すると、現在のディレクトリの TUI が開始されます。
 
 ```bash
-opencode
+zyraxon
 ```
 
 または、特定の作業ディレクトリに対して起動することもできます。
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 TUI に入ったら、メッセージを表示することができます。
@@ -354,7 +354,7 @@ VS Code などの一部のエディターは、`--wait` フラグを使用して
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -371,7 +371,7 @@ VS Code などの一部のエディターは、`--wait` フラグを使用して
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -394,7 +394,7 @@ VS Code などの一部のエディターは、`--wait` フラグを使用して
 - `mouse` - TUI でのマウスキャプチャを有効または無効にします (デフォルト: `true`)。無効にすると、ターミナル本来のマウス選択/スクロール動作が維持されます。
 - `attention` - TUI のデスクトップ通知とサウンドを設定します。デフォルトでは無効です。
 
-カスタム TUI 設定パスをロードするには、`OPENCODE_TUI_CONFIG` を使用します。
+カスタム TUI 設定パスをロードするには、`ZYRAXON_TUI_CONFIG` を使用します。
 
 ### Attention
 
@@ -404,7 +404,7 @@ Attention を有効にすると、ZYRAXON が回答待ち、権限の承認待�
 - `notifications` - Attention が有効なとき、TUI がターミナル経由でデスクトップ通知を送信できるようにします。デフォルトは `true` です。
 - `sound` - Attention が有効なとき、通知音の再生を許可します。デフォルトは `true` です。
 - `volume` - 通知音のデフォルト音量を `0` から `1` で指定します。デフォルトは `0.4` です。
-- `sound_pack` - 使用する sound pack ID です。デフォルトは `opencode.default` です。
+- `sound_pack` - 使用する sound pack ID です。デフォルトは `zyraxon.default` です。
 - `sounds` - `default`、`question`、`permission`、`error`、`done`、または `subagent_done` に使うカスタムサウンドファイルを指定します。パスは絶対パス、`file://` URL、または `tui.json` からの相対パスにできます。
 
 ---

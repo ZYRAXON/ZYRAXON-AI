@@ -1,5 +1,5 @@
 import { type Component, Show } from "solid-js"
-import type { AgentInfo } from "@opencode-ai/collab"
+import type { AgentInfo } from "@zyraxon-ai/collab"
 
 interface AgentCardProps {
   agent: AgentInfo

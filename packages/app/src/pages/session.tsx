@@ -1,6 +1,6 @@
-import type { FilePart, Project, UserMessage, VcsFileDiff } from "@opencode-ai/sdk/v2"
-import { getFilename } from "@opencode-ai/core/util/path"
-import { useDialog } from "@opencode-ai/ui/context/dialog"
+import type { FilePart, Project, UserMessage, VcsFileDiff } from "@zyraxon-ai/sdk/v2"
+import { getFilename } from "@zyraxon-ai/core/util/path"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
 import { createQuery, skipToken, useMutation, useQueryClient } from "@tanstack/solid-query"
 import {
   batch,
@@ -25,19 +25,19 @@ import { debounce } from "@solid-primitives/scheduled"
 import { useLocal } from "@/context/local"
 import { FileProvider, selectionFromLines, useFile, type FileSelection, type SelectedLineRange } from "@/context/file"
 import { createStore } from "solid-js/store"
-import type { SessionReviewLineComment } from "@opencode-ai/session-ui/session-review"
-import { ResizeHandle } from "@opencode-ai/ui/resize-handle"
-import { Select } from "@opencode-ai/ui/select"
-import { SelectV2 } from "@opencode-ai/ui/v2/select-v2"
-import { isScrollKeyTarget, scrollKey, scrollKeyOwner } from "@opencode-ai/ui/scroll-view"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { ButtonV2 } from "@opencode-ai/ui/v2/button-v2"
-import { createAutoScroll } from "@opencode-ai/ui/hooks"
-import { previewSelectedLines } from "@opencode-ai/session-ui/pierre/selection-bridge"
-import { getPreviewActive, getPreviewWidth } from "@/pages/session/preview-state"
-import { Button } from "@opencode-ai/ui/button"
+import type { SessionReviewLineComment } from "@zyraxon-ai/session-ui/session-review"
+import { ResizeHandle } from "@zyraxon-ai/ui/resize-handle"
+import { Select } from "@zyraxon-ai/ui/select"
+import { SelectV2 } from "@zyraxon-ai/ui/v2/select-v2"
+import { isScrollKeyTarget, scrollKey, scrollKeyOwner } from "@zyraxon-ai/ui/scroll-view"
+import { Tabs } from "@zyraxon-ai/ui/tabs"
+import { ButtonV2 } from "@zyraxon-ai/ui/v2/button-v2"
+import { createAutoScroll } from "@zyraxon-ai/ui/hooks"
+import { previewSelectedLines } from "@zyraxon-ai/session-ui/pierre/selection-bridge"
+import { getPreviewActive, getPreviewWidth, setPreviewActiveState } from "@/pages/session/preview-state"
+import { Button } from "@zyraxon-ai/ui/button"
 import { showToast } from "@/utils/toast"
-import { base64Encode, checksum } from "@opencode-ai/core/util/encode"
+import { base64Encode, checksum } from "@zyraxon-ai/core/util/encode"
 import { useLocation, useNavigate, useParams, useSearchParams } from "@solidjs/router"
 import { NewSessionView, SessionHeader } from "@/components/session"
 import { ErrorPage } from "@/pages/error"
@@ -83,9 +83,9 @@ import {
 } from "@/pages/session/session-panel-width"
 import { SessionSidePanel } from "@/pages/session/session-side-panel"
 import { sessionPanelLayout } from "@/pages/session/session-panel-layout"
-import { SessionReviewEmptyChangesV2 } from "@opencode-ai/session-ui/v2/session-review-empty-changes-v2"
-import { SessionReviewEmptyNoGitV2 } from "@opencode-ai/session-ui/v2/session-review-empty-no-git-v2"
-import { SessionReviewV2SidebarToggle } from "@opencode-ai/session-ui/v2/session-review-v2"
+import { SessionReviewEmptyChangesV2 } from "@zyraxon-ai/session-ui/v2/session-review-empty-changes-v2"
+import { SessionReviewEmptyNoGitV2 } from "@zyraxon-ai/session-ui/v2/session-review-empty-no-git-v2"
+import { SessionReviewV2SidebarToggle } from "@zyraxon-ai/session-ui/v2/session-review-v2"
 import { ReviewPanelV2 } from "@/pages/session/v2/review-panel-v2"
 import { createReviewPanelV2State } from "@/pages/session/v2/review-panel-v2-state"
 import { reviewDiffDirectory, reviewDiffNeedsLoad, reviewRootDirectory } from "@/pages/session/v2/review-diff-kinds"
@@ -205,6 +205,7 @@ function SessionErrorFallback(props: { error: unknown; sessionID?: string; serve
   const language = useLanguage()
   const server = useServer()
   const tabs = useTabs()
+  const navigate = useNavigate()
   const displayServer = createMemo(() => {
     const key = props.serverKey ?? server.key
     const conn = server.list.find((item) => ServerConnection.key(item) === key)
@@ -214,29 +215,29 @@ function SessionErrorFallback(props: { error: unknown; sessionID?: string; serve
     if (!props.sessionID) return
     tabs.removeSessionTab({ server: props.serverKey ?? server.key, sessionId: props.sessionID })
   }
+  const createNewSession = () => {
+    closeTab()
+    navigate("/", { replace: true })
+  }
   if (isCurrentSessionNotFoundError(props.error, props.sessionID)) {
+    // Auto-recover: close the stale tab and navigate to home instead of
+    // showing an error page.  One tick delay so the ErrorBoundary doesn't
+    // re-throw during the same render cycle.
+    let recovered = false
+    createEffect(() => {
+      if (recovered) return
+      recovered = true
+      queueMicrotask(createNewSession)
+    })
     return (
       <div class="flex-1 min-h-0 overflow-hidden">
         <div class="h-full px-6 pb-42 -mt-4 flex flex-col items-center justify-center text-center gap-4">
           <div class="flex flex-col items-center gap-2">
             <div class="text-16-medium text-text max-w-md">{language.t("session.error.notFound")}</div>
             <div class="text-13-regular text-text-weak max-w-md">
-              {language.t("session.error.notFound.description")}
+              Session not found. Opening new session…
             </div>
           </div>
-          <Show when={props.sessionID}>
-            {(sessionID) => (
-              <div class="max-w-full flex flex-col items-center gap-1">
-                <div class="max-w-full text-11-regular text-text-faint break-all">{displayServer()}</div>
-                <code class="max-w-full rounded-[4px] px-1 py-0.5 font-mono text-xs font-medium leading-4 text-text-base break-all bg-[color-mix(in_oklch,var(--v2-text-text-base)_8%,transparent)]">
-                  {sessionID()}
-                </code>
-              </div>
-            )}
-          </Show>
-          <ButtonV2 variant="neutral" size="normal" icon="xmark-small" onClick={closeTab}>
-            {language.t("session.error.notFound.closeTab")}
-          </ButtonV2>
         </div>
       </div>
     )
@@ -597,6 +598,20 @@ export default function Page() {
         if (!prev) return
         if (next.dir === prev.dir && next.id === prev.id) return
         if (prev.id && !next.id) local.session.reset()
+      },
+      { defer: true },
+    ),
+  )
+
+  // Reset global preview state when session changes so the side panel
+  // doesn't stay open with empty content from a previous session.
+  createEffect(
+    on(
+      () => params.id,
+      (_id, prev) => {
+        if (prev !== undefined && _id !== prev) {
+          setPreviewActiveState(false)
+        }
       },
       { defer: true },
     ),
@@ -1031,7 +1046,10 @@ export default function Page() {
 
   const isEditableTarget = (target: EventTarget | null | undefined) => {
     if (!(target instanceof HTMLElement)) return false
-    return /^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName) || target.isContentEditable
+    if (/^(INPUT|TEXTAREA|SELECT|BUTTON)$/.test(target.tagName) || target.isContentEditable) return true
+    if (target.closest(".monaco-editor") || target.closest("[data-monaco-editor]")) return true
+    if (target.closest(".cm-editor") || target.closest(".view-lines")) return true
+    return false
   }
 
   const deepActiveElement = () => {
@@ -1048,14 +1066,16 @@ export default function Page() {
     const activeElement = deepActiveElement()
 
     const protectedTarget = path.some(
-      (item) => item instanceof HTMLElement && item.closest("[data-prevent-autofocus]") !== null,
+      (item) => item instanceof HTMLElement && (item.closest("[data-prevent-autofocus]") !== null || item.closest(".monaco-editor") !== null || item.closest(".cm-editor") !== null),
     )
     if (protectedTarget || isEditableTarget(target)) return
 
     if (activeElement) {
       const isProtected = activeElement.closest("[data-prevent-autofocus]")
       const isInput = isEditableTarget(activeElement)
-      if (isProtected || isInput) return
+      const isInMonaco = activeElement.closest(".monaco-editor") || activeElement.closest("[data-monaco-editor]")
+      const isInCodeMirror = activeElement.closest(".cm-editor")
+      if (isProtected || isInput || isInMonaco || isInCodeMirror) return
     }
     if (dialog.active) return
 
@@ -2037,6 +2057,8 @@ export default function Page() {
 
   onMount(() => {
     makeEventListener(document, "keydown", handleKeyDown)
+    // Close review panel on session mount to prevent auto-opening from persisted state
+    if (view().reviewPanel.opened()) view().reviewPanel.close()
   })
 
   onCleanup(() => {
@@ -2343,7 +2365,7 @@ export default function Page() {
           </Show>
         </div>
 
-        <Show when={!newSessionDesign() && (desktopSidePanelOpen() || activeTab() === "preview" || getPreviewActive())}>
+        <Show when={!newSessionDesign() && (desktopSidePanelOpen() || activeTab() === "preview" || getPreviewActive() || activeTab() === "ecosystem")}>
           <SessionSidePanel
             canReview={canReview}
             diffs={reviewDiffs}
@@ -2360,9 +2382,9 @@ export default function Page() {
           />
         </Show>
         <Show when={newSessionDesign()}>
-          <Show when={isDesktop() ? (desktopV2PanelLayout().visible || activeTab() === "preview" || getPreviewActive()) : terminalOpen()}>
+          <Show when={isDesktop() ? (desktopV2PanelLayout().visible || activeTab() === "preview" || getPreviewActive() || activeTab() === "ecosystem") : terminalOpen()}>
             <div class="min-w-0 h-full flex flex-1 flex-col">
-              <Show when={isDesktop() && (desktopV2ReviewOpen() || desktopFileTreeOpen() || activeTab() === "preview" || getPreviewActive())}>
+              <Show when={isDesktop() && (desktopV2ReviewOpen() || desktopFileTreeOpen() || activeTab() === "preview" || getPreviewActive() || activeTab() === "ecosystem")}>
                 <div class="min-h-0 flex-1">
                   <SessionSidePanel
                     canReview={canReview}

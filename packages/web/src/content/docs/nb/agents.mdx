@@ -188,10 +188,10 @@ Konfigurer agenter i konfigurasjonsfilen `zyraxon.json`:
 
 Du kan også definere agenter ved å bruke markdown-filer. Plasser dem i:
 
-- Globalt: `~/.config/opencode/agents/`
-- Per prosjekt: `.opencode/agents/`
+- Globalt: `~/.config/zyraxon/agents/`
+- Per prosjekt: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -366,7 +366,7 @@ Hvis du ikke spesifiserer en modell, bruker primæragenter [modell globalt konfi
 }
 ```
 
-Modellen ID i ZYRAXON-konfigurasjonen din bruker formatet `provider/model-id`. For eksempel, hvis du bruker [ZYRAXON Zen](/docs/zen), vil du bruke `opencode/gpt-5.1-codex` for GPT 5.1 Codex.
+Modellen ID i ZYRAXON-konfigurasjonen din bruker formatet `provider/model-id`. For eksempel, hvis du bruker [ZYRAXON Zen](/docs/zen), vil du bruke `zyraxon/gpt-5.1-codex` for GPT 5.1 Codex.
 
 ---
 
@@ -454,7 +454,7 @@ Du kan overstyre disse tillatelsene per agent.
 
 Du kan også angi tillatelser i Markdown-agenter.
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -674,7 +674,7 @@ Kjør `zyraxon models` for å se en liste over tilgjengelige modeller.
 Du kan opprette nye agenter ved å bruke følgende kommando:
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Denne interaktive kommandoen vil:
@@ -711,7 +711,7 @@ Har du en agent du vil dele? [Send inn en PR](https://github.com/onelpawarai/ZYR
 
 ### Dokumentasjonsagent
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -733,7 +733,7 @@ Focus on:
 
 ### Sikkerhetsrevisor
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

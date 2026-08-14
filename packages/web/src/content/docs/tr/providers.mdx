@@ -1,30 +1,30 @@
 ---
 title: Sağlayıcılar
-description: opencode'da herhangi bir LLM sağlayıcısını kullanma.
+description: zyraxon'da herhangi bir LLM sağlayıcısını kullanma.
 ---
 
 import config from "../../../../config.mjs"
 export const console = config.console
 
-opencode, **75'ten fazla LLM sağlayıcısını** desteklemek için [AI SDK](https://ai-sdk.dev/) ve [Models.dev](https://models.dev) kullanır ve yerel modellerin çalıştırılmasını destekler.
+zyraxon, **75'ten fazla LLM sağlayıcısını** desteklemek için [AI SDK](https://developers.cloudflare.com/ai-gateway/features/unified-billing/1) ve [Models.dev](https://developers.cloudflare.com/ai-gateway/features/unified-billing/2) kullanır ve yerel modellerin çalıştırılmasını destekler.
 
 Bir sağlayıcı eklemek için şunları yapmanız gerekir:
 
 1. `/connect` komutunu kullanarak sağlayıcı için API anahtarlarını ekleyin.
-2. Sağlayıcıyı opencode yapılandırmanızda yapılandırın.
+2. Sağlayıcıyı zyraxon yapılandırmanızda yapılandırın.
 
 ---
 
 ### Kimlik Bilgileri
 
 Bir sağlayıcının API anahtarlarını `/connect` komutuyla eklediğinizde, bunlar saklanır
-`~/.local/share/opencode/auth.json` içinde.
+`~/.local/share/zyraxon/auth.json` içinde.
 
 ---
 
 ### Yapılandırma
 
-Sağlayıcıları opencode'unuzdaki `provider` bölümü aracılığıyla özelleştirebilirsiniz.
+Sağlayıcıları zyraxon'unuzdaki `provider` bölümü aracılığıyla özelleştirebilirsiniz.
 config.
 
 ---
@@ -35,11 +35,11 @@ config.
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://api.anthropic.com/v1"
+        "baseURL": "https://zyraxon.ai/auth"
       }
     }
   }
@@ -50,14 +50,14 @@ config.
 
 ## ZYRAXON Zen
 
-ZYRAXON Zen, opencode ekibi tarafından sağlanan modellerin bir listesidir.
-opencode ile iyi çalıştığı test edilip doğrulandı. [Daha fazla bilgi](/docs/zen).
+ZYRAXON Zen, zyraxon ekibi tarafından sağlanan modellerin bir listesidir.
+zyraxon ile iyi çalıştığı test edilip doğrulandı. [Daha fazla bilgi](/docs/zen).
 
 :::tip
 Yeniyseniz ZYRAXON Zen ile başlamanızı öneririz.
 :::
 
-1. TUI'de `/connect` komutunu çalıştırın, opencode'u seçin ve [zyraxon.ai/auth](https://zyraxon.ai/auth)'ye gidin.
+1. TUI'de `/connect` komutunu çalıştırın, zyraxon'u seçin ve [zyraxon.ai/auth](https://zyraxon.ai/auth)'ye gidin.
 
    ```txt
    /connect
@@ -80,13 +80,13 @@ Yeniyseniz ZYRAXON Zen ile başlamanızı öneririz.
    /models
    ```
 
-opencode'daki diğer sağlayıcılar gibi çalışır ve kullanımı tamamen isteğe bağlıdır.
+zyraxon'daki diğer sağlayıcılar gibi çalışır ve kullanımı tamamen isteğe bağlıdır.
 
 ---
 
 ## ZYRAXON Go
 
-ZYRAXON Go, opencode ile iyi çalıştığı test edilmiş ve doğrulanmış, opencode ekibi tarafından sağlanan popüler açık kodlama modellerine güvenilir erişim sağlayan düşük maliyetli bir abonelik planıdır.
+ZYRAXON Go, zyraxon ile iyi çalıştığı test edilmiş ve doğrulanmış, zyraxon ekibi tarafından sağlanan popüler açık kodlama modellerine güvenilir erişim sağlayan düşük maliyetli bir abonelik planıdır.
 
 1. TUI'de `/connect` komutunu çalıştırın, `ZYRAXON Go`'yu seçin ve [zyraxon.ai/auth](https://zyraxon.ai/zen) adresine gidin.
 
@@ -111,7 +111,7 @@ ZYRAXON Go, opencode ile iyi çalıştığı test edilmiş ve doğrulanmış, op
    /models
    ```
 
-opencode'daki diğer sağlayıcılar gibi çalışır ve kullanımı tamamen isteğe bağlıdır.
+zyraxon'daki diğer sağlayıcılar gibi çalışır ve kullanımı tamamen isteğe bağlıdır.
 
 ---
 
@@ -128,7 +128,7 @@ Burada bir sağlayıcı göremiyor musunuz? Bir PR gönderin.
 
 ### 302.AI
 
-1. [302.AI console](https://302.ai/) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [302.AI console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/3) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **302.AI**'yi arayın.
 
@@ -155,7 +155,7 @@ Burada bir sağlayıcı göremiyor musunuz? Bir PR gönderin.
 
 ### Amazon Bedrock
 
-Amazon Bedrock'u opencode ile kullanmak için:
+Amazon Bedrock'u zyraxon ile kullanmak için:
 
 1. Amazon Bedrock konsolundaki **Model kataloğuna** gidin ve istekte bulunun
    Dilediğiniz modellere ulaşabilirsiniz.
@@ -168,17 +168,17 @@ Amazon Bedrock'u opencode ile kullanmak için:
 
    #### Ortam Değişkenleri (Hızlı Başlangıç)
 
-   opencode'u çalıştırırken bu ortam değişkenlerinden birini ayarlayın:
+   zyraxon'u çalıştırırken bu ortam değişkenlerinden birini ayarlayın:
 
    ```bash
    # Option 1: Using AWS access keys
-   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY opencode
+   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY zyraxon
 
    # Option 2: Using named AWS profile
-   AWS_PROFILE=my-profile opencode
+   AWS_PROFILE=my-profile zyraxon
 
    # Option 3: Using Bedrock bearer token
-   AWS_BEARER_TOKEN_BEDROCK=XXX opencode
+   AWS_BEARER_TOKEN_BEDROCK=XXX zyraxon
    ```
 
    Veya bunları bash profilinize ekleyin:
@@ -194,7 +194,7 @@ Amazon Bedrock'u opencode ile kullanmak için:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -221,7 +221,7 @@ Bedrock için VPC uç noktaları kullanıyorsanız:
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "amazon-bedrock": {
       "options": {
@@ -267,7 +267,7 @@ Bir taşıyıcı belirteç ayarlandığında (`/connect` veya `AWS_BEARER_TOKEN_
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "amazon-bedrock": {
       // ...
@@ -312,7 +312,7 @@ Bir taşıyıcı belirteç ayarlandığında (`/connect` veya `AWS_BEARER_TOKEN_
    ```
 
 :::info
-Claude Pro/Max aboneliğinizi opencode'da kullanmak [Anthropic](https://anthropic.com) tarafından resmi olarak desteklenmemektedir.
+Claude Pro/Max aboneliğinizi zyraxon'da kullanmak [Anthropic](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/7) tarafından resmi olarak desteklenmemektedir.
 :::
 
 ##### API anahtarlarını kullanma
@@ -325,11 +325,11 @@ Veya zaten bir API anahtarınız varsa **API Anahtarını Manuel Olarak Girin** 
 
 ### Atomic Chat
 
-opencode'u, yerel LLM'leri OpenAI uyumlu bir API sunucusunun arkasında çalıştıran bir masaüstü uygulaması olan [Atomic Chat](https://atomic.chat) aracılığıyla yerel modelleri kullanacak şekilde yapılandırabilirsiniz (varsayılan uç nokta `http://127.0.0.1:1337/v1`).
+zyraxon'u, yerel LLM'leri OpenAI uyumlu bir API sunucusunun arkasında çalıştıran bir masaüstü uygulaması olan [Atomic Chat](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com5) aracılığıyla yerel modelleri kullanacak şekilde yapılandırabilirsiniz (varsayılan uç nokta `https://developers.cloudflare.com/ai-gateway/features/unified-billing/7).
 
 ```json title="zyraxon.json" "atomic-chat" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "atomic-chat": {
       "npm": "@ai-sdk/openai-compatible",
@@ -353,7 +353,7 @@ Bu örnekte:
 - `npm` bu sağlayıcı için kullanılacak paketi belirtir. Burada, herhangi bir OpenAI uyumlu API için `@ai-sdk/openai-compatible` kullanılır.
 - `name` sağlayıcının arayüzde görüntülenen adıdır.
 - `options.baseURL` yerel sunucunun uç noktasıdır. Host ve portu Atomic Chat kurulumunuzla eşleşecek şekilde değiştirin.
-- `models` model kimliklerini görüntüleme adlarına eşleyen bir haritadır. Her ID, `GET /v1/models` tarafından döndürülen `id` ile eşleşmelidir — Atomic Chat'te yüklü kimlikleri listelemek için `curl http://127.0.0.1:1337/v1/models` çalıştırın.
+- `models` model kimliklerini görüntüleme adlarına eşleyen bir haritadır. Her ID, `GET /v1/models` tarafından döndürülen `id` ile eşleşmelidir — Atomic Chat'te yüklü kimlikleri listelemek için `curl https://zenmux.ai/settings/keys çalıştırın.
 
 :::tip
 Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan yüklü bir model seçin (örneğin, bir Qwen-Coder veya DeepSeek-Coder varyantı).
@@ -374,7 +374,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 2. [Azure AI Foundry](https://ai.azure.com/)'a gidin ve bir model dağıtın.
 
    :::note
-   opencode'un düzgün çalışması için dağıtım adının model adıyla eşleşmesi gerekir.
+   zyraxon'un düzgün çalışması için dağıtım adının model adıyla eşleşmesi gerekir.
    :::
 
 3. `/connect` komutunu çalıştırın ve **Azure**'u arayın.
@@ -395,7 +395,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 5. Kaynak adınızı ortam değişkeni olarak ayarlayın:
 
    ```bash
-   AZURE_RESOURCE_NAME=XXX opencode
+   AZURE_RESOURCE_NAME=XXX zyraxon
    ```
 
    Veya bash profilinize ekleyin:
@@ -421,7 +421,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 2. [Azure AI Foundry](https://ai.azure.com/)'a gidin ve bir model dağıtın.
 
    :::note
-   opencode'un düzgün çalışması için dağıtım adının model adıyla eşleşmesi gerekir.
+   zyraxon'un düzgün çalışması için dağıtım adının model adıyla eşleşmesi gerekir.
    :::
 
 3. `/connect` komutunu çalıştırın ve **Azure Cognitive Services**'i arayın.
@@ -442,7 +442,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 5. Kaynak adınızı ortam değişkeni olarak ayarlayın:
 
    ```bash
-   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX opencode
+   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX zyraxon
    ```
 
    Veya bash profilinize ekleyin:
@@ -461,7 +461,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 
 ### Baseten
 
-1. [Baseten](https://app.baseten.co/) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [Baseten](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/4) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Baseten**'i arayın.
 
@@ -488,7 +488,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 
 ### Cerebras
 
-1. [Cerebras console](https://inference.cerebras.ai/) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [Cerebras console](https://helicone.ai/models) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Cerebras**'ı arayın.
 
@@ -517,7 +517,7 @@ Araç çağrıları iyi çalışmıyorsa, tool calling desteği güçlü olan y�
 
 Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki modellere birleşik bir uç nokta aracılığıyla erişmenizi sağlar. [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/) ile her sağlayıcı için ayrı API anahtarlarına ihtiyacınız yoktur.
 
-1. [Cloudflare dashboard](https://dash.cloudflare.com/)'a gidin, **AI** > **AI Ağ Geçidi**'ne gidin ve yeni bir ağ geçidi oluşturun.
+1. [Cloudflare dashboard](https://zyraxon.ai/zen)'a gidin, **AI** > **AI Ağ Geçidi**'ne gidin ve yeni bir ağ geçidi oluşturun.
 
 2. Hesap Kimliğinizi ve Ağ Geçidi Kimliğinizi ortam değişkenleri olarak ayarlayın.
 
@@ -553,11 +553,11 @@ Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki model
    /models
    ```
 
-   Opencode yapılandırmanız aracılığıyla da modeller ekleyebilirsiniz.
+   Zyraxon yapılandırmanız aracılığıyla da modeller ekleyebilirsiniz.
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "cloudflare-ai-gateway": {
          "models": {
@@ -573,7 +573,7 @@ Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki model
 
 ### Cortecs
 
-1. [Cortecs console](https://cortecs.ai/) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [Cortecs console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com2) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Cortecs**'i arayın.
 
@@ -600,7 +600,7 @@ Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki model
 
 ### DeepSeek
 
-1. [DeepSeek console](https://platform.deepseek.com/)'a gidin, bir hesap oluşturun ve **Yeni API anahtarı oluştur**'a tıklayın.
+1. [DeepSeek console](https://gitlab.company.com)'a gidin, bir hesap oluşturun ve **Yeni API anahtarı oluştur**'a tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **DeepSeek**'i arayın.
 
@@ -627,7 +627,7 @@ Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki model
 
 ### Deep Infra
 
-1. [Deep Infra dashboard](https://deepinfra.com/dash) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [Deep Infra dashboard](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Deep Infra**'yı arayın.
 
@@ -681,7 +681,7 @@ Cloudflare AI Gateway, OpenAI, Anthropic, Workers AI ve daha fazlasındaki model
 
 ### Fireworks AI
 
-1. [Fireworks AI console](https://app.fireworks.ai/)'a gidin, bir hesap oluşturun ve **API Anahtarı Oluştur**'a tıklayın.
+1. [Fireworks AI console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/4)'a gidin, bir hesap oluşturun ve **API Anahtarı Oluştur**'a tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **Fireworks AI**'yi arayın.
 
@@ -750,20 +750,20 @@ GitLab Duo, GitLab'ın Anthropic proxy'si aracılığıyla yerel araç çağırm
 
 :::note
 İstemiyorsanız 'GITLAB_TOKEN' ortam değişkenini de belirtebilirsiniz.
-to store token in opencode auth storage.
+to store token in zyraxon auth storage.
 :::
 
 ##### Kendi Kendine Barındırılan GitLab
 
 :::note[uyumluluk notu]
-opencode, oturum başlığını oluşturmak gibi bazı AI görevleri için küçük bir model kullanır.
-Varsayılan olarak Zen tarafından barındırılan gpt-5-nano'yu kullanacak şekilde yapılandırılmıştır. opencode'u kilitlemek için
+zyraxon, oturum başlığını oluşturmak gibi bazı AI görevleri için küçük bir model kullanır.
+Varsayılan olarak Zen tarafından barındırılan gpt-5-nano'yu kullanacak şekilde yapılandırılmıştır. zyraxon'u kilitlemek için
 yalnızca kendi GitLab tarafından barındırılan örneğinizi kullanmak için aşağıdakileri ekleyin:
 `zyraxon.json` dosyası. Ayrıca oturum paylaşımını devre dışı bırakmanız da önerilir.
 
 ```json
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "small_model": "gitlab/duo-chat-haiku-4-5",
   "share": "disabled"
 }
@@ -781,14 +781,14 @@ export GITLAB_TOKEN=glpat-...
 Örneğiniz özel bir AI Ağ Geçidi çalıştırıyorsa:
 
 ```bash
-GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 ```
 
 Veya bash profilinize ekleyin:
 
 ```bash title="~/.bash_profile"
 export GITLAB_INSTANCE_URL=https://gitlab.company.com
-export GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+export GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 export GITLAB_TOKEN=glpat-...
 ```
 
@@ -817,7 +817,7 @@ Then expose application ID as environment variable:
 export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 ```
 
-Daha fazla belge [opencode-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) ana sayfasında.
+Daha fazla belge [zyraxon-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) ana sayfasında.
 
 ##### Yapılandırma
 
@@ -825,11 +825,11 @@ Daha fazla belge [opencode-gitlab-auth](https://www.npmjs.com/package/opencode-g
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "gitlab": {
       "options": {
-        "instanceUrl": "https://gitlab.com"
+        "instanceUrl": "https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com6"
       }
     }
   }
@@ -842,8 +842,8 @@ GitLab araçlarına (birleştirme istekleri, sorunlar, işlem hatları, CI/CD vb
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-gitlab-plugin"]
+  "$schema": "https://portal.azure.com/",
+  "plugin": ["zyraxon-gitlab-plugin"]
 }
 ```
 
@@ -853,7 +853,7 @@ Bu eklenti, MR incelemeleri, sorun izleme, işlem hattı izleme ve daha fazlası
 
 ### GitHub Copilot
 
-GitHub Copilot aboneliğinizi opencode'la kullanmak için:
+GitHub Copilot aboneliğinizi zyraxon'la kullanmak için:
 
 :::note
 Bazı modelleri kullanmak için [Pro+ aboneliği](https://github.com/features/copilot/plans) gerekebilir.
@@ -867,12 +867,12 @@ Bazı modellerin [GitHub Copilot settings](https://docs.github.com/en/copilot/ho
    /connect
    ```
 
-2. [github.com/login/device](https://github.com/login/device)'a gidin ve kodu girin.
+2. [github.com/login/device](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6)'a gidin ve kodu girin.
 
    ```txt
    ┌ Login with GitHub Copilot
    │
-   │ https://github.com/login/device
+   │ https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6
    │
    │ Enter code: 8F43-6FCF
    │
@@ -889,7 +889,7 @@ Bazı modellerin [GitHub Copilot settings](https://docs.github.com/en/copilot/ho
 
 ### Google Vertex AI
 
-Google Vertex AI'yi opencode ile kullanmak için:
+Google Vertex AI'yi zyraxon ile kullanmak için:
 
 1. Google Cloud Console'daki **Model Bahçesi**'ne gidin ve şunları kontrol edin:
    Bölgenizde mevcut modeller.
@@ -905,10 +905,10 @@ Google Vertex AI'yi opencode ile kullanmak için:
      - `GOOGLE_APPLICATION_CREDENTIALS`: Hizmet hesabınızın yolu JSON anahtar dosyası
      - gcloud kullanarak kimlik doğrulaması yapın CLI: `gcloud auth application-default login`
 
-   Bunları opencode çalıştırılırken ayarlayın.
+   Bunları zyraxon çalıştırılırken ayarlayın.
 
    ```bash
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id opencode
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id zyraxon
    ```
 
    Veya bunları bash profilinize ekleyin.
@@ -960,7 +960,7 @@ Google Vertex AI'yi opencode ile kullanmak için:
 
 ### Hugging Face
 
-[Hugging Face Inference Providers](https://huggingface.co/docs/inference-providers) 17'den fazla sağlayıcı tarafından desteklenen açık modellere erişim sağlar.
+[Hugging Face Inference Providers](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use2) 17'den fazla sağlayıcı tarafından desteklenen açık modellere erişim sağlar.
 
 1. Çıkarım Sağlayıcılara çağrı yapma iznine sahip bir belirteç oluşturmak için [Hugging Face settings](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained) adresine gidin.
 
@@ -989,9 +989,9 @@ Google Vertex AI'yi opencode ile kullanmak için:
 
 ### Helicone
 
-[Helicone](https://helicone.ai), AI uygulamalarınız için günlük kaydı, izleme ve analiz sağlayan bir LLM gözlemlenebilirlik platformudur. Helicone AI Gateway, taleplerinizi modele göre otomatik olarak uygun sağlayıcıya yönlendirir.
+[Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1), AI uygulamalarınız için günlük kaydı, izleme ve analiz sağlayan bir LLM gözlemlenebilirlik platformudur. Helicone AI Gateway, taleplerinizi modele göre otomatik olarak uygun sağlayıcıya yönlendirir.
 
-1. [Helicone](https://helicone.ai) adresine gidin, bir hesap oluşturun ve kontrol panelinizden bir API anahtarı oluşturun.
+1. [Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1) adresine gidin, bir hesap oluşturun ve kontrol panelinizden bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Helicone**'yu arayın.
 
@@ -1014,23 +1014,23 @@ Google Vertex AI'yi opencode ile kullanmak için:
    /models
    ```
 
-Daha fazla sağlayıcı ve önbelleğe alma ve hız sınırlama gibi gelişmiş özellikler için [Helicone documentation](https://docs.helicone.ai)'yi kontrol edin.
+Daha fazla sağlayıcı ve önbelleğe alma ve hız sınırlama gibi gelişmiş özellikler için [Helicone documentation](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/1)'yi kontrol edin.
 
 #### İsteğe Bağlı Yapılandırmalar
 
-Helicone'un opencode aracılığıyla otomatik olarak yapılandırılmayan bir özelliği veya modelini görmeniz durumunda bunu her zaman kendiniz yapılandırabilirsiniz.
+Helicone'un zyraxon aracılığıyla otomatik olarak yapılandırılmayan bir özelliği veya modelini görmeniz durumunda bunu her zaman kendiniz yapılandırabilirsiniz.
 
 İşte [Helicone's Model Directory](https://helicone.ai/models), eklemek istediğiniz modellerin kimliklerini almak için buna ihtiyacınız olacak.
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "http://localhost:11434/v1",
       },
       "models": {
         "gpt-4o": {
@@ -1050,18 +1050,18 @@ Helicone'un opencode aracılığıyla otomatik olarak yapılandırılmayan bir �
 
 Helicone, önbelleğe alma, kullanıcı izleme ve oturum yönetimi gibi özellikler için özel başlıkları destekler. `options.headers` kullanarak bunları sağlayıcınızın yapılandırmasına ekleyin:
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "http://localhost:11434/v1",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -1071,21 +1071,21 @@ Helicone, önbelleğe alma, kullanıcı izleme ve oturum yönetimi gibi özellik
 
 ##### Oturum izleme
 
-Helicone'un [Sessions](https://docs.helicone.ai/features/sessions) özelliği, ilgili LLM isteklerini birlikte gruplandırmanıza olanak tanır. Her opencode görüşmesini Helicone'da bir oturum olarak otomatik olarak kaydetmek için [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) eklentisini kullanın.
+Helicone'un [Sessions](https://docs.helicone.ai/features/sessions) özelliği, ilgili LLM isteklerini birlikte gruplandırmanıza olanak tanır. Her zyraxon görüşmesini Helicone'da bir oturum olarak otomatik olarak kaydetmek için [zyraxon-helicone-session](https://github.com/H2Shami/opencode-helicone-session) eklentisini kullanın.
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 Yapılandırmanıza ekleyin.
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 
-Eklenti isteklerinize `Helicone-Session-Id` ve `Helicone-Session-Name` başlıklarını enjekte eder. Helicone'un Oturumlar sayfasında her opencode görüşmesinin ayrı bir oturum olarak listelendiğini göreceksiniz.
+Eklenti isteklerinize `Helicone-Session-Id` ve `Helicone-Session-Name` başlıklarını enjekte eder. Helicone'un Oturumlar sayfasında her zyraxon görüşmesinin ayrı bir oturum olarak listelendiğini göreceksiniz.
 
 ##### Yaygın Helicone başlıkları
 
@@ -1102,17 +1102,17 @@ Mevcut tüm başlıklar için [Helicone Header Directory](https://docs.helicone.
 
 ### llama.cpp
 
-opencode'u yerel modelleri kullanacak şekilde [llama.cpp's](https://github.com/ggml-org/llama.cpp) llama-server yardımcı programını kullanarak yapılandırabilirsiniz.
+zyraxon'u yerel modelleri kullanacak şekilde [llama.cpp's](https://github.com/ggml-org/llama.cpp) llama-server yardımcı programını kullanarak yapılandırabilirsiniz.
 
 ```json title="zyraxon.json" "llama.cpp" {5, 6, 8, 10-15}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "llama.cpp": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "llama-server (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:8080/v1"
+        "baseURL": "https://developers.cloudflare.com/ai-gateway/features/unified-billing/9"
       },
       "models": {
         "qwen3-coder:a3b": {
@@ -1142,7 +1142,7 @@ Bu örnekte:
 
 IO.NET, çeşitli kullanım durumları için optimize edilmiş 17 model sunar:
 
-1. [IO.NET console](https://ai.io.net/) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [IO.NET console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com8) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **IO.NET** öğesini arayın.
 
@@ -1169,17 +1169,17 @@ IO.NET, çeşitli kullanım durumları için optimize edilmiş 17 model sunar:
 
 ### LM Studio
 
-LM Studio aracılığıyla opencode'u yerel modelleri kullanacak şekilde yapılandırabilirsiniz.
+LM Studio aracılığıyla zyraxon'u yerel modelleri kullanacak şekilde yapılandırabilirsiniz.
 
 ```json title="zyraxon.json" "lmstudio" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1234/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/0"
       },
       "models": {
         "google/gemma-3n-e4b": {
@@ -1205,7 +1205,7 @@ Bu örnekte:
 
 Moonshot AI'dan Kimi K2'yi kullanmak için:
 
-1. [Moonshot AI console](https://platform.moonshot.ai/console)'a gidin, bir hesap oluşturun ve **API anahtarı oluştur**'a tıklayın.
+1. [Moonshot AI console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained0)'a gidin, bir hesap oluşturun ve **API anahtarı oluştur**'a tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **Moonshot AI**'yi arayın.
 
@@ -1232,7 +1232,7 @@ Moonshot AI'dan Kimi K2'yi kullanmak için:
 
 ### MiniMax
 
-1. [MiniMax API Console](https://platform.minimax.io/login) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [MiniMax API Console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained3) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **MiniMax**'ı arayın.
 
@@ -1259,7 +1259,7 @@ Moonshot AI'dan Kimi K2'yi kullanmak için:
 
 ### Nebius Token Factory
 
-1. [Nebius Token Factory console](https://tokenfactory.nebius.com/)'a gidin, bir hesap oluşturun ve **Anahtar Ekle**'ye tıklayın.
+1. [Nebius Token Factory console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained4)'a gidin, bir hesap oluşturun ve **Anahtar Ekle**'ye tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **Nebius Token Factory**'yi arayın.
 
@@ -1286,15 +1286,15 @@ Moonshot AI'dan Kimi K2'yi kullanmak için:
 
 ### Ollama
 
-Ollama aracılığıyla opencode'u yerel modelleri kullanacak şekilde yapılandırabilirsiniz.
+Ollama aracılığıyla zyraxon'u yerel modelleri kullanacak şekilde yapılandırabilirsiniz.
 
 :::tip
-Ollama kendisini opencode için otomatik olarak yapılandırabilir. Ayrıntılar için [Ollama integration docs](https://docs.ollama.com/integrations/opencode)'a bakın.
+Ollama kendisini zyraxon için otomatik olarak yapılandırabilir. Ayrıntılar için [Ollama integration docs](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use3)'a bakın.
 :::
 
 ```json title="zyraxon.json" "ollama" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -1328,13 +1328,13 @@ Araç çağrıları çalışmıyorsa Ollama'da `num_ctx` değerini artırmayı d
 
 ### Ollama Cloud
 
-Ollama Cloud'u opencode ile kullanmak için:
+Ollama Cloud'u zyraxon ile kullanmak için:
 
-1. [https://ollama.com/](https://ollama.com/) adresine gidin ve oturum açın veya bir hesap oluşturun.
+1. [https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0) adresine gidin ve oturum açın veya bir hesap oluşturun.
 
 2. **Ayarlar** > **Anahtarlar**'a gidin ve yeni bir API anahtarı oluşturmak için **API Anahtarı Ekle**'yi tıklayın.
 
-3. opencode'da kullanmak için API anahtarını kopyalayın.
+3. zyraxon'da kullanmak için API anahtarını kopyalayın.
 
 4. `/connect` komutunu çalıştırın ve **Ollama Cloud**'u arayın.
 
@@ -1351,7 +1351,7 @@ Ollama Cloud'u opencode ile kullanmak için:
    └ enter
    ```
 
-6. **Önemli**: opencode'da bulut modellerini kullanmadan önce model bilgilerini yerel olarak almanız gerekir:
+6. **Önemli**: zyraxon'da bulut modellerini kullanmadan önce model bilgilerini yerel olarak almanız gerekir:
 
    ```bash
    ollama pull gpt-oss:20b-cloud
@@ -1367,7 +1367,7 @@ Ollama Cloud'u opencode ile kullanmak için:
 
 ### OpenAI
 
-[ChatGPT Plus or Pro](https://chatgpt.com/pricing)'a kaydolmanızı öneririz.
+[ChatGPT Plus or Pro](https://ai.azure.com/)'a kaydolmanızı öneririz.
 
 1. Kaydolduktan sonra `/connect` komutunu çalıştırın ve OpenAI'yi seçin.
 
@@ -1400,7 +1400,7 @@ Zaten bir API anahtarınız varsa, **API Anahtarını Manuel Olarak Girin** seç
 
 ### ZYRAXON Zen
 
-ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesidir. [Daha fazla bilgi](/docs/zen).
+ZYRAXON Zen, zyraxon ekibinin test edip doğruladığı modellerin bir listesidir. [Daha fazla bilgi](/docs/zen).
 
 1. **<a href={console}>ZYRAXON Zen</a>**'de oturum açın ve **API Anahtarı Oluştur**'u tıklayın.
 
@@ -1410,7 +1410,7 @@ ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesid
    /connect
    ```
 
-3. opencode API anahtarınızı girin.
+3. zyraxon API anahtarınızı girin.
 
    ```txt
    ┌ API key
@@ -1429,7 +1429,7 @@ ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesid
 
 ### OpenRouter
 
-1. [OpenRouter dashboard](https://openrouter.ai/settings/keys)'a gidin, **API Anahtarı Oluştur**'a tıklayın ve anahtarı kopyalayın.
+1. [OpenRouter dashboard](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained1)'a gidin, **API Anahtarı Oluştur**'a tıklayın ve anahtarı kopyalayın.
 
 2. `/connect` komutunu çalıştırın ve OpenRouter'ı arayın.
 
@@ -1452,11 +1452,11 @@ ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesid
    /models
    ```
 
-   opencode yapılandırmanız aracılığıyla ek modeller de ekleyebilirsiniz.
+   zyraxon yapılandırmanız aracılığıyla ek modeller de ekleyebilirsiniz.
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "openrouter": {
          "models": {
@@ -1467,11 +1467,11 @@ ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesid
    }
    ```
 
-5. Bunları ayrıca opencode yapılandırmanız aracılığıyla da özelleştirebilirsiniz. Burada bir sağlayıcı belirtmeye ilişkin bir örnek verilmiştir
+5. Bunları ayrıca zyraxon yapılandırmanız aracılığıyla da özelleştirebilirsiniz. Burada bir sağlayıcı belirtmeye ilişkin bir örnek verilmiştir
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "openrouter": {
          "models": {
@@ -1495,7 +1495,7 @@ ZYRAXON Zen, opencode ekibinin test edip doğruladığı modellerin bir listesid
 
 SAP AI Core, birleşik bir platform aracılığıyla OpenAI, Anthropic, Google, Amazon, Meta, Mistral ve AI21'den 40'tan fazla modele erişim sağlar.
 
-1. [SAP BTP Cockpit](https://account.hana.ondemand.com/) sunucunuza gidin, SAP AI Core hizmet örneğinize gidin ve bir hizmet anahtarı oluşturun.
+1. [SAP BTP Cockpit](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained2) sunucunuza gidin, SAP AI Core hizmet örneğinize gidin ve bir hizmet anahtarı oluşturun.
 
    :::tip
    Hizmet anahtarı, `clientid`, `clientsecret`, `url` ve `serviceurls.AI_API_URL` içeren bir JSON nesnesidir. AI Core örneğinizi BTP Kokpitinde **Hizmetler** > **Örnekler ve Abonelikler** altında bulabilirsiniz.
@@ -1519,7 +1519,7 @@ SAP AI Core, birleşik bir platform aracılığıyla OpenAI, Anthropic, Google, 
    Veya `AICORE_SERVICE_KEY` ortam değişkenini ayarlayın:
 
    ```bash
-   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' opencode
+   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' zyraxon
    ```
 
    Veya bash profilinize ekleyin:
@@ -1531,7 +1531,7 @@ SAP AI Core, birleşik bir platform aracılığıyla OpenAI, Anthropic, Google, 
 4. İsteğe bağlı olarak dağıtım kimliğini ve kaynak grubunu ayarlayın:
 
    ```bash
-   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group opencode
+   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group zyraxon
    ```
 
    :::note
@@ -1550,7 +1550,7 @@ SAP AI Core, birleşik bir platform aracılığıyla OpenAI, Anthropic, Google, 
 
 STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avrupa altyapısında maksimum veri egemenliğine sahip AI modelleri için tam olarak yönetilen bağımsız barındırma ortamı sağlar.
 
-1. [STACKIT Portal](https://portal.stackit.cloud) adresine gidin, **AI Model Serving**'e gidin ve projeniz için bir yetkilendirme belirteci oluşturun.
+1. [STACKIT Portal](https://console.x.ai/) adresine gidin, **AI Model Serving**'e gidin ve projeniz için bir yetkilendirme belirteci oluşturun.
 
    :::tip
    Yetkilendirme belirteçleri oluşturmadan önce bir STACKIT müşteri hesabına, kullanıcı hesabına ve projesine ihtiyacınız vardır.
@@ -1581,7 +1581,7 @@ STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avru
 
 ### OVHcloud AI Endpoints
 
-1. [OVHcloud panel](https://ovh.com/manager)'a gidin. `Public Cloud` bölümüne gidin, `AI & Machine Learning` > `AI Endpoints` ve `API Keys` sekmesinde **Yeni bir API anahtarı oluştur**'u tıklayın.
+1. [OVHcloud panel](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/5)'a gidin. `Public Cloud` bölümüne gidin, `AI & Machine Learning` > `AI Endpoints` ve `API Keys` sekmesinde **Yeni bir API anahtarı oluştur**'u tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **OVHcloud AI Endpoints**'i arayın.
 
@@ -1608,7 +1608,7 @@ STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avru
 
 ### Scaleway
 
-[Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-apis/)'yi Opencode ile kullanmak için:
+[Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-apis/)'yi Zyraxon ile kullanmak için:
 
 1. Yeni bir API anahtarı oluşturmak için [Scaleway Console IAM settings](https://console.scaleway.com/iam/api-keys)'a gidin.
 
@@ -1637,7 +1637,7 @@ STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avru
 
 ### Together AI
 
-1. [Together AI console](https://api.together.ai)'a gidin, bir hesap oluşturun ve **Anahtar Ekle**'ye tıklayın.
+1. [Together AI console](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/3)'a gidin, bir hesap oluşturun ve **Anahtar Ekle**'ye tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **Together AI**'yi arayın.
 
@@ -1664,7 +1664,7 @@ STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avru
 
 ### Venice AI
 
-1. [Venice AI console](https://venice.ai) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
+1. [Venice AI console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com9) adresine gidin, bir hesap oluşturun ve bir API anahtarı oluşturun.
 
 2. `/connect` komutunu çalıştırın ve **Venice AI**'yi arayın.
 
@@ -1693,7 +1693,7 @@ STACKIT AI Model Serving, Llama, Mistral ve Qwen gibi LLM'lere odaklanarak, Avru
 
 Vercel AI Gateway, OpenAI, Anthropic, Google, xAI ve daha fazlasındaki modellere birleşik bir uç nokta aracılığıyla erişmenizi sağlar. Modeller herhangi bir fark olmadan liste fiyatıyla sunulmaktadır.
 
-1. [Vercel dashboard](https://vercel.com/)'a gidin, **AI Ağ Geçidi** sekmesine gidin ve yeni bir API anahtarı oluşturmak için **API anahtarlarına** tıklayın.
+1. [Vercel dashboard](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0)'a gidin, **AI Ağ Geçidi** sekmesine gidin ve yeni bir API anahtarı oluşturmak için **API anahtarlarına** tıklayın.
 
 2. `/connect` komutunu çalıştırın ve **Vercel AI Gateway**'i arayın.
 
@@ -1716,11 +1716,11 @@ Vercel AI Gateway, OpenAI, Anthropic, Google, xAI ve daha fazlasındaki modeller
    /models
    ```
 
-Modelleri opencode yapılandırmanız aracılığıyla da özelleştirebilirsiniz. Sağlayıcı yönlendirme sırasını belirtmeye ilişkin bir örneği burada bulabilirsiniz.
+Modelleri zyraxon yapılandırmanız aracılığıyla da özelleştirebilirsiniz. Sağlayıcı yönlendirme sırasını belirtmeye ilişkin bir örneği burada bulabilirsiniz.
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "vercel": {
       "models": {
@@ -1826,11 +1826,11 @@ Bazı yararlı yönlendirme seçenekleri:
    /models
    ```
 
-   opencode yapılandırmanız aracılığıyla ek modeller de ekleyebilirsiniz.
+   zyraxon yapılandırmanız aracılığıyla ek modeller de ekleyebilirsiniz.
 
    ```json title="zyraxon.json" {6}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "zenmux": {
          "models": {
@@ -1848,7 +1848,7 @@ Bazı yararlı yönlendirme seçenekleri:
 `/connect` komutunda listelenmeyen herhangi bir **OpenAI uyumlu** sağlayıcıyı eklemek için:
 
 :::tip
-OpenAI uyumlu herhangi bir sağlayıcıyı opencode ile kullanabilirsiniz. Çoğu modern yapay zeka sağlayıcısı OpenAI uyumlu API'ler sunar.
+OpenAI uyumlu herhangi bir sağlayıcıyı zyraxon ile kullanabilirsiniz. Çoğu modern yapay zeka sağlayıcısı OpenAI uyumlu API'ler sunar.
 :::
 
 1. `/connect` komutunu çalıştırın ve **Diğer** seçeneğine ilerleyin.
@@ -1898,13 +1898,13 @@ OpenAI uyumlu herhangi bir sağlayıcıyı opencode ile kullanabilirsiniz. Çoğ
 
    ```json title="zyraxon.json" ""myprovider"" {5-15}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://portal.azure.com/",
      "provider": {
        "myprovider": {
          "npm": "@ai-sdk/openai-compatible",
          "name": "My AI ProviderDisplay Name",
          "options": {
-           "baseURL": "https://api.myprovider.com/v1"
+           "baseURL": "http://127.0.0.1:1337/v1"
          },
          "models": {
            "my-model-name": {
@@ -1936,13 +1936,13 @@ Burada `apiKey`, `headers` ve model `limit` seçeneklerini ayarlayan bir örnek 
 
 ```json title="zyraxon.json" {9,11,17-20}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://portal.azure.com/",
   "provider": {
     "myprovider": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "My AI ProviderDisplay Name",
       "options": {
-        "baseURL": "https://api.myprovider.com/v1",
+        "baseURL": "http://127.0.0.1:1337/v1",
         "apiKey": "{env:ANTHROPIC_API_KEY}",
         "headers": {
           "Authorization": "Bearer custom-token"
@@ -1969,7 +1969,7 @@ Yapılandırma ayrıntıları:
 - **limit.context**: Modelin kabul ettiği maksimum giriş tokenları.
 - **limit.output**: Modelin üretebileceği maksimum token sayısı.
 
-`limit` alanları opencode'un ne kadar bağlamınız kaldığını anlamasını sağlar. Standart sağlayıcılar bunları models.dev'den otomatik olarak alır.
+`limit` alanları zyraxon'un ne kadar bağlamınız kaldığını anlamasını sağlar. Standart sağlayıcılar bunları models.dev'den otomatik olarak alır.
 
 ---
 
@@ -1982,7 +1982,7 @@ Sağlayıcıyı yapılandırma konusunda sorun yaşıyorsanız aşağıdakileri 
 
    Bu, kimlik doğrulaması için ortam değişkenlerine güvenen Amazon Bedrock gibi sağlayıcılar için geçerli değildir.
 
-2. Özel sağlayıcılar için opencode yapılandırmasını kontrol edin ve:
-   - `/connect` komutunda kullanılan sağlayıcı kimliğinin, opencode yapılandırmanızdaki kimlikle eşleştiğinden emin olun.
+2. Özel sağlayıcılar için zyraxon yapılandırmasını kontrol edin ve:
+   - `/connect` komutunda kullanılan sağlayıcı kimliğinin, zyraxon yapılandırmanızdaki kimlikle eşleştiğinden emin olun.
    - Sağlayıcı için doğru npm paketi kullanılıyor. Örneğin Cerebras için `@ai-sdk/cerebras` kullanın. Diğer tüm OpenAI uyumlu sağlayıcılar için `@ai-sdk/openai-compatible` kullanın.
    - `options.baseURL` alanında doğru API bitiş noktasının kullanıldığını kontrol edin.

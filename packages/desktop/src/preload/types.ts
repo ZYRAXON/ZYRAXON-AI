@@ -1,19 +1,19 @@
-import type { DesktopMenuAction } from "@opencode-ai/app/desktop-menu"
-import type { WslServersPlatform } from "@opencode-ai/app/wsl/types"
-import type { UpdaterState } from "@opencode-ai/app/updater"
+import type { DesktopMenuAction } from "@zyraxon-ai/app/desktop-menu"
+import type { WslServersPlatform } from "@zyraxon-ai/app/wsl/types"
+import type { UpdaterState } from "@zyraxon-ai/app/updater"
 export type {
   WslDistroProbe,
   WslInstalledDistro,
   WslJob,
   WslOnlineDistro,
-  WslOpencodeCheck,
+  WslZyraxonCheck,
   WslRuntimeCheck,
   WslServerConfig,
   WslServerItem,
   WslServerRuntime,
   WslServersEvent,
   WslServersState,
-} from "@opencode-ai/app/wsl/types"
+} from "@zyraxon-ai/app/wsl/types"
 
 export type ServerReadyData = {
   url: string
@@ -96,27 +96,13 @@ export type ElectronAPI = {
   storeLength: (name: string) => Promise<number>
   saveEcosystemAuth: (data: { token: string; user: any }) => Promise<boolean>
   getGithubToken: () => Promise<string | null>
-  // ZYRAXON Extension Manager — installs directly, no VS Code dependency
-  installVsix: (vsixUrl: string, extensionId: string, options?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => Promise<{ success: boolean; error?: string; extensionId?: string; extension?: any }>
-  getInstalledExtensions: () => Promise<any[]>
-  uninstallExtension: (extensionId: string) => Promise<{ success: boolean; error?: string }>
-  toggleExtensionStatus: (extensionId: string) => Promise<{ success: boolean; status?: string; error?: string }>
-  isExtensionInstalled: (extensionId: string) => Promise<boolean>
-  queryVscodeMarketplace: (body: unknown) => Promise<any>
-  extensionHost: {
-    getExtensions: () => Promise<{ id: string; name: string; displayName: string; description: string; version: string; publisher: string; isActive: boolean }[]>
-    activateExtension: (extensionId: string) => Promise<boolean>
-    deactivateExtension: (extensionId: string) => Promise<boolean>
-    isActive: (extensionId: string) => Promise<boolean>
-    checkUpdates: () => Promise<{ hasUpdates: boolean; updates: any[]; checkedAt: string }>
-    getLastCheck: () => Promise<string | null>
-    getRegisteredModels: () => Promise<Array<{ providerID: string; models: Array<{ providerID: string; modelID: string; name: string; description?: string; contextLength?: number; cost?: { input: number; output: number } }> }>>
-    onNotification: (cb: (data: any) => void) => () => void
-    onUpdatesAvailable: (cb: (result: any) => void) => () => void
-    onUpdateProgress: (cb: (data: any) => void) => () => void
-  }
 
-  onExtensionInstalled: (cb: (data: any) => void) => () => void
+  setEditorMode: (active: boolean, directory?: string) => Promise<void>
+  setEditorBounds: (bounds: { x: number; y: number; width: number; height: number }) => Promise<void>
+  installEditorExtension: (sourceDir: string) => Promise<{ ok: boolean; error?: string }>
+  installVsix: (vsixUrl: string, extensionId: string, meta?: { displayName?: string; version?: string; publisher?: string; description?: string; icon?: string }) => Promise<{ ok: boolean; error?: string }>
+  getEditorState: () => Promise<{ active: boolean }>
+  onEditorModeChanged: (cb: (active: boolean) => void) => () => void
 
   getWindowCount: () => Promise<number>
   getWindowID: () => Promise<string>

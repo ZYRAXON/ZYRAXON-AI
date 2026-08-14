@@ -1,22 +1,22 @@
 ---
 title: TUI
-description: Использование TUI opencode.
+description: Использование TUI zyraxon.
 ---
 
 import { Tabs, TabItem } from "@astrojs/starlight/components"
 
-opencode предоставляет интерактивный terminal интерфейс или TUI для работы над вашими проектами с помощью LLM.
+zyraxon предоставляет интерактивный terminal интерфейс или TUI для работы над вашими проектами с помощью LLM.
 
-Запуск opencode запускает TUI для текущего каталога.
+Запуск zyraxon запускает TUI для текущего каталога.
 
 ```bash
-opencode
+zyraxon
 ```
 
 Или вы можете запустить его для определенного рабочего каталога.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 Как только вы окажетесь в TUI, вы можете запросить его с помощью сообщения.
@@ -57,7 +57,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ## Команды
 
-При использовании opencode TUI вы можете ввести `/`, а затем имя команды, чтобы быстро выполнить действия. Например:
+При использовании zyraxon TUI вы можете ввести `/`, а затем имя команды, чтобы быстро выполнить действия. Например:
 
 ```bash frame="none"
 /help
@@ -71,7 +71,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ### connect
 
-Добавьте провайдера в opencode. Позволяет выбирать из доступных поставщиков и добавлять их ключи API.
+Добавьте провайдера в zyraxon. Позволяет выбирать из доступных поставщиков и добавлять их ключи API.
 
 ```bash frame="none"
 /connect
@@ -117,7 +117,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 
 ### exit
 
-Выйдите из opencode. _Псевдонимы_: `/quit`, `/q`
+Выйдите из zyraxon. _Псевдонимы_: `/quit`, `/q`
 
 ```bash frame="none"
 /exit
@@ -360,7 +360,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -400,7 +400,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `mouse` — Включает или отключает захват мыши в TUI (по умолчанию `true`). Если отключено, сохраняется нативное поведение терминала для выделения мышью и прокрутки.
 - `attention` — Настраивает уведомления рабочего стола и звуки TUI. По умолчанию отключено.
 
-Используйте `OPENCODE_TUI_CONFIG` для загрузки пользовательского пути конфигурации TUI.
+Используйте `ZYRAXON_TUI_CONFIG` для загрузки пользовательского пути конфигурации TUI.
 
 ### Attention
 
@@ -410,7 +410,7 @@ Attention позволяет TUI уведомлять вас, когда ZYRAXON
 - `notifications` — Когда Attention включён, разрешает TUI отправлять уведомления рабочего стола через терминал. По умолчанию `true`.
 - `sound` — Когда Attention включён, разрешает воспроизводить звуковые оповещения. По умолчанию `true`.
 - `volume` — Громкость звуковых оповещений по умолчанию от `0` до `1`. По умолчанию `0.4`.
-- `sound_pack` — ID sound pack для использования. По умолчанию `opencode.default`.
+- `sound_pack` — ID sound pack для использования. По умолчанию `zyraxon.default`.
 - `sounds` — Задаёт пользовательские звуковые файлы для `default`, `question`, `permission`, `error`, `done` или `subagent_done`. Пути могут быть абсолютными, `file://` URL или относительными к `tui.json`.
 
 ---

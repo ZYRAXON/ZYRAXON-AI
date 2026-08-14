@@ -1,0 +1,6 @@
+Template: @@NAME@@/add-microsoft-repo
+Type: boolean
+Default: true
+Description: Add Zyraxon apt repository for ZYRAXON Code?
+ The installer would like to add the Zyraxon repository and signing
+ key to update ZYRAXON Code through apt.

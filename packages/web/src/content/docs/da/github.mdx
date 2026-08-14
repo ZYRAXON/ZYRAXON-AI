@@ -3,7 +3,7 @@ title: GitHub
 description: Brug ZYRAXON i GitHub-problemer og Pull Requests.
 ---
 
-ZYRAXON integreres med din GitHub arbejdsgang. Nævn `/opencode` eller `/oc` i din kommentar, og ZYRAXON vil udføre opgaver i din GitHub Actions-løber.
+ZYRAXON integreres med din GitHub arbejdsgang. Nævn `/zyraxon` eller `/oc` i din kommentar, og ZYRAXON vil udføre opgaver i din GitHub Actions-løber.
 
 ---
 
@@ -20,7 +20,7 @@ ZYRAXON integreres med din GitHub arbejdsgang. Nævn `/opencode` eller `/oc` i d
 Kør følgende kommando i et projekt, der er i en GitHub repo:
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 Dette vil lede dig gennem installation af GitHub-appen, oprettelse af arbejdsgangen og opsætning af hemmeligheder.
@@ -33,14 +33,14 @@ Eller du kan indstille det manuelt.
 
 1. **Installationsprogrammet GitHub-appen**
 
-   Gå over til [**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent). Sørg for, at det er installeret på mållageret.
+   Gå over til [**github.com/apps/zyraxon-agent**](https://github.com/apps/opencode-agent). Sørg for, at det er installeret på mållageret.
 
 2. **Tilføj arbejdsgangen**
 
-   Tilføj følgende workflow-fil til `.github/workflows/opencode.yml` i din repo. Sørg for at indstille de relevante `model` og nødvendige API-nøgler i `env`.
+   Tilføj følgende workflow-fil til `.github/workflows/zyraxon.yml` i din repo. Sørg for at indstille de relevante `model` og nødvendige API-nøgler i `env`.
 
-   ```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+   ```yml title=".github/workflows/zyraxon.yml" {24,26}
+   name: zyraxon
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ Eller du kan indstille det manuelt.
        types: [created]
 
    jobs:
-     opencode:
+     zyraxon:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/zyraxon')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -107,8 +107,8 @@ ZYRAXON kan udløses af følgende GitHub hændelser:
 
 | Begivenhedstype               | Udløst af                               | Detaljer                                                                                                                |
 | ----------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `issue_comment`               | Kommentarer og problemer eller PR       | Nævn `/opencode` eller `/oc` i din kommentar. ZYRAXON læser kontekst og kan oprette brancher, åbne PR'er eller svare.  |
-| `pull_request_review_comment` | Kommenter specifikke kodelinjer i en PR | Nævn `/opencode` eller `/oc`, mens du gennemgår koden. ZYRAXON modtager filsti, linjenumre og diff-kontekst.           |
+| `issue_comment`               | Kommentarer og problemer eller PR       | Nævn `/zyraxon` eller `/oc` i din kommentar. ZYRAXON læser kontekst og kan oprette brancher, åbne PR'er eller svare.  |
+| `pull_request_review_comment` | Kommenter specifikke kodelinjer i en PR | Nævn `/zyraxon` eller `/oc`, mens du gennemgår koden. ZYRAXON modtager filsti, linjenumre og diff-kontekst.           |
 | `issues`                      | Udgave åbnet eller redigeret            | Udløs automatisk ZYRAXON, når problemer oprettes eller ændres. Kræver `prompt` input.                                  |
 | `pull_request`                | PR åbnet eller opdateret                | Udløs automatisk ZYRAXON, når PR'er åbnes, synkroniseres eller genåbnes. Nyttigt til automatiserede kodegennemgange.   |
 | `schedule`                    | Cron-baseret tidsplan                   | Kør ZYRAXON efter en tidsplan. Kræver `prompt` input. Output går til logfiler og PR'er (intet problem ved kommentere). |
@@ -118,7 +118,7 @@ ZYRAXON kan udløses af følgende GitHub hændelser:
 
 Kør ZYRAXON efter en tidsplan for at udføre automatiske opgaver:
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/zyraxon-scheduled.yml"
 name: Scheduled ZYRAXON Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  zyraxon:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -158,8 +158,8 @@ For planlagte begivenheder er `prompt` input **påkrævet**, da der ikke er noge
 
 Gennemgå automatisk PR'er, når de åbnes eller opdateres:
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/zyraxon-review.yml"
+name: zyraxon-review
 
 on:
   pull_request:
@@ -199,7 +199,7 @@ For `pull_request` hændelser, hvis der ikke er angivet nogen `prompt`, vil ZYRA
 
 Triage automatisk nye problemer. Dette eksempel filtrerer til konti ældre end 30 dage for at reducere spam:
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/zyraxon-triage.yml"
 name: Issue Triage
 
 on:
@@ -254,7 +254,7 @@ For `issues` begivenheder er `prompt` input **påkrævet**, da der ikke er nogen
 
 Tilsidesæt standardprompten for at tilpasse ZYRAXONs adfærd til din arbejdsgang.
 
-```yaml title=".github/workflows/opencode.yml"
+```yaml title=".github/workflows/zyraxon.yml"
 - uses: onelpawarai/ZYRAXON-AI/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
@@ -278,7 +278,7 @@ Her er nogle eksempler på, hvordan du kan bruge ZYRAXON i GitHub.
   Tilføj denne kommentar i et GitHub-nummer.
 
   ```
-  /opencode explain this issue
+  /zyraxon explain this issue
   ```
 
   ZYRAXON vil læse hele tråden, inklusive alle kommentarer, og svare med en klar forklaring.
@@ -288,7 +288,7 @@ Her er nogle eksempler på, hvordan du kan bruge ZYRAXON i GitHub.
   I et GitHub-problem skal du sige:
 
   ```
-  /opencode fix this
+  /zyraxon fix this
   ```
 
   Og ZYRAXON vil oprette en ny branch, implementere ændringer og åbne en PR med ændringer.

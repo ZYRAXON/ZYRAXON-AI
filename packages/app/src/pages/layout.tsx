@@ -15,34 +15,35 @@ import {
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { useNavigate, useParams } from "@solidjs/router"
 import { useLayout, LocalProject } from "@/context/layout"
+import { editorMode } from "@/context/editor-mode"
 import { useServerSync } from "@/context/server-sync"
 import { Persist, persisted } from "@/utils/persist"
-import { base64Encode } from "@opencode-ai/core/util/encode"
+import { base64Encode } from "@zyraxon-ai/core/util/encode"
 import { decode64 } from "@/utils/base64"
-import { ResizeHandle } from "@opencode-ai/ui/resize-handle"
-import { Button } from "@opencode-ai/ui/button"
-import { Icon as IconV2 } from "@opencode-ai/ui/v2/icon"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
-import { DropdownMenu } from "@opencode-ai/ui/dropdown-menu"
-import { Dialog } from "@opencode-ai/ui/dialog"
-import { getFilename } from "@opencode-ai/core/util/path"
-import { Session } from "@opencode-ai/sdk/v2/client"
+import { ResizeHandle } from "@zyraxon-ai/ui/resize-handle"
+import { Button } from "@zyraxon-ai/ui/button"
+import { Icon as IconV2 } from "@zyraxon-ai/ui/v2/icon"
+import { IconButton } from "@zyraxon-ai/ui/icon-button"
+import { Tooltip } from "@zyraxon-ai/ui/tooltip"
+import { DropdownMenu } from "@zyraxon-ai/ui/dropdown-menu"
+import { Dialog } from "@zyraxon-ai/ui/dialog"
+import { getFilename } from "@zyraxon-ai/core/util/path"
+import { Session } from "@zyraxon-ai/sdk/v2/client"
 import { usePlatform } from "@/context/platform"
 import { useSettings } from "@/context/settings"
 import { createStore, produce, reconcile } from "solid-js/store"
 import { DragDropProvider, DragDropSensors, DragOverlay, SortableProvider, closestCenter } from "@thisbeyond/solid-dnd"
 import type { DragEvent } from "@thisbeyond/solid-dnd"
 import { useProviders } from "@/hooks/use-providers"
-import { toaster } from "@opencode-ai/ui/toast"
+import { toaster } from "@zyraxon-ai/ui/toast"
 import { setV2Toast, showToast, ToastRegion } from "@/utils/toast"
 import { useServerSDK } from "@/context/server-sdk"
 import { clearWorkspaceTerminals } from "@/context/terminal"
 import { pickSessionCacheEvictions } from "@/context/global-sync/session-cache"
 import { useNotification } from "@/context/notification"
 import { usePermission } from "@/context/permission"
-import { Binary } from "@opencode-ai/core/util/binary"
-import { retry } from "@opencode-ai/core/util/retry"
+import { Binary } from "@zyraxon-ai/core/util/binary"
+import { retry } from "@zyraxon-ai/core/util/retry"
 import { playSoundById } from "@/utils/sound"
 import { createAim } from "@/utils/aim"
 import { setNavigate } from "@/utils/notification-click"
@@ -50,8 +51,8 @@ import { Worktree as WorktreeState } from "@/utils/worktree"
 import { setSessionHandoff } from "@/pages/session/handoff"
 import { SessionRouteKey, SessionStateKey } from "@/utils/server-scope"
 
-import { useDialog } from "@opencode-ai/ui/context/dialog"
-import { useTheme, type ColorScheme } from "@opencode-ai/ui/theme/context"
+import { useDialog } from "@zyraxon-ai/ui/context/dialog"
+import { useTheme, type ColorScheme } from "@zyraxon-ai/ui/theme/context"
 import { useCommand, type CommandOption } from "@/context/command"
 import { ConstrainDragXAxis, getDraggableId } from "@/utils/solid-dnd"
 import { DebugBar } from "@/components/debug-bar"
@@ -84,8 +85,6 @@ import {
 } from "./layout/sidebar-workspace"
 import { ProjectDragOverlay, SortableProject, type ProjectSidebarContext } from "./layout/sidebar-project"
 import { SidebarContent } from "./layout/sidebar-shell"
-import { ActivityBar, type ActivityBarEntry } from "./layout/activity-bar"
-import { ExtensionPanel } from "./layout/extension-panel"
 
 export default function LegacyLayout(props: ParentProps) {
   const serverSDK = useServerSDK()
@@ -160,66 +159,6 @@ export default function LegacyLayout(props: ParentProps) {
     sizing: false,
     peek: undefined as string | undefined,
     peeked: false,
-  })
-
-  // Activity Bar state — which panel is active (null = none)
-  const [activePanel, setActivePanel] = createSignal<string | null>(null)
-  const [installedExtensions, setInstalledExtensions] = createSignal<Array<{ id: string; displayName: string; icon?: string; publisher: string }>>([])
-  const [selectedExtensionId, setSelectedExtensionId] = createSignal<string | null>(null)
-
-  const builtinEntries: ActivityBarEntry[] = [
-    { id: "extensions", icon: "puzzle", label: "Extensions" },
-  ]
-
-  const extensionEntries = createMemo<ActivityBarEntry[]>(() =>
-    installedExtensions().map((ext) => ({
-      id: `ext:${ext.id}`,
-      icon: ext.displayName?.slice(0, 2)?.toUpperCase() || "??",
-      label: ext.displayName || ext.id,
-      iconUrl: ext.icon,
-    }))
-  )
-
-  const activityEntries = createMemo<ActivityBarEntry[]>(() => [
-    ...builtinEntries,
-    ...extensionEntries(),
-  ])
-
-  const togglePanel = (id: string) => {
-    if (id.startsWith("ext:")) {
-      const extId = id.slice(4)
-      setSelectedExtensionId(selectedExtensionId() === extId ? null : extId)
-      setActivePanel("extensions")
-      return
-    }
-    setSelectedExtensionId(null)
-    setActivePanel(activePanel() === id ? null : id)
-  }
-
-  const loadExtensions = async () => {
-    try {
-      const apiObj = (window as any).api
-      const manifestList = await apiObj?.getInstalledExtensions?.()
-      if (manifestList && Array.isArray(manifestList)) {
-        setInstalledExtensions(
-          manifestList.map((ext: any) => ({
-            id: ext.id,
-            displayName: ext.displayName || ext.id,
-            icon: ext.icon,
-            publisher: ext.publisher || "",
-          }))
-        )
-      }
-    } catch {}
-  }
-
-  onMount(() => {
-    loadExtensions()
-    const apiObj = (window as any).api
-    if (apiObj?.onExtensionInstalled) {
-      const cleanup = apiObj.onExtensionInstalled(() => loadExtensions())
-      onCleanup(cleanup)
-    }
   })
 
   const updateVersion = () => {
@@ -1325,11 +1264,6 @@ export default function LegacyLayout(props: ParentProps) {
     // Handle zyraxon://install/... deep links
     const installLinks = collectInstallDeepLinks(urls)
     for (const link of installLinks) {
-      if (link.type === "extension") {
-        // Navigate to ecosystem extensions page with the extension ID
-        navigateWithSidebarReset(`/ecosystem?item=${encodeURIComponent(link.extensionId)}`)
-        return
-      }
       if (link.type === "release") {
         // Navigate to ecosystem GitHub releases page
         navigateWithSidebarReset(`/ecosystem?view=github&repo=${encodeURIComponent(link.repo)}&tag=${encodeURIComponent(link.tag)}`)
@@ -2318,6 +2252,7 @@ export default function LegacyLayout(props: ParentProps) {
       onOpenSettings={openSettings}
       helpLabel={() => language.t("sidebar.help")}
       onOpenHelp={() => platform.openLink("https://zyraxon.ai/desktop-feedback")}
+      editorDirectory={currentDir}
       renderPanel={() =>
         mobile ? <SidebarPanel project={currentProject} mobile /> : <SidebarPanel project={currentProject} merged />
       }
@@ -2334,17 +2269,6 @@ export default function LegacyLayout(props: ParentProps) {
       <div class="flex-1 min-h-0 min-w-0 flex">
         <div class="flex-1 min-h-0 relative">
           <div class="size-full relative overflow-x-hidden">
-            {/* Activity Bar — fixed 48px left strip */}
-            <Show when={layout.sidebar.opened()}>
-              <div class="hidden xl:block absolute inset-y-0 left-0 z-20">
-                <ActivityBar
-                  entries={activityEntries}
-                  activeId={activePanel}
-                  onSelect={togglePanel}
-                />
-              </div>
-            </Show>
-
             <nav
               aria-label={language.t("sidebar.nav.projectsAndSessions")}
               data-component="sidebar-nav-desktop"
@@ -2353,7 +2277,7 @@ export default function LegacyLayout(props: ParentProps) {
                 "absolute inset-y-0": true,
                 "z-10": true,
               }}
-              style={{ left: `${layout.sidebar.opened() ? "48px" : "0"}`, width: `${side()}px` }}
+              style={{ left: "0", width: `${side()}px` }}
               ref={(el) => {
                 setState("nav", el)
               }}
@@ -2368,15 +2292,7 @@ export default function LegacyLayout(props: ParentProps) {
               }}
             >
               <div class="@container w-full h-full contain-strict">
-                <Show
-                  when={activePanel() === "extensions"}
-                  fallback={sidebarContent()}
-                >
-                  <ExtensionPanel
-                    selectedExtension={selectedExtensionId() ?? undefined}
-                    onClearSelection={() => setSelectedExtensionId(null)}
-                  />
-                </Show>
+                {sidebarContent()}
               </div>
             </nav>
 
@@ -2449,7 +2365,9 @@ export default function LegacyLayout(props: ParentProps) {
                 }}
               >
                 <Show when={!autoselecting.loading} fallback={<div class="size-full" />}>
-                  {props.children}
+                  <Show when={!editorMode()} fallback={<EditorHost />}>
+                    {props.children}
+                  </Show>
                 </Show>
               </main>
             </div>
@@ -2533,4 +2451,29 @@ function UpdateAvailableToast(props: {
   })
 
   return null
+}
+
+function EditorHost() {
+  let ref: HTMLDivElement | undefined
+
+  const reportBounds = () => {
+    if (!ref) return
+    const rect = ref.getBoundingClientRect()
+    window.api?.setEditorBounds?.({
+      x: Math.round(rect.left),
+      y: Math.round(rect.top),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+    })
+  }
+
+  onMount(() => {
+    reportBounds()
+    requestAnimationFrame(reportBounds)
+    const observer = new ResizeObserver(reportBounds)
+    if (ref) observer.observe(ref)
+    onCleanup(() => observer.disconnect())
+  })
+
+  return <div ref={ref} class="size-full" data-editor-host />
 }

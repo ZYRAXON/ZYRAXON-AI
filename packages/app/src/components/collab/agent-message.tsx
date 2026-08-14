@@ -1,5 +1,5 @@
 import { type Component, For, Show, createSignal, onMount, onCleanup } from "solid-js"
-import type { AgentMessage, AgentInfo } from "@opencode-ai/collab"
+import type { AgentMessage, AgentInfo } from "@zyraxon-ai/collab"
 
 interface AgentMessageProps {
   message: AgentMessage

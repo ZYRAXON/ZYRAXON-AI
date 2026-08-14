@@ -3,7 +3,7 @@ title: GitHub
 description: 在 GitHub Issue 和 Pull Request 中使用 ZYRAXON。
 ---
 
-ZYRAXON 可以与你的 GitHub 工作流集成。在评论中提及 `/opencode` 或 `/oc`，ZYRAXON 就会在你的 GitHub Actions 运行器中执行任务。
+ZYRAXON 可以与你的 GitHub 工作流集成。在评论中提及 `/zyraxon` 或 `/oc`，ZYRAXON 就会在你的 GitHub Actions 运行器中执行任务。
 
 ---
 
@@ -20,7 +20,7 @@ ZYRAXON 可以与你的 GitHub 工作流集成。在评论中提及 `/opencode` 
 在一个位于 GitHub 仓库中的项目里运行以下命令：
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 该命令会引导你完成 GitHub App 的安装、工作流的创建以及密钥的配置。
@@ -33,14 +33,14 @@ opencode github install
 
 1. **安装 GitHub App**
 
-   前往 [**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent)，确保已在目标仓库中安装该应用。
+   前往 [**github.com/apps/zyraxon-agent**](https://github.com/apps/opencode-agent)，确保已在目标仓库中安装该应用。
 
 2. **添加工作流**
 
-   将以下工作流文件添加到仓库的 `.github/workflows/opencode.yml` 中。请确保在 `env` 中设置合适的 `model` 及所需的 API 密钥。
+   将以下工作流文件添加到仓库的 `.github/workflows/zyraxon.yml` 中。请确保在 `env` 中设置合适的 `model` 及所需的 API 密钥。
 
-   ```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+   ```yml title=".github/workflows/zyraxon.yml" {24,26}
+   name: zyraxon
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ opencode github install
        types: [created]
 
    jobs:
-     opencode:
+     zyraxon:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/zyraxon')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -107,8 +107,8 @@ ZYRAXON 可以由以下 GitHub 事件触发：
 
 | 事件类型                      | 触发方式                     | 详情                                                                                      |
 | ----------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------- |
-| `issue_comment`               | 在 Issue 或 PR 上发表评论    | 在评论中提及 `/opencode` 或 `/oc`。ZYRAXON 会读取上下文，并可创建分支、提交 PR 或回复。  |
-| `pull_request_review_comment` | 在 PR 中对特定代码行发表评论 | 在代码审查时提及 `/opencode` 或 `/oc`。ZYRAXON 会接收文件路径、行号和 diff 上下文。      |
+| `issue_comment`               | 在 Issue 或 PR 上发表评论    | 在评论中提及 `/zyraxon` 或 `/oc`。ZYRAXON 会读取上下文，并可创建分支、提交 PR 或回复。  |
+| `pull_request_review_comment` | 在 PR 中对特定代码行发表评论 | 在代码审查时提及 `/zyraxon` 或 `/oc`。ZYRAXON 会接收文件路径、行号和 diff 上下文。      |
 | `issues`                      | Issue 被创建或编辑           | 在 Issue 创建或修改时自动触发 ZYRAXON。需要提供 `prompt` 输入。                          |
 | `pull_request`                | PR 被创建或更新              | 在 PR 被打开、同步或重新打开时自动触发 ZYRAXON。适用于自动化审查场景。                   |
 | `schedule`                    | 基于 Cron 的定时任务         | 按计划运行 ZYRAXON。需要提供 `prompt` 输入。输出会写入日志和 PR（没有 Issue 可供评论）。 |
@@ -118,7 +118,7 @@ ZYRAXON 可以由以下 GitHub 事件触发：
 
 按计划运行 ZYRAXON 以执行自动化任务：
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/zyraxon-scheduled.yml"
 name: Scheduled ZYRAXON Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  zyraxon:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -158,8 +158,8 @@ jobs:
 
 在 PR 被创建或更新时自动进行审查：
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/zyraxon-review.yml"
+name: zyraxon-review
 
 on:
   pull_request:
@@ -199,7 +199,7 @@ jobs:
 
 自动分类新建的 Issue。以下示例会过滤掉注册不满 30 天的账户以减少垃圾信息：
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/zyraxon-triage.yml"
 name: Issue Triage
 
 on:
@@ -254,7 +254,7 @@ jobs:
 
 覆盖默认提示词，以便为你的工作流自定义 ZYRAXON 的行为。
 
-```yaml title=".github/workflows/opencode.yml"
+```yaml title=".github/workflows/zyraxon.yml"
 - uses: onelpawarai/ZYRAXON-AI/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
@@ -278,7 +278,7 @@ jobs:
   在 GitHub Issue 中添加以下评论：
 
   ```
-  /opencode explain this issue
+  /zyraxon explain this issue
   ```
 
   ZYRAXON 会阅读整个讨论串（包括所有评论），并回复一份清晰的解释。
@@ -288,7 +288,7 @@ jobs:
   在 GitHub Issue 中输入：
 
   ```
-  /opencode fix this
+  /zyraxon fix this
   ```
 
   ZYRAXON 会创建一个新分支，实现变更，并提交一个包含所有修改的 PR。

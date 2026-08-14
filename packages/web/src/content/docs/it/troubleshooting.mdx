@@ -11,8 +11,8 @@ Per diagnosticare problemi con ZYRAXON, inizia controllando i log e i dati local
 
 I file di log vengono scritti in:
 
-- **macOS/Linux**: `~/.local/share/opencode/log/`
-- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.local\share\opencode\log`
+- **macOS/Linux**: `~/.local/share/zyraxon/log/`
+- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.local\share\zyraxon\log`
 
 I file di log hanno nomi con timestamp (ad es. `2025-01-09T123456.log`) e vengono conservati i 10 file di log piu recenti.
 
@@ -22,10 +22,10 @@ Puoi impostare il livello di log con l'opzione a riga di comando `--log-level` p
 
 ## Archiviazione
 
-opencode salva i dati delle sessioni e altri dati dell'applicazione su disco in:
+zyraxon salva i dati delle sessioni e altri dati dell'applicazione su disco in:
 
-- **macOS/Linux**: `~/.local/share/opencode/`
-- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.local\share\opencode`
+- **macOS/Linux**: `~/.local/share/zyraxon/`
+- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.local\share\zyraxon`
 
 Questa directory contiene:
 
@@ -39,7 +39,7 @@ Questa directory contiene:
 
 ## App desktop
 
-ZYRAXON Desktop esegue in background un server locale di ZYRAXON (il sidecar `opencode-cli`). La maggior parte dei problemi e causata da un plugin che si comporta male, da una cache corrotta o da un'impostazione del server errata.
+ZYRAXON Desktop esegue in background un server locale di ZYRAXON (il sidecar `zyraxon-cli`). La maggior parte dei problemi e causata da un plugin che si comporta male, da una cache corrotta o da un'impostazione del server errata.
 
 ### Controlli rapidi
 
@@ -57,9 +57,9 @@ Se l'app desktop va in crash all'avvio, si blocca o si comporta in modo strano, 
 
 Apri il tuo file di configurazione globale e cerca la chiave `plugin`.
 
-- **macOS/Linux**: `~/.config/opencode/zyraxon.jsonc` (o `~/.config/opencode/zyraxon.json`)
-- **macOS/Linux** (installazioni vecchie): `~/.local/share/opencode/zyraxon.jsonc`
-- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.config\opencode\zyraxon.jsonc`
+- **macOS/Linux**: `~/.config/zyraxon/zyraxon.jsonc` (o `~/.config/zyraxon/zyraxon.json`)
+- **macOS/Linux** (installazioni vecchie): `~/.local/share/zyraxon/zyraxon.jsonc`
+- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.config\zyraxon\zyraxon.jsonc`
 
 Se hai plugin configurati, disabilitali temporaneamente rimuovendo la chiave o impostandola a un array vuoto:
 
@@ -75,10 +75,10 @@ Se hai plugin configurati, disabilitali temporaneamente rimuovendo la chiave o i
 ZYRAXON puo anche caricare plugin locali dal disco. Spostali temporaneamente altrove (o rinomina la cartella) e riavvia l'app desktop:
 
 - **Plugin globali**
-  - **macOS/Linux**: `~/.config/opencode/plugins/`
-- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.config\opencode\plugins`
+  - **macOS/Linux**: `~/.config/zyraxon/plugins/`
+- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.config\zyraxon\plugins`
 - **Plugin del progetto** (solo se usi una configurazione per progetto)
-  - `<your-project>/.opencode/plugins/`
+  - `<your-project>/.zyraxon/plugins/`
 
 Se l'app ricomincia a funzionare, riabilita i plugin uno alla volta per capire quale stia causando il problema.
 
@@ -91,9 +91,9 @@ Se disabilitare i plugin non aiuta (o l'installazione di un plugin e bloccata), 
 1. Chiudi completamente ZYRAXON Desktop.
 2. Elimina la directory della cache:
 
-- **macOS**: Finder -> `Cmd+Shift+G` -> paste `~/.cache/opencode`
-- **Linux**: elimina `~/.cache/opencode` (oppure esegui `rm -rf ~/.cache/opencode`)
-- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.cache\opencode`
+- **macOS**: Finder -> `Cmd+Shift+G` -> paste `~/.cache/zyraxon`
+- **Linux**: elimina `~/.cache/zyraxon` (oppure esegui `rm -rf ~/.cache/zyraxon`)
+- **Windows**: premi `WIN+R` e incolla `%USERPROFILE%\.cache\zyraxon`
 
 3. Riavvia ZYRAXON Desktop.
 
@@ -115,9 +115,9 @@ Se il tuo `zyraxon.json(c)` contiene una sezione `server`, rimuovila temporaneam
 
 #### Controlla le variabili d'ambiente
 
-Se hai `OPENCODE_PORT` impostato nell'ambiente, l'app desktop provera a usare quella porta per il server locale.
+Se hai `ZYRAXON_PORT` impostato nell'ambiente, l'app desktop provera a usare quella porta per il server locale.
 
-- Rimuovi `OPENCODE_PORT` (o scegli una porta libera) e riavvia.
+- Rimuovi `ZYRAXON_PORT` (o scegli una porta libera) e riavvia.
 
 ---
 
@@ -158,8 +158,8 @@ Se l'app non si avvia e non riesci a ripulire le impostazioni dall'interfaccia, 
 1. Chiudi ZYRAXON Desktop.
 2. Trova ed elimina questi file (si trovano nella directory dati dell'app ZYRAXON Desktop):
 
-- `opencode.settings.dat` (desktop default server URL)
-- `opencode.global.dat` e `opencode.workspace.*.dat` (stato dell'interfaccia come server/progetti recenti)
+- `zyraxon.settings.dat` (desktop default server URL)
+- `zyraxon.global.dat` e `zyraxon.workspace.*.dat` (stato dell'interfaccia come server/progetti recenti)
 
 Per trovare rapidamente la directory:
 
@@ -224,7 +224,7 @@ Esempi:
 
 - `openai/gpt-4.1`
 - `openrouter/google/gemini-2.5-flash`
-- `opencode/kimi-k2`
+- `zyraxon/kimi-k2`
 
 Per capire a quali modelli hai accesso, esegui `zyraxon models`
 
@@ -240,10 +240,10 @@ Per risolvere:
 2. Se il problema persiste, prova a cancellare la configurazione salvata:
 
    ```bash
-   rm -rf ~/.local/share/opencode
+   rm -rf ~/.local/share/zyraxon
    ```
 
-   Su Windows, premi `WIN+R` ed elimina: `%USERPROFILE%\.local\share\opencode`
+   Su Windows, premi `WIN+R` ed elimina: `%USERPROFILE%\.local\share\zyraxon`
 
 3. Riautenticati con il provider usando il comando `/connect` nella TUI.
 
@@ -251,21 +251,21 @@ Per risolvere:
 
 ### AI_APICallError e problemi dei pacchetti provider
 
-Se incontri errori nelle chiamate API, potrebbe dipendere da pacchetti provider non aggiornati. opencode installa dinamicamente i pacchetti provider (OpenAI, Anthropic, Google, ecc.) quando servono e li mette in cache localmente.
+Se incontri errori nelle chiamate API, potrebbe dipendere da pacchetti provider non aggiornati. zyraxon installa dinamicamente i pacchetti provider (OpenAI, Anthropic, Google, ecc.) quando servono e li mette in cache localmente.
 
 Per risolvere problemi coi pacchetti provider:
 
 1. Svuota la cache dei pacchetti provider:
 
    ```bash
-   rm -rf ~/.cache/opencode
+   rm -rf ~/.cache/zyraxon
    ```
 
-   Su Windows, premi `WIN+R` ed elimina: `%USERPROFILE%\.cache\opencode`
+   Su Windows, premi `WIN+R` ed elimina: `%USERPROFILE%\.cache\zyraxon`
 
-2. Riavvia opencode per reinstallare i pacchetti provider piu recenti
+2. Riavvia zyraxon per reinstallare i pacchetti provider piu recenti
 
-Questo forzera opencode a scaricare le versioni piu recenti dei pacchetti provider, cosa che spesso risolve problemi di compatibilita con parametri dei modelli e cambiamenti delle API.
+Questo forzera zyraxon a scaricare le versioni piu recenti dei pacchetti provider, cosa che spesso risolve problemi di compatibilita con parametri dei modelli e cambiamenti delle API.
 
 ---
 
@@ -296,4 +296,4 @@ Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 export DISPLAY=:99.0
 ```
 
-opencode rilevera se stai usando Wayland e preferira `wl-clipboard`; altrimenti provera a trovare gli strumenti per gli appunti nell'ordine: `xclip` e `xsel`.
+zyraxon rilevera se stai usando Wayland e preferira `wl-clipboard`; altrimenti provera a trovare gli strumenti per gli appunti nell'ordine: `xclip` e `xsel`.

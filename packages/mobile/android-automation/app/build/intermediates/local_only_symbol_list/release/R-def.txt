@@ -1,7 +1,0 @@
-R_DEF: Internal format may change without notice
-local
-id foregroundText
-id statusText
-layout activity_main
-style Theme.ZyraxonAutomation
-xml accessibility_service_config

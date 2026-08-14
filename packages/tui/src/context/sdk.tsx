@@ -1,6 +1,6 @@
-import { createOpencodeClient } from "@opencode-ai/sdk/v2"
-import type { GlobalEvent } from "@opencode-ai/sdk/v2"
-import { Flag } from "@opencode-ai/core/flag/flag"
+import { createZyraxonClient } from "@zyraxon-ai/sdk/v2"
+import type { GlobalEvent } from "@zyraxon-ai/sdk/v2"
+import { Flag } from "@zyraxon-ai/core/flag/flag"
 import { createSimpleContext } from "./helper"
 import { batch, onCleanup, onMount } from "solid-js"
 
@@ -21,7 +21,7 @@ export const { use: useSDK, provider: SDKProvider } = createSimpleContext({
     let sse: AbortController | undefined
 
     function createSDK() {
-      return createOpencodeClient({
+      return createZyraxonClient({
         baseUrl: props.url,
         signal: abort.signal,
         directory: props.directory,

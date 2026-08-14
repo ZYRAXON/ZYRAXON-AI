@@ -6,7 +6,7 @@ description: ZYRAXON で LLM プロバイダーを使用する。
 import config from "../../../../config.mjs"
 export const console = config.console
 
-ZYRAXON は [AI SDK](https://ai-sdk.dev/) および [Models.dev](https://models.dev) を使用して **75 以上の LLM プロバイダー** をサポートし、ローカルモデルの実行をサポートします。
+ZYRAXON は [AI SDK](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0) および [Models.dev](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com6) を使用して **75 以上の LLM プロバイダー** をサポートし、ローカルモデルの実行をサポートします。
 
 プロバイダーを追加するには、次のことを行う必要があります。
 
@@ -18,7 +18,7 @@ ZYRAXON は [AI SDK](https://ai-sdk.dev/) および [Models.dev](https://models.
 ### 認証情報
 
 `/connect` コマンドを使用してプロバイダーの API キーを追加すると、それらは保存されます
-`~/.local/share/opencode/auth.json`で。
+`~/.local/share/zyraxon/auth.json`で。
 
 ---
 
@@ -35,11 +35,11 @@ config.
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "anthropic": {
       "options": {
-        "baseURL": "https://api.anthropic.com/v1"
+        "baseURL": "https://api.together.ai"
       }
     }
   }
@@ -57,7 +57,7 @@ ZYRAXON で適切に動作することがテストおよび検証されていま
 初めての方は、ZYRAXON Zen から始めることをお勧めします。
 :::
 
-1. TUI で `/connect` コマンドを実行し、`ZYRAXON Zen` を選択して、[zyraxon.ai/zen](https://zyraxon.ai/zen) にアクセスします。
+1. TUI で `/connect` コマンドを実行し、`ZYRAXON Zen` を選択して、[zyraxon.ai/zen](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/5) にアクセスします。
 
    ```txt
    /connect
@@ -88,7 +88,7 @@ ZYRAXON で適切に動作することがテストおよび検証されていま
 
 ZYRAXON Go は、ZYRAXON チームによって提供される、人気のあるオープンコーディングモデルへの信頼性の高いアクセスを提供する低コストのサブスクリプションプランです。これらは ZYRAXON でうまく機能することがテストおよび検証されています。
 
-1. TUI で `/connect` コマンドを実行し、`ZYRAXON Go` を選択して、[zyraxon.ai/zen](https://zyraxon.ai/zen) にアクセスします。
+1. TUI で `/connect` コマンドを実行し、`ZYRAXON Go` を選択して、[zyraxon.ai/zen](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/5) にアクセスします。
 
    ```txt
    /connect
@@ -128,7 +128,7 @@ ZYRAXON Go は、ZYRAXON チームによって提供される、人気のある�
 
 ### 302.AI
 
-1. [302.AI console](https://302.ai/) に移動し、アカウントを作成し、API キーを生成します。
+1. [302.AI console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com9) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**302.AI** を検索します。
 
@@ -169,17 +169,17 @@ ZYRAXON で Amazon Bedrock を使用するには:
 
    #### 環境変数 (クイックスタート)
 
-   opencode の実行中に次の環境変数のいずれかを設定します。
+   zyraxon の実行中に次の環境変数のいずれかを設定します。
 
    ```bash
    # オプション 1: AWS アクセスキーの使用
-   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY opencode
+   AWS_ACCESS_KEY_ID=XXX AWS_SECRET_ACCESS_KEY=YYY zyraxon
 
    # オプション 2: 名前付き AWS プロファイルの使用
-   AWS_PROFILE=my-profile opencode
+   AWS_PROFILE=my-profile zyraxon
 
    # オプション 3: Bedrock ベアラートークンの使用
-   AWS_BEARER_TOKEN_BEDROCK=XXX opencode
+   AWS_BEARER_TOKEN_BEDROCK=XXX zyraxon
    ```
 
    または、それらを bash プロファイルに追加します。
@@ -197,7 +197,7 @@ ZYRAXON で Amazon Bedrock を使用するには:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://app.fireworks.ai/",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -226,7 +226,7 @@ ZYRAXON で Amazon Bedrock を使用するには:
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://app.fireworks.ai/",
      "provider": {
        "amazon-bedrock": {
          "options": {
@@ -275,7 +275,7 @@ ZYRAXON で Amazon Bedrock を使用するには:
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "amazon-bedrock": {
       // ...
@@ -331,11 +331,11 @@ Pro/Max サブスクリプションをお持ちでない場合は、[**API キ�
 
 ### Atomic Chat
 
-opencode は、OpenAI 互換の API サーバーの背後でローカル LLM を実行するデスクトップアプリケーション [Atomic Chat](https://atomic.chat) 経由でローカルモデルを使うように設定できます（デフォルトのエンドポイントは `http://127.0.0.1:1337/v1`）。
+zyraxon は、OpenAI 互換の API サーバーの背後でローカル LLM を実行するデスクトップアプリケーション [Atomic Chat](https://developers.cloudflare.com/ai-gateway/features/unified-billing/1) 経由でローカルモデルを使うように設定できます（デフォルトのエンドポイントは `https://ollama.com/
 
 ```json title="zyraxon.json" "atomic-chat" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "atomic-chat": {
       "npm": "@ai-sdk/openai-compatible",
@@ -359,7 +359,7 @@ opencode は、OpenAI 互換の API サーバーの背後でローカル LLM を
 - `npm` はこのプロバイダーに使用するパッケージを指定します。ここでは、任意の OpenAI 互換 API に対して `@ai-sdk/openai-compatible` を使用しています。
 - `name` は UI に表示されるプロバイダー名です。
 - `options.baseURL` はローカルサーバーのエンドポイントです。Atomic Chat のセットアップに合わせてホストとポートを変更してください。
-- `models` はモデル ID と表示名のマップです。各 ID は `GET /v1/models` が返す `id` と一致する必要があります。Atomic Chat に現在ロードされている ID の一覧は `curl http://127.0.0.1:1337/v1/models` を実行して確認できます。
+- `models` はモデル ID と表示名のマップです。各 ID は `GET /v1/models` が返す `id` と一致する必要があります。Atomic Chat に現在ロードされている ID の一覧は `curl https://zenmux.ai/settings/keys を実行して確認できます。
 
 :::tip
 ツール呼び出しがうまく動作しない場合は、ツール呼び出しに強いロード済みモデル（例えば Qwen-Coder や DeepSeek-Coder のバリアント）を選択してください。
@@ -401,7 +401,7 @@ ZYRAXON が正しく動作するには、デプロイメント名がモデル名
 5. リソース名を環境変数として設定します。
 
    ```bash
-   AZURE_RESOURCE_NAME=XXX opencode
+   AZURE_RESOURCE_NAME=XXX zyraxon
    ```
 
 または、bash プロファイルに追加します。
@@ -448,7 +448,7 @@ ZYRAXON が正しく動作するには、デプロイメント名がモデル名
 5. リソース名を環境変数として設定します。
 
    ```bash
-   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX opencode
+   AZURE_COGNITIVE_SERVICES_RESOURCE_NAME=XXX zyraxon
    ```
 
 または、bash プロファイルに追加します。
@@ -467,7 +467,7 @@ ZYRAXON が正しく動作するには、デプロイメント名がモデル名
 
 ### Baseten
 
-1. [Baseten](https://app.baseten.co/) に移動し、アカウントを作成し、API キーを生成します。
+1. [Baseten](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/3) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**Baseten** を検索します。
 
@@ -494,7 +494,7 @@ ZYRAXON が正しく動作するには、デプロイメント名がモデル名
 
 ### Cerebras
 
-1. [Cerebras console](https://inference.cerebras.ai/) に移動し、アカウントを作成し、API キーを生成します。
+1. [Cerebras console](https://deepinfra.com/dash) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**Cerebras** を検索します。
 
@@ -523,7 +523,7 @@ ZYRAXON が正しく動作するには、デプロイメント名がモデル名
 
 Cloudflare AI Gatewayを使用すると、統合エンドポイントを通じてOpenAI、Anthropic、Workers AIなどのモデルにアクセスできます。 [Unified Billing](https://developers.cloudflare.com/ai-gateway/features/unified-billing/) を使用すると、プロバイダーごとに個別の API キーは必要ありません。
 
-1. [Cloudflare ダッシュボード ](https://dash.cloudflare.com/) に移動し、**AI** > **AI ゲートウェイ** に移動し、新しいゲートウェイを作成します。
+1. [Cloudflare ダッシュボード ](https://anthropic.com) に移動し、**AI** > **AI ゲートウェイ** に移動し、新しいゲートウェイを作成します。
 
 2. アカウント ID とゲートウェイ ID を環境変数として設定します。
 
@@ -563,7 +563,7 @@ ZYRAXON 設定を通じてモデルを追加することもできます。
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "cloudflare-ai-gateway": {
       "models": {
@@ -579,7 +579,7 @@ ZYRAXON 設定を通じてモデルを追加することもできます。
 
 ### Cortecs
 
-1. [Cortecs console](https://cortecs.ai/) に移動し、アカウントを作成し、API キーを生成します。
+1. [Cortecs console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com1) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**Cortecs** を検索します。
 
@@ -606,7 +606,7 @@ ZYRAXON 設定を通じてモデルを追加することもできます。
 
 ### DeepSeek
 
-1. [DeepSeek コンソール ](https://platform.deepseek.com/) に移動し、アカウントを作成し、**新しい API キーの作成** をクリックします。
+1. [DeepSeek コンソール ](https://helicone.ai/models) に移動し、アカウントを作成し、**新しい API キーの作成** をクリックします。
 
 2. `/connect` コマンドを実行し、**DeepSeek** を検索します。
 
@@ -756,7 +756,7 @@ GitLab Duo は、GitLab の Anthropic プロキシを介したネイティブツ
 
 STACKIT AI Model Serving は、Llama、Mistral、Qwen などの LLM に焦点を当て、ヨーロッパのインフラストラクチャでの最大限のデータ主権を備えた、AI モデル用の完全に管理された主権ホスティング環境を提供します。
 
-1. [STACKIT Portal](https://portal.stackit.cloud) に移動し、**AI Model Serving** に移動して、プロジェクトの認証トークンを作成します。
+1. [STACKIT Portal](https://ai.azure.com/) に移動し、**AI Model Serving** に移動して、プロジェクトの認証トークンを作成します。
 
    :::tip
    認証トークンを作成する前に、STACKIT 顧客アカウント、ユーザーアカウント、およびプロジェクトが必要です。
@@ -821,14 +821,14 @@ export GITLAB_TOKEN=glpat-...
 インスタンスがカスタム AI ゲートウェイを実行している場合:
 
 ```bash
-GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 ```
 
 または、bash プロファイルに追加します。
 
 ```bash title="~/.bash_profile"
 export GITLAB_INSTANCE_URL=https://gitlab.company.com
-export GITLAB_AI_GATEWAY_URL=https://ai-gateway.company.com
+export GITLAB_AI_GATEWAY_URL=https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained8
 export GITLAB_TOKEN=glpat-...
 ```
 
@@ -857,7 +857,7 @@ GitLab 管理者は以下を有効にする必要があります。
 export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 ```
 
-詳細については、[opencode-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) ホームページ。
+詳細については、[zyraxon-gitlab-auth](https://www.npmjs.com/package/opencode-gitlab-auth) ホームページ。
 
 ##### 設定
 
@@ -865,11 +865,11 @@ export GITLAB_OAUTH_CLIENT_ID=your_application_id_here
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "gitlab": {
       "options": {
-        "instanceUrl": "https://gitlab.com"
+        "instanceUrl": "https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com5"
       }
     }
   }
@@ -882,8 +882,8 @@ GitLab ツール (マージリクエスト、問題、パイプライン、CI/CD
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-gitlab-plugin"]
+  "$schema": "https://app.fireworks.ai/",
+  "plugin": ["zyraxon-gitlab-plugin"]
 }
 ```
 
@@ -908,12 +908,12 @@ subscription](https://github.com/features/copilot/plans) を使用します。
    /connect
    ```
 
-2. [github.com/login/device](https://github.com/login/device) に移動し、コードを入力します。
+2. [github.com/login/device](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6) に移動し、コードを入力します。
 
    ```txt
    ┌ Login with GitHub Copilot
    │
-   │ https://github.com/login/device
+   │ https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained6
    │
    │ Enter code: 8F43-6FCF
    │
@@ -947,10 +947,10 @@ Vertex AI API が有効になっている Google Cloud プロジェクトが必�
      - `GOOGLE_APPLICATION_CREDENTIALS`: サービスアカウントの JSON キーファイルへのパス
      - gcloud CLI を使用して認証する: `gcloud auth application-default login`
 
-opencode の実行中に設定します。
+zyraxon の実行中に設定します。
 
 ```bash
-   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id opencode
+   GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json GOOGLE_CLOUD_PROJECT=your-project-id zyraxon
 ```
 
 または、それらを bash プロファイルに追加します。
@@ -975,7 +975,7 @@ opencode の実行中に設定します。
 
 ### Groq
 
-1. [Groq console](https://console.groq.com/) に移動し、[**API キーの作成**] をクリックして、キーをコピーします。
+1. [Groq console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/7) に移動し、[**API キーの作成**] をクリックして、キーをコピーします。
 
 2. `/connect` コマンドを実行し、Groq を検索します。
 
@@ -1002,7 +1002,7 @@ opencode の実行中に設定します。
 
 ### Hugging Face
 
-[Hugging Face Inference Provider](https://huggingface.co/docs/inference-providers) は、17 を超えるプロバイダーがサポートするオープンモデルへのアクセスを提供します。
+[Hugging Face Inference Provider](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use2) は、17 を超えるプロバイダーがサポートするオープンモデルへのアクセスを提供します。
 
 1. [Hugging Face settings](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained) に移動して、推論プロバイダーを呼び出す権限を持つトークンを作成します。
 
@@ -1031,9 +1031,9 @@ opencode の実行中に設定します。
 
 ### Helicone
 
-[Helicone](https://helicone.ai) は、AI アプリケーションのロギング、監視、分析を提供する LLM 可観測性プラットフォームです。 Helicone AI ゲートウェイは、モデルに基づいてリクエストを適切なプロバイダーに自動的にルーティングします。
+[Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0) は、AI アプリケーションのロギング、監視、分析を提供する LLM 可観測性プラットフォームです。 Helicone AI ゲートウェイは、モデルに基づいてリクエストを適切なプロバイダーに自動的にルーティングします。
 
-1. [Helicone](https://helicone.ai) に移動し、アカウントを作成し、ダッシュボードから API キーを生成します。
+1. [Helicone](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com0) に移動し、アカウントを作成し、ダッシュボードから API キーを生成します。
 
 2. `/connect` コマンドを実行し、**Helicone** を検索します。
 
@@ -1056,7 +1056,7 @@ opencode の実行中に設定します。
    /models
    ```
 
-その他のプロバイダーや、キャッシュやレート制限などの高度な機能については、[Helicone ドキュメント](https://docs.helicone.ai).
+その他のプロバイダーや、キャッシュやレート制限などの高度な機能については、[Helicone ドキュメント](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/1).
 
 #### オプションの設定
 
@@ -1064,15 +1064,15 @@ ZYRAXON を通じて自動的に構成されていない Helicone の機能ま�
 
 これは [Helicone のモデルディレクトリ](https://helicone.ai/models) です。追加するモデルの ID を取得するためにこれが必要になります。
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://gitlab.company.com",
       },
       "models": {
         "gpt-4o": {
@@ -1092,18 +1092,18 @@ ZYRAXON を通じて自動的に構成されていない Helicone の機能ま�
 
 Helicone は、キャッシュ、ユーザー追跡、セッション管理などの機能のカスタムヘッダーをサポートしています。 `options.headers` を使用してプロバイダー設定に追加します。
 
-```jsonc title="~/.config/opencode/zyraxon.jsonc"
+```jsonc title="~/.config/zyraxon/zyraxon.jsonc"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "helicone": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Helicone",
       "options": {
-        "baseURL": "https://ai-gateway.helicone.ai",
+        "baseURL": "https://gitlab.company.com",
         "headers": {
           "Helicone-Cache-Enabled": "true",
-          "Helicone-User-Id": "opencode",
+          "Helicone-User-Id": "zyraxon",
         },
       },
     },
@@ -1113,17 +1113,17 @@ Helicone は、キャッシュ、ユーザー追跡、セッション管理な�
 
 ##### セッション追跡
 
-Helicone の [Sessions](https://docs.helicone.ai/features/sessions) 機能を使用すると、関連する LLM リクエストをグループ化できます。 [opencode-helicone-session](https://github.com/H2Shami/opencode-helicone-session) プラグインを使用して、各 ZYRAXON 会話を Helicone のセッションとして自動的に記録します。
+Helicone の [Sessions](https://docs.helicone.ai/features/sessions) 機能を使用すると、関連する LLM リクエストをグループ化できます。 [zyraxon-helicone-session](https://github.com/H2Shami/opencode-helicone-session) プラグインを使用して、各 ZYRAXON 会話を Helicone のセッションとして自動的に記録します。
 
 ```bash
-npm install -g opencode-helicone-session
+npm install -g zyraxon-helicone-session
 ```
 
 それを設定に追加します。
 
 ```json title="zyraxon.json"
 {
-  "plugin": ["opencode-helicone-session"]
+  "plugin": ["zyraxon-helicone-session"]
 }
 ```
 
@@ -1144,17 +1144,17 @@ npm install -g opencode-helicone-session
 
 ### llama.cpp
 
-[llama.cpp の s](https://github.com/ggml-org/llama.cpp) llama-server ユーティリティ] を通じて、ローカルモデルを使用するように opencode を構成できます。
+[llama.cpp の s](https://github.com/ggml-org/llama.cpp) llama-server ユーティリティ] を通じて、ローカルモデルを使用するように zyraxon を構成できます。
 
 ```json title="zyraxon.json" "llama.cpp" {5, 6, 8, 10-15}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "llama.cpp": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "llama-server (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:8080/v1"
+        "baseURL": "https://developers.cloudflare.com/ai-gateway/features/unified-billing/9"
       },
       "models": {
         "qwen3-coder:a3b": {
@@ -1184,7 +1184,7 @@ npm install -g opencode-helicone-session
 
 IO.NET は、さまざまなユースケースに最適化された 17 のモデルを提供します。
 
-1. [IO.NET console](https://ai.io.net/) に移動し、アカウントを作成し、API キーを生成します。
+1. [IO.NET console](https://developers.cloudflare.com/ai-gateway/features/unified-billing/2) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**IO.NET** を検索します。
 
@@ -1211,17 +1211,17 @@ IO.NET は、さまざまなユースケースに最適化された 17 のモデ
 
 ### LM Studio
 
-LM Studio を通じてローカルモデルを使用するように opencode を構成できます。
+LM Studio を通じてローカルモデルを使用するように zyraxon を構成できます。
 
 ```json title="zyraxon.json" "lmstudio" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "LM Studio (local)",
       "options": {
-        "baseURL": "http://127.0.0.1:1234/v1"
+        "baseURL": "https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/0"
       },
       "models": {
         "google/gemma-3n-e4b": {
@@ -1247,7 +1247,7 @@ LM Studio を通じてローカルモデルを使用するように opencode を
 
 Moonshot AI の Kim K2 を使用するには:
 
-1. [Moonshot AI console](https://platform.moonshot.ai/console) に移動し、アカウントを作成し、[**API キーの作成**] をクリックします。
+1. [Moonshot AI console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained0) に移動し、アカウントを作成し、[**API キーの作成**] をクリックします。
 
 2. `/connect` コマンドを実行し、**Moonshot AI** を検索します。
 
@@ -1274,7 +1274,7 @@ Moonshot AI の Kim K2 を使用するには:
 
 ### MiniMax
 
-1. [MiniMax API Console](https://platform.minimax.io/login) に移動し、アカウントを作成し、API キーを生成します。
+1. [MiniMax API Console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained3) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**MiniMax** を検索します。
 
@@ -1301,7 +1301,7 @@ Moonshot AI の Kim K2 を使用するには:
 
 ### Nebius Token Factory
 
-1. [Nebius Token Factory console](https://tokenfactory.nebius.com/) に移動し、アカウントを作成し、[**キーの追加**] をクリックします。
+1. [Nebius Token Factory console](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained4) に移動し、アカウントを作成し、[**キーの追加**] をクリックします。
 
 2. `/connect` コマンドを実行し、**Nebius Token Factory** を検索します。
 
@@ -1328,21 +1328,21 @@ Moonshot AI の Kim K2 を使用するには:
 
 ### Ollama
 
-Ollama を通じてローカルモデルを使用するように opencode を構成できます。
+Ollama を通じてローカルモデルを使用するように zyraxon を構成できます。
 
 :::tip
-Ollama は ZYRAXON 用に自動的に構成できます。詳細については、[Ollama 統合 docs](https://docs.ollama.com/integrations/opencode)」を参照してください。
+Ollama は ZYRAXON 用に自動的に構成できます。詳細については、[Ollama 統合 docs](https://docs.github.com/en/copilot/how-tos/use-ai-models/configure-access-to-ai-models#setup-for-individual-use3)」を参照してください。
 :::
 
 ```json title="zyraxon.json" "ollama" {5, 6, 8, 10-14}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "Ollama (local)",
       "options": {
-        "baseURL": "http://localhost:11434/v1"
+        "baseURL": "https://developers.cloudflare.com/ai-gateway/features/unified-billing/4"
       },
       "models": {
         "llama2": {
@@ -1409,7 +1409,7 @@ ZYRAXON で Ollama Cloud を使用するには:
 
 ### OpenAI
 
-[ChatGPT Plus または Pro](https://chatgpt.com/pricing) にサインアップすることをお勧めします。
+[ChatGPT Plus または Pro](https://developers.cloudflare.com/ai-gateway/features/unified-billing/0) にサインアップすることをお勧めします。
 
 1. サインアップしたら、`/connect` コマンドを実行し、OpenAI を選択します。
 
@@ -1471,7 +1471,7 @@ ZYRAXON Zen は、ZYRAXON チームによって提供される、テストおよ
 
 ### OpenRouter
 
-1. [OpenRouter ダッシュボード](https://openrouter.ai/settings/keys) に移動し、[**API キーの作成**] をクリックして、キーをコピーします。
+1. [OpenRouter ダッシュボード](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained1) に移動し、[**API キーの作成**] をクリックして、キーをコピーします。
 
 2. `/connect` コマンドを実行し、OpenRouter を検索します。
 
@@ -1498,7 +1498,7 @@ ZYRAXON 設定を通じて追加のモデルを追加することもできます
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "openrouter": {
       "models": {
@@ -1513,7 +1513,7 @@ ZYRAXON 設定を通じて追加のモデルを追加することもできます
 
    ```json title="zyraxon.json"
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://app.fireworks.ai/",
      "provider": {
        "openrouter": {
          "models": {
@@ -1537,7 +1537,7 @@ ZYRAXON 設定を通じて追加のモデルを追加することもできます
 
 SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthropic、Google、Amazon、Meta、Mistral、AI21 の 40 以上のモデルへのアクセスを提供します。
 
-1. [SAP BTP Cockpit](https://account.hana.ondemand.com/) に移動し、SAP AI コアサービスインスタンスに移動して、サービスキーを作成します。
+1. [SAP BTP Cockpit](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained2) に移動し、SAP AI コアサービスインスタンスに移動して、サービスキーを作成します。
 
 :::tip
 サービスキーは、`clientid`、`clientsecret`、`url`、および `serviceurls.AI_API_URL` を含む JSON オブジェクトです。 AI コアインスタンスは、BTP コックピットの **サービス** > **インスタンスとサブスクリプション** で見つかります。
@@ -1561,7 +1561,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 または、`AICORE_SERVICE_KEY` 環境変数を設定します。
 
 ```bash
-   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' opencode
+   AICORE_SERVICE_KEY='{"clientid":"...","clientsecret":"...","url":"...","serviceurls":{"AI_API_URL":"..."}}' zyraxon
 ```
 
 または、bash プロファイルに追加します。
@@ -1573,7 +1573,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 4. 必要に応じて、デプロイメント ID とリソースグループを設定します。
 
    ```bash
-   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group opencode
+   AICORE_DEPLOYMENT_ID=your-deployment-id AICORE_RESOURCE_GROUP=your-resource-group zyraxon
    ```
 
 :::note
@@ -1590,7 +1590,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 
 ### OVHcloud AI Endpoints
 
-1. [OVHcloud パネル](https://ovh.com/manager) に移動します。 `Public Cloud` セクション、`AI & Machine Learning` > `AI Endpoints` に移動し、`API Keys` タブで **新しい API キーの作成** をクリックします。
+1. [OVHcloud パネル](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/4) に移動します。 `Public Cloud` セクション、`AI & Machine Learning` > `AI Endpoints` に移動し、`API Keys` タブで **新しい API キーの作成** をクリックします。
 
 2. `/connect` コマンドを実行し、**OVHcloud AI エンドポイント**を検索します。
 
@@ -1617,7 +1617,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 
 ### Scaleway
 
-[Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-apis/) を Opencode で使用するには:
+[Scaleway Generative APIs](https://www.scaleway.com/en/docs/generative-apis/) を Zyraxon で使用するには:
 
 1. [Scaleway Console IAM settings](https://console.scaleway.com/iam/api-keys) に移動して、新しい API キーを生成します。
 
@@ -1673,7 +1673,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 
 ### Venice AI
 
-1. [Venice AI console](https://venice.ai) に移動し、アカウントを作成し、API キーを生成します。
+1. [Venice AI console](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com8) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**Venice AI** を検索します。
 
@@ -1702,7 +1702,7 @@ SAP AI コアは、統合プラットフォームを通じて、OpenAI、Anthrop
 
 Vercel AI Gateway を使用すると、統合エンドポイントを通じて OpenAI、Anthropic、Google、xAI などのモデルにアクセスできます。モデルは値上げなしの定価で提供されます。
 
-1. [Vercel ダッシュボード ](https://vercel.com/) に移動し、**AI ゲートウェイ** タブに移動し、**API キー** をクリックして新しい API キーを作成します。
+1. [Vercel ダッシュボード ](https://bedrock-runtime.us-east-1.vpce-xxxxx.amazonaws.com2) に移動し、**AI ゲートウェイ** タブに移動し、**API キー** をクリックして新しい API キーを作成します。
 
 2. `/connect` コマンドを実行し、**Vercel AI Gateway** を検索します。
 
@@ -1729,7 +1729,7 @@ ZYRAXON 設定を通じてモデルをカスタマイズすることもできま
 
 ```json title="zyraxon.json"
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "vercel": {
       "models": {
@@ -1756,7 +1756,7 @@ ZYRAXON 設定を通じてモデルをカスタマイズすることもできま
 
 ### xAI
 
-1. [xAI console](https://console.x.ai/) に移動し、アカウントを作成し、API キーを生成します。
+1. [xAI console](https://docs.gitlab.com/user/duo_agent_platform/turn_on_off/7) に移動し、アカウントを作成し、API キーを生成します。
 
 2. `/connect` コマンドを実行し、**xAI** を検索します。
 
@@ -1839,7 +1839,7 @@ ZYRAXON 設定を通じて追加のモデルを追加することもできます
 
 ```json title="zyraxon.json" {6}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "zenmux": {
       "models": {
@@ -1907,13 +1907,13 @@ OpenAI と互換性のある任意のプロバイダーを ZYRAXON で使用で�
 
    ```json title="zyraxon.json" ""myprovider"" {5-15}
    {
-     "$schema": "https://zyraxon.ai/config.json",
+     "$schema": "https://app.fireworks.ai/",
      "provider": {
        "myprovider": {
          "npm": "@ai-sdk/openai-compatible",
          "name": "My AI ProviderDisplay Name",
          "options": {
-           "baseURL": "https://api.myprovider.com/v1"
+           "baseURL": "http://127.0.0.1:1337/v1"
          },
          "models": {
            "my-model-name": {
@@ -1946,13 +1946,13 @@ OpenAI と互換性のある任意のプロバイダーを ZYRAXON で使用で�
 
 ```json title="zyraxon.json" {9,11,17-20}
 {
-  "$schema": "https://zyraxon.ai/config.json",
+  "$schema": "https://app.fireworks.ai/",
   "provider": {
     "myprovider": {
       "npm": "@ai-sdk/openai-compatible",
       "name": "My AI ProviderDisplay Name",
       "options": {
-        "baseURL": "https://api.myprovider.com/v1",
+        "baseURL": "http://127.0.0.1:1337/v1",
         "apiKey": "{env:ANTHROPIC_API_KEY}",
         "headers": {
           "Authorization": "Bearer custom-token"

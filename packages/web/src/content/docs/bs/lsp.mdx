@@ -47,14 +47,14 @@ ZYRAXON dolazi sa nekoliko ugrađenih LSP servera za popularne jezike:
 
 LSP je podrazumijevano isključen. Kada je omogućen, serveri se pokreću kada se otkrije jedna od gore navedenih ekstenzija datoteke i zahtjevi su ispunjeni.
 :::note
-Možete onemogućiti automatska preuzimanja LSP servera tako što ćete postaviti varijablu okruženja `OPENCODE_DISABLE_LSP_DOWNLOAD` na `true`.
+Možete onemogućiti automatska preuzimanja LSP servera tako što ćete postaviti varijablu okruženja `ZYRAXON_DISABLE_LSP_DOWNLOAD` na `true`.
 :::
 
 ---
 
 ## Kako radi
 
-Kada je LSP omogućen i opencode otvori fajl, on:
+Kada je LSP omogućen i zyraxon otvori fajl, on:
 
 1. Provjerava ekstenziju datoteke u odnosu na sve omogućene LSP servere.
 2. Pokreće odgovarajući LSP server ako već nije pokrenut.
@@ -71,7 +71,7 @@ Jezički serveri mogu ispasti iz sinhronizacije, koristiti mnogo memorije, razli
 
 ## Konfiguracija
 
-Možete omogućiti i prilagoditi LSP servere kroz `lsp` odjeljak u vašoj opencode konfiguraciji.
+Možete omogućiti i prilagoditi LSP servere kroz `lsp` odjeljak u vašoj zyraxon konfiguraciji.
 
 Da biste omogućili sve ugrađene LSP servere, postavite `lsp` na `true`.
 

@@ -3,7 +3,7 @@ title: GitHub
 description: ใช้ ZYRAXON ในปัญหา GitHub และคำขอแบบดึง
 ---
 
-ZYRAXON ผสานรวมกับเวิร์กโฟลว์ GitHub ของคุณ พูดถึง `/opencode` หรือ `/oc` ในความคิดเห็นของคุณ แล้ว ZYRAXON จะดำเนินการงานภายใน GitHub Actions runner ของคุณ
+ZYRAXON ผสานรวมกับเวิร์กโฟลว์ GitHub ของคุณ พูดถึง `/zyraxon` หรือ `/oc` ในความคิดเห็นของคุณ แล้ว ZYRAXON จะดำเนินการงานภายใน GitHub Actions runner ของคุณ
 
 ---
 
@@ -20,7 +20,7 @@ ZYRAXON ผสานรวมกับเวิร์กโฟลว์ GitHub �
 รันคำสั่งต่อไปนี้ในโปรเจ็กต์ที่อยู่ใน repo GitHub:
 
 ```bash
-opencode github install
+zyraxon github install
 ```
 
 ขั้นตอนนี้จะแนะนำคุณตลอดขั้นตอนการติดตั้งแอป GitHub การสร้างเวิร์กโฟลว์ และการตั้งค่าความลับ
@@ -33,14 +33,14 @@ opencode github install
 
 1. **ติดตั้งแอป GitHub**
 
-   ไปที่ [**github.com/apps/opencode-agent**](https://github.com/apps/opencode-agent) ตรวจสอบให้แน่ใจว่าได้ติดตั้งบนที่เก็บเป้าหมายแล้ว
+   ไปที่ [**github.com/apps/zyraxon-agent**](https://github.com/apps/opencode-agent) ตรวจสอบให้แน่ใจว่าได้ติดตั้งบนที่เก็บเป้าหมายแล้ว
 
 2. **เพิ่มขั้นตอนการทำงาน**
 
-   เพิ่มไฟล์เวิร์กโฟลว์ต่อไปนี้ไปที่ `.github/workflows/opencode.yml` ใน repo ของคุณ ตรวจสอบให้แน่ใจว่าได้ตั้งค่า `model` ที่เหมาะสมและคีย์ API ที่จำเป็นใน `env`
+   เพิ่มไฟล์เวิร์กโฟลว์ต่อไปนี้ไปที่ `.github/workflows/zyraxon.yml` ใน repo ของคุณ ตรวจสอบให้แน่ใจว่าได้ตั้งค่า `model` ที่เหมาะสมและคีย์ API ที่จำเป็นใน `env`
 
-   ```yml title=".github/workflows/opencode.yml" {24,26}
-   name: opencode
+   ```yml title=".github/workflows/zyraxon.yml" {24,26}
+   name: zyraxon
 
    on:
      issue_comment:
@@ -49,10 +49,10 @@ opencode github install
        types: [created]
 
    jobs:
-     opencode:
+     zyraxon:
        if: |
          contains(github.event.comment.body, '/oc') ||
-         contains(github.event.comment.body, '/opencode')
+         contains(github.event.comment.body, '/zyraxon')
        runs-on: ubuntu-latest
        permissions:
          id-token: write
@@ -107,8 +107,8 @@ ZYRAXON สามารถทริกเกอร์ได้โดยเหต
 
 | ประเภทเหตุการณ์               | กระตุ้นโดย                                                | รายละเอียด                                                                                                        |
 | ----------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `issue_comment`               | แสดงความคิดเห็นในประเด็นหรือประชาสัมพันธ์                 | พูดถึง `/opencode` หรือ `/oc` ในความคิดเห็นของคุณ ZYRAXON อ่านบริบทและสามารถสร้างสาขา เปิด PR หรือตอบกลับได้     |
-| `pull_request_review_comment` | แสดงความคิดเห็นเกี่ยวกับบรรทัดรหัสเฉพาะในการประชาสัมพันธ์ | พูดถึง `/opencode` หรือ `/oc` ในขณะที่ตรวจสอบโค้ด ZYRAXON รับเส้นทางไฟล์ หมายเลขบรรทัด และบริบทที่แตกต่าง        |
+| `issue_comment`               | แสดงความคิดเห็นในประเด็นหรือประชาสัมพันธ์                 | พูดถึง `/zyraxon` หรือ `/oc` ในความคิดเห็นของคุณ ZYRAXON อ่านบริบทและสามารถสร้างสาขา เปิด PR หรือตอบกลับได้     |
+| `pull_request_review_comment` | แสดงความคิดเห็นเกี่ยวกับบรรทัดรหัสเฉพาะในการประชาสัมพันธ์ | พูดถึง `/zyraxon` หรือ `/oc` ในขณะที่ตรวจสอบโค้ด ZYRAXON รับเส้นทางไฟล์ หมายเลขบรรทัด และบริบทที่แตกต่าง        |
 | `issues`                      | ปัญหาเปิดหรือแก้ไข                                        | ทริกเกอร์ ZYRAXON โดยอัตโนมัติเมื่อมีการสร้างหรือแก้ไขปัญหา ต้องป้อนข้อมูล `prompt`                              |
 | `pull_request`                | PR เปิดหรืออัปเดตแล้ว                                     | ทริกเกอร์ ZYRAXON โดยอัตโนมัติเมื่อมีการเปิด ซิงโครไนซ์ หรือเปิด PR อีกครั้ง มีประโยชน์สำหรับการตรวจสอบอัตโนมัติ |
 | `schedule`                    | กำหนดการตาม Cron                                          | เรียกใช้ ZYRAXON ตามกำหนดเวลา ต้องป้อนข้อมูล `prompt` เอาต์พุตไปที่บันทึกและ PR (ไม่มีปัญหาในการแสดงความคิดเห็น) |
@@ -118,7 +118,7 @@ ZYRAXON สามารถทริกเกอร์ได้โดยเหต
 
 เรียกใช้ ZYRAXON ตามกำหนดเวลาเพื่อทำงานอัตโนมัติ:
 
-```yaml title=".github/workflows/opencode-scheduled.yml"
+```yaml title=".github/workflows/zyraxon-scheduled.yml"
 name: Scheduled ZYRAXON Task
 
 on:
@@ -126,7 +126,7 @@ on:
     - cron: "0 9 * * 1" # Every Monday at 9am UTC
 
 jobs:
-  opencode:
+  zyraxon:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -158,8 +158,8 @@ jobs:
 
 ตรวจสอบ PR โดยอัตโนมัติเมื่อมีการเปิดหรืออัปเดต:
 
-```yaml title=".github/workflows/opencode-review.yml"
-name: opencode-review
+```yaml title=".github/workflows/zyraxon-review.yml"
+name: zyraxon-review
 
 on:
   pull_request:
@@ -199,7 +199,7 @@ jobs:
 
 คัดแยกปัญหาใหม่โดยอัตโนมัติ ตัวอย่างนี้กรองไปยังบัญชีที่มีอายุมากกว่า 30 วันเพื่อลดสแปม:
 
-```yaml title=".github/workflows/opencode-triage.yml"
+```yaml title=".github/workflows/zyraxon-triage.yml"
 name: Issue Triage
 
 on:
@@ -254,7 +254,7 @@ jobs:
 
 แทนที่ข้อความแจ้งเริ่มต้นเพื่อปรับแต่งการทำงานของ ZYRAXON สำหรับเวิร์กโฟลว์ของคุณ
 
-```yaml title=".github/workflows/opencode.yml"
+```yaml title=".github/workflows/zyraxon.yml"
 - uses: onelpawarai/ZYRAXON-AI/github@latest
   with:
     model: anthropic/claude-sonnet-4-5
@@ -278,7 +278,7 @@ jobs:
   เพิ่มความคิดเห็นนี้ในปัญหา GitHub
 
   ```
-  /opencode explain this issue
+  /zyraxon explain this issue
   ```
 
   ZYRAXON จะอ่านกระทู้ทั้งหมด รวมถึงความคิดเห็นทั้งหมด และตอบกลับพร้อมคำอธิบายที่ชัดเจน
@@ -288,7 +288,7 @@ jobs:
   ในปัญหา GitHub ให้พูดว่า:
 
   ```
-  /opencode fix this
+  /zyraxon fix this
   ```
 
   และ ZYRAXON จะสร้างสาขาใหม่ ดำเนินการเปลี่ยนแปลง และเปิด PR ที่มีการเปลี่ยนแปลง

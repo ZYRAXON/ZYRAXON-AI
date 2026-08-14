@@ -189,8 +189,31 @@ function launchMCP(extraArgs) {
   }
 
   var cliPath = path.join(nodeModules, '@playwright', 'mcp', 'cli.js');
-  process.argv = [process.execPath, cliPath].concat(extraArgs);
-  require(cliPath);
+
+  // Spawn as child process using Node.js (not Electron) to avoid ESM/CJS conflicts
+  // In packaged Electron, process.execPath is the Electron binary which breaks
+  // module resolution for @playwright/mcp tools
+  var nodeExec = process.execPath;
+  try {
+    var { execFileSync: _exec } = require('child_process');
+    var nodePath = _exec('where', ['node'], { encoding: 'utf8' }).trim().split('\n')[0].trim();
+    if (nodePath && require('fs').existsSync(nodePath)) {
+      nodeExec = nodePath;
+    }
+  } catch (e) {}
+
+  var child = spawn(nodeExec, [cliPath].concat(extraArgs), {
+    stdio: ['inherit', 'inherit', 'inherit'],
+    env: Object.assign({}, process.env, { NODE_PATH: nodeModules }),
+  });
+  child.on('error', function(err) {
+    console.error('[Jarvis] MCP child error:', err.message);
+  });
+  child.on('exit', function(code) {
+    process.exit(code || 0);
+  });
+  process.on('SIGTERM', function() { child.kill(); process.exit(0); });
+  process.on('SIGINT', function() { child.kill(); process.exit(0); });
 }
 
 main().catch(function(err) {

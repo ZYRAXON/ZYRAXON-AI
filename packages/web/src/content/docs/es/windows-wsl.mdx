@@ -35,7 +35,7 @@ WSL ofrece mejor rendimiento del sistema de archivos, soporte completo de termin
 
    ```bash
    cd /mnt/c/Users/YourName/project
-   opencode
+   zyraxon
    ```
 
 </Steps>
@@ -49,7 +49,7 @@ Si prefieres usar la app de escritorio de ZYRAXON pero quieres ejecutar el servi
 1. **Inicia el servidor en WSL** con `--hostname 0.0.0.0` para permitir conexiones externas:
 
    ```bash
-   opencode serve --hostname 0.0.0.0 --port 4096
+   zyraxon serve --hostname 0.0.0.0 --port 4096
    ```
 
 2. **Conecta la app de escritorio** a `http://localhost:4096`
@@ -59,10 +59,10 @@ Si `localhost` no funciona en tu configuración, conéctate usando la dirección
 :::
 
 :::caution
-Cuando uses `--hostname 0.0.0.0`, define `OPENCODE_SERVER_PASSWORD` para proteger el servidor.
+Cuando uses `--hostname 0.0.0.0`, define `ZYRAXON_SERVER_PASSWORD` para proteger el servidor.
 
 ```bash
-OPENCODE_SERVER_PASSWORD=your-password opencode serve --hostname 0.0.0.0
+ZYRAXON_SERVER_PASSWORD=your-password zyraxon serve --hostname 0.0.0.0
 ```
 
 :::
@@ -76,7 +76,7 @@ Para obtener la mejor experiencia web en Windows:
 1. **Ejecuta `zyraxon web` en la terminal de WSL** en lugar de PowerShell:
 
    ```bash
-   opencode web --hostname 0.0.0.0
+   zyraxon web --hostname 0.0.0.0
    ```
 
 2. **Accede desde tu navegador de Windows** en `http://localhost:<port>` (ZYRAXON muestra la URL)
@@ -97,7 +97,7 @@ Ejemplo:
 
 ```bash
 cd /mnt/c/Users/YourName/Documents/project
-opencode
+zyraxon
 ```
 
 :::tip
@@ -110,4 +110,4 @@ Para una experiencia más fluida, considera clonar o copiar tu repo al sistema d
 
 - Ejecuta ZYRAXON en WSL para proyectos guardados en unidades de Windows: el acceso a archivos es transparente
 - Usa la [extensión WSL de VS Code](https://code.visualstudio.com/docs/remote/wsl) junto con ZYRAXON para un flujo de desarrollo integrado
-- Tu configuración y tus sesiones de ZYRAXON se guardan dentro del entorno WSL en `~/.local/share/opencode/`
+- Tu configuración y tus sesiones de ZYRAXON se guardan dentro del entorno WSL en `~/.local/share/zyraxon/`

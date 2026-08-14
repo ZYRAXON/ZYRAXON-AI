@@ -15,7 +15,7 @@ Bir oturum sırasında agent'lar arasında geçiş yapabilir veya onları `@` if
 
 ## Türler
 
-opencode'da iki tür agent vardır; birincil agent'lar ve alt agent'lar.
+zyraxon'da iki tür agent vardır; birincil agent'lar ve alt agent'lar.
 
 ---
 
@@ -27,7 +27,7 @@ Birincil agent'lar, doğrudan etkileşim kurduğunuz ana yardımcılardır. **Se
 Bir oturum sırasında birincil agent'lar arasında geçiş yapmak için **Sekme** tuşunu kullanabilirsiniz.
 :::
 
-opencode, **Build** ve **Plan** olmak üzere iki yerleşik birincil agent ile birlikte gelir. Bunlara aşağıda bakacağız.
+zyraxon, **Build** ve **Plan** olmak üzere iki yerleşik birincil agent ile birlikte gelir. Bunlara aşağıda bakacağız.
 
 ---
 
@@ -188,10 +188,10 @@ Agent'ları `zyraxon.json` yapılandırma dosyanızda yapılandırın:
 
 Ayrıca agent'ları Markdown dosyalarını kullanarak da tanımlayabilirsiniz. Bunları şuraya yerleştirin:
 
-- Global: `~/.config/opencode/agents/`
-- Proje başına: `.opencode/agents/`
+- Global: `~/.config/zyraxon/agents/`
+- Proje başına: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -284,7 +284,7 @@ Sıcaklık değerleri tipik olarak 0,0 ila 1,0 arasındadır:
 }
 ```
 
-Sıcaklık belirtilmezse opencode modeline özgü varsayılanları kullanır; çoğu model için genellikle 0, Qwen modelleri için 0,55.
+Sıcaklık belirtilmezse zyraxon modeline özgü varsayılanları kullanır; çoğu model için genellikle 0, Qwen modelleri için 0,55.
 
 ---
 
@@ -344,7 +344,7 @@ Bu agent için `prompt` yapılandırmasıyla özel bir sistem prompt dosyası be
 }
 ```
 
-Bu yol, yapılandırma dosyasının bulunduğu yere göredir. Yani bu hem global opencode yapılandırması hem de projeye özel yapılandırma için işe yarar.
+Bu yol, yapılandırma dosyasının bulunduğu yere göredir. Yani bu hem global zyraxon yapılandırması hem de projeye özel yapılandırma için işe yarar.
 
 ---
 
@@ -366,7 +366,7 @@ Bir model belirtmezseniz, birincil agent'lar [küresel olarak yapılandırılmı
 }
 ```
 
-opencode yapılandırmanızdaki model kimliği `provider/model-id` biçimini kullanır. Örneğin, [ZYRAXON Zen](/docs/zen) kullanıyorsanız, GPT 5.1 Codex için `opencode/gpt-5.1-codex` kullanırsınız.
+zyraxon yapılandırmanızdaki model kimliği `provider/model-id` biçimini kullanır. Örneğin, [ZYRAXON Zen](/docs/zen) kullanıyorsanız, GPT 5.1 Codex için `zyraxon/gpt-5.1-codex` kullanırsınız.
 
 ---
 
@@ -454,7 +454,7 @@ Bu izinleri agent başına geçersiz kılabilirsiniz.
 
 İzinleri Markdown agent'larında da ayarlayabilirsiniz.
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -674,7 +674,7 @@ Mevcut modellerin listesini görmek için `zyraxon models` komutunu çalıştır
 Aşağıdaki komutu kullanarak yeni agent'lar oluşturabilirsiniz:
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 Bu etkileşimli komut şunları sağlayacaktır:
@@ -711,7 +711,7 @@ Paylaşmak istediğiniz bir agent'ınız var mı? [Submit a PR](https://github.c
 
 ### Dokümantasyon agent'ı
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -733,7 +733,7 @@ Focus on:
 
 ### Güvenlik denetçisi
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

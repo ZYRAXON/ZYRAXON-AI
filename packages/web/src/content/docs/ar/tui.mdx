@@ -10,13 +10,13 @@ import { Tabs, TabItem } from "@astrojs/starlight/components"
 يؤدي تشغيل ZYRAXON إلى بدء واجهة TUI للدليل الحالي.
 
 ```bash
-opencode
+zyraxon
 ```
 
 أو يمكنك تشغيلها لدليل عمل محدد.
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 بعد الدخول إلى واجهة TUI، يمكنك إرسال رسالة كطلب.
@@ -357,7 +357,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -374,7 +374,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -397,7 +397,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `mouse` - يفعّل أو يعطّل التقاط الماوس في TUI (القيمة الافتراضية: `true`). عند تعطيله، يتم الحفاظ على سلوك terminal الأصلي لتحديد النص والتمرير بالماوس.
 - `attention` - يضبط desktop notifications والأصوات في TUI. معطل افتراضيًا.
 
-استخدم `OPENCODE_TUI_CONFIG` لتحميل مسار إعدادات TUI مخصص.
+استخدم `ZYRAXON_TUI_CONFIG` لتحميل مسار إعدادات TUI مخصص.
 
 ### Attention
 
@@ -407,7 +407,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `notifications` - عند تفعيل Attention، يسمح لـ TUI بإرسال desktop notifications عبر terminal. القيمة الافتراضية `true`.
 - `sound` - عند تفعيل Attention، يسمح بتشغيل أصوات التنبيه. القيمة الافتراضية `true`.
 - `volume` - مستوى صوت التنبيهات الافتراضي من `0` إلى `1`. القيمة الافتراضية `0.4`.
-- `sound_pack` - sound pack ID المراد استخدامه. القيمة الافتراضية `opencode.default`.
+- `sound_pack` - sound pack ID المراد استخدامه. القيمة الافتراضية `zyraxon.default`.
 - `sounds` - يحدد ملفات صوت مخصصة لـ `default` أو `question` أو `permission` أو `error` أو `done` أو `subagent_done`. يمكن أن تكون المسارات مطلقة، أو `file://` URLs، أو نسبية إلى `tui.json`.
 
 ---

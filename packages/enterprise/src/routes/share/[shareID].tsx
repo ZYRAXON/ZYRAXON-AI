@@ -1,31 +1,31 @@
-import { Message, Model, Part, Session, SessionStatus, SnapshotFileDiff, UserMessage } from "@opencode-ai/sdk/v2"
-import { SessionTurn } from "@opencode-ai/session-ui/session-turn"
-import { SessionReview } from "@opencode-ai/session-ui/session-review"
-import { DataProvider } from "@opencode-ai/session-ui/context"
-import { FileComponentProvider } from "@opencode-ai/ui/context/file"
-import { WorkerPoolProvider } from "@opencode-ai/ui/context/worker-pool"
+import { Message, Model, Part, Session, SessionStatus, SnapshotFileDiff, UserMessage } from "@ZYRAXON-ai/sdk/v2"
+import { SessionTurn } from "@ZYRAXON-ai/session-ui/session-turn"
+import { SessionReview } from "@ZYRAXON-ai/session-ui/session-review"
+import { DataProvider } from "@ZYRAXON-ai/session-ui/context"
+import { FileComponentProvider } from "@ZYRAXON-ai/ui/context/file"
+import { WorkerPoolProvider } from "@ZYRAXON-ai/ui/context/worker-pool"
 import { createAsync, query, useParams } from "@solidjs/router"
 import { createMemo, createSignal, ErrorBoundary, For, Match, Show, Switch } from "solid-js"
 import { Share } from "~/core/share"
-import { Logo, Mark } from "@opencode-ai/ui/logo"
-import { IconButton } from "@opencode-ai/ui/icon-button"
-import { ProviderIcon } from "@opencode-ai/ui/provider-icon"
-import { iife } from "@opencode-ai/core/util/iife"
-import { Binary } from "@opencode-ai/core/util/binary"
-import { NamedError } from "@opencode-ai/core/util/error"
+import { Logo, Mark } from "@ZYRAXON-ai/ui/logo"
+import { IconButton } from "@ZYRAXON-ai/ui/icon-button"
+import { ProviderIcon } from "@ZYRAXON-ai/ui/provider-icon"
+import { iife } from "@ZYRAXON-ai/core/util/iife"
+import { Binary } from "@ZYRAXON-ai/core/util/binary"
+import { NamedError } from "@ZYRAXON-ai/core/util/error"
 import { DateTime } from "luxon"
 import { createStore } from "solid-js/store"
 import NotFound from "../[...404]"
-import { Tabs } from "@opencode-ai/ui/tabs"
-import { MessageNav } from "@opencode-ai/session-ui/message-nav"
-import { FileSSR } from "@opencode-ai/session-ui/file-ssr"
+import { Tabs } from "@ZYRAXON-ai/ui/tabs"
+import { MessageNav } from "@ZYRAXON-ai/session-ui/message-nav"
+import { FileSSR } from "@ZYRAXON-ai/session-ui/file-ssr"
 import { clientOnly } from "@solidjs/start"
 import { Meta, Title } from "@solidjs/meta"
 import { Base64 } from "js-base64"
 import { getRequestEvent } from "solid-js/web"
 
 const ClientOnlyWorkerPoolProvider = clientOnly(() =>
-  import("@opencode-ai/session-ui/pierre/worker").then((m) => ({
+  import("@ZYRAXON-ai/session-ui/pierre/worker").then((m) => ({
     default: (props: { children: any }) => (
       <WorkerPoolProvider pools={m.getWorkerPools()}>{props.children}</WorkerPoolProvider>
     ),
@@ -185,7 +185,7 @@ export default function () {
           return (
             <>
               <Show when={info().title}>
-                <Title>{info().title} | OpenCode</Title>
+                <Title>{info().title} | ZYRAXON</Title>
               </Show>
               <Meta name="description" content="zyraxon - The AI coding agent built for the terminal." />
               <Meta property="og:image" content={ogImage()} />

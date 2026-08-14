@@ -181,7 +181,7 @@ export class JarvisBrowserIntegration {
         resolve();
       });
       
-      this._wsConnection.on('message', (data) => {
+      this._wsConnection.on('message', (data: { toString(): string }) => {
         try {
           const message = JSON.parse(data.toString());
           if (message.id && this._pendingRequests.has(message.id)) {
@@ -482,7 +482,7 @@ export class JarvisBrowserIntegration {
 
 let jarvisInstance: JarvisBrowserIntegration | null = null;
 
-export function registerJarvisBrowserIPC(mainWindow: BrowserWindow): void {
+export function registerJarvisBrowserIPC(_mainWindow?: BrowserWindow): void {
   ipcMain.handle('jarvis-browser:init', async (_, config?: Partial<JarvisConfig>) => {
     try {
       jarvisInstance = new JarvisBrowserIntegration(config);

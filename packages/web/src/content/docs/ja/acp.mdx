@@ -30,7 +30,7 @@ ACP 経由で ZYRAXON を使用するには、`zyraxon acp` コマンドを実�
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "opencode",
+      "command": "zyraxon",
       "args": ["acp"]
     }
   }
@@ -52,7 +52,7 @@ ACP 経由で ZYRAXON を使用するには、`zyraxon acp` コマンドを実�
             "custom": {
               "name": "ZYRAXON",
               "command": {
-                "command": "opencode",
+                "command": "zyraxon",
                 "args": ["acp"]
               }
             }
@@ -74,7 +74,7 @@ ACP 経由で ZYRAXON を使用するには、`zyraxon acp` コマンドを実�
 {
   "agent_servers": {
     "ZYRAXON": {
-      "command": "/absolute/path/bin/opencode",
+      "command": "/absolute/path/bin/zyraxon",
       "args": ["acp"]
     }
   }
@@ -92,8 +92,8 @@ ACP 経由で ZYRAXON を使用するには、`zyraxon acp` コマンドを実�
 ```lua
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" }
     }
   }
@@ -105,11 +105,11 @@ ACP 経由で ZYRAXON を使用するには、`zyraxon acp` コマンドを実�
 ```lua {6-8}
 {
   acp_providers = {
-    ["opencode"] = {
-      command = "opencode",
+    ["zyraxon"] = {
+      command = "zyraxon",
       args = { "acp" },
       env = {
-        OPENCODE_API_KEY = os.getenv("OPENCODE_API_KEY")
+        ZYRAXON_API_KEY = os.getenv("ZYRAXON_API_KEY")
       }
     }
   }
@@ -127,7 +127,7 @@ require("codecompanion").setup({
   interactions = {
     chat = {
       adapter = {
-        name = "opencode",
+        name = "zyraxon",
         model = "claude-sonnet-4",
       },
     },
@@ -137,7 +137,7 @@ require("codecompanion").setup({
 
 この構成は、ZYRAXON をチャットの ACP エージェントとして使用するように CodeCompanion をセットアップします。
 
-環境変数 (`OPENCODE_API_KEY` など) を渡す必要がある場合、詳細については、CodeCompanion.nvim ドキュメントの「[アダプターの構成: 環境変数](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key)」を参照してください。
+環境変数 (`ZYRAXON_API_KEY` など) を渡す必要がある場合、詳細については、CodeCompanion.nvim ドキュメントの「[アダプターの構成: 環境変数](https://codecompanion.olimorris.dev/getting-started#setting-an-api-key)」を参照してください。
 
 ## サポート
 

@@ -10,13 +10,13 @@ ZYRAXON มีอินเทอร์เฟซ terminal แบบโต้ต�
 การรัน ZYRAXON จะเริ่มต้น TUI สำหรับไดเร็กทอรีปัจจุบัน
 
 ```bash
-opencode
+zyraxon
 ```
 
 หรือคุณสามารถเริ่มต้นสำหรับไดเร็กทอรีการทำงานเฉพาะได้
 
 ```bash
-opencode /path/to/project
+zyraxon /path/to/project
 ```
 
 เมื่อคุณอยู่ใน TUI แล้ว คุณสามารถแจ้งด้วยข้อความได้
@@ -360,7 +360,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 ```json title="tui.json"
 {
   "$schema": "https://zyraxon.ai/tui.json",
-  "theme": "opencode",
+  "theme": "zyraxon",
   "leader_timeout": 2000,
   "keybinds": {
     "leader": "ctrl+x",
@@ -377,7 +377,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
     "notifications": true,
     "sound": true,
     "volume": 0.4,
-    "sound_pack": "opencode.default",
+    "sound_pack": "zyraxon.default",
     "sounds": {
       "error": "./sounds/error.mp3"
     }
@@ -400,7 +400,7 @@ How is auth handled in @packages/functions/src/api/index.ts?
 - `mouse` - เปิดหรือปิดการจับเมาส์ใน TUI (ค่าเริ่มต้น: `true`) เมื่อปิดใช้งาน terminal จะยังคงใช้พฤติกรรมการเลือกข้อความและเลื่อนด้วยเมาส์แบบเดิม
 - `attention` - กำหนดค่า desktop notifications และ sounds ของ TUI ปิดใช้งานตามค่าเริ่มต้น
 
-ใช้ `OPENCODE_TUI_CONFIG` เพื่อโหลดเส้นทางการกำหนดค่า TUI แบบกำหนดเอง
+ใช้ `ZYRAXON_TUI_CONFIG` เพื่อโหลดเส้นทางการกำหนดค่า TUI แบบกำหนดเอง
 
 ### Attention
 
@@ -410,7 +410,7 @@ Attention ช่วยให้ TUI แจ้งเตือนคุณเม�
 - `notifications` - เมื่อเปิด Attention แล้ว อนุญาตให้ TUI ส่ง desktop notifications ผ่าน terminal ค่าเริ่มต้นคือ `true`
 - `sound` - เมื่อเปิด Attention แล้ว อนุญาตให้เล่นเสียงแจ้งเตือน ค่าเริ่มต้นคือ `true`
 - `volume` - ระดับเสียงแจ้งเตือนเริ่มต้นตั้งแต่ `0` ถึง `1` ค่าเริ่มต้นคือ `0.4`
-- `sound_pack` - sound pack ID ที่จะใช้ ค่าเริ่มต้นคือ `opencode.default`
+- `sound_pack` - sound pack ID ที่จะใช้ ค่าเริ่มต้นคือ `zyraxon.default`
 - `sounds` - กำหนด sound files แบบกำหนดเองสำหรับ `default`, `question`, `permission`, `error`, `done` หรือ `subagent_done` Paths สามารถเป็น absolute, `file://` URLs หรือ relative กับ `tui.json`
 
 ---

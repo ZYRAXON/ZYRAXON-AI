@@ -19,7 +19,7 @@ export function wrapClientError(
   if (!opts?.throwOnError) return error
   if (error instanceof Error) return error
 
-  // NamedError-shaped responses (the common case for opencode 4xx) come
+  // NamedError-shaped responses (the common case for zyraxon 4xx) come
   // through as POJOs — extract a useful message first, then wrap.
   if (typeof error === "object" && error !== null && Object.keys(error).length > 0) {
     const obj = error as { data?: { message?: unknown }; message?: unknown; name?: unknown }

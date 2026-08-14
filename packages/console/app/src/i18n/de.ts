@@ -659,7 +659,7 @@ export const dict = {
   "workspace.lite.subscription.resetsIn": "Setzt zurück in",
   "workspace.lite.subscription.useBalance": "Nutze dein verfügbares Guthaben, nachdem die Nutzungslimits erreicht sind",
   "workspace.lite.subscription.selectProvider":
-    'Wähle "ZYRAXON Go" als Anbieter in deiner opencode-Konfiguration, um Go-Modelle zu verwenden.',
+    'Wähle "ZYRAXON Go" als Anbieter in deiner zyraxon-Konfiguration, um Go-Modelle zu verwenden.',
   "workspace.lite.providers.title": "Anbieter",
   "workspace.lite.providers.description": "Steuere, welche Anbieter für das Routing verwendet werden.",
   "workspace.lite.providers.useChina": "In China gehostete Modelle aktivieren",

@@ -1,6 +1,6 @@
 ---
 title: Konfigurasjon
-description: Ved å bruke opencode JSON-konfigurasjonen.
+description: Ved å bruke zyraxon JSON-konfigurasjonen.
 ---
 
 Du kan konfigurere ZYRAXON ved å bruke en JSON konfigurasjonsfil.
@@ -35,7 +35,7 @@ Konfigurasjonsfiler er **slått sammen**, ikke erstattet.
 
 Konfigurasjonsfiler slås sammen, ikke erstattes. Innstillinger fra følgende konfigurasjonsplasseringer kombineres. Senere konfigurasjoner overstyrer tidligere kun for motstridende nøkler. Ikke-motstridende innstillinger fra alle konfigurasjoner er bevart.
 
-For eksempel, hvis din globale konfigurasjon setter `theme: "opencode"` og `autoupdate: true`, og prosjektkonfigurasjonen setter `model: "anthropic/claude-sonnet-4-5"`, vil den endelige konfigurasjonen inkludere alle tre innstillingene.
+For eksempel, hvis din globale konfigurasjon setter `theme: "zyraxon"` og `autoupdate: true`, og prosjektkonfigurasjonen setter `model: "anthropic/claude-sonnet-4-5"`, vil den endelige konfigurasjonen inkludere alle tre innstillingene.
 
 ---
 
@@ -43,30 +43,30 @@ For eksempel, hvis din globale konfigurasjon setter `theme: "opencode"` og `auto
 
 Konfigurasjonskilder lastes inn i denne rekkefølgen (senere kilder overstyrer tidligere):
 
-1. **Ekstern konfigurasjon** (fra `.well-known/opencode`) - organisasjonsstandarder
-2. **Global konfigurasjon** (`~/.config/opencode/zyraxon.json`) - brukerinnstillinger
-3. **Egendefinert konfigurasjon** (`OPENCODE_CONFIG` env var) - egendefinerte overstyringer
+1. **Ekstern konfigurasjon** (fra `.well-known/zyraxon`) - organisasjonsstandarder
+2. **Global konfigurasjon** (`~/.config/zyraxon/zyraxon.json`) - brukerinnstillinger
+3. **Egendefinert konfigurasjon** (`ZYRAXON_CONFIG` env var) - egendefinerte overstyringer
 4. **Prosjektkonfigurasjon** (`zyraxon.json` i prosjekt) - prosjektspesifikke innstillinger
-5. **`.opencode` kataloger** - agenter, kommandoer, plugins
-6. **Inline config** (`OPENCODE_CONFIG_CONTENT` env var) - kjøretidsoverstyringer
+5. **`.zyraxon` kataloger** - agenter, kommandoer, plugins
+6. **Inline config** (`ZYRAXON_CONFIG_CONTENT` env var) - kjøretidsoverstyringer
 
 Dette betyr at prosjektkonfigurasjoner kan overstyre globale standardinnstillinger, og globale konfigurasjoner kan overstyre eksterne organisasjonsstandarder.
 
 :::note
-`.opencode` og `~/.config/opencode` katalogene bruker **flertallsnavn** på underkataloger: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` og `themes/`. Enkeltnavn (f.eks. `agent/`) støttes også for bakoverkompatibilitet.
+`.zyraxon` og `~/.config/zyraxon` katalogene bruker **flertallsnavn** på underkataloger: `agents/`, `commands/`, `modes/`, `plugins/`, `skills/`, `tools/` og `themes/`. Enkeltnavn (f.eks. `agent/`) støttes også for bakoverkompatibilitet.
 :::
 
 ---
 
 ### Ekstern konfigurasjon
 
-Organisasjoner kan tilby standardkonfigurasjon via `.well-known/opencode`-endepunktet. Dette hentes automatisk når du autentiserer med en leverandør som støtter det.
+Organisasjoner kan tilby standardkonfigurasjon via `.well-known/zyraxon`-endepunktet. Dette hentes automatisk når du autentiserer med en leverandør som støtter det.
 
 Ekstern konfigurasjon lastes først, og fungerer som grunnlaget. Alle andre konfigurasjonskilder (global, prosjekt) kan overstyre disse standardinnstillingene.
 
 For eksempel, hvis organisasjonen din tilbyr MCP servere som er deaktivert som standard:
 
-```json title="Remote config from .well-known/opencode"
+```json title="Remote config from .well-known/zyraxon"
 {
   "mcp": {
     "jira": {
@@ -96,7 +96,7 @@ Du kan aktivere spesifikke servere i din lokale konfigurasjon:
 
 ### Global konfigurasjon
 
-Plasser din globale ZYRAXON-konfigurasjon i `~/.config/opencode/zyraxon.json`. Bruk global konfigurasjon for brukerspesifikke preferanser som temaer, leverandører eller nøkkelbindinger.
+Plasser din globale ZYRAXON-konfigurasjon i `~/.config/zyraxon/zyraxon.json`. Bruk global konfigurasjon for brukerspesifikke preferanser som temaer, leverandører eller nøkkelbindinger.
 
 Global konfigurasjon overstyrer eksterne organisasjonsstandarder.
 
@@ -118,11 +118,11 @@ Det er også trygt å sjekke inn dette i Git og bruker samme skjema som det glob
 
 ### Egendefinert bane
 
-Spesifiser en tilpasset konfigurasjonsfilbane ved å bruke miljøvariabelen `OPENCODE_CONFIG`.
+Spesifiser en tilpasset konfigurasjonsfilbane ved å bruke miljøvariabelen `ZYRAXON_CONFIG`.
 
 ```bash
-export OPENCODE_CONFIG=/path/to/my/custom-config.json
-opencode run "Hello world"
+export ZYRAXON_CONFIG=/path/to/my/custom-config.json
+zyraxon run "Hello world"
 ```
 
 Egendefinert konfigurasjon lastes inn mellom globale og prosjektkonfigurasjoner i prioritetsrekkefølge.
@@ -131,17 +131,17 @@ Egendefinert konfigurasjon lastes inn mellom globale og prosjektkonfigurasjoner 
 
 ### Egendefinert katalog
 
-Spesifiser en tilpasset konfigurasjonskatalog ved å bruke `OPENCODE_CONFIG_DIR`
+Spesifiser en tilpasset konfigurasjonskatalog ved å bruke `ZYRAXON_CONFIG_DIR`
 miljøvariabel. Denne katalogen vil bli søkt etter agenter, kommandoer,
-moduser og plugins akkurat som standard `.opencode` katalog, og bør
+moduser og plugins akkurat som standard `.zyraxon` katalog, og bør
 følge samme struktur.
 
 ```bash
-export OPENCODE_CONFIG_DIR=/path/to/my/config-directory
-opencode run "Hello world"
+export ZYRAXON_CONFIG_DIR=/path/to/my/config-directory
+zyraxon run "Hello world"
 ```
 
-Den egendefinerte katalogen lastes inn etter den globale konfigurasjonen og `.opencode`-katalogene, slik at den **kan overstyre** innstillingene deres.
+Den egendefinerte katalogen lastes inn etter den globale konfigurasjonen og `.zyraxon`-katalogene, slik at den **kan overstyre** innstillingene deres.
 
 ---
 
@@ -202,7 +202,7 @@ Tilgjengelige alternativer:
 - `port` - Port å lytte på.
 - `hostname` - Vertsnavn å lytte på. Når `mdns` er aktivert og ingen vertsnavn er angitt, er standard `0.0.0.0`.
 - `mdns` - Aktiver mDNS-tjenesteoppdagelse. Dette lar andre enheter på nettverket oppdage ZYRAXON-serveren din.
-- `mdnsDomain` - Egendefinert domenenavn for mDNS-tjeneste. Standard er `opencode.local`. Nyttig for å kjøre flere forekomster på samme nettverk.
+- `mdnsDomain` - Egendefinert domenenavn for mDNS-tjeneste. Standard er `zyraxon.local`. Nyttig for å kjøre flere forekomster på samme nettverk.
 - `cors` - Ytterligere opprinnelser for å tillate CORS når du bruker HTTP-serveren fra en nettleserbasert klient. Verdiene må være fullstendige opprinnelser (skjema + vert + valgfri port), f.eks. `https://app.example.com`.
 
 [Les mer om serveren her](/docs/server).
@@ -337,7 +337,7 @@ Du kan konfigurere spesialiserte agenter for spesifikke oppgaver gjennom alterna
 }
 ```
 
-Du kan også definere agenter ved å bruke markdown-filer i `~/.config/opencode/agents/` eller `.opencode/agents/`. [Les mer her](/docs/agents).
+Du kan også definere agenter ved å bruke markdown-filer i `~/.config/zyraxon/agents/` eller `.zyraxon/agents/`. [Les mer her](/docs/agents).
 
 ---
 
@@ -401,7 +401,7 @@ Du kan konfigurere egendefinerte kommandoer for repeterende oppgaver gjennom alt
 }
 ```
 
-Du kan også definere kommandoer ved å bruke markdown-filer i `~/.config/opencode/commands/` eller `.opencode/commands/`. [Les mer her](/docs/commands).
+Du kan også definere kommandoer ved å bruke markdown-filer i `~/.config/zyraxon/commands/` eller `.zyraxon/commands/`. [Les mer her](/docs/commands).
 
 ---
 
@@ -539,12 +539,12 @@ Du kan konfigurere MCP-servere du vil bruke gjennom alternativet `mcp`.
 
 [Plugins](/docs/plugins) utvider ZYRAXON med tilpassede verktøy, kroker og integrasjoner.
 
-Plasser plugin-filer i `.opencode/plugins/` eller `~/.config/opencode/plugins/`. Du kan også laste inn plugins fra npm gjennom alternativet `plugin`.
+Plasser plugin-filer i `.zyraxon/plugins/` eller `~/.config/zyraxon/plugins/`. Du kan også laste inn plugins fra npm gjennom alternativet `plugin`.
 
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  "plugin": ["zyraxon-helicone-session", "@my-org/custom-plugin"]
 }
 ```
 
@@ -642,7 +642,7 @@ Bruk `{env:VARIABLE_NAME}` for å erstatte miljøvariabler:
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "model": "{env:OPENCODE_MODEL}",
+  "model": "{env:ZYRAXON_MODEL}",
   "provider": {
     "anthropic": {
       "models": {},

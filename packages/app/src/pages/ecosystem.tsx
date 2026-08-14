@@ -1,7 +1,7 @@
 import { lazy, Suspense, Show, createSignal, onMount } from "solid-js"
 import { useNavigate, useSearchParams, useParams } from "@solidjs/router"
-import { Button } from "@opencode-ai/ui/button"
-import { Tooltip } from "@opencode-ai/ui/tooltip"
+import { Button } from "@zyraxon-ai/ui/button"
+import { Tooltip } from "@zyraxon-ai/ui/tooltip"
 import { AuthCallback } from "@zyraxon/ecosystem"
 
 const EcosystemPage = lazy(() =>

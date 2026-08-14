@@ -188,10 +188,10 @@ _モード_: `primary`
 
 Markdown ファイルを使用してエージェントを定義することもできます。それらを次の場所に置きます。
 
-- グローバル: `~/.config/opencode/agents/`
-- プロジェクトごと: `.opencode/agents/`
+- グローバル: `~/.config/zyraxon/agents/`
+- プロジェクトごと: `.zyraxon/agents/`
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Reviews code for quality and best practices
 mode: subagent
@@ -366,7 +366,7 @@ Markdown ファイル名がエージェント名になります。たとえば�
 }
 ```
 
-ZYRAXON 設定内のモデル ID は、`provider/model-id` という形式を使用します。たとえば、[ZYRAXON Zen](/docs/zen) を使用している場合、GPT 5.1 Codex には `opencode/gpt-5.1-codex` を使用します。
+ZYRAXON 設定内のモデル ID は、`provider/model-id` という形式を使用します。たとえば、[ZYRAXON Zen](/docs/zen) を使用している場合、GPT 5.1 Codex には `zyraxon/gpt-5.1-codex` を使用します。
 
 ---
 
@@ -453,7 +453,7 @@ MCP サーバーからすべてのツールを無効にするには、次のよ�
 
 Markdown エージェントで権限を設定することもできます。
 
-```markdown title="~/.config/opencode/agents/review.md"
+```markdown title="~/.config/zyraxon/agents/review.md"
 ---
 description: Code review without edits
 mode: subagent
@@ -671,7 +671,7 @@ Only analyze code and suggest changes.
 次のコマンドを使用して、新しいエージェントを作成できます。
 
 ```bash
-opencode agent create
+zyraxon agent create
 ```
 
 この対話型コマンドは次のことを行います。
@@ -708,7 +708,7 @@ opencode agent create
 
 ### ドキュメント作成エージェント
 
-```markdown title="~/.config/opencode/agents/docs-writer.md"
+```markdown title="~/.config/zyraxon/agents/docs-writer.md"
 ---
 description: Writes and maintains project documentation
 mode: subagent
@@ -730,7 +730,7 @@ Focus on:
 
 ### セキュリティ監査エージェント
 
-```markdown title="~/.config/opencode/agents/security-auditor.md"
+```markdown title="~/.config/zyraxon/agents/security-auditor.md"
 ---
 description: Performs security audits and identifies vulnerabilities
 mode: subagent

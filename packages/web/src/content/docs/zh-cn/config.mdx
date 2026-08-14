@@ -42,30 +42,30 @@ ZYRAXON 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式。
 
 配置源按以下顺序加载（后面的源覆盖前面的源）：
 
-1. **远程配置**（来自 `.well-known/opencode`）- 组织默认值
-2. **全局配置**（`~/.config/opencode/zyraxon.json`）- 用户偏好
-3. **自定义配置**（`OPENCODE_CONFIG` 环境变量）- 自定义覆盖
+1. **远程配置**（来自 `.well-known/zyraxon`）- 组织默认值
+2. **全局配置**（`~/.config/zyraxon/zyraxon.json`）- 用户偏好
+3. **自定义配置**（`ZYRAXON_CONFIG` 环境变量）- 自定义覆盖
 4. **项目配置**（项目中的 `zyraxon.json`）- 项目特定设置
-5. **`.opencode` 目录** - 代理、命令、插件
-6. **内联配置**（`OPENCODE_CONFIG_CONTENT` 环境变量）- 运行时覆盖
+5. **`.zyraxon` 目录** - 代理、命令、插件
+6. **内联配置**（`ZYRAXON_CONFIG_CONTENT` 环境变量）- 运行时覆盖
 
 这意味着项目配置可以覆盖全局默认值，全局配置可以覆盖远程组织默认值。
 
 :::note
-`.opencode` 和 `~/.config/opencode` 目录的子目录使用**复数名称**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。为了向后兼容，也支持单数名称（例如 `agent/`）。
+`.zyraxon` 和 `~/.config/zyraxon` 目录的子目录使用**复数名称**：`agents/`、`commands/`、`modes/`、`plugins/`、`skills/`、`tools/` 和 `themes/`。为了向后兼容，也支持单数名称（例如 `agent/`）。
 :::
 
 ---
 
 ### 远程
 
-组织可以通过 `.well-known/opencode` 端点提供默认配置。当您使用支持该功能的提供商进行身份验证时，会自动获取此配置。
+组织可以通过 `.well-known/zyraxon` 端点提供默认配置。当您使用支持该功能的提供商进行身份验证时，会自动获取此配置。
 
 远程配置最先加载，作为基础层。所有其他配置源（全局、项目）都可以覆盖这些默认值。
 
 例如，如果您的组织提供了默认禁用的 MCP 服务器：
 
-```json title="Remote config from .well-known/opencode"
+```json title="Remote config from .well-known/zyraxon"
 {
   "mcp": {
     "jira": {
@@ -95,7 +95,7 @@ ZYRAXON 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式。
 
 ### 全局
 
-将全局 ZYRAXON 配置放在 `~/.config/opencode/zyraxon.json` 中。使用全局配置来设置用户级别的偏好，例如主题、提供商或快捷键。
+将全局 ZYRAXON 配置放在 `~/.config/zyraxon/zyraxon.json` 中。使用全局配置来设置用户级别的偏好，例如主题、提供商或快捷键。
 
 全局配置覆盖远程组织默认值。
 
@@ -117,11 +117,11 @@ ZYRAXON 支持 **JSON** 和 **JSONC**（带注释的 JSON）格式。
 
 ### 自定义路径
 
-使用 `OPENCODE_CONFIG` 环境变量指定自定义配置文件路径。
+使用 `ZYRAXON_CONFIG` 环境变量指定自定义配置文件路径。
 
 ```bash
-export OPENCODE_CONFIG=/path/to/my/custom-config.json
-opencode run "Hello world"
+export ZYRAXON_CONFIG=/path/to/my/custom-config.json
+zyraxon run "Hello world"
 ```
 
 自定义配置在优先级顺序中位于全局配置和项目配置之间加载。
@@ -130,14 +130,14 @@ opencode run "Hello world"
 
 ### 自定义目录
 
-使用 `OPENCODE_CONFIG_DIR` 环境变量指定自定义配置目录。该目录会像标准 `.opencode` 目录一样被搜索代理、命令、模式和插件，并且应遵循相同的结构。
+使用 `ZYRAXON_CONFIG_DIR` 环境变量指定自定义配置目录。该目录会像标准 `.zyraxon` 目录一样被搜索代理、命令、模式和插件，并且应遵循相同的结构。
 
 ```bash
-export OPENCODE_CONFIG_DIR=/path/to/my/config-directory
-opencode run "Hello world"
+export ZYRAXON_CONFIG_DIR=/path/to/my/config-directory
+zyraxon run "Hello world"
 ```
 
-自定义目录在全局配置和 `.opencode` 目录之后加载，因此**可以覆盖**它们的设置。
+自定义目录在全局配置和 `.zyraxon` 目录之后加载，因此**可以覆盖**它们的设置。
 
 ---
 
@@ -198,7 +198,7 @@ opencode run "Hello world"
 - `port` - 监听端口。
 - `hostname` - 监听主机名。当 `mdns` 启用且未设置主机名时，默认为 `0.0.0.0`。
 - `mdns` - 启用 mDNS 服务发现。这允许网络上的其他设备发现您的 ZYRAXON 服务器。
-- `mdnsDomain` - mDNS 服务的自定义域名。默认为 `opencode.local`。适用于在同一网络上运行多个实例的场景。
+- `mdnsDomain` - mDNS 服务的自定义域名。默认为 `zyraxon.local`。适用于在同一网络上运行多个实例的场景。
 - `cors` - 从基于浏览器的客户端使用 HTTP 服务器时允许 CORS 的额外来源。值必须是完整的来源（协议 + 主机 + 可选端口），例如 `https://app.example.com`。
 
 [在此了解更多关于服务器的信息](/docs/server)。
@@ -333,7 +333,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）优先于基于配置
 }
 ```
 
-您还可以使用 `~/.config/opencode/agents/` 或 `.opencode/agents/` 中的 Markdown 文件定义代理。[在此了解更多](/docs/agents)。
+您还可以使用 `~/.config/zyraxon/agents/` 或 `.zyraxon/agents/` 中的 Markdown 文件定义代理。[在此了解更多](/docs/agents)。
 
 ---
 
@@ -397,7 +397,7 @@ Bearer Token（`AWS_BEARER_TOKEN_BEDROCK` 或 `/connect`）优先于基于配置
 }
 ```
 
-您还可以使用 `~/.config/opencode/commands/` 或 `.opencode/commands/` 中的 Markdown 文件定义命令。[在此了解更多](/docs/commands)。
+您还可以使用 `~/.config/zyraxon/commands/` 或 `.zyraxon/commands/` 中的 Markdown 文件定义命令。[在此了解更多](/docs/commands)。
 
 ---
 
@@ -535,12 +535,12 @@ ZYRAXON 启动时会自动下载新版本。您可以使用 `autoupdate` 选项�
 
 [插件](/docs/plugins)通过自定义工具、钩子和集成来扩展 ZYRAXON。
 
-将插件文件放置在 `.opencode/plugins/` 或 `~/.config/opencode/plugins/` 中。您还可以通过 `plugin` 选项从 npm 加载插件。
+将插件文件放置在 `.zyraxon/plugins/` 或 `~/.config/zyraxon/plugins/` 中。您还可以通过 `plugin` 选项从 npm 加载插件。
 
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "plugin": ["opencode-helicone-session", "@my-org/custom-plugin"]
+  "plugin": ["zyraxon-helicone-session", "@my-org/custom-plugin"]
 }
 ```
 
@@ -637,7 +637,7 @@ ZYRAXON 启动时会自动下载新版本。您可以使用 `autoupdate` 选项�
 ```json title="zyraxon.json"
 {
   "$schema": "https://zyraxon.ai/config.json",
-  "model": "{env:OPENCODE_MODEL}",
+  "model": "{env:ZYRAXON_MODEL}",
   "provider": {
     "anthropic": {
       "models": {},
