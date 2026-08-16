@@ -15,7 +15,7 @@ import {
 import { makeEventListener } from "@solid-primitives/event-listener"
 import { useNavigate, useParams } from "@solidjs/router"
 import { useLayout, LocalProject } from "@/context/layout"
-import { editorMode } from "@/context/editor-mode"
+import { editorMode, enableEditorOnStartup } from "@/context/editor-mode"
 import { useServerSync } from "@/context/server-sync"
 import { Persist, persisted } from "@/utils/persist"
 import { base64Encode } from "@zyraxon-ai/core/util/encode"
@@ -85,6 +85,7 @@ import {
 } from "./layout/sidebar-workspace"
 import { ProjectDragOverlay, SortableProject, type ProjectSidebarContext } from "./layout/sidebar-project"
 import { SidebarContent } from "./layout/sidebar-shell"
+import { SplitEditorLayout } from "./layout/split-editor"
 
 export default function LegacyLayout(props: ParentProps) {
   const serverSDK = useServerSDK()
@@ -126,6 +127,9 @@ export default function LegacyLayout(props: ParentProps) {
   const theme = useTheme()
   const language = useLanguage()
   createEffect(() => setV2Toast(false))
+  
+  // Auto-open editor on app start
+  enableEditorOnStartup()
   const initialDirectory = decode64(params.dir)
   const route = createMemo(() => {
     const slug = params.dir
@@ -2365,9 +2369,11 @@ export default function LegacyLayout(props: ParentProps) {
                 }}
               >
                 <Show when={!autoselecting.loading} fallback={<div class="size-full" />}>
-                  <Show when={!editorMode()} fallback={<EditorHost />}>
-                    {props.children}
-                  </Show>
+                  <SplitEditorLayout
+                    initialEditorWidth={50}
+                    agentContent={() => props.children}
+                    editorContent={() => <EditorHost />}
+                  />
                 </Show>
               </main>
             </div>
