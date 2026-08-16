@@ -26,17 +26,30 @@ export function SplitEditorLayout(props: SplitEditorLayoutProps) {
 
   return (
     <div class="flex size-full">
-      {/* Agent Mode - Left Panel - Always visible */}
+      {/* 
+        Layout Structure:
+        ┌─────────────────────────────────────────────────────┐
+        │                    Main App                          │
+        │  ┌──────────┬───────────────────┬───────────────┐ │
+        │  │ Sidebar │   Agent Mode      │    Editor     │ │
+        │  │          │  (Chat, Prompt)   │   Mode       │ │
+        │  │          │                   │  (ZYRAXON    │ │
+        │  │          │                   │   Code)       │ │
+        │  └──────────┴───────────────────┴───────────────┘ │
+        └─────────────────────────────────────────────────────┘
+      */}
+      
+      {/* Agent Mode - Left Panel */}
       <div
-        class="flex flex-col overflow-hidden"
+        class="flex flex-col overflow-hidden h-full"
         style={{ width: editorMode() ? `${100 - editorWidth()}%` : "100%" }}
       >
         {props.agentContent()}
       </div>
 
-      {/* Editor Mode - Right Panel - Shown when editorMode is true */}
+      {/* Editor Mode - Right Panel (ZYRAXON Code) */}
       <Show when={editorMode()}>
-        {/* Resize Handle */}
+        {/* Resize Handle - Drag to resize panels */}
         <ResizeHandle
           direction="horizontal"
           edge="start"
@@ -47,9 +60,9 @@ export function SplitEditorLayout(props: SplitEditorLayoutProps) {
           class="shrink-0 w-1 bg-transparent hover:bg-[var(--border-accent-base)] cursor-col-resize transition-colors"
         />
 
-        {/* Editor Panel */}
+        {/* Editor Panel - ZYRAXON Code (VS Code) embedded */}
         <div
-          class="flex flex-col overflow-hidden"
+          class="flex flex-col overflow-hidden h-full"
           style={{ width: `${editorWidth()}%` }}
         >
           {props.editorContent()}
